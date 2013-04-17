@@ -16,6 +16,7 @@ About
 
 Because our team is not located in one single place, we needed a way to distribute the process of prototying so that everyone could try it at home, debug it, create new features and improve the awesomeness for a better world today!
 
+
 Branches
 ------------
 
@@ -51,3 +52,10 @@ Updating using git
 
 	$ git pull
 	$ make install
+
+
+Leka would like to thank
+------------------------
+
+Our team would like to thank with all our hearts [Vincent Thiberville](http://www.vincent-thiberville.com/) for his kind work on our first prototype.
+Without him nothing would have been possible!
