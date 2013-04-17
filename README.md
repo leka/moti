@@ -1,7 +1,7 @@
 Robot Readme
 =======================
 
-*	&copy; Leka Smart Toys, contact@leka-smarttoys.com, 2012-2013
+*	&copy; Leka Smart Toys, hello@weareleka.com, 2012-2013
 *	The code presented here is a property of Leka Smart Toys.
 
 
