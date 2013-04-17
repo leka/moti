@@ -39,9 +39,13 @@ Installing
 
 Note: Make sure Git and cURL are installed.
 
-This should work on Mac OS X, Debian, Ubuntu, Fedora, RedHat, etc.
+For the project, we use different libraries. Some of them are public, well-known libraries from the Arduino website and some are custom made to suit our needs.
+If you want to be able to compile the project, you need to have your libraries inside the library folder of accessed by the Arduino app.
+[Following this link](http://arduino.cc/en/Guide/Libraries), you'll know here to find yours depending on your OS: Windows or a UNIX  based system (OS X, Linux, Debien, etc.)
 
-The easiest way is to use Git for installing:
+The following instructions should work on Mac OS X, Debian, Ubuntu, Fedora, RedHat, etc.
+
+The easiest way is to use Git and make for installing:
 
 	$ git clone https://github.com/LekaSmartToys/robot.git
 	$ cd YOUR/PATH/TO/robot/
