@@ -1,20 +1,15 @@
-Robot Readme
+Moti Readme
 =======================
-
-*	&copy; Leka Smart Toys, hello@weareleka.com, 2012-2013
-*	The code presented here is a property of Leka Smart Toys.
-
-
-Summary
--------
-
-robot is the code name of our first home made prototype of Moti.
 
 
 About
 -----
 
-Because our team is not located in one single place, we needed a way to distribute the process of prototying so that everyone could try it at home, debug it, create new features and improve the awesomeness for a better world today!
+Because our team is not located in one single place, we needed a way to distribute the process of prototying so that everyone could try it at home, debug it and create new features.
+
+At first, we wanted to keep the code for ourselves. But then we thought "hey! our project is great, but wouldn't it be better if a lot of people could fork it, add their modifications, features, improvements, and then share it back to the community?"
+
+For us, the answer is an absolute YES! We want people to be able to look at our code, use it for their projects, use it to build their own Moti and to improve the awesomeness for a better world today!
 
 
 Branches
@@ -63,3 +58,16 @@ Leka would like to thank
 
 Our team would like to thank with all our hearts [Vincent Thiberville](http://www.vincent-thiberville.com/) for his kind work on our first prototype.
 Without him nothing would have been possible!
+
+
+Copyright and License
+------------------------
+
+The library is Copyright (c) 2013 Leka Inc., and distributed under the MIT
+License as follows:
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
