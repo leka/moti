@@ -1,0 +1,240 @@
+#N canvas 163 128 980 614 10;
+#X obj 335 8 cnv 15 100 60 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 375 72 OSCroute /in /adc;
+#X obj 528 180 vsl 15 64 0 255 0 0 empty empty 2 0 -9 0 10 -204786
+-1 -1 0 1;
+#X obj 490 180 vsl 15 64 0 255 0 0 empty empty 0 0 -9 0 10 -204786
+-1 -1 0 1;
+#X obj 546 180 vsl 15 64 0 255 0 0 empty empty 3 0 -9 0 10 -204786
+-1 -1 0 1;
+#X obj 564 180 vsl 15 64 0 255 0 0 empty empty 4 0 -9 0 10 -204786
+-1 -1 0 1;
+#X obj 583 180 vsl 15 64 0 255 0 0 empty empty 5 0 -9 0 10 -204786
+-1 -1 0 1;
+#X obj 509 180 vsl 15 64 0 255 0 0 empty empty 1 0 -9 0 10 -204786
+-1 -1 0 1;
+#X obj 490 100 OSCroute /0 /1 /2 /3 /4 /5;
+#X obj 259 145 tgl 15 0 empty empty 3 5 25 0 10 -204786 -1 -1 0 1;
+#X obj 276 145 tgl 15 0 empty empty 4 5 25 0 10 -204786 -1 -1 0 1;
+#X obj 294 145 tgl 15 0 empty empty 5 5 25 0 10 -204786 -1 -1 0 1;
+#X obj 312 145 tgl 15 0 empty empty 6 5 25 0 10 -204786 -1 -1 0 1;
+#X obj 329 145 tgl 15 0 empty empty 7 5 25 0 10 -204786 -1 -1 0 1;
+#X obj 346 145 tgl 15 0 empty empty 8 5 25 0 10 -204786 -1 -1 0 1;
+#X obj 363 145 tgl 15 0 empty empty 9 5 25 0 10 -204786 -1 -1 0 1;
+#X obj 203 145 tgl 15 0 empty empty 0 5 25 0 10 -204786 -1 -1 0 1;
+#X obj 221 145 tgl 15 0 empty empty 1 5 25 0 10 -204786 -1 -1 0 1;
+#X obj 242 145 tgl 15 0 empty empty 2 5 25 0 10 -204786 -1 -1 0 1;
+#X text 108 140 Input Values;
+#X obj 203 123 tgl 15 1 empty empty empty 17 7 0 10 -203904 -1 -1 1
+1;
+#X obj 490 125 tgl 15 0 empty empty empty 17 7 0 10 -203904 -1 -1 0
+1;
+#X obj 500 72 print;
+#X msg 174 98 set 1;
+#X obj 174 73 loadbang;
+#X obj 241 180 vradio 15 1 0 2 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X text 162 178 Input;
+#X text 156 194 Output;
+#X obj 258 180 vradio 15 1 0 2 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X obj 276 180 vradio 15 1 0 2 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X obj 294 180 vradio 15 1 0 2 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X obj 312 180 vradio 15 1 0 2 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X obj 330 180 vradio 15 1 0 2 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X obj 348 180 vradio 15 1 0 2 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X obj 365 180 vradio 15 1 0 2 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X obj 205 180 vradio 15 1 0 2 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X obj 222 180 vradio 15 1 0 2 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X text 110 178 Pin Mode:;
+#X obj 241 221 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 260 221 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 278 222 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 296 221 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 314 221 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 332 221 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 349 221 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 366 221 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 206 221 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 223 221 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X msg 642 122 set \$1;
+#X obj 509 149 tgl 15 0 empty empty empty 17 7 0 10 -203904 -1 -1 0
+1;
+#X obj 527 149 tgl 15 0 empty empty empty 17 7 0 10 -203904 -1 -1 0
+1;
+#X obj 545 149 tgl 15 0 empty empty empty 17 7 0 10 -203904 -1 -1 0
+1;
+#X obj 564 149 tgl 15 0 empty empty empty 17 7 0 10 -203904 -1 -1 0
+1;
+#X obj 583 149 tgl 15 0 empty empty empty 17 7 0 10 -203904 -1 -1 0
+1;
+#X obj 490 149 tgl 15 0 empty empty empty 17 7 0 10 -203904 -1 -1 0
+1;
+#X obj 366 242 vsl 15 64 0 255 0 0 empty empty empty 0 -9 0 10 -261234
+-1 -1 0 0;
+#X obj 281 329 int;
+#X text 398 250 PWM Output;
+#X obj 324 53 r oscIn;
+#X text 604 200 Analog Input Values;
+#X text 222 122 Report Digital Inputs;
+#X text 509 123 Report Analog Inputs;
+#X text 605 234 0;
+#X text 604 173 255;
+#X text 111 218 Digital Output;
+#X text 388 235 255;
+#X text 401 296 0;
+#X text 98 -61 Message format Arduino->PD:;
+#X text 99 -47 Digital input: /in/[2..12] [0|1] e.g. \, /in/4 1;
+#X text 461 -59 Message format PD->Arduino;
+#X text 460 -47 Set digital pin to input/output: /pinmode/[2..12] [0|1]
+;
+#X text 461 -22 Write digital output: /out/[2..12] [0|1];
+#X text 460 -35 Write PWM: /pwm/[3 \, 5 \, 6 \, 9 \, 10 \, 11] [0..255]
+;
+#X text 460 -9 Turn reporting for all digital pins on/off: /report/in
+[0|1];
+#X text 461 5 Turn reporting for all analog pins on/off: /report/adc
+[0|1];
+#X text 460 18 Turn reporting for one analog pin on/off: /report/adc/[0..5]
+[0|1];
+#X text 99 -34 Analog input: /adc/[0..5] [0..255] e.g. \, /adc/4 193
+;
+#X msg 449 290 send /out/2 \$1;
+#X msg 450 313 send /out/3 \$1;
+#X msg 451 336 send /out/4 \$1;
+#X msg 569 289 send /report/adc/0 \$1;
+#X msg 569 310 send /report/adc/1 \$1;
+#X msg 569 329 send /report/adc/2 \$1;
+#X msg 570 349 send /report/adc/3 \$1;
+#X msg 569 370 send /report/adc/4 \$1;
+#X msg 569 391 send /report/adc/5 \$1;
+#X obj 267 537 s oscOut;
+#X msg 215 303 send /report/adc \$1;
+#X msg 216 276 send /report/in \$1;
+#X msg 449 357 send /out/5 \$1;
+#X msg 449 382 send /out/6 \$1;
+#X msg 448 404 send /out/7 \$1;
+#X msg 449 428 send /out/8 \$1;
+#X msg 450 449 send /out/9 \$1;
+#X msg 282 358 send /pwm/9 \$1;
+#X obj 218 100 OSCroute /2 /3 /4 /5 /6 /7 /8 /9 /0 /1;
+#X msg 452 474 send /out/0 \$1;
+#X msg 449 496 send /out/1 \$1;
+#X msg 88 452 send /pinmode/0 \$1;
+#X msg 89 474 send /pinmode/1 \$1;
+#X msg 92 275 send /pinmode/2 \$1;
+#X msg 91 296 send /pinmode/3 \$1;
+#X msg 91 318 send /pinmode/4 \$1;
+#X msg 90 341 send /pinmode/5 \$1;
+#X msg 91 366 send /pinmode/6 \$1;
+#X msg 90 389 send /pinmode/7 \$1;
+#X msg 89 409 send /pinmode/8 \$1;
+#X msg 88 429 send /pinmode/9 \$1;
+#X connect 1 0 95 0;
+#X connect 1 1 8 0;
+#X connect 1 2 22 0;
+#X connect 8 0 3 0;
+#X connect 8 1 7 0;
+#X connect 8 2 2 0;
+#X connect 8 3 4 0;
+#X connect 8 4 5 0;
+#X connect 8 5 6 0;
+#X connect 20 0 88 0;
+#X connect 21 0 87 0;
+#X connect 21 0 48 0;
+#X connect 23 0 20 0;
+#X connect 24 0 23 0;
+#X connect 25 0 100 0;
+#X connect 28 0 101 0;
+#X connect 29 0 102 0;
+#X connect 30 0 103 0;
+#X connect 31 0 104 0;
+#X connect 32 0 105 0;
+#X connect 33 0 106 0;
+#X connect 34 0 107 0;
+#X connect 35 0 98 0;
+#X connect 36 0 99 0;
+#X connect 38 0 77 0;
+#X connect 39 0 78 0;
+#X connect 40 0 79 0;
+#X connect 41 0 89 0;
+#X connect 42 0 90 0;
+#X connect 43 0 91 0;
+#X connect 44 0 92 0;
+#X connect 45 0 93 0;
+#X connect 46 0 96 0;
+#X connect 47 0 97 0;
+#X connect 48 0 49 0;
+#X connect 48 0 54 0;
+#X connect 48 0 50 0;
+#X connect 48 0 51 0;
+#X connect 48 0 52 0;
+#X connect 48 0 53 0;
+#X connect 49 0 81 0;
+#X connect 50 0 82 0;
+#X connect 51 0 83 0;
+#X connect 52 0 84 0;
+#X connect 53 0 85 0;
+#X connect 54 0 80 0;
+#X connect 55 0 56 0;
+#X connect 56 0 94 0;
+#X connect 58 0 1 0;
+#X connect 77 0 86 0;
+#X connect 78 0 86 0;
+#X connect 79 0 86 0;
+#X connect 80 0 86 0;
+#X connect 81 0 86 0;
+#X connect 82 0 86 0;
+#X connect 83 0 86 0;
+#X connect 84 0 86 0;
+#X connect 85 0 86 0;
+#X connect 87 0 86 0;
+#X connect 88 0 86 0;
+#X connect 89 0 86 0;
+#X connect 90 0 86 0;
+#X connect 91 0 86 0;
+#X connect 92 0 86 0;
+#X connect 93 0 86 0;
+#X connect 94 0 86 0;
+#X connect 95 0 18 0;
+#X connect 95 1 9 0;
+#X connect 95 2 10 0;
+#X connect 95 3 11 0;
+#X connect 95 4 12 0;
+#X connect 95 5 13 0;
+#X connect 95 6 14 0;
+#X connect 95 7 15 0;
+#X connect 95 8 16 0;
+#X connect 95 9 17 0;
+#X connect 96 0 86 0;
+#X connect 97 0 86 0;
+#X connect 98 0 86 0;
+#X connect 99 0 86 0;
+#X connect 100 0 86 0;
+#X connect 101 0 86 0;
+#X connect 102 0 86 0;
+#X connect 103 0 86 0;
+#X connect 104 0 86 0;
+#X connect 105 0 86 0;
+#X connect 106 0 86 0;
+#X connect 107 0 86 0;
+#X coords 0 -1 1 1 640 240 2 100 100;

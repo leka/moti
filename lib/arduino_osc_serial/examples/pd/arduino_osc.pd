@@ -1,0 +1,18 @@
+#N canvas 296 86 902 595 10;
+#X obj 441 44 serialIO /dev/tty.usbserial-A1001NZS 38400 1;
+#X obj 441 68 OpenSoundControl;
+#X msg 441 16 start;
+#X msg 494 16 stop;
+#X obj 384 16 r oscOut;
+#X obj 487 98 s oscIn;
+#X obj 82 126 arduino_osc_widgets;
+#X obj 441 -6 loadbang;
+#X text 77 -11 ARDUINO_OSC Test Patch;
+#X text 76 21 bjoern@cs.stanford.edu 11/2008;
+#X text 75 8 see arduino_osc_widgets for message format;
+#X connect 0 0 1 0;
+#X connect 1 1 5 0;
+#X connect 2 0 0 0;
+#X connect 3 0 0 0;
+#X connect 4 0 0 0;
+#X connect 7 0 2 0;

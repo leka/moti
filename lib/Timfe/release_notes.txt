@@ -1,0 +1,33 @@
+Release notes for Time and TimeAlarm libraries 
+
+Changes made July 22 2011:
+
+This release provides a fix for recurring weekly alarms.
+
+TheTime library is unchanged except for fixes to a macro in Time.h that
+converts the number of days to elapsed seconds and the macros that are used
+to calculate weekly alarms.
+
+The functionality of the TimeAlarms library has changed slightly in order to
+make the library easier to maintain and enhance.
+
+In short, if your application used one of the Alarm methods to create weekly
+alarms then you should change your sketch  to use the methods that take the
+explicit DayOfWeek parameter. Only the Alarm methods are affected,
+Timer methods are as before.
+
+Here are the details:
+The previous version could set weekly alarms by calling the AlarmOnce method
+with a value greater than one day to indicate the day and time of the weekly
+alarm. This has changed and explicit calls to set weekly alarms must be used
+when setting weekly alarms. If you were setting weekly alarms by calling either
+   Alarm.alarmRepeat(weeklyValue,  AlarmFunction);
+then you need to change this to:
+  arm.alarmRepeat(DayOfWeek, Hour, Minute, Second,  AlarmFunction);
+  
+Also the clock must be set to a time on or after Jan1 1971 when using the Alarm methods.
+Timer methods are unchanged and will function even if the clock has not been set
+
+Please report problems or suggestions in the forums.
+
+September 5 2011 updated code to compile with Arduino 1.0
