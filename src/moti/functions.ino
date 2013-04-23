@@ -61,58 +61,5 @@ Serial.print(F("Accelero"));
 
 
 
-void sendAtCommand() {
-  Serial.println("Sending command to the XBee");
-
-  // send the command
-  xbee.send(atRequest);
-
-  // wait up to 5 seconds for the status response
-  if (xbee.readPacket(5000)) {
-    // got a response!
-
-    // should be an AT command response
-    if (xbee.getResponse().getApiId() == AT_COMMAND_RESPONSE) {
-      xbee.getResponse().getAtCommandResponse(atResponse);
-
-      if (atResponse.isOk()) {
-        Serial.print("Command [");
-        Serial.print(atResponse.getCommand()[0]);
-        Serial.print(atResponse.getCommand()[1]);
-        Serial.println("] was successful!");
-
-        if (atResponse.getValueLength() > 0) {
-          Serial.print("Command value length is ");
-          Serial.println(atResponse.getValueLength(), DEC);
-
-          Serial.print("Command value: ");
-          
-          for (int i = 0; i < atResponse.getValueLength(); i++) {
-            Serial.print(atResponse.getValue()[i], HEX);
-            Serial.print(" ");
-          }
-
-          Serial.println("");
-        }
-      } 
-      else {
-        Serial.print("Command return error code: ");
-        Serial.println(atResponse.getStatus(), HEX);
-      }
-    } else {
-      Serial.print("Expected AT response but got ");
-      Serial.print(xbee.getResponse().getApiId(), HEX);
-    }   
-  } else {
-    // at command failed
-    if (xbee.getResponse().isError()) {
-      Serial.print("Error reading packet.  Error code: ");  
-      Serial.println(xbee.getResponse().getErrorCode());
-    } 
-    else {
-      Serial.print("No response from radio");  
-    }
-  }
-}
 
 

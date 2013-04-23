@@ -1,12 +1,13 @@
+
+
 // Attention, toute nouvelle carte doit au préalable se voir chargé le bootloader adapté sinon mauvaise config des fuse !
-
-
+#include <Wire.h>
 #include <ADXL345.h>
 ADXL345 accel;
 
 // TO DEFINE :
 #define delaidodo 600 // delai avant que le robot ne s'endorme
-#define ReveilEteint 100  // valeur 0 < 250; seuil de reveil de la carte Eteint -> Reveil
+#define ReveilEteint 0  // valeur 0 < 250; seuil de reveil de la carte Eteint -> Reveil
 #define AllMax 200   // seuil max d'éclairage des led
 #define bleuMax 180  
 #define DeltaSignalInact 2   // seuil min pour detection inact
@@ -49,36 +50,13 @@ int speed_cmd=0;
 int motor_nb_cmd=0;
 int RGB_num=0;
 
-uint8_t payload[] = { 'H', 'i' };// Create an array for holding the data you want to send.
-
-// with Series 1 you can use either 16-bit or 64-bit addressing
-
-// 16-bit addressing: Enter address of remote XBee, typically the coordinator
-Tx16Request tx = Tx16Request(0x1874, payload, sizeof(payload));
-
-// 64-bit addressing: This is the SH + SL address of remote XBee
-//XBeeAddress64 addr64 = XBeeAddress64(0x0013a200, 0x4008b490);
-// unless you have MY on the receiving radio set to FFFF, this will be received as a RX16 packet
-//Tx64Request tx = Tx64Request(addr64, payload, sizeof(payload));
-
-TxStatusResponse txStatus = TxStatusResponse();
-
-// serial high
-uint8_t shCmd[] = {'S','H'};
-// serial low
-uint8_t slCmd[] = {'S','L'};
-// association status
-uint8_t assocCmd[] = {'A','I'};
-
-AtCommandRequest atRequest = AtCommandRequest(shCmd);
-
-AtCommandResponse atResponse = AtCommandResponse();
 
 
 // ----------------------------------------------------------------------
 // ----------------------- SETUP ----------------------------------------
 // ----------------------------------------------------------------------
-void setup(){
+void setup() {
+  
   remote_ctrl= false;
   flagSession=0;
   savingbyte=0;
@@ -87,7 +65,8 @@ void setup(){
   Moteur[1]=0;
   Moteur_A[0]=0;
   Moteur_A[1]=0;
- 	/* Initialize pinout */
+  
+  /* Initialize pinout */
   pinMode(mot_IN1, OUTPUT);
   pinMode(mot_IN2, OUTPUT);
   pinMode(mot_IN3, OUTPUT);
@@ -101,72 +80,52 @@ void setup(){
   pinMode(DATAIN, INPUT);
   pinMode(SPICLOCK, OUTPUT);
   pinMode(SLAVESELECT, OUTPUT);
-    
-      digitalWrite(mot_IN1,0);
+      
+  digitalWrite(mot_IN1,0);
   digitalWrite(mot_IN2,0);
-digitalWrite(mot_IN3,0);
-digitalWrite(mot_IN4,0);
-digitalWrite(BUZZ,0);
-digitalWrite(RGB_1,0);
-digitalWrite(RGB_2,0);
-digitalWrite(RGB_3,0);
-digitalWrite(RGB_2_EN,0);
- Serial.begin(115200);
-  Serial1.begin(9600);
-  //xbee.setSerial(Serial1);
-  xbee.begin(Serial1);
- delay(3);
- 
-
-
+  digitalWrite(mot_IN3,0);
+  digitalWrite(mot_IN4,0);
+  digitalWrite(BUZZ,0);
+  digitalWrite(RGB_1,0);
+  digitalWrite(RGB_2,0);
+  digitalWrite(RGB_3,0);
+  digitalWrite(RGB_2_EN,0);
+  Serial.begin(115200);
   
-CheckAccelero();
+  delay(3);
+  
+  CheckAccelero();
+  accel.readAccel(xyz);
 
- accel.readAccel(xyz);
- CheckMem();
- 
- 
- 
-
-analogWrite(RGB_1,50);
+  analogWrite(RGB_1,50);
 
 
 
-    // Allumage led bleu : Reveil du robot en douceur avec un jolie fade 
+  // Allumage led bleu : Reveil du robot en douceur avec un jolie fade 
     
-    Serial.println(F("Reveil douceur"));
-      for(int fadeValue = 0 ; fadeValue < bleuMax; fadeValue +=3) { 
-      // sets the value (range from 0 to 255):
-      analogWrite(RGB_1, fadeValue);  
-      delay(10);                            
-      } 
+  Serial.println(F("Reveil douceur"));
+  for(int fadeValue = 0 ; fadeValue < bleuMax; fadeValue +=3) { 
+    // sets the value (range from 0 to 255):
+    analogWrite(RGB_1, fadeValue);  
+    delay(10);                            
+  } 
     
-
-dataflash.BufferWrite(1, 0);
-Serial.println(F("Debut comportement"));
-
-Blinki(4);  // On excite un peu la boule en flashant les led à fond !
-
-   RGB[0]=0;  // moins rouge
-   RGB[1]=0;   // pas de changement du vert
-   RGB[2]=bleuMax;   //plus bleu
-       
-
-
-
+  Serial.println(F("Debut comportement"));
+  
+  Blinki(4);  // On excite un peu la boule en flashant les led à fond !
+  
+  RGB[0]=0;  // moins rouge
+  RGB[1]=0;   // pas de changement du vert
+  RGB[2]=bleuMax;   //plus bleu
+  
 }
-
-
-
-
 
 
 
 // -------------- MAIN ------ -----------------//
 void loop() {
   
-  
-    CheckConsole();
+
     
     // relevé des capteurs
     mic = analogRead(MicAnalog);   // micro
@@ -413,85 +372,6 @@ int freeRam () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-void EEPROM_writeLong(int ee, unsigned long value)
-{
-    byte* p = (byte*)(void*)&value;
-    for (int i = 0; i < sizeof(value); i++)
-	  EEPROM.write(ee++, *p++);
-}
-
-void writeLong(unsigned long value)
-{
-    byte* p = (byte*)(void*)&value;
-    for (int i = 0; i < sizeof(value); i++)
-	  spi_transfer(*p++);
-}
-
-void writeInt(int value)
-{
-    byte* p = (byte*)(void*)&value;
-    for (int i = 0; i < sizeof(value); i++)
-	  spi_transfer(*p++);
-}
-
-void writeByte(byte value)
-{
-    byte* p = (byte*)(void*)&value;
-    for (int i = 0; i < sizeof(value); i++)
-	  spi_transfer(*p++);
-}
-
-int ReadByte()
-{
-    byte value = 0;
-    byte* p = (byte*)(void*)&value;
-    for (int i = 0; i < sizeof(value); i++)
-	  *p++ = spi_transfer(0xff);
-
-    return value;
-} 
-
-int ReadInt()
-{
-    int value = 0;
-    byte* p = (byte*)(void*)&value;
-    for (int i = 0; i < sizeof(value); i++)
-	  *p++ = spi_transfer(0xff);
-
-    return value;
-} 
-
-unsigned long ReadLong()
-{
-    unsigned long value = 0;
-    byte* p = (byte*)(void*)&value;
-    for (int i = 0; i < sizeof(value); i++)
-	  *p++ = spi_transfer(0xff);
-
-    return value;
-} 
-
-unsigned long EEPROM_readLong(int ee)
-{
-    unsigned long value = 0;
-    byte* p = (byte*)(void*)&value;
-    for (int i = 0; i < sizeof(value); i++)
-	  *p++ = EEPROM.read(ee++);
-    return value;
-} 
 
 void Shutdown()
 {
