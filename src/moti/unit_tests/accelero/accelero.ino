@@ -10,6 +10,7 @@ const int xPin = 0;
 const int yPin = 1;
 const int zPin = 2;
 
+
 //The minimum and maximum values that came from
 //the accelerometer while standing still
 //You very well may need to change these
