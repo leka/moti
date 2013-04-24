@@ -68,7 +68,7 @@ void loop()
   Serial.print(formatFloat(theta, 2, &string_width));
   Serial.println("");
   
-  delay(1000);
+  delay(100);
 }
 
 //this function was taken from my format float library
