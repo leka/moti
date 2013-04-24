@@ -1,3 +1,27 @@
+void blinkLed(byte nbrOfBlink) {
+
+	for(int iBlink=0 ; iBlink < nbrOfBlink ; iBlink++) {
+		digitalWrite(RED_PIN,1);
+		digitalWrite(GREEN_PIN,1);
+		digitalWrite(BLUE_PIN,1);
+
+		delay(50);
+
+		digitalWrite(RED_PIN,0);
+		digitalWrite(GREEN_PIN,0);
+		digitalWrite(BLUE_PIN,0);
+
+		delay(50);
+	}
+}
+
+boolean shutDown() {
+	return isShutDown = true;
+}
+
+boolean wakeUp() {
+	return isShutDown = false;
+}
 
 void CheckLed() {
 
