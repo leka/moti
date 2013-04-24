@@ -17,7 +17,7 @@
 //#####################//
 
 const int SLEEP_DELAY = 600; //	Time to elapse before the robot goes to sleep
-const int AWAKE_THRESHOLD = 0; //	DO NOT USE A VALUE HIGHER THAN 150 - This threshold is used to wake up the card. The higher, the harder it is to wake up.
+const int AWAKE_THRESHOLD = 50; //	DO NOT USE A VALUE HIGHER THAN 150 - This threshold is used to wake up the card. The higher, the harder it is to wake up.
 const int LED_MAX_BRIGHTNESS = 255;   //	Maximum led brightness
 const int BLUE_LED_MAX = 255;	//	Maximum blue led brightness - it appears that the blue color is stronger than the two others
 const int DELTA_ACCELERO_THRESHOLD = 2;   //	Threshold used to know is the accelerometer has moved between 2 cycles
@@ -42,16 +42,10 @@ const int Z_PIN = A2;
 const float Vin = 3.3;	//	Vin connected to +3.3V
 ADXL335 accel(X_PIN, Y_PIN, Z_PIN, Vin);	//	constructs an instance named "accel" of the ADXL335 class
 
-//	ICSP COMMUNICATION (used for the ADXL345, NOT ADXL335. Kept in case)
-const int DATAOUT = 16; //	MOSI
-const int DATAIN  = 14; //	MISO 
-const int SPICLOCK  = 15; //	sck
-const int SLAVESELECT = 8; //	ss
-
 //	LED
-const int RED_PIN = 8;
-const int GREEN_PIN = 9;
-const int BLUE_PIN = 10;
+const int RED_PIN = 9;
+const int GREEN_PIN = 10;
+const int BLUE_PIN = 11;
 
 //	MICROPHONE
 const int MIC_PIN = A3;
@@ -59,6 +53,7 @@ const int MIC_PIN = A3;
 // OTHERS
 
 boolean isRemoteCtrl;
+boolean isShutDown;
 
 //###########//
 // VARIABLES //
@@ -84,6 +79,7 @@ void setup() {
 
 	isRemoteCtrl = false;
 	isDebugSound = false;
+	isShutDown = false;
 
 	MOTOR[0]=0;
 	MOTOR[1]=0;
@@ -99,11 +95,6 @@ void setup() {
 	pinMode(RED_PIN, OUTPUT);
 	pinMode(GREEN_PIN, OUTPUT);
 	pinMode(BLUE_PIN, OUTPUT);
-
-	pinMode(DATAOUT, OUTPUT);
-	pinMode(DATAIN, INPUT);
-	pinMode(SPICLOCK, OUTPUT);
-	pinMode(SLAVESELECT, OUTPUT);
 
 	//	SET PINS VALUE AT ZERO - 0 is the same as LOW and 1 the same as HIGH
 	digitalWrite(MOTOR_2_DIR, 0);
@@ -157,10 +148,22 @@ void loop() {
 	XYZ[1] = accel.getY();
 	XYZ[2] = accel.getZ();
 
-	if(isRemoteCtrl) {
+	if(isShutDown) {
+		digitalWrite(RED_PIN,1);
+		digitalWrite(GREEN_PIN,0);
+		digitalWrite(BLUE_PIN,0);
 
-		// Code for the R-Pi to take control over the PCB
+		delay(100);
 
+		digitalWrite(RED_PIN,0);
+		digitalWrite(GREEN_PIN,1);
+		digitalWrite(BLUE_PIN,0);
+
+		delay(50);
+
+		digitalWrite(RED_PIN,0);
+		digitalWrite(GREEN_PIN,0);
+		digitalWrite(BLUE_PIN,1);
 	}
 	else {
 
@@ -210,6 +213,9 @@ void loop() {
 		if(volume > volumeBaseline) {
 			RGB[1]+=50;
 		}
+		else {
+			RGB[1]-=10;
+		}
 
 		Serial.print(F(" RGB : "));
 		Serial.print(RGB[0]);
@@ -255,22 +261,21 @@ void loop() {
 
 	if(MOTOR[0] > 0) {	// Go forward
 		digitalWrite(MOTOR_1_DIR, 1);
-		analogWrite(MOTOR_1_SPEED, 	abs(MOTOR[0]))
+		analogWrite(MOTOR_1_SPEED, 	abs(MOTOR[0]));
 	}
 	else {	//	Go backward
 		digitalWrite(MOTOR_1_DIR, 0);
-		analogWrite(MOTOR_1_SPEED, 	abs(MOTOR[0]))
+		analogWrite(MOTOR_1_SPEED, 	abs(MOTOR[0]));
 	}
 
 	if(MOTOR[1] > 0) { // Go forward
 		digitalWrite(MOTOR_2_DIR, 1);
-		analogWrite(MOTOR_2_SPEED, 	abs(MOTOR[1]))
+		analogWrite(MOTOR_2_SPEED, 	abs(MOTOR[1]));
 	}
 	else {	//	Go backward
 		digitalWrite(MOTOR_2_DIR, 0);
-		analogWrite(MOTOR_2_SPEED, 	abs(MOTOR[1]))
+		analogWrite(MOTOR_2_SPEED, 	abs(MOTOR[1]));
 	}
-
 
 	lastVolume = volume;
 	lastXYZ[0]=XYZ[0];
@@ -278,28 +283,3 @@ void loop() {
 	delay(GLOBAL_DELAY);
 
 }
-
-void blinkLed(byte valuer) {
-	
-	for(int gro=0;gro<valuer;gro++) {
-		digitalWrite(RED_PIN,1);
-		digitalWrite(GREEN_PIN,1);
-		digitalWrite(BLUE_PIN,1);
-		delay(50);
-		digitalWrite(RED_PIN,0);
-		digitalWrite(GREEN_PIN,0);
-		digitalWrite(BLUE_PIN,0);
-
-		delay(50);
-	}
-}
-
-void shutDown()
-{
-//I2C_Write(ADPS,TIMNG,0x01);
-Serial.println(accel.getInterruptSource(),BIN);
-}
-
-
-
-
