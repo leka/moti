@@ -9,20 +9,23 @@
 //###########//
 
 #include <ADXL335.h>
-#include <Wire.h>
+
 
 
 //#####################//
 // CONSTANT DEFINITION //
 //#####################//
 
+const int GLOBAL_DELAY = 75;   //	Delay used at the end of void loop() - The higher, the slower the robot is.
 const int SLEEP_DELAY = 600; //	Time to elapse before the robot goes to sleep
-const int AWAKE_THRESHOLD = 50; //	DO NOT USE A VALUE HIGHER THAN 150 - This threshold is used to wake up the card. The higher, the harder it is to wake up.
+
+const int AWAKE_THRESHOLD = 500; //	DO NOT USE A VALUE HIGHER THAN 150 - This threshold is used to wake up the card. The higher, the harder it is to wake up.
+const int DELTA_ACCELERO_THRESHOLD = 100;   //	Threshold used to know is the accelerometer has moved between 2 cycles
+const int CRAZY_ACTIVITY_THRESHOLD= 4;    //	Is used to know if the activity around the robot is important. If so, the robot gets excited much faster - Smaller value means more excitement. 
+
 const int LED_MAX_BRIGHTNESS = 255;   //	Maximum led brightness
 const int BLUE_LED_MAX = 255;	//	Maximum blue led brightness - it appears that the blue color is stronger than the two others
-const int DELTA_ACCELERO_THRESHOLD = 2;   //	Threshold used to know is the accelerometer has moved between 2 cycles
-const int GLOBAL_DELAY = 150;   //	Delay used at the end of void loop() - The higher, the slower the robot is.
-const int CRAZY_ACTIVITY_THRESHOLD= 4;    //	Is used to know if the activity around the robot is important. If so, the robot gets excited much faster - Smaller value means more excitement. 
+
 
 
 //################//
@@ -51,9 +54,10 @@ const int BLUE_PIN = 11;
 const int MIC_PIN = A3;
 
 // OTHERS
-
 boolean isRemoteCtrl;
 boolean isShutDown;
+
+
 
 //###########//
 // VARIABLES //
@@ -69,6 +73,7 @@ int sleepy;
 
 //	DEBUG
 boolean isDebugSound;	//	make true if you need to output the sound in serial
+
 
 
 //#######//
@@ -87,52 +92,47 @@ void setup() {
 	MOTOR_BUFFER[1]=0;
 
 	//	SET PINS AS INPOUT OR OUTPUT
-	pinMode(MOTOR_2_DIR, OUTPUT);
-	pinMode(MOTOR_1_DIR, OUTPUT);
-	pinMode(MOTOR_2_SPEED, OUTPUT);
-	pinMode(MOTOR_1_SPEED, OUTPUT);
-
-	pinMode(RED_PIN, OUTPUT);
-	pinMode(GREEN_PIN, OUTPUT);
-	pinMode(BLUE_PIN, OUTPUT);
+	setPinsAsOutput();
 
 	//	SET PINS VALUE AT ZERO - 0 is the same as LOW and 1 the same as HIGH
-	digitalWrite(MOTOR_2_DIR, 0);
-	digitalWrite(MOTOR_1_DIR, 0);
-	digitalWrite(MOTOR_2_SPEED, 0);
-	digitalWrite(MOTOR_1_SPEED, 0);
+	setPinsValuesToZero():
 
-	digitalWrite(RED_PIN, 0);
-	digitalWrite(GREEN_PIN, 0);
-	digitalWrite(BLUE_PIN, 0);
-
+	//	Begin serial for debug
 	Serial.begin(115200);
 
 	delay(3);
 
+	// Check the ambient noise to make is the volume baseline for the current run of the programm.
 	volumeBaseline = analogRead(MIC_PIN);
 
+	// Update the accelerometer and 
 	accel.update();
-	lastXYZ[0] = 0;
+	lastXYZ[0] = accel.getX() * 1000;
+	lastXYZ[1] = accel.getY() * 1000;
+	lastXYZ[2] = accel.getZ() * 1000;
 
-	analogWrite(RED_PIN,50);
+	analogWrite(RED_PIN, 50);
 
-	Serial.println(F("Time to slowly wake up"));
+	delay(100);
 
+	Serial.println(F("Time to slowly wake up ============"));
+
+	//	Wake up with a beautiful fade to blue
 	for(fadeValue = 0 ; fadeValue < BLUE_LED_MAX; fadeValue +=3) {
 		analogWrite(RED_PIN, fadeValue);  
 		delay(10);                            
 	} 
 
-	Serial.println(F("Let's start living!"));
+	Serial.println(F("Let's start living!\n"));
 
-	blinkLed(4);	//	Flashes the LED 4 times
+	blinkLed(4);
 
 	RGB[0] = 0;
 	RGB[1] = 0;
 	RGB[2] = BLUE_LED_MAX;
 
-}	//	end of void setup()
+}
+
 
 
 //######//
@@ -144,26 +144,37 @@ void loop() {
 	//	Check sensors values
 	volume = analogRead(MIC_PIN);
 	accel.update();
-	XYZ[0] = accel.getX();
-	XYZ[1] = accel.getY();
-	XYZ[2] = accel.getZ();
+	XYZ[0] = accel.getX() * 1000;
+	XYZ[1] = accel.getY() * 1000;
+	XYZ[2] = accel.getZ() * 1000;
+
+	deltaXYZ[0] = XYZ[0] - lastXYZ[0];
+	deltaXYZ[1] = XYZ[1] - lastXYZ[1];
+	deltaXYZ[2] = XYZ[2] - lastXYZ[2];
 
 	if(isShutDown) {
 		digitalWrite(RED_PIN,1);
 		digitalWrite(GREEN_PIN,0);
 		digitalWrite(BLUE_PIN,0);
-
+ 
+		// Code for the R-Pi to take control over the PCB
 		delay(100);
-
+ 
 		digitalWrite(RED_PIN,0);
 		digitalWrite(GREEN_PIN,1);
 		digitalWrite(BLUE_PIN,0);
-
-		delay(50);
-
+ 
+		delay(100);
+ 
 		digitalWrite(RED_PIN,0);
 		digitalWrite(GREEN_PIN,0);
 		digitalWrite(BLUE_PIN,1);
+
+		delay(100);
+
+		if ( abs(deltaXYZ[0]) > AWAKE_THRESHOLD || abs(deltaXYZ[1]) > AWAKE_THRESHOLD || abs(deltaXYZ[2]) > AWAKE_THRESHOLD) {
+			softwareReset();
+		}
 	}
 	else {
 
@@ -174,8 +185,6 @@ void loop() {
 		if (lastXYZ[0] == XYZ[0]) {
 			sleepy++;
 		}
-
-		deltaXYZ[0] = XYZ[0] - lastXYZ[0];
 
 		if (abs(deltaXYZ[0]) < DELTA_ACCELERO_THRESHOLD) {
 			sleepy++;
@@ -217,25 +226,6 @@ void loop() {
 			RGB[1]-=10;
 		}
 
-		Serial.print(F(" RGB : "));
-		Serial.print(RGB[0]);
-		Serial.print(F(" - "));
-		Serial.print(RGB[1]);
-		Serial.print(F(" - "));
-
-		Serial.print(RGB[2]);
-		Serial.print(F(" MOTORs : "));
-		Serial.print(MOTOR[0]);
-		Serial.print(F(" - "));
-
-		Serial.print(MOTOR[1]);
-		Serial.print(F("  sleepy : "));
-		Serial.print(sleepy);
-		Serial.print(F("  AccX : "));
-		Serial.print(XYZ[0]);
-		Serial.print(F("  Volume : "));
-		Serial.print(volume);
-		Serial.println(F("."));
 	}
 
 	// Constrain the RGB[] values between zero and LED_MAX_BRIGHTNESS
@@ -279,6 +269,10 @@ void loop() {
 
 	lastVolume = volume;
 	lastXYZ[0]=XYZ[0];
+	lastXYZ[1]=XYZ[1];
+	lastXYZ[2]=XYZ[2];
+
+	sendSerialFeedback();
 
 	delay(GLOBAL_DELAY);
 
