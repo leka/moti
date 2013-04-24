@@ -66,14 +66,14 @@ boolean isRemoteCtrl;
 
 //	GENERAL
 int i;
-int mic, last_Mic;
+int volume, lastVolume, volumeBaseline;
 int RGB[3], RGB_BUFFER[3], fadeValue;
 int MOTOR[2], MOTOR_BUFFER[2];
 int XYZ[3], lastXYZ[3], deltaXYZ[3];
 int sleepy;
 
 //	DEBUG
-int DEBUGSON = false;	//	make true if you need to output the sound in serial
+boolean isDebugSound;	//	make true if you need to output the sound in serial
 
 
 //#######//
@@ -83,6 +83,7 @@ int DEBUGSON = false;	//	make true if you need to output the sound in serial
 void setup() {
 
 	isRemoteCtrl = false;
+	isDebugSound = false;
 
 	MOTOR[0]=0;
 	MOTOR[1]=0;
@@ -118,6 +119,8 @@ void setup() {
 
 	delay(3);
 
+	volumeBaseline = analogRead(MIC_PIN);
+
 	accel.update();
 	lastXYZ[0] = 0;
 
@@ -148,7 +151,7 @@ void setup() {
 void loop() {
 
 	//	Check sensors values
-	mic = analogRead(MIC_PIN);
+	volume = analogRead(MIC_PIN);
 	accel.update();
 	XYZ[0] = accel.getX();
 	XYZ[1] = accel.getY();
@@ -161,230 +164,137 @@ void loop() {
 	}
 	else {
 
-		if(DEBUGSON) {
-			Serial.println(mic);
+		if(isDebugSound) {
+			Serial.println(volume);
 		}
 
 		if (lastXYZ[0] == XYZ[0]) {
 			sleepy++;
 		}
 
-		int DeltaSignal = XYZ[0] - lastXYZ[0];
+		deltaXYZ[0] = XYZ[0] - lastXYZ[0];
 
-		if (abs(DeltaSignal) < DELTA_ACCELERO_THRESHOLD ) 
-		{
-		//Serial.print(F("So small movement -Sleep"));
-		// Serial.println(sleepy);
-		sleepy++;
-		RGB[0]-=5;  // moins rouge
-		RGB[1]-=10;
-		RGB[2]+=5;   //plus bleu
+		if (abs(deltaXYZ[0]) < DELTA_ACCELERO_THRESHOLD) {
+			sleepy++;
 
+			RGB[0]-=5;
+			RGB[1]-=10;
+			RGB[2]+=5;
 
-		MOTOR[0]-=10;
-		MOTOR[1]-=10;
-
-
+			MOTOR[0]-=10;
+			MOTOR[1]-=10;
 		}
-	else
-	{
+		else {
+			if (abs(deltaXYZ[0]) > CRAZY_ACTIVITY_THRESHOLD) {
+				sleepy=0;
+				RGB[0]+=30;
+				RGB[1]-=10;
+				RGB[2]-=30;
+			}
+		}
 
-	if (abs(DeltaSignal) > CRAZY_ACTIVITY_THRESHOLD) 
-	{
-	// Serial.print(F("So crazy movement - Mad"));
-	// Serial.println(sleepy);
-	sleepy=0;
-	RGB[0]+=30;  // moins rouge
-	RGB[1]-=10;    // pas de changement du vert
-	RGB[2]-=30;   //plus bleu
+		if (sleepy < 400) {
+			if(RGB[0]>(BLUE_LED_MAX-20)) {
+				MOTOR[0]+=20;
+				MOTOR[1]+=20;
+			}
+		}
+
+		if(sleepy > SLEEP_DELAY) {
+			blinkLed(2);
+			Serial.println(F("It's time to go to sleep!"));
+			delay(500);
+			shutDown();
+		}
+
+		if(volume > volumeBaseline) {
+			RGB[1]+=50;
+		}
+
+		Serial.print(F(" RGB : "));
+		Serial.print(RGB[0]);
+		Serial.print(F(" - "));
+		Serial.print(RGB[1]);
+		Serial.print(F(" - "));
+
+		Serial.print(RGB[2]);
+		Serial.print(F(" MOTORs : "));
+		Serial.print(MOTOR[0]);
+		Serial.print(F(" - "));
+
+		Serial.print(MOTOR[1]);
+		Serial.print(F("  sleepy : "));
+		Serial.print(sleepy);
+		Serial.print(F("  AccX : "));
+		Serial.print(XYZ[0]);
+		Serial.print(F("  Volume : "));
+		Serial.print(volume);
+		Serial.println(F("."));
 	}
 
-
-
-	}
-
-	// Déclencher roulement si le robot est exité
-	if (sleepy < 400)
-	{ // Si le robot etait trop au repos alors on ajoute un délai avant de le reveiller
-	if(RGB[0]>(BLUE_LED_MAX-20))
-	{
-	MOTOR[0]+=20;
-	MOTOR[1]+=20;
-
-	}
-
-	}
-
-	if(sleepy > SLEEP_DELAY)
-	{ // Shut down the robot !
-	blinkLed(2);
-	Serial.println(F("Bye bye "));
-	delay(500);
-	Shutdown();
-	}
-	/*
-	if(mic < 739)
-	{
-	RGB[1]+=50;
-	}
-	*/
-	if(mic > 10)
-	{
-	RGB[1]+=50;
-	}
-
-
-
-
-
-
-	Serial.print(F(" RGB : "));
-	Serial.print(RGB[0]);
-	Serial.print(F(" - "));
-	Serial.print(RGB[1]);
-	Serial.print(F(" - "));
-
-	Serial.print(RGB[2]);
-	Serial.print(F(" MOTORs : "));
-	Serial.print(MOTOR[0]);
-	Serial.print(F(" - "));
-
-	Serial.print(MOTOR[1]);
-	Serial.print(F("  sleepy : "));
-	Serial.print(sleepy);
-	Serial.print(F("  AccX : "));
-	Serial.print(XYZ[0]);
-	Serial.print(F("  Mic : "));
-	Serial.print(mic);
-	Serial.println(F("."));
-	}
-	RGB_BUFFER[0] = constrain(RGB[0], 0, LED_MAX_BRIGHTNESS);  // evite de monter trop fort
+	// Constrain the RGB[] values between zero and LED_MAX_BRIGHTNESS
+	RGB_BUFFER[0] = constrain(RGB[0], 0, LED_MAX_BRIGHTNESS);
 	RGB_BUFFER[1] = constrain(RGB[1], 0, LED_MAX_BRIGHTNESS);
 	RGB_BUFFER[2] = constrain(RGB[2], 0, LED_MAX_BRIGHTNESS);
+
+	// Set RGB[] to the buffer values
 	RGB[0] = RGB_BUFFER[0];
 	RGB[1] = RGB_BUFFER[1];
 	RGB[2] = RGB_BUFFER[2];
-	analogWrite(GREEN_PIN, RGB_BUFFER[0]); // met à jour les led
-	analogWrite(BLUE_PIN, RGB_BUFFER[1]); 
-	analogWrite(RED_PIN, RGB_BUFFER[2]);
+
+	// Output the values
+	analogWrite(RED_PIN, RGB_BUFFER[0]);
+	analogWrite(GREEN_PIN, RGB_BUFFER[1]); 
+	analogWrite(BLUE_PIN, RGB_BUFFER[2]);
 
 	MOTOR_BUFFER[0] = constrain(MOTOR[0], -255, 255);  
-	MOTOR_BUFFER[1] = constrain(MOTOR[1], -255, 255);  
+	MOTOR_BUFFER[1] = constrain(MOTOR[1], -255, 255);
+
 	MOTOR[0]=MOTOR_BUFFER[0];
 	MOTOR[1]=MOTOR_BUFFER[1];
-	if(MOTOR[0]<0)
-	{ // recule
-	analogWrite(MOTOR_2_DIR,MOTOR_BUFFER[0]); 
-	analogWrite(MOTOR_1_DIR,0);
+
+	if(MOTOR[0] > 0) {	// Go forward
+		digitalWrite(MOTOR_1_DIR, 1);
+		analogWrite(MOTOR_1_SPEED, 	abs(MOTOR[0]))
 	}
-	else
-	{// avance
-	analogWrite(MOTOR_2_DIR,0); 
-	analogWrite(MOTOR_1_DIR,MOTOR_BUFFER[0]);
+	else {	//	Go backward
+		digitalWrite(MOTOR_1_DIR, 0);
+		analogWrite(MOTOR_1_SPEED, 	abs(MOTOR[0]))
 	}
 
-	if(MOTOR[1]<0)
-	{ // recule
-	analogWrite(MOTOR_2_SPEED,MOTOR_BUFFER[1]); 
-	analogWrite(MOTOR_1_SPEED,0);
+	if(MOTOR[1] > 0) { // Go forward
+		digitalWrite(MOTOR_2_DIR, 1);
+		analogWrite(MOTOR_2_SPEED, 	abs(MOTOR[1]))
 	}
-	else
-	{// avance
-	analogWrite(MOTOR_2_SPEED,0); 
-	analogWrite(MOTOR_1_SPEED,MOTOR_BUFFER[1]);
+	else {	//	Go backward
+		digitalWrite(MOTOR_2_DIR, 0);
+		analogWrite(MOTOR_2_SPEED, 	abs(MOTOR[1]))
 	}
 
 
-
-
-	delay(GLOBAL_DELAY);  // GLOBAL_DELAY
-	last_Mic = mic;
+	lastVolume = volume;
 	lastXYZ[0]=XYZ[0];
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ------------------- Fonction ---------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void CheckRTC()
-{
-
-
+	delay(GLOBAL_DELAY);
 
 }
 
+void blinkLed(byte valuer) {
+	
+	for(int gro=0;gro<valuer;gro++) {
+		digitalWrite(RED_PIN,1);
+		digitalWrite(GREEN_PIN,1);
+		digitalWrite(BLUE_PIN,1);
+		delay(50);
+		digitalWrite(RED_PIN,0);
+		digitalWrite(GREEN_PIN,0);
+		digitalWrite(BLUE_PIN,0);
 
-
-
-void PowerDown()
-{
-//I2C_Write(ADPS,TIMNG,0x01);
-Serial.println(accel.getInterruptSource(),BIN);
+		delay(50);
+	}
 }
 
-
-
-void blinkLed(byte valuer)
-{
-for(int gro=0;gro<valuer;gro++)
-{
-digitalWrite(RED_PIN,1);
-digitalWrite(GREEN_PIN,1);
-digitalWrite(BLUE_PIN,1);
-delay(50);
-digitalWrite(RED_PIN,0);
-digitalWrite(GREEN_PIN,0);
-digitalWrite(BLUE_PIN,0);
-
-
-delay(50);
-
-
-
-}
-}
-int freeRam () {
-extern int __heap_start, *__brkval; 
-int v; 
-return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval); 
-}
-
-
-
-
-
-
-
-void Shutdown()
+void shutDown()
 {
 //I2C_Write(ADPS,TIMNG,0x01);
 Serial.println(accel.getInterruptSource(),BIN);
