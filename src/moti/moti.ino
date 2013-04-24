@@ -16,13 +16,13 @@
 // CONSTANT DEFINITION //
 //#####################//
 
-const int SLEEP_DELAY = 600; // delay to elapse before the robot goes to sleep
-const int AWAKE_THRESHOLD = 0; // valeur 0 < 250; seuil de reveil de la carte Eteint -> Reveil
-const int LED_MAX_BRIGHTNESS = 200;   // seuil max d'éclairage des led
-const int BLUE_LED_MAX = 180;  
-const int DELTA_SIGNAL_INACTIVATION = 2;   // seuil min pour detection inact
-const int GLOBAL_DELAY = 150;   // ralentir ou rendre plus rapide le robot, plus c'est grand moins il se calme vite
-const int CRAZY_ACTIVITY = 4;    // Diminuer pour que le robot s'exsite plus vite ! 
+const int SLEEP_DELAY = 600; //	Time to elapse before the robot goes to sleep
+const int AWAKE_THRESHOLD = 0; //	DO NOT USE A VALUE HIGHER THAN 150 - This threshold is used to wake up the card. The higher, the harder it is to wake up.
+const int LED_MAX_BRIGHTNESS = 200;   //	Maximum led brightness
+const int BLUE_LED_MAX = 180;	//	Maximum blue led brightness - it appears that the blue color is stronger than the two others
+const int DELTA_ACCELERO_THRESHOLD = 2;   //	Threshold used to know is the accelerometer has moved between 2 cycles
+const int GLOBAL_DELAY = 150;   //	Delay used at the end of void loop() - The higher, the slower the robot is.
+const int CRAZY_ACTIVITY_THRESHOLD= 4;    //	Is used to know if the activity around the robot is important. If so, the robot gets excited much faster - Smaller value means more excitement. 
 
 
 //################//
@@ -42,7 +42,7 @@ const int Z_PIN = A2;
 const float Vin = 3.3;	//	Vin connected to +3.3V
 ADXL335 accel(X_PIN, Y_PIN, pin_z, Vin);	//	constructs an instance of the ADXL335 class
 
-//	ICSP COMMUNICATION
+//	ICSP COMMUNICATION (used for the ADXL345, NOT ADXL335. Kept in case)
 const int DATAOUT = 16; //	MOSI
 const int DATAIN  = 14; //	MISO 
 const int SPICLOCK  = 15; //	sck
@@ -54,7 +54,7 @@ const int GREEN_PIN = 9;
 const int BLUE_PIN = 10;
 
 //	MICROPHONE
-const int MIC_PIN = 3; //analog
+const int MIC_PIN = A3;
 
 //###########//
 // VARIABLES //
@@ -86,9 +86,11 @@ pinMode(mot_IN1, OUTPUT);
 pinMode(mot_IN2, OUTPUT);
 pinMode(mot_IN3, OUTPUT);
 pinMode(mot_IN4, OUTPUT);
+
 pinMode(RED_PIN, OUTPUT);
 pinMode(GREEN_PIN, OUTPUT);
 pinMode(BLUE_PIN, OUTPUT);
+
 pinMode(DATAOUT, OUTPUT);
 pinMode(DATAIN, INPUT);
 pinMode(SPICLOCK, OUTPUT);
@@ -98,9 +100,11 @@ digitalWrite(mot_IN1,0);
 digitalWrite(mot_IN2,0);
 digitalWrite(mot_IN3,0);
 digitalWrite(mot_IN4,0);
+
 digitalWrite(RED_PIN,0);
 digitalWrite(GREEN_PIN,0);
 digitalWrite(BLUE_PIN,0);
+
 Serial.begin(115200);
 
 delay(3);
@@ -171,7 +175,7 @@ Sleepy++;
 }
 
 int DeltaSignal = XYZ[0] - last_XYZ;
-if (abs(DeltaSignal) < DELTA_SIGNAL_INACTIVATION ) 
+if (abs(DeltaSignal) < DELTA_ACCELERO_THRESHOLD ) 
 {
 //Serial.print(F("So small movement -Sleep"));
 // Serial.println(Sleepy);
@@ -189,7 +193,7 @@ MOTOR[1]-=10;
 else
 {
 
-if (abs(DeltaSignal) > CRAZY_ACTIVITY ) 
+if (abs(DeltaSignal) > CRAZY_ACTIVITY_THRESHOLD) 
 {
 // Serial.print(F("So crazy movement - Mad"));
 // Serial.println(Sleepy);
