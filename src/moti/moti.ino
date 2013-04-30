@@ -132,7 +132,9 @@ void loop() {
 	if(isShutDown) {
 		setPinsValuesToZero();
 		setRgbAndMotorToZero();
+
 		sendSerialFeedback();
+		//sendProcessingFeedback(); #### JUST COMMENT ONE OF THE TWO LINES
 
 		if ( deltaXYZ[0] > AWAKE_THRESHOLD || deltaXYZ[1] > AWAKE_THRESHOLD || deltaXYZ[2] > AWAKE_THRESHOLD) {
 			softwareReset();
@@ -186,6 +188,7 @@ void loop() {
 		setMotorSpeedAndDirection();
 
 		sendSerialFeedback();
+		//sendProcessingFeedback(); #### JUST COMMENT ONE OF THE TWO LINES
 	}
 
 	lastVolume = volume;
