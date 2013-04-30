@@ -16,7 +16,7 @@ float[] maxi = {0,0,0,0,0,0};
 float[] moy = new float[6];
 int[] colors = {#b0d02e, #e94366, #51a5cb,#f08f33,#333333,#777777};
 void setup () {
-  output = createWriter(timestamp+"data.txt");
+  output = createWriter("../../../log/"+timestamp+"data.txt");
   size(1200, 600, OPENGL);    
   background(0);
   smooth();
