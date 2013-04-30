@@ -1,8 +1,7 @@
-<<<<<<< HEAD
+
 log/*
+tmp/*
 *~
 .DS_Store
-=======
-*.png
-*.txt
->>>>>>> origin/processing
+
+
