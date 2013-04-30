@@ -27,16 +27,18 @@ Known Issues
 *	none yet (we're so cool!)
 
 
-Installing
-----------
-
-###Stable on Linux/Unix based systems using make####
+Installing & Updating
+---------------------
 
 Note: Make sure Git and cURL are installed.
 
 For the project, we use different libraries. Some of them are public, well-known libraries from the Arduino website and some are custom made to suit our needs.
-If you want to be able to compile the project, you need to have your libraries inside the library folder of accessed by the Arduino app.
-[Following this link](http://arduino.cc/en/Guide/Libraries), you'll know here to find yours depending on your OS: Windows or a UNIX  based system (OS X, Linux, Debien, etc.)
+If you want to be able to compile the project, you need to have our libraries inside your library folder so they can be accessed by the Arduino app.
+[Following this link](http://arduino.cc/en/Guide/Libraries), you'll know here to find yours depending on your OS: Windows or a UNIX based system (OS X, Linux, Debien, etc.)
+
+###Stable on Linux/Unix based systems using make install####
+
+####Installing
 
 The following instructions should work on Mac OS X, Debian, Ubuntu, Fedora, RedHat, etc.
 
@@ -44,13 +46,26 @@ The easiest way is to use Git and make for installing:
 
 	$ git clone https://github.com/LekaSmartToys/robot.git
 	$ cd YOUR/PATH/TO/robot/
-	$ git checkout master
+	$ git checkout dev #or master
 	$ make install
+
+####Updating
 
 Updating using git
 
 	$ git pull
-	$ make install
+	$ make cleaninstall
+
+
+Uninstalling 
+------------
+
+###Linux/Unix based OS
+
+To remove all the libraries used for the Moti project, simply run:
+	
+	$ git pull
+	$ make clean
 
 
 Leka would like to thank
@@ -61,7 +76,7 @@ Without him nothing would have been possible!
 
 
 Copyright and License
-------------------------
+---------------------
 
 The library is Copyright (c) 2013 Leka Inc., and distributed under the MIT
 License as follows:
@@ -71,3 +86,9 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Additional License
+---------------------
+
+"THE BEER-WARE LICENSE" (Revision 42):
+[Leka](hello@weareleka.com) wrote this file. As long as you retain this notice you can do whatever you want with this stuff. If we meet some day, and you think this stuff is worth it, you can buy me a beer in return.
