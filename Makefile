@@ -6,7 +6,7 @@ SELFDIR?=${CURDIR}
 DESTDIR?=~/Documents/Arduino/libraries/
 
 install:
-	ln -s $(SELFDIR)/lib/* $(DESTDIR)
+	ln -s $(SELFDIR)/lib/arduino/* $(DESTDIR)
 	
 	@echo "Installation successfull! Open the Arduino IDE and verify that the libraries are available."
 
