@@ -47,14 +47,14 @@ The easiest way is to use Git and make for installing:
 	$ git clone https://github.com/LekaSmartToys/robot.git
 	$ cd YOUR/PATH/TO/robot/
 	$ git checkout dev #or master
-	$ make install
+	$ make install-all
 
 ####Updating
 
 Updating using git
 
 	$ git pull
-	$ make cleaninstall
+	$ make update
 
 
 Uninstalling 
@@ -65,7 +65,7 @@ Uninstalling
 To remove all the libraries used for the Moti project, simply run:
 	
 	$ git pull
-	$ make clean
+	$ make uninstall-all
 
 
 Leka would like to thank
