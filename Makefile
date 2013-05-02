@@ -33,9 +33,7 @@ install-processing:
 		(ln -s ${PROC_DIR}/$$dir $(PROC_DEST_DIR)/); \
 	done
 
-install-all:
-	install-arduino
-	install-processing
+install-all: install-arduino install-processing
 	@echo "Installation successfull! Open the Arduino & Processing IDE and verify that the libraries are available."
 
 clean-arduino:
@@ -50,9 +48,7 @@ clean-processing:
 		(rm -rf ${PROC_DEST_DIR}/$$dir); \
 	done
 
-uninstall-all:
-	clean-arduino
-	clean-processing	
+uninstall-all: clean-arduino clean-processing	
 	@echo "Everything has been cleaned up, you can proceed with your life..."
 
 update: uninstall-all install-all
