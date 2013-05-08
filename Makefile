@@ -16,8 +16,8 @@ ARDU_LIB = $(shell ls $(ARDU_DIR))
 all:
 	@echo "usage: make install-arduino     -> installs arduino's lib only"
 	@echo "       make install-processing     -> installs processing's lib only"
-	@echo "       make install-all -> installs arduino and processing libs"	
-	@echo "       make uninstall-all -> uninstalls arduino and processing libs"
+	@echo "       make install	-> installs arduino and processing libs"	
+	@echo "       make uninstall -> uninstalls arduino and processing libs"
 	@echo "       make clean-arduino"
 	@echo "       make clean-processing"
 
@@ -33,7 +33,7 @@ install-processing:
 		(ln -s ${PROC_DIR}/$$dir $(PROC_DEST_DIR)/); \
 	done
 
-install-all: install-arduino install-processing
+install: install-arduino install-processing
 	@echo "Installation successfull! Open the Arduino & Processing IDE and verify that the libraries are available."
 
 clean-arduino:
@@ -48,7 +48,7 @@ clean-processing:
 		(rm -rf ${PROC_DEST_DIR}/$$dir); \
 	done
 
-uninstall-all: clean-arduino clean-processing	
+uninstall: clean-arduino clean-processing	
 	@echo "Everything has been cleaned up, you can proceed with your life..."
 
-update: uninstall-all install-all
+update: uninstall install
