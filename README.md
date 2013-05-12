@@ -34,7 +34,7 @@ Note: Make sure Git and cURL are installed.
 
 For the project, we use different libraries. Some of them are public, well-known libraries from the Arduino website and some are custom made to suit our needs.
 If you want to be able to compile the project, you need to have our libraries inside your library folder so they can be accessed by the Arduino app.
-[By following this link](http://arduino.cc/en/Guide/Libraries), you'll know here to find yours depending on your OS: Windows or a UNIX based system (OS X, Linux, Debien, etc.)
+[By following this link](http://arduino.cc/en/Guide/Libraries), you'll know here to find yours depending on your OS: Windows or a UNIX based system (OS X, Linux, Debian, etc.)
 
 ###Stable on Linux/Unix based systems using make install####
 
