@@ -1,9 +1,0 @@
-# use glob syntax.
-syntax: glob
-
-applet
-.DS_Store
-*.svn
-*.swf
-*.o
-*~
