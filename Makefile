@@ -4,7 +4,7 @@ SHELL=/bin/sh
 
 SELFDIR?=${CURDIR}
 
-ARDU_DIR?=${SELFDIR}/lib/arduino
+ARDU_DIR?=${SELFDIR}/lib/
 
 ARDU_DEST_DIR?=${HOME}/Documents/Arduino/libraries
 
