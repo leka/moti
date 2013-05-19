@@ -6,15 +6,13 @@ Software
 --------
 
 ###3D Models
+
 To visualize and edit the 3D models, you need to have [Catia](http://www.3ds.com/products/catia/) installed on your computer.
 
 
-###Moti
+###Fritzing
+
 To visualize the Arduino design of Moti, you need to download & install [Fritzing]() for your platform. Fritzing is a great tool for designing and for sharing your sketches, connections and so on.
-
-
-###PCB
-To visualize the PCB files, you need to download & install [Eagle](http://www.cadsoftusa.com/). It is highly recommended to copy in a safe place on your hard drive because sometimes, just opening them can cause gruesome errors in the PCB.
 
 
 Bill of Material
@@ -26,6 +24,16 @@ Feel free to notify us if you find cheaper retailers in your country, we'll add 
 
 
 ###Moti_2 - v1.0 - actual version
+
+*	[Arduino Mega 2560](http://arduino.cc/en/Main/arduinoBoardMega2560) x1
+*	[6 DOF IMU Shield](http://www.dfrobot.com/index.php?route=product/product&product_id=788) x1
+*	[RGB Led Breakout 5050](http://www.dfrobot.com/index.php?route=product/product&filter_name=rgb%20led&product_id=900) x2
+*	[2A Motor Shield](http://www.dfrobot.com/index.php?route=product/product&filter_name=DRI0009&product_id=69) x1
+*	[Gear Motor GM2](http://www.robotshop.com/eu/productinfo.aspx?pc=RB-Sbo-01&lang=fr-CA) x2
+*	[Plastic Wheels GMW](http://www.robotshop.com/eu/solarbotics-gmw-gear-motor-mounts-2.html) x2
+*	[Gear Motor Bracket GMB28](http://www.robotshop.com/eu/solarbotics-gmb28-gear-motor-bracket-2.html) x2
+*	9V Battery x2
+*	Endless supply of Jumper Wires X∞
 
 
 ###Moti 1 - v0.1 - obsolete
