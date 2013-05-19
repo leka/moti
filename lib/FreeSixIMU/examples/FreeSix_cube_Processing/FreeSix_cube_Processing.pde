@@ -2,7 +2,7 @@ import processing.serial.*;
 
 Serial myPort;  // Create object from Serial class
 
-final String serialPort = "/dev/tty.usbmodemfd131"; // replace this with your serial port. On windows you will need something like "COM1".
+final String serialPort = "/dev/tty.usbmodemfa131"; // replace this with your serial port. On windows you will need something like "COM1".
 
 float [] q = new float [4];
 float [] hq = null;
@@ -58,11 +58,6 @@ float decodeFloat(String inString) {
   int intbits = (inData[3] << 24) | ((inData[2] & 0xff) << 16) | ((inData[1] & 0xff) << 8) | (inData[0] & 0xff);
   return Float.intBitsToFloat(intbits);
 }
-
-
-
-
-
 
 
 void readQ() {
