@@ -1,7 +1,6 @@
 Designing Moti
 ==============
 
-
 Software
 --------
 

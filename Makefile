@@ -11,7 +11,7 @@ ARDU_DEST_DIR?=${HOME}/Documents/Arduino/libraries
 ARDU_LIB = $(shell ls $(ARDU_DIR))
 
 all:
-	@echo "usage: make install     ->     installs arduino's lib"	
+	@echo "usage: make install     ->     installs arduino's lib"
 	@echo "       make uninstall   ->     uninstalls arduino's libs"
 	@echo "       make update      ->     updates if new libraries added"
 
@@ -33,5 +33,5 @@ clean-arduino:
 uninstall: clean-arduino
 	@echo "Everything has been cleaned up, you can proceed with your life..."
 
-update: uninstall install
+update: clean-arduino install-arduino
 	@echo "Everything has been updated, enjoy the new awesomeness!"
