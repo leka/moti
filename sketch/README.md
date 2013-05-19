@@ -24,7 +24,11 @@ Because we think that being able to build your own Moti is the best way to impro
 All of them can be purchased at [Sparkfun](https://www.sparkfun.com/), [DFRobot](http://www.dfrobot.com/index.php) or [RobotShop](http://www.robotshop.com/).
 Feel free to notify us if you find cheaper retailers in your country, we'll add them to the list! :)
 
-###Moti_1
+
+###Moti_2 - v1.0 - actual version
+
+
+###Moti 1 - v0.1 - obsolete
 
 *	1 Arduino Uno	x1
 *	1 Breadboard	x1
