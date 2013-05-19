@@ -13,7 +13,7 @@ If you are planning on making some pull request later, you should consider using
 Versions
 --------
 
-###Moti 2 - v1.0 - Actual version
+###Moti_2 - v1.0 - Actual version
 
-###Moti 1 - v0.1
+###Moti_1 - v0.1
 

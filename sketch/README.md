@@ -22,7 +22,7 @@ All of them can be purchased at [Sparkfun](https://www.sparkfun.com/), [DFRobot]
 Feel free to notify us if you find cheaper retailers in your country, we'll add them to the list! :)
 
 
-###Moti_2 - v1.0 - actual version
+###Moti_2 - v1.0 - actual dev version
 
 *	[Arduino Mega 2560](http://arduino.cc/en/Main/arduinoBoardMega2560) x1
 *	[6 DOF IMU Shield](http://www.dfrobot.com/index.php?route=product/product&product_id=788) x1
@@ -35,7 +35,7 @@ Feel free to notify us if you find cheaper retailers in your country, we'll add 
 *	Endless supply of Jumper Wires X∞
 
 
-###Moti 1 - v0.1 - obsolete
+###Moti_1 - v0.1 - obsolete
 
 *	1 Arduino Uno	x1
 *	1 Breadboard	x1

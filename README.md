@@ -21,7 +21,7 @@ For us, the answer is an absolute YES! We want people to be able to look at our 
 Actual Version
 --------------
 
-The actual version is v1.0, but it hasn't been pushed on Github yet.
+The actual development version is v1.0, but it hasn't been pushed on Github yet.
 
 The working version is 0.1 - please note that this was our first prototype. Due to heavy development we are going a little faster than we thought and we are now developing a new version with different components.
 
@@ -34,18 +34,6 @@ Branches
 *	master is the stable branch for production and tests.
 *	dev (origin HEAD) is the development branch for unit/lab tests and behaviour development. if the lab tests are concluding, a pull request to the master can be made.
 *	feature branches are transitory branches used to develop new features to incorporate to the dev branch. when the feature is bugless, a pull request may be made to merge the concluding results inside the dev branch.
-
-
-Known Issues
-------------
-
-###Moti 2 - v1.0
-
-*	none yet (we're so cool!) - just kidding!
-
-###Moti 1 - v0.1
-
-*	the speed and the light depend on the excitement of the robot, but when the motors are running, moti is exciting itself perpetually... need to change that!
 
 
 Toolbox
@@ -69,7 +57,7 @@ With these softwares, you should be up and running and ready to hack autism with
 
 Okay, so you started with the Arduino and Processing IDE, you're now familiarized with the languages, you've already read and write something like a thousand lines of code and you would really love some new tools to speed up your coding and improve your coding experience. Here are some solutions for you that we, at Leka, are using on a daily basis with great pleasure!
 
-*	[Sublime Text 2](http://www.sublimetext.com/2) - ST2 is our favorite code editor. It takes some times to familiarize but once you get used to it, you'll have some hard time finding a replacement! The great thing with ST2 is that you can install or develop your own packages to improve your coding experience. Here after are some of theme :)
+*	[Sublime Text 2](http://www.sublimetext.com/2) - ST2 is our favorite code editor. It takes some time to familiarize but once you get used to it, you'll have some hard time finding a replacement! The great thing with ST2 is that you can install or develop your own packages to improve your coding experience. Here after are some of theme :)
 *	[ST2 Package Controler](http://wbond.net/sublime_packages/package_control) - First start with this one! It will allow you to manage and install great packages. Follow the instruction provided by the link and your good to go!
 *	[Arduino-like IDE](https://github.com/Robot-Will/Stino) - This package allow you to develop the Arduino code and upload it to your robot directly from within ST2. Everything is very well explained on their Github. If you are having some troubles, give us a call or contact them directly.
 *	[Processing-like IDE](https://github.com/b-g/processing-sublime) - Same as above but for Processing!
@@ -94,7 +82,7 @@ The easiest way is to use Git and make for installing:
 
 	$ git clone https://github.com/WeAreLeka/moti.git
 	$ cd YOUR/PATH/TO/moti/
-	$ git checkout dev # or master for previous versions
+	$ git checkout dev # or master for working versions
 	$ make install
 
 Basically it just makes symlinks from ./lib to ./Arduino/libraries. Make sure you don't already have a library with the same name, it can cause troubles. Plus, we may have made some changes to the libraries, so it's better to use our versions.
@@ -127,6 +115,18 @@ Here are something to do see your robot living :
 1.	Enjoy! :)
 
 
+Known Issues
+------------
+
+###Moti 2 - v1.0
+
+*	none yet (we're so cool!)
+
+###Moti 1 - v0.1
+
+*	the speed and the light depend on the excitement of the robot, but when the motors are running, moti is exciting itself perpetually... need to change that!
+
+
 Uninstalling
 ------------
 
@@ -138,6 +138,12 @@ To remove all the libraries used for the Moti project, simply run:
 	$ make uninstall
 
 The uninstaller is clever! You don't need to worry about your own libraries being removed, only our libraries are targeted and removed.
+
+
+TODO
+----
+
+*	Implement the todo list...
 
 
 Leka would like to thank
