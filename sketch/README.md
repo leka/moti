@@ -10,7 +10,7 @@ To visualize and edit the 3D models, you need to have [Catia](http://www.3ds.com
 
 ###Fritzing
 
-To visualize the Arduino design of Moti, you need to download & install [Fritzing]() for your platform. Fritzing is a great tool for designing and for sharing your sketches, connections and so on.
+To visualize the Arduino design of Moti, you need to download & install [Fritzing](http://www.fritzing.org) for your platform. Fritzing is a great tool for designing and for sharing your sketches, connections and so on.
 
 
 ##Bill of Material
