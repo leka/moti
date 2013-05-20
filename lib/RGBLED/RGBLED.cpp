@@ -16,7 +16,7 @@ RGBLED::RGBLED(uint8_t  redPin, uint8_t  greenPin, uint8_t  bluePin)  //Initiali
 RGBLED::RGBLED()  //Initialization for the three pins of to show RGB/HSV color
 {
 }
-	
+
 
 void RGBLED::InitPins(){
 
@@ -24,7 +24,7 @@ void RGBLED::InitPins(){
 	analogWrite(Pin_green,255);
 	analogWrite(Pin_blue,255);
 }
-	
+
 	//Set RGB color to the LED
 void RGBLED::colorRGB(int red, int green, int blue){
 
@@ -32,7 +32,7 @@ void RGBLED::colorRGB(int red, int green, int blue){
 	analogWrite(Pin_green,constrain(green,0,255));
 	analogWrite(Pin_blue,constrain(blue,0,255));
 }
-	
+
 
 //Set HSV color to the LED
 //range of H:0~360
