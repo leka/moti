@@ -39,9 +39,7 @@ Branches
 Toolbox
 -------
 
-###Software
-
-####Basic
+###Basic
 
 To help us develop our product, you'll first need to different softwares:
 
@@ -53,7 +51,7 @@ To help us develop our product, you'll first need to different softwares:
 With these softwares, you should be up and running and ready to hack autism with Moti!
 
 
-####Advanced
+###Advanced
 
 Okay, so you started with the Arduino and Processing IDE, you're now familiarized with the languages, you've already read and write something like a thousand lines of code and you would really love some new tools to speed up your coding and improve your coding experience. Here are some solutions for you that we, at Leka, are using on a daily basis with great pleasure!
 
@@ -101,9 +99,9 @@ Use update when new libraries are added.
 How to use
 ----------
 
-"Okay, I've cloned the repo, installed all the software, but I'm quite new to Arduino and I don't know what to do!" - That's all right! You might not be a geek like us, but you will be sooner than you think.
+"Okay, I've cloned the repo, installed all the softwares, but I'm quite new to Arduino and I don't know what to do!" - That's all right! You might not be a geek like us, but you will be sooner than you think.
 
-Here are something to do see your robot living :
+Here are some things to do for your robot to start living :
 
 1.	Visit our [Bill of Material page](sketch/README.md) and buy the different parts from your favorite retailer.
 1.	Wait a couple of days for the mailman.
@@ -147,13 +145,6 @@ TODO
 *	Implement the todo list...
 
 
-Leka would like to thank
-------------------------
-
-Our team would like to thank with all our hearts [Vincent Thiberville](http://www.vincent-thiberville.com/) for his kind work on our first prototype.
-Without him nothing would have been possible!
-
-
 Copyright and License
 ---------------------
 
@@ -169,3 +160,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 "THE BEER-WARE LICENSE" (Revision 42):
 <hello@weareleka.com> wrote this file. As long as you retain this notice you can do whatever you want with this stuff. If we meet some day, and you think this stuff is worth it, you can buy me a beer in return.
+
+
+Leka would like to thank
+------------------------
+
+Our team would like to thank with all our hearts [Vincent Thiberville](http://www.vincent-thiberville.com/) for his kind work on our first prototype.
+Without him nothing would have been possible!
