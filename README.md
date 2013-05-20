@@ -1,15 +1,12 @@
-Moti Readme
-===========
+#Moti Readme
 
 
-About
------
+##About
 
 Moti is a new kind of interactive smart toy: it's a spherical robot specially designed for children with autism.
 
 
-Why Github?
------------
+##Why Github?
 
 Because our team is not located in one single place, we needed a way to distribute the process of prototyping so that everyone could try it at home, debug it and create new features.
 
@@ -18,8 +15,7 @@ At first, we wanted to keep the code for ourselves. But then we thought "hey! ou
 For us, the answer is an absolute YES! We want people to be able to look at our code, use it for their projects, use it to build their own Moti and then get back to us to improve the awesomeness for a better world today!
 
 
-Actual Version
---------------
+##Actual Version
 
 The actual development version is v1.0, but it hasn't been pushed on Github yet.
 
@@ -28,16 +24,14 @@ The working version is 0.1 - please note that this was our first prototype. Due 
 The new v1.0 version is a little more expensive than v0.1, so do not hesitate to fork the master branch tagged 0.1 to continue the development of v0.1 cheaper version.
 
 
-Branches
-------------
+##Branches
 
 *	master is the stable branch for production and tests.
 *	dev (origin HEAD) is the development branch for unit/lab tests and behaviour development. if the lab tests are concluding, a pull request to the master can be made.
 *	feature branches are transitory branches used to develop new features to incorporate to the dev branch. when the feature is bugless, a pull request may be made to merge the concluding results inside the dev branch.
 
 
-Toolbox
--------
+##Toolbox
 
 ###Basic
 
@@ -61,8 +55,7 @@ Okay, so you started with the Arduino and Processing IDE, you're now familiarize
 *	[Processing-like IDE](https://github.com/b-g/processing-sublime) - Same as above but for Processing!
 
 
-Installing & Updating
----------------------
+##Installing & Updating
 
 Note: Make sure Git and cURL are installed.
 
@@ -96,8 +89,7 @@ Updating using git:
 Use update when new libraries are added.
 
 
-How to use
-----------
+##How to use
 
 "Okay, I've cloned the repo, installed all the softwares, but I'm quite new to Arduino and I don't know what to do!" - That's all right! You might not be a geek like us, but you will be sooner than you think.
 
@@ -114,8 +106,7 @@ Here are some things to do for your robot to start living :
 1.	Enjoy! :)
 
 
-Known Issues
-------------
+##Known Issues
 
 ###Moti 2 - v1.0
 
@@ -126,8 +117,7 @@ Known Issues
 *	the speed and the light depend on the excitement of the robot, but when the motors are running, moti is exciting itself perpetually... need to change that!
 
 
-Uninstalling
-------------
+##Uninstalling
 
 ###Linux/Unix based OS
 
@@ -139,14 +129,12 @@ To remove all the libraries used for the Moti project, simply run:
 The uninstaller is clever! You don't need to worry about your own libraries being removed, only our libraries are targeted and removed.
 
 
-TODO
-----
+##TODO
 
 *	Implement the todo list...
 
 
-Copyright and License
----------------------
+##Copyright and License
 
 The library is Copyright (c) 2013 Leka Inc., and distributed under the MIT License as follows:
 
@@ -162,8 +150,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <hello@weareleka.com> wrote this file. As long as you retain this notice you can do whatever you want with this stuff. If we meet some day, and you think this stuff is worth it, you can buy me a beer in return.
 
 
-Leka would like to thank
-------------------------
+##Leka would like to thank
 
 Our team would like to thank with all our hearts [Vincent Thiberville](http://www.vincent-thiberville.com/) for his kind work on our first prototype.
 Without him nothing would have been possible!

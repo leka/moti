@@ -1,8 +1,7 @@
-Designing Moti
-==============
+#Designing Moti
 
-Software
---------
+##Software
+
 
 ###3D Models
 
@@ -11,11 +10,11 @@ To visualize and edit the 3D models, you need to have [Catia](http://www.3ds.com
 
 ###Fritzing
 
-To visualize the Arduino design of Moti, you need to download & install [Fritzing]() for your platform. Fritzing is a great tool for designing and for sharing your sketches, connections and so on.
+To visualize the Arduino design of Moti, you need to download & install [Fritzing](http://www.fritzing.org) for your platform. Fritzing is a great tool for designing and for sharing your sketches, connections and so on.
 
 
-Bill of Material
-----------------
+##Bill of Material
+
 
 Because we think that being able to build your own Moti is the best way to improve it, we've made available all the components we use for our Moti.
 All of them can be purchased at [Sparkfun](https://www.sparkfun.com/), [DFRobot](http://www.dfrobot.com/index.php) or [RobotShop](http://www.robotshop.com/).
