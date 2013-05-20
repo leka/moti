@@ -1,5 +1,4 @@
-List of the Libraries Used
-==========================
+#List of the Libraries Used
 
 *	ADXL335 lib - obsolete, used for the v0.1.
 *	FreeSixIMU lib - library made to use the ADXL345 accelerometer and ITG-3200 gyro. You can download a "light" version [here on bildr.org](http://bildr.org/2012/03/stable-orientation-digital-imu-6dof-arduino/). For the orginal version, visit the [varesano.net website](http://www.varesano.net/projects/hardware/FreeIMU).
