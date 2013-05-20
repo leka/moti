@@ -105,7 +105,7 @@ How to use
 
 Here are something to do see your robot living :
 
-1.	Visit our [Bill of Materil page](sketch/README.md) and buy the different parts from your favorite retailer.
+1.	Visit our [Bill of Material page](sketch/README.md) and buy the different parts from your favorite retailer.
 1.	Wait a couple of days for the mailman.
 1.	Build the robot, yeah!
 1.	Connect the Arduino board to your computer using the usb cable.
