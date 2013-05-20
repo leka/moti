@@ -104,6 +104,7 @@ How to use
 "Okay, I've cloned the repo, installed all the software, but I'm quite new to Arduino and I don't know what to do!" - That's all right! You might not be a geek like us, but you will be sooner than you think.
 
 Here are something to do see your robot living :
+
 1.	Visit our [Bill of Materil page](sketch/README.md) and buy the different parts from your favorite retailer.
 1.	Wait a couple of days for the mailman.
 1.	Build the robot, yeah!
