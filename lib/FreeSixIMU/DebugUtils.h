@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Serial.print(' ');      \
     Serial.println(str);
 #endif
-
+ 
 #ifdef DEBUG
   #define DEBUG_PRINT(str) \
     Serial.println(str);
