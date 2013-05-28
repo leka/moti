@@ -1,5 +1,5 @@
 //##########################################################################//
-//	THIS FILE CONTAINS ALL OF THE FUNCTIONS USED IN moti.ino				//
+//	THIS FILE CONTAINS ALL OF THE FUNCTIONS USED IN moti_X.ino				//
 //	THE PURPOSE OF THIS FILE IS TO SIMPLIFY THE READING AND UNDERSTANDING	//
 //	OF THE MAIN PROGRAM.													//
 //	THE CODE WRITTEN IN function.ino MUST BE OVERLY COMMENTED!				//
@@ -23,8 +23,8 @@ void softwareReset() {
 	//	it is used because we don't know how much time has passed since the last awaken state.
 	//	the environment may have change, so going through the void setup() again is required.
 
-	asm volatile ("  jmp 0");  
-} 
+	asm volatile ("  jmp 0");
+}
 
 
 

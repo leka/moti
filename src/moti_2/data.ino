@@ -30,10 +30,6 @@ void sendSerialFeedback() {
 	Serial.print(deltaXYZ[1]);
 	Serial.print(F(" dZ: "));
 	Serial.print(deltaXYZ[2]);
-
-	// Serial.print(F(" | Volume: "));
-	// Serial.println(volume);
-
 }
 
 
@@ -65,9 +61,8 @@ void sendProcessingFeedback() {
 	Serial.print(RGB[2]);
 
 	Serial.print(',');
-	
-	Serial.println(MOTOR[1]);
 
+	Serial.println(MOTOR[1]);
 }
 
 

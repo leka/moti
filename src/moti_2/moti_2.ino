@@ -1,6 +1,6 @@
 //######################################################################//
-//	BEWARE, EVERY NEW PCB MUST FIRST BE LOADED WITH THE ADAPTED			//
-//	BOOTLOADER. IF NOT, THERE IS A HIGH RISK OF BAD FUSE CONFIGURATION!	//
+//	MOTI SOFTWARE v1.0													//
+//	COPYRIGHT WE ARE LEKA! - SOURCE CODE DISTRIBUTED UNDER MIT LICENCE	//
 //######################################################################//
 
 
@@ -35,22 +35,16 @@ const int AWAKE_THRESHOLD = 500; //	DO NOT USE A VALUE HIGHER THAN 150 - This th
 const int DELTA_ACCELERO_THRESHOLD = 200;   //	Threshold used to know if the accelerometer has moved between 2 cycles
 const int CRAZY_ACTIVITY_THRESHOLD= 10;    //	Is used to know if the activity around the robot is important. If so, the robot gets excited much faster - Smaller value means more excitement.
 
-const int LED_MAX_BRIGHTNESS = 255;   //	Maximum led brightness
+const int LED_MAX_BRIGHTNESS = 255;	//	Maximum led brightness
+const int RED_MAX_BRIGHTNESS = 255;
+const int GREEN_MAX_BRIGHTNESS = 255;
 const int BLUE_LED_MAX = 255;	//	Maximum blue led brightness - it appears that the blue color is stronger than the two others
 
-// const int DELTA_VOLUME_THRESHOLD = 4;
 
 
-
-//################//
-// PINS ASSIGMENT //
-//################//
-
-//	MOTORS - set speed and direction pins for each motor
-const int MOTOR_1_SPEED = 5;
-const int MOTOR_1_DIR = 4;
-const int MOTOR_2_SPEED = 6;
-const int MOTOR_2_DIR = 7;
+//##############################################//
+// ACCELEROMETER, GYROSCOPE AND RGB LED CLASSES //
+//##############################################//
 
 //	ACCELEROMETER
 FreeSixIMU AccelGyro = FreeSixIMU();
@@ -60,13 +54,25 @@ RGBLED RGBLED = RGBLED(9,10,11);
 
 
 
+//######################//
+// MOTOR PINS ASSIGMENT //
+//######################//
+
+//	MOTORS - set speed and direction pins for each motor
+const int MOTOR_1_SPEED = 5;
+const int MOTOR_1_DIR = 4;
+const int MOTOR_2_SPEED = 6;
+const int MOTOR_2_DIR = 7;
+
+
+
 //###########//
 // VARIABLES //
 //###########//
 
 //	GENERAL
 int i;
-int RGB[3], RGB_BUFFER[3], fadeValue;
+int RGB[3], RGB_BUFFER[3];
 int MOTOR[2], MOTOR_BUFFER[2];
 int XYZ[3], lastXYZ[3], deltaXYZ[3];
 int sleepy;
@@ -136,8 +142,9 @@ void setup() {
 	Serial.println(F("Pins as OUTPUT OK."));
 	println();
 
-	delay(50);
+	delay(100);
 
+	println(F("Everything is up and running, let's hack autism!"));
 
 	blinkLed(4);
 }
@@ -215,7 +222,6 @@ void loop() {
 		sendProcessingFeedback(); //JUST COMMENT ONE OF THE TWO LINES
 	}
 
-	lastVolume = volume;
 	lastXYZ[0] = XYZ[0];
 	lastXYZ[1] = XYZ[1];
 	lastXYZ[2] = XYZ[2];

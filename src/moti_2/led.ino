@@ -12,9 +12,7 @@ void setRgbLed() {
 	RGB[2] = RGB_BUFFER[2];
 
 	//	Output the values
-	analogWrite(RED_PIN, RGB_BUFFER[0]);
-	analogWrite(GREEN_PIN, RGB_BUFFER[1]);
-	analogWrite(BLUE_PIN, RGB_BUFFER[2]);
+	RGBLED.colorRGB(RGB_BUFFER[0], RGB_BUFFER[1], RGB_BUFFER[2]);
 }
 
 
@@ -23,8 +21,10 @@ void fadeToBlue() {
 	//	This function is used in void setup() when the robot wakes up
 	//	it does not take any argument and can be used anywhere else
 
+	byte fadeValue;
+
 	for(fadeValue = 0 ; fadeValue < BLUE_LED_MAX; fadeValue +=1) {
-		analogWrite(BLUE_PIN, fadeValue);
+		RGBLED.colorRGB(0, 0, fadeValue);
 	}
 }
 
