@@ -7,16 +7,19 @@
 //###########//
 // LIBRARIES //
 //###########//
-
-#include <ADXL335.h>
+#include <RGBLED.h>
 
 #include <FreeSixIMU.h>
-
 #include <FIMU_ADXL345.h>
 #include <FIMU_ITG3200.h>
 
-#include "RGBLED.h"
+#define DEBUG
+#ifdef DEBUG
+#include <DebugUtils.h>
+#endif
 
+#include <CommunicationUtils.h>
+#include <FreeSixIMU.h>
 #include <Wire.h>
 
 
@@ -30,12 +33,12 @@ const int SLEEP_DELAY = 600; //	Time to elapse before the robot goes to sleep
 
 const int AWAKE_THRESHOLD = 500; //	DO NOT USE A VALUE HIGHER THAN 150 - This threshold is used to wake up the card. The higher, the harder it is to wake up.
 const int DELTA_ACCELERO_THRESHOLD = 200;   //	Threshold used to know if the accelerometer has moved between 2 cycles
-const int CRAZY_ACTIVITY_THRESHOLD= 4;    //	Is used to know if the activity around the robot is important. If so, the robot gets excited much faster - Smaller value means more excitement. 
+const int CRAZY_ACTIVITY_THRESHOLD= 10;    //	Is used to know if the activity around the robot is important. If so, the robot gets excited much faster - Smaller value means more excitement.
 
 const int LED_MAX_BRIGHTNESS = 255;   //	Maximum led brightness
-const int BLUE_LED_MAX = 200;	//	Maximum blue led brightness - it appears that the blue color is stronger than the two others
+const int BLUE_LED_MAX = 255;	//	Maximum blue led brightness - it appears that the blue color is stronger than the two others
 
-const int DELTA_VOLUME_THRESHOLD = 4;
+// const int DELTA_VOLUME_THRESHOLD = 4;
 
 
 
@@ -50,19 +53,10 @@ const int MOTOR_2_SPEED = 6;
 const int MOTOR_2_DIR = 7;
 
 //	ACCELEROMETER
-const int X_PIN = A0;
-const int Y_PIN = A1;
-const int Z_PIN = A2;
-const float Vin = 3.3;	//	Vin connected to +3.3V
-ADXL335 accel(X_PIN, Y_PIN, Z_PIN, Vin);	//	constructs an instance named "accel" of the ADXL335 class
+FreeSixIMU AccelGyro = FreeSixIMU();
 
 //	LED
-const int RED_PIN = 9;
-const int GREEN_PIN = 10;
-const int BLUE_PIN = 11;
-
-//	MICROPHONE
-const int MIC_PIN = A3;
+RGBLED RGBLED = RGBLED(9,10,11);
 
 
 
@@ -72,14 +66,12 @@ const int MIC_PIN = A3;
 
 //	GENERAL
 int i;
-int volume, lastVolume, deltaVolume, volumeBaseline;
 int RGB[3], RGB_BUFFER[3], fadeValue;
 int MOTOR[2], MOTOR_BUFFER[2];
 int XYZ[3], lastXYZ[3], deltaXYZ[3];
 int sleepy;
 
 //	DEBUG
-boolean isDebugSound;	//	make true if you need to output the sound in serial
 boolean isRemoteCtrl;
 boolean isShutDown;
 
@@ -90,39 +82,62 @@ boolean isShutDown;
 
 void setup() {
 
-	isRemoteCtrl = false;
-	isDebugSound = false;
-	isShutDown = false;
+	//	Begin serial connection using XBEE
+	Serial.begin(115200);
+	Serial.println(F("Moti is waking up."));
+	println();
 
-	setRgbAndMotorToZero();
 
-	//	SET PINS AS INPOUT OR OUTPUT
-	setPinsAsOutput();
-
-	//	SET PINS VALUE AT ZERO - 0 is the same as LOW and 1 the same as HIGH
-	setPinsValuesToZero();
-
-	//	Begin serial for debug
-	Serial.begin(9600);
-
-	delay(3);
-
-	// Check the ambient noise to make is the volume baseline for the current run of the programm.
-	volumeBaseline = analogRead(MIC_PIN);
-	lastVolume = volumeBaseline;
-
-	// Update the accelerometer and get the xyz values
-	accel.update();
-	lastXYZ[0] = accel.getX() * 1000;	//	we need to multiply by 1000 to have the decimals. we don't want to use float because it requires more resources to compute.
-	lastXYZ[1] = accel.getY() * 1000;
-	lastXYZ[2] = accel.getZ() * 1000;
-
-	Serial.println(F("Time to slowly wake up ============"));
-
-	//	Wake up with a beautiful fade to blue
+	//	Slowly fade LED to blue
 	fadeToBlue();
 
-	Serial.println(F("Let's start living!\n"));
+	delay(100);
+
+
+	//	Starting Wire
+	Serial.println(F("Wire begin."));
+
+		Wire.begin();
+
+	delay(100);
+	Serial.println(F("Wire OK."));
+	println();
+
+	delay(100);`
+
+
+	// Accelerometer and gyroscope initialization
+	Serial.println(F("Accelerometer and gyroscope initialization."));
+
+		AccelGyro.init();
+
+	delay(100);
+	Serial.println(F("Accelerometer and gyroscope OK."));
+	println();
+
+
+	// Set isRemoteCtrl and isShutdown to false
+	Serial.println(F("Setting up isRemoteCtrl and isShutDown to FALSE."));
+
+		isRemoteCtrl = false;
+		isShutDown = false;
+
+	delay(100);
+	Serial.println(F("isRemoteCtrl and isShutDown OK."));
+	println();
+
+	// Set pins as output for the motors
+	Serial.println(F("Setting Motor pins as OUTPUT."));
+
+		setPinsAsOutput();
+		setPinsValuesToZero();
+
+	delay(100);
+	Serial.println(F("Pins as OUTPUT OK."));
+	println();
+
+	delay(50);
+
 
 	blinkLed(4);
 }

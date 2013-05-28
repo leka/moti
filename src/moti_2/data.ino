@@ -31,8 +31,8 @@ void sendSerialFeedback() {
 	Serial.print(F(" dZ: "));
 	Serial.print(deltaXYZ[2]);
 
-	Serial.print(F(" | Volume: "));
-	Serial.println(volume);
+	// Serial.print(F(" | Volume: "));
+	// Serial.println(volume);
 
 }
 
