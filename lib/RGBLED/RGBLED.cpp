@@ -30,6 +30,10 @@ void RGBLED::colorRGB(int red, int green, int blue){
 	analogWrite(Pin_blue,constrain(blue,0,255));
 }
 
+void RGBLED::setToZero(){
+	colorRGB(0, 0, 0);
+}
+
 void RGBLED::fadeToBlue(){
 
 	unsigned char _fadeValue;
