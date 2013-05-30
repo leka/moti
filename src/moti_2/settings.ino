@@ -20,6 +20,8 @@ void setPinsValuesToZero() {
 	digitalWrite(MOTOR_1_DIR, 0);
 	digitalWrite(MOTOR_2_SPEED, 0);
 	digitalWrite(MOTOR_1_SPEED, 0);
+
+	RGBLED.colorRGB(0,0,0);
 }
 
 

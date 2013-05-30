@@ -1,4 +1,4 @@
-void setRgbLed() {
+void setRGB() {
 	//	this function is used to constrain and set the led to express the robot's feelings
 
 	//	Constrain the RGB[] values between zero and LED_MAX_BRIGHTNESS
@@ -10,7 +10,9 @@ void setRgbLed() {
 	RGB[0] = RGB_BUFFER[0];
 	RGB[1] = RGB_BUFFER[1];
 	RGB[2] = RGB_BUFFER[2];
+}
 
+void outputRGB(){
 	//	Output the values
 	RGBLED.colorRGB(RGB_BUFFER[0], RGB_BUFFER[1], RGB_BUFFER[2]);
 }

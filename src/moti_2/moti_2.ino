@@ -84,65 +84,8 @@ boolean isShutDown;
 
 void setup() {
 
-	//	Begin serial connection using XBEE
-	Serial.begin(115200);
-	Serial.println(F("Moti is waking up."));
-	Serial.println("");
-
-
-	//	Slowly fade LED to blue
-	RGBLED.fadeToBlue();
-
-	delay(100);
-
-
-	//	Starting Wire
-	Serial.println(F("Wire begin."));
-
-		Wire.begin();
-
-	delay(100);
-	Serial.println(F("Wire OK."));
-	Serial.println("");
-
-	delay(100);
-
-
-	// Accelerometer and gyroscope initialization
-	Serial.println(F("Accelerometer and gyroscope initialization."));
-
-		AccelGyro.init();
-
-	delay(100);
-	Serial.println(F("Accelerometer and gyroscope OK."));
-	Serial.println("");
-
-
-	// Set isRemoteCtrl and isShutdown to false
-	Serial.println(F("Setting up isRemoteCtrl and isShutDown to FALSE."));
-
-		isRemoteCtrl = false;
-		isShutDown = false;
-
-	delay(100);
-	Serial.println(F("isRemoteCtrl and isShutDown OK."));
-	Serial.println("");
-
-	// Set pins as output for the motors
-	Serial.println(F("Setting Motor pins as OUTPUT."));
-
-		setPinsAsOutput();
-		setPinsValuesToZero();
-
-	delay(100);
-	Serial.println(F("Pins as OUTPUT OK."));
-	Serial.println("");
-
-	delay(100);
-
-	Serial.println(F("Everything is up and running, let's hack autism!"));
-
-	RGBLED.fadeToBlue();
+	// setupMoti_VERBOSE();
+	setupMoti_QUIET();
 }
 
 
@@ -157,14 +100,12 @@ void loop() {
 	checkSensors();
 
 	if(isShutDown) {
-		setPinsValuesToZero();
-		setRgbAndMotorToZero();
 
 		//sendSerialFeedback();
 		sendProcessingFeedback(); // JUST COMMENT ONE OF THE TWO LINES
 
 		if ( deltaXYZ[0] > AWAKE_THRESHOLD || deltaXYZ[1] > AWAKE_THRESHOLD || deltaXYZ[2] > AWAKE_THRESHOLD) {
-			softwareReset();
+			isShutDown = false;
 		}
 	}
 	else {
@@ -193,13 +134,19 @@ void loop() {
 		}
 
 		if(sleepy > SLEEP_DELAY) {
+			setPinsValuesToZero();
+			setRgbAndMotorToZero();
+
 			RGBLED.blinkLED(2);
-			Serial.println(F("It's time to go to sleep!"));
-			delay(500);
+
+			delay(100);
+
 			shutDown();
 		}
 
-		setRgbLed();
+		setRGB();
+
+		outputRGB();
 
 		setMotorSpeedAndDirection();
 
