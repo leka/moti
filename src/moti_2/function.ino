@@ -5,13 +5,21 @@
 //	THE CODE WRITTEN IN function.ino MUST BE OVERLY COMMENTED!				//
 //##########################################################################//
 
+void setAllToZero(){
 
+	setMotorPinToZero();
+	setMotorValueToZero();
+	setMotorSpeedAndDirection();
+
+	setRGBValueToZero();
+	setLedPinToZero();
+}
 
 boolean shutDown() {
 	//	this function only returns isShutDown as true.
 	//	it is then used in an if statement during which the robot to wake up.
 
-	setPinsValuesToZero();
+	setAllToZero();
 
 	return isShutDown = true;
 }
