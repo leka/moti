@@ -7,20 +7,16 @@
 //###########//
 // LIBRARIES //
 //###########//
-#include <RGBLED.h>
+
+#include "RGBLED.h"
+#include "Arduino.h"
+#include <Wire.h>
 
 #include <FreeSixIMU.h>
 #include <FIMU_ADXL345.h>
 #include <FIMU_ITG3200.h>
 
-#define DEBUG
-#ifdef DEBUG
-#include <DebugUtils.h>
-#endif
-
 #include <CommunicationUtils.h>
-#include <FreeSixIMU.h>
-#include <Wire.h>
 
 
 
@@ -50,7 +46,7 @@ const int BLUE_LED_MAX = 255;	//	Maximum blue led brightness - it appears that t
 FreeSixIMU AccelGyro = FreeSixIMU();
 
 //	LED
-RGBLED RGBLED = RGBLED(9,10,11);
+RGBLED LEDrgb = RGBLED(9, 10, 11);
 
 
 
@@ -91,7 +87,9 @@ void setup() {
 	//	Begin serial connection using XBEE
 	Serial.begin(115200);
 	Serial.println(F("Moti is waking up."));
-	println();
+	Serial.println("");
+
+	LEDrgb.InitPins();
 
 
 	//	Slowly fade LED to blue
@@ -107,9 +105,9 @@ void setup() {
 
 	delay(100);
 	Serial.println(F("Wire OK."));
-	println();
+	Serial.println("");
 
-	delay(100);`
+	delay(100);
 
 
 	// Accelerometer and gyroscope initialization
@@ -119,7 +117,7 @@ void setup() {
 
 	delay(100);
 	Serial.println(F("Accelerometer and gyroscope OK."));
-	println();
+	Serial.println("");
 
 
 	// Set isRemoteCtrl and isShutdown to false
@@ -130,7 +128,7 @@ void setup() {
 
 	delay(100);
 	Serial.println(F("isRemoteCtrl and isShutDown OK."));
-	println();
+	Serial.println("");
 
 	// Set pins as output for the motors
 	Serial.println(F("Setting Motor pins as OUTPUT."));
@@ -140,13 +138,13 @@ void setup() {
 
 	delay(100);
 	Serial.println(F("Pins as OUTPUT OK."));
-	println();
+	Serial.println("");
 
 	delay(100);
 
-	println(F("Everything is up and running, let's hack autism!"));
+	Serial.println(F("Everything is up and running, let's hack autism!"));
 
-	blinkLed(4);
+	blinkLED(4);
 }
 
 
@@ -173,10 +171,6 @@ void loop() {
 	}
 	else {
 
-		if(isDebugSound) {
-			Serial.println(volume);
-		}
-
 		if (lastXYZ[0] == XYZ[0]) {
 			sleepy++;
 		}
@@ -200,15 +194,8 @@ void loop() {
 			}
 		}
 
-		if(deltaVolume > DELTA_VOLUME_THRESHOLD && deltaVolume > abs(volume - volumeBaseline)) {
-			RGB[1]+=50;
-		}
-		else {
-			RGB[1]-=10;
-		}
-
 		if(sleepy > SLEEP_DELAY) {
-			blinkLed(2);
+			blinkLED(2);
 			Serial.println(F("It's time to go to sleep!"));
 			delay(500);
 			shutDown();

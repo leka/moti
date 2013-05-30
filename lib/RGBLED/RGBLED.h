@@ -18,4 +18,3 @@ class RGBLED 	{
 };
 
 #endif
-

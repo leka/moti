@@ -1,7 +1,7 @@
 void setMotorSpeedAndDirection() {
 	//	this function is used to the motor speed and direction to express the robot's feelings
 
-	MOTOR_BUFFER[0] = constrain(MOTOR[0], -255, 255);  
+	MOTOR_BUFFER[0] = constrain(MOTOR[0], -255, 255);
 	MOTOR_BUFFER[1] = constrain(MOTOR[1], -255, 255);
 
 	MOTOR[0]=MOTOR_BUFFER[0];

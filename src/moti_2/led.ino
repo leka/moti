@@ -12,43 +12,37 @@ void setRgbLed() {
 	RGB[2] = RGB_BUFFER[2];
 
 	//	Output the values
-	RGBLED.colorRGB(RGB_BUFFER[0], RGB_BUFFER[1], RGB_BUFFER[2]);
+	LEDrgb.colorRGB(RGB_BUFFER[0], RGB_BUFFER[1], RGB_BUFFER[2]);
 }
-
-
 
 void fadeToBlue() {
 	//	This function is used in void setup() when the robot wakes up
 	//	it does not take any argument and can be used anywhere else
 
-	byte fadeValue;
+	byte _fadeValue;
 
-	for(fadeValue = 0 ; fadeValue < BLUE_LED_MAX; fadeValue +=1) {
-		RGBLED.colorRGB(0, 0, fadeValue);
+	for(_fadeValue = 0 ; _fadeValue < BLUE_LED_MAX; _fadeValue +=1) {
+		// LEDrgb.colorRGB(0, 0, _fadeValue);
 	}
 }
 
 
-
-void blinkLed(byte nbrOfBlink) {
+void blinkLED(int nbrOfBlinks) {
 	//	this function is used to blink all three colors at the same time.
 	//	it takes as an argument the number of blinks you want.
 
 	int _timeBtwBlink = 50;
-	byte _nbrOfBlink = nbrOfBlink;
-	byte _iBlink;
+	int _nbrOfBlinks = nbrOfBlinks;
+	int _iBlink;
 
-	for(_iBlink = 0 ; _iBlink < _nbrOfBlink ; _iBlink++) {
-		digitalWrite(RED_PIN,1);
-		digitalWrite(GREEN_PIN,1);
-		digitalWrite(BLUE_PIN,1);
+	for(_iBlink = 0 ; _iBlink < _nbrOfBlinks ; _iBlink++) {
+		LEDrgb.colorRGB(255, 255, 255);
 
 		delay(_timeBtwBlink);
 
-		digitalWrite(RED_PIN,0);
-		digitalWrite(GREEN_PIN,0);
-		digitalWrite(BLUE_PIN,0);
+		LEDrgb.colorRGB(0, 0, 0);
 
 		delay(_timeBtwBlink);
 	}
+
 }
