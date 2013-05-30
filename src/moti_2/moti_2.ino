@@ -27,14 +27,14 @@
 const int GLOBAL_DELAY = 75;   //	Delay used at the end of void loop() - The higher, the slower the robot is.
 const int SLEEP_DELAY = 600; //	Time to elapse before the robot goes to sleep
 
-const int AWAKE_THRESHOLD = 500; //	DO NOT USE A VALUE HIGHER THAN 150 - This threshold is used to wake up the card. The higher, the harder it is to wake up.
+const int AWAKE_THRESHOLD = 300; //	DO NOT USE A VALUE HIGHER THAN 150 - This threshold is used to wake up the card. The higher, the harder it is to wake up.
 const int DELTA_ACCELERO_THRESHOLD = 200;   //	Threshold used to know if the accelerometer has moved between 2 cycles
-const int CRAZY_ACTIVITY_THRESHOLD= 10;    //	Is used to know if the activity around the robot is important. If so, the robot gets excited much faster - Smaller value means more excitement.
+const int CRAZY_ACTIVITY_THRESHOLD= 80;    //	Is used to know if the activity around the robot is important. If so, the robot gets excited much faster - Smaller value means more excitement.
 
 const int LED_MAX_BRIGHTNESS = 255;	//	Maximum led brightness
 const int RED_MAX_BRIGHTNESS = 255;
 const int GREEN_MAX_BRIGHTNESS = 255;
-const int BLUE_LED_MAX = 255;	//	Maximum blue led brightness - it appears that the blue color is stronger than the two others
+const int BLUE_LED_MAX = 255;
 
 
 
@@ -85,8 +85,8 @@ boolean isShutDown;
 
 void setup() {
 
-	setupMoti_VERBOSE();
-	// setupMoti_QUIET();
+	// setupMoti_VERBOSE();
+	setupMoti_QUIET();
 }
 
 
@@ -107,20 +107,21 @@ void loop() {
 
 		if ( deltaXYZ[0] > AWAKE_THRESHOLD || deltaXYZ[1] > AWAKE_THRESHOLD || deltaXYZ[2] > AWAKE_THRESHOLD) {
 			isShutDown = false;
+			softwareReset();
 		}
 	}
 	else {
 
-		if (lastXYZ[0] == XYZ[0]) {
+		if (lastXYZ[2] == XYZ[2]) {
 			sleepy++;
 		}
 
-		if (deltaXYZ[0] < DELTA_ACCELERO_THRESHOLD) {
+		if (deltaXYZ[0] < CRAZY_ACTIVITY_THRESHOLD || deltaXYZ[1] < CRAZY_ACTIVITY_THRESHOLD || deltaXYZ[2] < CRAZY_ACTIVITY_THRESHOLD) {
 			sleepy++;
 
-			RGB[0]-=5;
-			RGB[1]-=10;
-			RGB[2]+=5;
+			RGB[0]-=15;
+			RGB[1]-=15;
+			RGB[2]+=30;
 
 			MOTOR[0]-=10;
 			MOTOR[1]-=10;
@@ -130,7 +131,19 @@ void loop() {
 				sleepy=0;
 				RGB[0]+=30;
 				RGB[1]+=10;
-				RGB[2]-=30;
+				RGB[2]-=50;
+			}
+			if (deltaXYZ[1] > CRAZY_ACTIVITY_THRESHOLD) {
+				sleepy=0;
+				RGB[0]+=30;
+				RGB[1]+=10;
+				RGB[2]-=50;
+			}
+			if (deltaXYZ[2] > CRAZY_ACTIVITY_THRESHOLD) {
+				sleepy=0;
+				RGB[0]+=30;
+				RGB[1]+=10;
+				RGB[2]-=50;
 			}
 		}
 
