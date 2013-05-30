@@ -43,8 +43,9 @@ void setupMoti_VERBOSE(){
 	// Set pins as output for the motors
 	Serial.println(F("Setting Motor pins as OUTPUT."));
 
-		setPinsAsOutput();
-		setPinsValuesToZero();
+		setMotorPinAsOutput();
+		setMotorPinToZero();
+		setMotorValueToZero();
 
 	delay(100);
 	Serial.println(F("Pins as OUTPUT OK."));
@@ -77,8 +78,9 @@ void setupMoti_QUIET(){
 
 	delay(50);
 
-	setPinsAsOutput();
-	setPinsValuesToZero();
+	setMotorPinAsOutput();
+	setMotorPinToZero();
+	setMotorValueToZero();
 
 	delay(50);
 

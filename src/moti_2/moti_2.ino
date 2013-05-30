@@ -78,6 +78,7 @@ boolean isRemoteCtrl;
 boolean isShutDown;
 
 
+
 //#######//
 // SETUP //
 //#######//
@@ -134,8 +135,12 @@ void loop() {
 		}
 
 		if(sleepy > SLEEP_DELAY) {
-			setPinsValuesToZero();
-			setRgbAndMotorToZero();
+			setMotorPinToZero();
+			setMotorValueToZero();
+			setMotorSpeedAndDirection();
+
+			setRGBValueToZero();
+			setLedPinToZero();
 
 			RGBLED.blinkLED(2);
 
@@ -144,7 +149,7 @@ void loop() {
 			shutDown();
 		}
 
-		setRGB();
+		setRGBValue();
 
 		outputRGB();
 
