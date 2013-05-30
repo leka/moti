@@ -1,4 +1,4 @@
-//######################################################################//
+	//######################################################################//
 //	MOTI SOFTWARE v1.0													//
 //	COPYRIGHT WE ARE LEKA! - SOURCE CODE DISTRIBUTED UNDER MIT LICENCE	//
 //######################################################################//
@@ -85,8 +85,8 @@ boolean isShutDown;
 
 void setup() {
 
-	// setupMoti_VERBOSE();
-	setupMoti_QUIET();
+	setupMoti_VERBOSE();
+	// setupMoti_QUIET();
 }
 
 
@@ -102,8 +102,8 @@ void loop() {
 
 	if(isShutDown) {
 
-		//sendSerialFeedback();
-		sendProcessingFeedback(); // JUST COMMENT ONE OF THE TWO LINES
+		sendSerialFeedback();
+		// sendProcessingFeedback(); // JUST COMMENT ONE OF THE TWO LINES
 
 		if ( deltaXYZ[0] > AWAKE_THRESHOLD || deltaXYZ[1] > AWAKE_THRESHOLD || deltaXYZ[2] > AWAKE_THRESHOLD) {
 			isShutDown = false;
@@ -155,8 +155,8 @@ void loop() {
 
 		setMotorSpeedAndDirection();
 
-		//sendSerialFeedback();
-		sendProcessingFeedback(); //JUST COMMENT ONE OF THE TWO LINES
+		sendSerialFeedback();
+		// sendProcessingFeedback(); //JUST COMMENT ONE OF THE TWO LINES
 	}
 
 	lastXYZ[0] = XYZ[0];

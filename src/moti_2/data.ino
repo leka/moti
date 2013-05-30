@@ -2,6 +2,9 @@ void sendSerialFeedback() {
 	//	this function serial prints the state of different variables.
 	//	it can be really usefull to debug and/or calibrate the robot.
 
+	Serial.print(F("Sleep: "));
+	Serial.print(sleepy);
+
 	Serial.print(F("R: "));
 	Serial.print(RGB[0]);
 	Serial.print(F(" G: "));
@@ -13,9 +16,6 @@ void sendSerialFeedback() {
 	Serial.print(MOTOR[0]);
 	Serial.print(F(" MOTOR 2: "));
 	Serial.print(MOTOR[1]);
-
-	Serial.print(F(" | SLEEPY: "));
-	Serial.print(sleepy);
 
 	Serial.print(F(" | X: "));
 	Serial.print(XYZ[0]);
@@ -29,7 +29,7 @@ void sendSerialFeedback() {
 	Serial.print(F(" dY: "));
 	Serial.print(deltaXYZ[1]);
 	Serial.print(F(" dZ: "));
-	Serial.print(deltaXYZ[2]);
+	Serial.println(deltaXYZ[2]);
 }
 
 

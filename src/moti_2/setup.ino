@@ -1,11 +1,14 @@
 void setupMoti_VERBOSE(){
+
+	RGBLED.blinkLED(4);
+	RGBLED.setToZero();
 	//	Begin serial connection using XBEE
 	Serial.begin(115200);
 	Serial.println(F("Moti is waking up."));
 	Serial.println("");
 
 
-	delay(100);
+	delay(50);
 
 
 	//	Starting Wire
@@ -13,11 +16,11 @@ void setupMoti_VERBOSE(){
 
 		Wire.begin();
 
-	delay(100);
+	delay(50);
 	Serial.println(F("Wire OK."));
 	Serial.println("");
 
-	delay(100);
+	delay(50);
 
 
 	// Accelerometer and gyroscope initialization
@@ -25,7 +28,7 @@ void setupMoti_VERBOSE(){
 
 		AccelGyro.init();
 
-	delay(100);
+	delay(50);
 	Serial.println(F("Accelerometer and gyroscope OK."));
 	Serial.println("");
 
@@ -36,7 +39,7 @@ void setupMoti_VERBOSE(){
 		isRemoteCtrl = false;
 		isShutDown = false;
 
-	delay(100);
+	delay(50);
 	Serial.println(F("isRemoteCtrl and isShutDown OK."));
 	Serial.println("");
 
@@ -47,19 +50,24 @@ void setupMoti_VERBOSE(){
 		setMotorPinToZero();
 		setMotorValueToZero();
 
-	delay(100);
+	delay(50);
 	Serial.println(F("Pins as OUTPUT OK."));
 	Serial.println("");
 
-	delay(100);
+	delay(50);
 
 	Serial.println(F("Everything is up and running, let's hack autism!"));
 
 	RGBLED.fadeToBlue();
+	RGBLED.blinkLED(4);
 }
 
 
 void setupMoti_QUIET(){
+
+	RGBLED.blinkLED(4);
+	RGBLED.setToZero();
+
 	//	Begin serial connection using XBEE
 	Serial.begin(115200);
 
@@ -85,4 +93,5 @@ void setupMoti_QUIET(){
 	delay(50);
 
 	RGBLED.fadeToBlue();
+	RGBLED.blinkLED(4);
 }
