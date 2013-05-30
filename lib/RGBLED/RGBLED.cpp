@@ -17,9 +17,7 @@ RGBLED::RGBLED()  //Initialization for the three pins of to show RGB/HSV color
 {
 }
 
-
 void RGBLED::InitPins(){
-
 	analogWrite(Pin_red,255);
 	analogWrite(Pin_green,255);
 	analogWrite(Pin_blue,255);
@@ -27,12 +25,37 @@ void RGBLED::InitPins(){
 
 	//Set RGB color to the LED
 void RGBLED::colorRGB(int red, int green, int blue){
-
 	analogWrite(Pin_red,constrain(red,0,255));
 	analogWrite(Pin_green,constrain(green,0,255));
 	analogWrite(Pin_blue,constrain(blue,0,255));
 }
 
+void RGBLED::fadeToBlue(){
+
+	unsigned char _fadeValue;
+
+	for(_fadeValue = 0 ; _fadeValue < 255; _fadeValue +=1) {
+		colorRGB(0, 0, _fadeValue);
+		delay(5);
+	}
+}
+
+void RGBLED::blinkLED(int nbrOfBlinks){
+
+	int _timeBtwBlink = 50;
+	int _nbrOfBlinks = nbrOfBlinks;
+	int _iBlink;
+
+	for(_iBlink = 0 ; _iBlink < _nbrOfBlinks ; _iBlink++) {
+		colorRGB(255, 255, 255);
+
+		delay(_timeBtwBlink);
+
+		colorRGB(0, 0, 0);
+
+		delay(_timeBtwBlink);
+	}
+}
 
 //Set HSV color to the LED
 //range of H:0~360

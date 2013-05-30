@@ -46,7 +46,7 @@ const int BLUE_LED_MAX = 255;	//	Maximum blue led brightness - it appears that t
 FreeSixIMU AccelGyro = FreeSixIMU();
 
 //	LED
-RGBLED LEDrgb = RGBLED(9, 10, 11);
+RGBLED RGBLED(9, 10,11);
 
 
 
@@ -89,11 +89,9 @@ void setup() {
 	Serial.println(F("Moti is waking up."));
 	Serial.println("");
 
-	LEDrgb.InitPins();
-
 
 	//	Slowly fade LED to blue
-	fadeToBlue();
+	RGBLED.fadeToBlue();
 
 	delay(100);
 
@@ -144,7 +142,7 @@ void setup() {
 
 	Serial.println(F("Everything is up and running, let's hack autism!"));
 
-	blinkLED(4);
+	RGBLED.fadeToBlue();
 }
 
 
@@ -195,7 +193,7 @@ void loop() {
 		}
 
 		if(sleepy > SLEEP_DELAY) {
-			blinkLED(2);
+			RGBLED.blinkLED(2);
 			Serial.println(F("It's time to go to sleep!"));
 			delay(500);
 			shutDown();
