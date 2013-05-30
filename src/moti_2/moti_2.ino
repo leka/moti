@@ -12,11 +12,11 @@
 #include "Arduino.h"
 #include <Wire.h>
 
-#include <FreeSixIMU.h>
+#include <CommunicationUtils.h>
+#include <DebugUtils.h>
 #include <FIMU_ADXL345.h>
 #include <FIMU_ITG3200.h>
-
-#include <CommunicationUtils.h>
+#include <FreeSixIMU.h>
 
 
 
@@ -70,7 +70,7 @@ const int MOTOR_2_DIR = 7;
 int i;
 int RGB[3], RGB_BUFFER[3];
 int MOTOR[2], MOTOR_BUFFER[2];
-int XYZ[3], lastXYZ[3], deltaXYZ[3];
+float XYZ[3], lastXYZ[3], deltaXYZ[3];
 int sleepy;
 
 //	DEBUG
@@ -102,8 +102,8 @@ void loop() {
 
 	if(isShutDown) {
 
-		sendSerialFeedback();
-		// sendProcessingFeedback(); // JUST COMMENT ONE OF THE TWO LINES
+		// sendSerialFeedback();
+		sendProcessingFeedback(); // JUST COMMENT ONE OF THE TWO LINES
 
 		if ( deltaXYZ[0] > AWAKE_THRESHOLD || deltaXYZ[1] > AWAKE_THRESHOLD || deltaXYZ[2] > AWAKE_THRESHOLD) {
 			isShutDown = false;
@@ -155,8 +155,8 @@ void loop() {
 
 		setMotorSpeedAndDirection();
 
-		sendSerialFeedback();
-		// sendProcessingFeedback(); //JUST COMMENT ONE OF THE TWO LINES
+		// sendSerialFeedback();
+		sendProcessingFeedback(); //JUST COMMENT ONE OF THE TWO LINES
 	}
 
 	lastXYZ[0] = XYZ[0];

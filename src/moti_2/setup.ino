@@ -2,6 +2,7 @@ void setupMoti_VERBOSE(){
 
 	RGBLED.blinkLED(4);
 	RGBLED.setToZero();
+
 	//	Begin serial connection using XBEE
 	Serial.begin(115200);
 	Serial.println(F("Moti is waking up."));
