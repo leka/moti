@@ -32,7 +32,7 @@ FreeSixIMU::FreeSixIMU() {
 	acc = ADXL345();
 	gyro = ITG3200();
 	//magn = HMC58X3();
-	
+
   // initialize quaternion
   q0 = 1.0f;
   q1 = 0.0f;
@@ -58,7 +58,7 @@ void FreeSixIMU::init(bool fastmode) {
 
 void FreeSixIMU::init(int acc_addr, int gyro_addr, bool fastmode) {
   delay(5);
-  
+
   // disable internal pullups of the ATMEGA which Wire enable by default
   #if defined(__AVR_ATmega168__) || defined(__AVR_ATmega8__) || defined(__AVR_ATmega328P__)
     // deactivate internal pull-ups for twi
@@ -71,22 +71,22 @@ void FreeSixIMU::init(int acc_addr, int gyro_addr, bool fastmode) {
     cbi(PORTD, 0);
     cbi(PORTD, 1);
   #endif
-  
+
   if(fastmode) { // switch to 400KHz I2C - eheheh
     TWBR = ((16000000L / 400000L) - 16) / 2; // see twi_init in Wire/utility/twi.c
     // TODO: make the above usable also for 8MHz arduinos..
   }
-  
+
 	// init ADXL345
 	acc.init(acc_addr);
-	
+
 
   // init ITG3200
   gyro.init(gyro_addr);
   delay(1000);
   // calibrate the ITG3200
   gyro.zeroCalibrate(128,5);
-  
+
   // init HMC5843
   //magn.init(false); // Don't set mode yet, we'll do that later on.
   // Calibrate HMC using self test, not recommended to change the gain after calibration.
@@ -95,7 +95,7 @@ void FreeSixIMU::init(int acc_addr, int gyro_addr, bool fastmode) {
   //magn.setMode(0);
   //delay(10);
   //magn.setDOR(B110);
-  
+
 }
 
 
@@ -103,19 +103,19 @@ void FreeSixIMU::getRawValues(int * raw_values) {
   acc.readAccel(&raw_values[0], &raw_values[1], &raw_values[2]);
   gyro.readGyroRaw(&raw_values[3], &raw_values[4], &raw_values[5]);
   //magn.getValues(&raw_values[6], &raw_values[7], &raw_values[8]);
-  
+
 }
 
 
-void FreeSixIMU::getValues(float * values) {  
+void FreeSixIMU::getValues(float * values) {
   int accval[3];
   acc.readAccel(&accval[0], &accval[1], &accval[2]);
   values[0] = ((float) accval[0]);
   values[1] = ((float) accval[1]);
   values[2] = ((float) accval[2]);
-  
+
   gyro.readGyro(&values[3]);
-  
+
   //magn.getValues(&values[6]);
 }
 
@@ -145,31 +145,31 @@ void FreeSixIMU::AHRSupdate(float gx, float gy, float gz, float ax, float ay, fl
   q2q2 = q2 * q2;
   q2q3 = q2 * q3;
   q3q3 = q3 * q3;
-  
-  
+
+
   /*
   // Use magnetometer measurement only when valid (avoids NaN in magnetometer normalisation)
   if((mx != 0.0f) && (my != 0.0f) && (mz != 0.0f)) {
     float hx, hy, bx, bz;
     float halfwx, halfwy, halfwz;
-    
+
     // Normalise magnetometer measurement
     recipNorm = invSqrt(mx * mx + my * my + mz * mz);
     mx *= recipNorm;
     my *= recipNorm;
     mz *= recipNorm;
-    
+
     // Reference direction of Earth's magnetic field
     hx = 2.0f * (mx * (0.5f - q2q2 - q3q3) + my * (q1q2 - q0q3) + mz * (q1q3 + q0q2));
     hy = 2.0f * (mx * (q1q2 + q0q3) + my * (0.5f - q1q1 - q3q3) + mz * (q2q3 - q0q1));
     bx = sqrt(hx * hx + hy * hy);
     bz = 2.0f * (mx * (q1q3 - q0q2) + my * (q2q3 + q0q1) + mz * (0.5f - q1q1 - q2q2));
-    
+
     // Estimated direction of magnetic field
     halfwx = bx * (0.5f - q2q2 - q3q3) + bz * (q1q3 - q0q2);
     halfwy = bx * (q1q2 - q0q3) + bz * (q0q1 + q2q3);
     halfwz = bx * (q0q2 + q1q3) + bz * (0.5f - q1q1 - q2q2);
-    
+
     // Error is sum of cross product between estimated direction and measured direction of field vectors
     halfex = (my * halfwz - mz * halfwy);
     halfey = (mz * halfwx - mx * halfwz);
@@ -180,18 +180,18 @@ void FreeSixIMU::AHRSupdate(float gx, float gy, float gz, float ax, float ay, fl
   // Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisation)
   if((ax != 0.0f) && (ay != 0.0f) && (az != 0.0f)) {
     float halfvx, halfvy, halfvz;
-    
+
     // Normalise accelerometer measurement
     recipNorm = invSqrt(ax * ax + ay * ay + az * az);
     ax *= recipNorm;
     ay *= recipNorm;
     az *= recipNorm;
-    
+
     // Estimated direction of gravity
     halfvx = q1q3 - q0q2;
     halfvy = q0q1 + q2q3;
     halfvz = q0q0 - 0.5f + q3q3;
-  
+
     // Error is sum of cross product between estimated direction and measured direction of field vectors
     halfex += (ay * halfvz - az * halfvy);
     halfey += (az * halfvx - ax * halfvz);
@@ -220,7 +220,7 @@ void FreeSixIMU::AHRSupdate(float gx, float gy, float gz, float ax, float ay, fl
     gy += twoKp * halfey;
     gz += twoKp * halfez;
   }
-  
+
   // Integrate rate of change of quaternion
   gx *= (0.5f * (1.0f / sampleFreq));   // pre-multiply common factors
   gy *= (0.5f * (1.0f / sampleFreq));
@@ -232,7 +232,7 @@ void FreeSixIMU::AHRSupdate(float gx, float gy, float gz, float ax, float ay, fl
   q1 += (qa * gx + qc * gz - q3 * gy);
   q2 += (qa * gy - qb * gz + q3 * gx);
   q3 += (qa * gz + qb * gy - qc * gx);
-  
+
   // Normalise quaternion
   recipNorm = invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
   q0 *= recipNorm;
@@ -245,7 +245,7 @@ void FreeSixIMU::AHRSupdate(float gx, float gy, float gz, float ax, float ay, fl
 void FreeSixIMU::getQ(float * q) {
   float val[9];
   getValues(val);
-  
+
   /*
   DEBUG_PRINT(val[3] * M_PI/180);
   DEBUG_PRINT(val[4] * M_PI/180);
@@ -257,8 +257,8 @@ void FreeSixIMU::getQ(float * q) {
   DEBUG_PRINT(val[7]);
   DEBUG_PRINT(val[8]);
   */
-  
-  
+
+
   now = micros();
   sampleFreq = 1.0 / ((now - lastUpdate) / 1000000.0);
   lastUpdate = now;
@@ -273,7 +273,7 @@ void FreeSixIMU::getQ(float * q) {
 }
 
 // Returns the Euler angles in radians defined with the Aerospace sequence.
-// See Sebastian O.H. Madwick report 
+// See Sebastian O.H. Madwick report
 // "An efficient orientation filter for inertial and intertial/magnetic sensor arrays" Chapter 2 Quaternion representation
 void FreeSixIMU::getEuler(float * angles) {
 float q[4]; // quaternion
@@ -291,7 +291,7 @@ void FreeSixIMU::getAngles(float * angles) {
   angles[0] = a[0];
   angles[1] = a[1];
   angles[2] = a[2];
-  
+
   if(angles[0] < 0)angles[0] += 360;
   if(angles[1] < 0)angles[1] += 360;
   if(angles[2] < 0)angles[2] += 360;
@@ -306,11 +306,11 @@ void FreeSixIMU::getYawPitchRoll(float * ypr) {
   float q[4]; // quaternion
   float gx, gy, gz; // estimated gravity direction
   getQ(q);
-  
+
   gx = 2 * (q[1]*q[3] - q[0]*q[2]);
   gy = 2 * (q[0]*q[1] + q[2]*q[3]);
   gz = q[0]*q[0] - q[1]*q[1] - q[2]*q[2] + q[3]*q[3];
-  
+
   ypr[0] = atan2(2 * q[1] * q[2] - 2 * q[0] * q[3], 2 * q[0]*q[0] + 2 * q[1] * q[1] - 1) * 180/M_PI;
   ypr[1] = atan(gx / sqrt(gy*gy + gz*gz))  * 180/M_PI;
   ypr[2] = atan(gy / sqrt(gx*gx + gz*gz))  * 180/M_PI;

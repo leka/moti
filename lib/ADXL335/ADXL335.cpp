@@ -21,10 +21,10 @@ ADXL335::ADXL335(int pin_x, int pin_y, int pin_z, float aref)
 float ADXL335::geta2d(float gx, float gy)
 {
   float a;
-  
+
   a = gx * gx;
   a = fma(gy,gy,a);
-  
+
   return sqrt(a);
 }
 
@@ -33,13 +33,13 @@ float ADXL335::geta2d(float gx, float gy)
 float ADXL335::geta3d(float gx, float gy, float gz)
 {
   float a;
-  
+
   //use floating point multiply-add cpu func
   //sometimes we get better precision
   a = gx * gx;
   a = fma(gy,gy,a);
   a = fma(gz,gz,a);
-  
+
   return sqrt(a);
 }
 
@@ -52,18 +52,18 @@ void ADXL335::processDeadzone(float* gv)
 }
 
 float ADXL335::getGravity(int reading)
-{  
+{
   float voltage = reading * _aref;
   voltage /= 1024.0;
 
-  //minus the zero g bias 
+  //minus the zero g bias
   //then divide by mv/g
   //which when Vs = 3.3V, V/g = 0.330
   float gv = (voltage - _bias) / _mvG;
-  
+
   //minus the null zone
   processDeadzone(&gv);
-  
+
   return gv;
 }
 
@@ -74,13 +74,13 @@ float ADXL335::_getRho(float ax, float ay, float az)
 
 float ADXL335::_getPhi(float ax, float ay, float az)
 {
-  return atan2(ay, ax) * _rad2deg;  
+  return atan2(ay, ax) * _rad2deg;
 }
 
 float ADXL335::_getTheta(float ax, float ay, float az)
 {
   float rho = _getRho(ax, ay, az);
-  
+
   if (rho == 0.0)
     return NAN;
   else

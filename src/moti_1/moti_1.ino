@@ -24,7 +24,7 @@ const int DELTA_ACCELERO_THRESHOLD = 200;   //	Threshold used to know is the acc
 const int CRAZY_ACTIVITY_THRESHOLD= 4;    //	Is used to know if the activity around the robot is important. If so, the robot gets excited much faster - Smaller value means more excitement. 
 
 const int LED_MAX_BRIGHTNESS = 255;   //	Maximum led brightness
-const int BLUE_LED_MAX = 200;	//	Maximum blue led brightness - it appears that the blue color is stronger than the two others
+const int BLUE_LED_MAX = 255;	//	Maximum blue led brightness - it appears that the blue color is stronger than the two others
 
 const int DELTA_VOLUME_THRESHOLD = 4;
 
