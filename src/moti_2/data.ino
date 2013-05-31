@@ -66,3 +66,46 @@ void sendProcessingFeedback() {
 }
 
 
+
+void sendJSON(){
+	Serial.print(F('{'));
+
+		Serial.print(F('"accelerometer" : '));
+
+		Serial.print(F('{'))
+
+			Serial.print(F('"x" : "'));
+			Serial.print(XYZ[0]);
+			Serial.print(F('",'));
+
+			Serial.print(F('"y" : "'));
+			Serial.print(XYZ[1]);
+			Serial.print(F('",'));
+
+			Serial.print(F('"z" : "'));
+			Serial.print(XYZ[2]);
+			Serial.print(F('"');
+
+		Serial.print(F(' }'));
+
+		Serial.print(F('"gyroscope" : '));
+
+		Serial.print(F('{'))
+
+			Serial.print(F('"yaw" : "'));
+			Serial.print(XYZ[3]);
+			Serial.print(F('",'));
+
+			Serial.print(F('"pitch" : "'));
+			Serial.print(XYZ[4]);
+			Serial.print(F('",'));
+
+			Serial.print(F('"roll" : "'));
+			Serial.print(XYZ[5]);
+			Serial.print(F('"');
+
+		Serial.print(F(' }'));
+
+	Serial.println(F('}'));
+}
+

@@ -1,0 +1,13 @@
+{
+	"accelerometer" : {
+		"x" : "",
+		"y" : "",
+		"z" : ""
+	},
+
+	"gyroscope" : {
+		"pitch" : "",
+		"yaw" : "",
+		"roll" : ""
+	}
+}
