@@ -68,44 +68,45 @@ void sendProcessingFeedback() {
 
 
 void sendJSON(){
-	Serial.print(F('{'));
+	Serial.print("{");
 
-		Serial.print(F('"accelerometer" : '));
+		Serial.print("'accel' : ");
 
-		Serial.print(F('{'))
+		Serial.print("{");
 
-			Serial.print(F('"x" : "'));
+			Serial.print("'x' : '");
 			Serial.print(XYZ[0]);
-			Serial.print(F('",'));
+			Serial.print("', ");
 
-			Serial.print(F('"y" : "'));
+			Serial.print("'y' : '");
 			Serial.print(XYZ[1]);
-			Serial.print(F('",'));
+			Serial.print("', ");
 
-			Serial.print(F('"z" : "'));
+			Serial.print("'z' : '");
 			Serial.print(XYZ[2]);
-			Serial.print(F('"');
+			Serial.print("'");
 
-		Serial.print(F(' }'));
+		Serial.print(" } ");
 
-		Serial.print(F('"gyroscope" : '));
+		Serial.print("'gyro' : ");
 
-		Serial.print(F('{'))
+		Serial.print("{");
 
-			Serial.print(F('"yaw" : "'));
+			Serial.print("'yaw' : '");
 			Serial.print(XYZ[3]);
-			Serial.print(F('",'));
+			Serial.print("', ");
 
-			Serial.print(F('"pitch" : "'));
+			Serial.print("'pitch' : '");
 			Serial.print(XYZ[4]);
-			Serial.print(F('",'));
+			Serial.print("', ");
 
-			Serial.print(F('"roll" : "'));
+			Serial.print("'roll' : '");
 			Serial.print(XYZ[5]);
-			Serial.print(F('"');
+			Serial.print("'");
 
-		Serial.print(F(' }'));
+		Serial.print(" } ");
 
-	Serial.println(F('}'));
+
+	Serial.println("}");
 }
 
