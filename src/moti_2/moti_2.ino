@@ -71,6 +71,7 @@ int i;
 int RGB[3], RGB_BUFFER[3];
 int MOTOR[2], MOTOR_BUFFER[2];
 float XYZ[3], lastXYZ[3], deltaXYZ[3];
+float YPR[3], lastYPR[3], deltaYPR[3];
 int sleepy;
 
 //	DEBUG
@@ -158,7 +159,7 @@ void loop() {
 			RGBLED.blinkLED(2);
 
 			delay(100);
-
+			
 			shutDown();
 		}
 
