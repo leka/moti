@@ -4,26 +4,94 @@
 		"selected_items":
 		[
 			[
-				"Acc",
-				"AccelGyro"
+				"if",
+				"If_no_interaction"
 			],
 			[
-				"ra",
-				"random"
+				"Moti",
+				"Moti_is_on"
 			],
 			[
-				"print",
-				"println"
+				"Moti_",
+				"Moti_turns_on"
+			],
+			[
+				"If",
+				"If_no_interaction"
+			],
+			[
+				"Moti_i",
+				"Moti_is_shaked"
+			],
+			[
+				"postDat",
+				"postDataChunk"
+			],
+			[
+				"cr",
+				"CRAZY_ACTIVITY_THRESHOLD"
+			],
+			[
+				"ADXL",
+				"ADXL345"
+			],
+			[
+				"Slee",
+				"sleepy"
+			],
+			[
+				"setMoto",
+				"setMotorSpeedAndDirection"
+			],
+			[
+				"FAl",
+				"false"
+			],
+			[
+				"fade",
+				"fadeToBlue"
+			],
+			[
+				"LED",
+				"LEDrgb"
+			],
+			[
+				"blin",
+				"blinkLED"
+			],
+			[
+				"color",
+				"colorRGB"
+			],
+			[
+				"RGB",
+				"RGBLED"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "lib/Moti.bak/Moti.cpp",
+			"file": "moti.sublime-project",
 			"settings":
 			{
-				"buffer_size": 2045,
+				"buffer_size": 682,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "lib/Moti/Moti.cpp",
+			"settings":
+			{
+				"buffer_size": 2048,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/Ladislas/Library/Application Support/Sublime Text 2/Packages/SublimeClang/SublimeClang.sublime-settings",
+			"settings":
+			{
+				"buffer_size": 13844,
 				"line_ending": "Unix"
 			}
 		}
@@ -31,143 +99,55 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 71.0,
+		"height": 375.0,
 		"selected_items":
 		[
 			[
-				"install",
-				"Package Control: Install Package"
+				"node",
+				"Nodejs::Run::Current File + Arguments"
 			],
 			[
-				"in",
-				"Package Control: Install Package"
+				"run",
+				"Nodejs::Run::Current File + Arguments"
 			],
 			[
-				"pack",
-				"Package Control: List Packages"
+				"node run",
+				"Nodejs::Run::Current File"
 			],
 			[
-				"ins",
-				"Package Control: Install Package"
+				"rename",
+				"Nodejs::Run::Current File + Arguments"
 			],
 			[
-				"instal",
-				"Package Control: Install Package"
-			],
-			[
-				"rena",
-				"TernJS: Rename variable"
-			],
-			[
-				"tern",
-				"TernJS: Rename variable"
-			],
-			[
-				"ter",
-				"TernJS: Rename variable"
-			],
-			[
-				"insta",
-				"Package Control: Install Package"
-			],
-			[
-				"veri",
-				"Stino: Verify / Compile"
-			],
-			[
-				"very",
-				"Stino: Verify / Compile"
-			],
-			[
-				"ulo",
+				"u",
 				"Stino: Upload"
 			],
 			[
-				"REMOV",
-				"Package Control: Remove Package"
+				"seri",
+				"Stino: Serial Monitor-Start"
 			],
 			[
-				"pa",
-				"Package Control: List Packages"
+				"seria",
+				"Stino: Serial Monitor-Start"
 			],
 			[
-				"remove",
-				"Package Control: Remove Package"
-			],
-			[
-				"packa",
-				"Package Control: Remove Package"
-			],
-			[
-				"verify",
+				"stino com",
 				"Stino: Verify / Compile"
 			],
 			[
-				"stino veri",
+				"verif",
 				"Stino: Verify / Compile"
 			],
 			[
-				"stino verif",
-				"Stino: Verify / Compile"
-			],
-			[
-				"stino ver",
-				"Stino: Verify / Compile"
-			],
-			[
-				"sti ver",
-				"Stino: Verify / Compile"
-			],
-			[
-				"set ardu",
-				"Set Syntax: Arduino"
-			],
-			[
-				"set ardio",
-				"Set Syntax: Arduino"
-			],
-			[
-				"set ardui",
-				"Set Syntax: Arduino"
-			],
-			[
-				"uploa",
-				"Stino: Upload"
-			],
-			[
-				"stino port",
-				"Stino: Select Serial Port"
-			],
-			[
-				"indent",
-				"Indentation: Convert to Tabs"
-			],
-			[
-				"sti",
-				"Stino: Upload"
-			],
-			[
-				"list",
-				"Package Control: List Packages"
-			],
-			[
-				"inst",
-				"Package Control: Install Package"
-			],
-			[
-				"stino",
-				"Stino: Upload"
-			],
-			[
-				"pac",
-				"Package Control: List Packages"
+				"mark",
+				"Markdown Preview: preview in Browser"
 			]
 		],
-		"width": 462.0
+		"width": 453.0
 	},
 	"console":
 	{
-		"height": 167.0
+		"height": 0.0
 	},
 	"distraction_free":
 	{
@@ -180,73 +160,59 @@
 	},
 	"file_history":
 	[
-		"/Users/Ladislas/dev/leka/moti/src/moti_2/setup.ino",
-		"/Users/Ladislas/dev/leka/moti/src/moti_2/motors.ino",
-		"/Users/Ladislas/dev/leka/moti/src/moti_2/function.ino",
-		"/Users/Ladislas/dev/leka/moti/src/moti_2/moti_2.ino",
-		"/Users/Ladislas/dev/leka/moti/src/moti_2/sensors.ino",
 		"/Users/Ladislas/dev/leka/moti/lib/Moti.bak/Moti.h",
-		"/Users/Ladislas/dev/leka/moti/lib/Moti.bak/Moti.cpp",
-		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FreeSixIMU.cpp",
-		"/Users/Ladislas/dev/leka/moti/lib/Moti/Moti.cpp",
-		"/Users/Ladislas/dev/leka/moti/lib/Moti/Moti.h",
-		"/Users/Ladislas/dev/leka/moti/src/moti_2/data.ino",
-		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FIMU_ITG3200.h",
+		"/Users/Ladislas/Library/Application Support/Sublime Text 2/Packages/User/SublimeClang.sublime-settings",
 		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FIMU_ADXL345.cpp",
-		"/Users/Ladislas/dev/node/first-node-app/hello.js",
-		"/Users/Ladislas/Library/Application Support/Sublime Text 2/Packages/TernJS/TernJS.sublime-settings",
-		"/Users/Ladislas/dev/node/arduino-server/function.js",
-		"/Users/Ladislas/dev/node/arduino-server/server.js",
-		"/Users/Ladislas/dev/node/arduino-server/index.html",
-		"/private/etc/paths",
-		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/Processing_Example/FreeSix_cube_Processing/FreeSix_cube_Processing.pde",
-		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/Processing_Example/FreeSix_cube_Arduino/FreeSix_cube_Arduino.ino",
+		"/Users/Ladislas/dev/leka/moti/src/moti_2/sensors.ino",
+		"/Users/Ladislas/dev/leka/moti/src/moti_2/moti_2.ino",
+		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FreeSixIMU.cpp",
+		"/Users/Ladislas/dev/dot/scenario.dot",
+		"/Users/Ladislas/dev/dot/scenario_2.dot",
+		"/Users/Ladislas/dev/dot/moti.dot",
+		"/Users/Ladislas/dev/leka/moti/src/moti_2/data.ino",
+		"/Users/Ladislas/dev/js/index.html",
+		"/Users/Ladislas/dev/node/src/first-node-app/README.md",
+		"/Users/Ladislas/Library/Application Support/Sublime Text 2/Packages/Nodejs/Nodejs.sublime-settings",
+		"/Users/Ladislas/dev/leka/moti-processing-app/src/app3/get_data/get_data.pde",
+		"/Users/Ladislas/dev/leka/moti/src/moti_2/setup.ino",
+		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FreeSixIMU.h",
+		"/Users/Ladislas/dev/leka/moti/test/unit/moti_2/Accelerometer/accelerometer.ino",
 		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/examples/FreeSix_cube_Arduino/FreeSix_cube_Arduino.ino",
-		"/Users/Ladislas/Desktop/6dof(Arduino)[V7]/sixDOF_Example.ino",
-		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/examples/FreeSix_cube_Processing/FreeSix_cube_Processing.pde",
-		"/Users/Ladislas/dev/leka/moti/src/moti_1/moti_1.ino",
-		"/Users/Ladislas/dev/leka/moti/test/unit/moti_2/led/led.ino",
+		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/CommunicationUtils.cpp",
+		"/Users/Ladislas/dev/leka/moti/lib/RGBLED/RGBLED.h",
+		"/Users/Ladislas/dev/leka/moti/lib/RGBLED/RGBLED.cpp",
+		"/Users/Ladislas/dev/leka/moti/src/moti_2/led.ino",
+		"/Users/Ladislas/dev/leka/moti/src/moti_2/function.ino",
+		"/Users/Ladislas/dev/leka/moti/src/moti_2/motors.ino",
+		"/Users/Ladislas/dev/leka/moti/src/moti_2/settings.ino",
+		"/Users/Ladislas/dev/leka/moti/src/README.md",
 		"/Users/Ladislas/dev/leka/moti/lib/RGBLED/Example/RGB_color/RGB_color.ino",
-		"/Users/Ladislas/dev/leka/moti/test/unit/moti_2/Xbee/receive/receive.ino",
-		"/Users/Ladislas/dev/leka/moti/test/unit/moti_2/Xbee/send/send.ino",
-		"/Users/Ladislas/dev/leka/moti/lib/XBee/examples/Series2_Tx/Series2_Tx.pde",
-		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/examples/FreeSix_cube_Processing/FreeSix_cube_Processing.ino",
-		"/Users/Ladislas/dev/leka/moti/lib/PlainProtocol/examples/AdvancedVersionReceivingCode/AdvancedVersionReceivingCode.ino",
-		"/Users/Ladislas/dev/leka/moti/lib/PlainProtocol/examples/AdvancedVersionsendingCode/AdvancedVersionSendingCode.ino",
-		"/Users/Ladislas/Desktop/xbeeSerialTerminal/xbeeSerialTerminal.pde",
-		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/examples/sixDOF_Example/sixDOF_Example.ino",
-		"/Users/Ladislas/dev/leka/moti-processing-app/src/app2/get_data/get_data.pde",
-		"/Users/Ladislas/dev/leka/moti-processing-app/.gitignore",
-		"/Users/Ladislas/dev/leka/moti-processing-app/src/app1/get_data/get_data.pde",
-		"/Users/Ladislas/dev/leka/moti-processing-app/log/2013-05-13-18-04-51-data.log",
-		"/Users/Ladislas/dev/leka/moti-processing-app/src/app1/get_data/2013-05-13-18-11-38-graphs.png",
-		"/Users/Ladislas/dev/leka/moti-processing-app/src/app1/get_data/2013-05-13-18-04-51-graphs.png",
-		"/Users/Ladislas/dev/leka/moti-processing-app/Makefile",
-		"/Users/Ladislas/dev/leka/moti/test/unit/moti_1/leds/leds.ino",
-		"/Users/Ladislas/Dropbox/dev/shell/profile",
+		"/Users/Ladislas/dev/leka/moti/lib/RGBLED/Example/HSV_color/HSV_color.ino",
+		"/Users/Ladislas/dev/leka/moti/src/moti_1/moti_1.ino",
+		"/Users/Ladislas/Desktop/SoScience/Expérience/param_foam.txt",
+		"/Users/Ladislas/dev/leka/moti/lib/ADXL335/ADXL335.cpp",
+		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/DebugUtils.h",
+		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FIMU_ADXL345.h",
+		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FIMU_ITG3200.cpp",
+		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FIMU_ITG3200.h",
+		"/Users/Ladislas/dev/leka/moti/lib/README.md",
+		"/Users/Ladislas/dev/leka/moti/sketch/README.md",
+		"/Users/Ladislas/dev/leka/moti/test/unit/moti_2/led/led.ino",
+		"/Users/Ladislas/Dropbox/dev/vhosts/leka.dev/assets/js/leka.js",
+		"/Users/Ladislas/Dropbox/dev/vhosts/leka.dev/assets/js/leka-ck.js",
+		"/Users/Ladislas/Dropbox/dev/vhosts/leka.dev/assets/less/carousel.less",
+		"/Users/Ladislas/Dropbox/dev/vhosts/leka.dev/php/social.php",
+		"/Users/Ladislas/Desktop/index.html",
+		"/Users/Ladislas/dev/node/node_modules/express/Readme.md",
+		"/Users/Ladislas/dev/node/node_modules/socket.io/Readme.md",
+		"/Users/Ladislas/dev/node/node_modules/serialport/README.md",
+		"/Applications/MAMP/conf/apache/httpd.conf",
 		"/Users/Ladislas/Dropbox/dev/conf/local-httpd-vhosts.conf",
-		"/Users/Ladislas/Dropbox/dev/conf/local-development.conf",
-		"/Users/Ladislas/Desktop/antoine.txt",
-		"/Users/Ladislas/Desktop/antoine.pdf",
-		"/Users/Ladislas/dev/rails/treebook/app/views/statuses/show.html.erb",
-		"/Users/Ladislas/dev/rails/treebook/app/models/user.rb",
-		"/Users/Ladislas/dev/rails/treebook/app/views/statuses/_form.html.erb",
-		"/Users/Ladislas/dev/rails/treebook/db/migrate/20130507144711_add_user_id_to_statuses.rb",
-		"/Users/Ladislas/dev/rails/treebook/app/views/statuses/index.html.erb",
-		"/Users/Ladislas/dev/rails/treebook/app/models/status.rb",
-		"/Users/Ladislas/dev/rails/treebook/config/routes.rb",
-		"/Users/Ladislas/dev/rails/treebook/Gemfile",
-		"/Users/Ladislas/dev/rails/treebook/app/views/devise/registrations/new.html.erb",
-		"/Users/Ladislas/dev/rails/treebook/db/migrate/20130507141727_devise_create_users.rb",
-		"/Users/Ladislas/dev/rails/treebook/config/environments/development.rb",
-		"/Users/Ladislas/dev/rails/treebook/app/views/layouts/application.html.erb",
-		"/Users/Ladislas/dev/rails/treebook/config/application.rb",
-		"/Users/Ladislas/dev/rails/treebook/app/assets/javascripts/statuses.js.coffee",
-		"/Users/Ladislas/dev/rails/treebook/app/assets/stylesheets/statuses.css.scss"
+		"/Applications/MAMP/conf/apache/extra/httpd-vhosts.conf"
 	],
 	"find":
 	{
-		"height": 37.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -260,30 +226,52 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"void ",
-			"int ",
-			"	//",
-			"int ",
-			"	//",
-			"int ",
-			"const",
-			" //",
-			"get",
-			"Morse",
+			"XYZ",
+			"yaw",
+			"reacts",
+			"attenton",
+			"Moti_waits_for_interaction",
+			"Moti_reacts -> ",
+			" ",
+			"yaw",
+			"XYZ",
 			"\"",
-			"random(0,255)",
-			"xbee",
-			"XBee",
-			"xbee",
-			"ecriture",
+			"\");",
+			"Serial.print(",
+			"start",
+			"DELTA_ACCELERO_THRESHOLD",
+			"crazy",
+			"|| deltaXYZ[1] > CRAZY_ACTIVITY_THRESHOLD || deltaXYZ[2] > CRAZY_ACTIVITY_THRESHOLD",
+			"|| deltaXYZ[1] > CRAZY_ACTIVITY_THRESHOLD || deltaXYZ[2] > CRAZY_ACTIVITY_THRESHOLD) {\n				sleepy=0;",
+			"||",
+			"i",
+			"serial",
+			" * 1000",
+			"100",
+			"  ",
+			"setRgbLed",
+			"100",
+			"LEDrgb",
+			"unsigned char",
+			"blink",
+			"int",
+			"uint8_t",
+			"int",
+			"uint8_t",
+			"myled",
+			"rgbLED",
+			"RgbLed",
+			"rgbLED",
+			"RGBLED",
+			"255",
+			"unhex",
 			"Development",
-			"h2",
-			"first_name"
+			"Dropbox"
 		],
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": false,
+		"regex": true,
 		"replace_history":
 		[
 		],
@@ -301,18 +289,46 @@
 			[
 				{
 					"buffer": 0,
-					"file": "lib/Moti.bak/Moti.cpp",
+					"file": "moti.sublime-project",
 					"settings":
 					{
-						"buffer_size": 2045,
+						"buffer_size": 682,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								665,
-								665
+								86,
+								86
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "lib/Moti/Moti.cpp",
+					"settings":
+					{
+						"buffer_size": 2048,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								98,
+								98
 							]
 						],
 						"settings":
@@ -320,7 +336,35 @@
 							"syntax": "Packages/C++/C++.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 437.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/Ladislas/Library/Application Support/Sublime Text 2/Packages/SublimeClang/SublimeClang.sublime-settings",
+					"settings":
+					{
+						"buffer_size": 13844,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2295.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -359,413 +403,805 @@
 		]
 	},
 	"menu_visible": true,
-	"output.Compilation_6dof(Arduino)[V7]_227820":
+	"output.Compilation_FreeSix_cube_Arduino_720743":
+	{
+		"height": 353.0
+	},
+	"output.Compilation_FreeSix_cube_Arduino_826502":
+	{
+		"height": 112.0
+	},
+	"output.Compilation_FreeSix_cube_Arduino_830785":
+	{
+		"height": 334.0
+	},
+	"output.Compilation_FreeSix_cube_Arduino_898102":
+	{
+		"height": 112.0
+	},
+	"output.Compilation_RGBLED_281812":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_AdvancedVersionReceivingCode_208068":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionReceivingCode_239199":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionReceivingCode_253916":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionReceivingCode_311604":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionReceivingCode_419768":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionReceivingCode_56603":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionReceivingCode_679241":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionReceivingCode_69193":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionReceivingCode_763357":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionReceivingCode_7912":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionReceivingCode_800609":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionReceivingCode_884905":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionReceivingCode_929470":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionReceivingCode_93732":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionsendingCode_191897":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionsendingCode_270462":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionsendingCode_420289":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionsendingCode_442435":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionsendingCode_474372":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionsendingCode_48700":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionsendingCode_563500":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionsendingCode_775760":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionsendingCode_79628":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionsendingCode_858485":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionsendingCode_859499":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionsendingCode_923267":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionsendingCode_974077":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_AdvancedVersionsendingCode_982450":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_FreeSix_cube_Arduino_119642":
+	"output.Compilation_RGBLED_493722":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Arduino_262206":
+	"output.Compilation_RGBLED_635865":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Arduino_263004":
+	"output.Compilation_RGBLED_646765":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Arduino_266296":
+	"output.Compilation_RGBLED_650701":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Arduino_291394":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_FreeSix_cube_Arduino_299297":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_FreeSix_cube_Arduino_302374":
+	"output.Compilation_RGBLED_665207":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Arduino_32215":
+	"output.Compilation_RGBLED_900025":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Arduino_327854":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_FreeSix_cube_Arduino_341462":
-	{
-		"height": 318.0
-	},
-	"output.Compilation_FreeSix_cube_Arduino_405540":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_FreeSix_cube_Arduino_440566":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_FreeSix_cube_Arduino_466459":
+	"output.Compilation_RGBLED_927212":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Arduino_491619":
+	"output.Compilation_RGBLED_974977":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Arduino_514269":
+	"output.Compilation_RGB_color_56708":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Arduino_597360":
+	"output.Compilation_RGB_color_932950":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Arduino_604396":
+	"output.Compilation_led_597973":
+	{
+		"height": 112.0
+	},
+	"output.Compilation_moti_1_952394":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Arduino_625192":
+	"output.Compilation_moti_2_111401":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Arduino_718539":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_FreeSix_cube_Arduino_737745":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_FreeSix_cube_Arduino_781068":
+	"output.Compilation_moti_2_118247":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Arduino_796213":
-	{
-		"height": 341.0
-	},
-	"output.Compilation_FreeSix_cube_Arduino_875632":
-	{
-		"height": 285.0
-	},
-	"output.Compilation_FreeSix_cube_Arduino_929935":
+	"output.Compilation_moti_2_119582":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Arduino_999227":
+	"output.Compilation_moti_2_123924":
 	{
-		"height": 112.0
+		"height": 289.0
 	},
-	"output.Compilation_FreeSix_cube_Processing_611283":
+	"output.Compilation_moti_2_125473":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Processing_749678":
+	"output.Compilation_moti_2_125631":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Processing_75441":
+	"output.Compilation_moti_2_127581":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_RGB_color_194157":
+	"output.Compilation_moti_2_127695":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_RGB_color_28748":
+	"output.Compilation_moti_2_128064":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_RGB_color_656908":
+	"output.Compilation_moti_2_128674":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_RGB_color_751528":
+	"output.Compilation_moti_2_138913":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_RGB_color_76719":
+	"output.Compilation_moti_2_142159":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_RGB_color_786405":
+	"output.Compilation_moti_2_150404":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_RGB_color_817468":
+	"output.Compilation_moti_2_160877":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_RGB_color_930517":
+	"output.Compilation_moti_2_164338":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_RGB_color_96407":
+	"output.Compilation_moti_2_167111":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_leds_900721":
+	"output.Compilation_moti_2_170264":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_moti_1_1881":
+	"output.Compilation_moti_2_175052":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_184291":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_198791":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_199083":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_210108":
+	{
+		"height": 305.0
+	},
+	"output.Compilation_moti_2_21129":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_21886":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_22724":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_229589":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_232508":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_23356":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_235782":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_242079":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_242132":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_243514":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_243680":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_250190":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_253953":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_262819":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_263675":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_266163":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_266574":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_267943":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_274644":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_278101":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_278418":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_285441":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_287477":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_300678":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_300707":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_302777":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_307857":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_313391":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_313431":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_334366":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_33677":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_337246":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_340054":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_340703":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_365071":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_368287":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_373671":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_384011":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_386928":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_399260":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_406431":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_408370":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_408935":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_425407":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_442189":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_445792":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_446928":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_455358":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_461280":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_465031":
+	{
+		"height": 247.0
+	},
+	"output.Compilation_moti_2_468319":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_485533":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_486170":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_490458":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_506284":
 	{
 		"height": 114.0
 	},
-	"output.Compilation_moti_1_207861":
+	"output.Compilation_moti_2_511274":
 	{
 		"height": 114.0
 	},
-	"output.Compilation_moti_1_219731":
-	{
-		"height": 114.0
-	},
-	"output.Compilation_moti_1_297309":
-	{
-		"height": 114.0
-	},
-	"output.Compilation_moti_2_99722":
+	"output.Compilation_moti_2_514967":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_motors_333659":
+	"output.Compilation_moti_2_515104":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_516654":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_518707":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_520775":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_523076":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_523151":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_532083":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_535093":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_536801":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_539234":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_539658":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_545137":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_547630":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_54868":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_552018":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_552350":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_557074":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_572017":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_580548":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_580998":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_583349":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_589999":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_596066":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_599420":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_612690":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_612965":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_618661":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_620569":
+	{
+		"height": 273.0
+	},
+	"output.Compilation_moti_2_621345":
 	{
 		"height": 114.0
 	},
-	"output.Compilation_motors_352389":
+	"output.Compilation_moti_2_627826":
 	{
-		"height": 114.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_12992":
+	"output.Compilation_moti_2_628107":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_143193":
+	"output.Compilation_moti_2_629651":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_207747":
+	"output.Compilation_moti_2_630398":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_211957":
+	"output.Compilation_moti_2_632315":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_226464":
+	"output.Compilation_moti_2_633926":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_23336":
+	"output.Compilation_moti_2_635912":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_242102":
+	"output.Compilation_moti_2_640849":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_275148":
+	"output.Compilation_moti_2_643404":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_338275":
+	"output.Compilation_moti_2_645535":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_393859":
+	"output.Compilation_moti_2_651881":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_464752":
+	"output.Compilation_moti_2_656556":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_593826":
+	"output.Compilation_moti_2_666243":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_717438":
+	"output.Compilation_moti_2_67174":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_8108":
+	"output.Compilation_moti_2_675176":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_851671":
+	"output.Compilation_moti_2_67760":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_receive_995325":
+	"output.Compilation_moti_2_688542":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_send_179847":
+	"output.Compilation_moti_2_694751":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_send_364637":
+	"output.Compilation_moti_2_696692":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_send_410284":
+	"output.Compilation_moti_2_69803":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_send_453138":
+	"output.Compilation_moti_2_698726":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_send_546217":
+	"output.Compilation_moti_2_710346":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_send_678281":
+	"output.Compilation_moti_2_71288":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_send_684138":
+	"output.Compilation_moti_2_713323":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_send_766424":
+	"output.Compilation_moti_2_729858":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_send_821352":
+	"output.Compilation_moti_2_747409":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_send_896530":
+	"output.Compilation_moti_2_749674":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_sixDOF_Example_109631":
+	"output.Compilation_moti_2_753617":
 	{
-		"height": 112.0
+		"height": 102.0
 	},
-	"output.Compilation_sixDOF_Example_429537":
+	"output.Compilation_moti_2_789539":
 	{
-		"height": 112.0
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_79723":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_801629":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_803160":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_818554":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_831114":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_831992":
+	{
+		"height": 380.0
+	},
+	"output.Compilation_moti_2_832778":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_838977":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_841278":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_84528":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_846149":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_851974":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_852221":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_853412":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_853799":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_859333":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_865773":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_866016":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_873106":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_882918":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_883224":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_883444":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_887176":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_890006":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_907236":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_907423":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_908647":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_927109":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_930697":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_935193":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_935208":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_947182":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_947207":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_951666":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_95253":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_952544":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_960475":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_966740":
+	{
+		"height": 358.0
+	},
+	"output.Compilation_moti_2_967158":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_971749":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_974562":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_982111":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_986625":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_987262":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_989555":
+	{
+		"height": 102.0
+	},
+	"output.Compilation_moti_2_997055":
+	{
+		"height": 102.0
 	},
 	"output.clang":
 	{
@@ -773,11 +1209,11 @@
 	},
 	"output.exec":
 	{
-		"height": 262.0
+		"height": 198.0
 	},
 	"output.stino_log":
 	{
-		"height": 136.0
+		"height": 102.0
 	},
 	"replace":
 	{
@@ -789,14 +1225,6 @@
 		"height": 0.0,
 		"selected_items":
 		[
-			[
-				"appli",
-				"config/application.rb"
-			],
-			[
-				"gem",
-				"Gemfile"
-			]
 		],
 		"width": 0.0
 	},
@@ -809,9 +1237,9 @@
 		"width": 0.0
 	},
 	"show_minimap": true,
-	"show_open_files": true,
+	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 310.0,
+	"side_bar_width": 250.0,
 	"status_bar_visible": true
 }
