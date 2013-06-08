@@ -19,40 +19,40 @@ Moti::Moti(int red_led_pin, int green_led_pin, int blue_led_pin, int left_motor_
 // SET CONSTANTS //
 //###############//
 
-int Moti::setGlobalDelay(){
-
+void Moti::setGlobalDelay(int value){
+	_globalDelay = value;
 }
 
-int Moti::setSleepDelay(){
-
+void Moti::setSleepDelay(int value){
+	_sleepDelay = value;
 }
 
-int Moti::setAwakeThreshold(){
-
+void Moti::setAwakeThreshold(int value){
+	_awakeThreshold = value;
 }
 
-int Moti::setDeltaAccelThreshold(){
-
+void Moti::setDeltaAccelThreshold(int value){
+	_deltaAccelThreshold = value;
 }
 
-int Moti::setCrazyActivityThreshold(){
-
+void Moti::setHighActivityThreshold(int value){
+	_highActivityThreshold = value;
 }
 
-int Moti::setLedMaxBrightness(){
-
+void Moti::setLedMaxBrightness(int value){
+	_ledMaxBrightness = value;
 }
 
-int Moti::setRedMaxBrightness(){
-
+void Moti::setRedMaxBrightness(int value){
+	_redMaxBrightness = value;
 }
 
-int Moti::setGreenMaxBrightness(){
-
+void Moti::setGreenMaxBrightness(int value){
+	_greenMaxBrightness = value;
 }
 
-int Moti::setBlueMaxBrightness(){
-
+void Moti::setBlueMaxBrightness(int value){
+	_blueMaxBrightness = value;
 }
 
 
@@ -61,40 +61,83 @@ int Moti::setBlueMaxBrightness(){
 //###############//
 
 int Moti::getGlobalDelay(){
-
+	return _globalDelay;
 }
 
 int Moti::getSleepDelay(){
-
+	return _sleepDelay;
 }
 
 int Moti::getAwakeThreshold(){
-
+	return _awakeThreshold;
 }
 
 int Moti::getDeltaAccelThreshold(){
-
+	return _deltaAccelThreshold;
 }
 
 int Moti::getHighActivityThreshold(){
-
+	return _highActivityThreshold;
 }
 
 int Moti::getLedMaxBrightness(){
-
+	return _ledMaxBrightness;
 }
 
 int Moti::getRedMaxBrightness(){
-
+	return _redMaxBrightness;
 }
 
 int Moti::getGreenMaxBrightness(){
-
+	return _greenMaxBrightness;
 }
 
 int Moti::getBlueMaxBrightness(){
+	return _blueMaxBrightness;
+}
+
+
+//#################//
+// RESET CONSTANTS //
+//#################//
+
+void Moti::resetGlobalDelay(int value){
 
 }
+
+void Moti::resetSleepDelay(int value){
+
+}
+
+void Moti::resetAwakeThreshold(int value){
+
+}
+
+void Moti::resetDeltaAccelThreshold(int value){
+
+}
+
+void Moti::resetHighActivityThreshold(int value){
+
+}
+
+
+void Moti::resetLedMaxBrightness(int value){
+
+}
+
+void Moti::resetRedMaxBrightness(int value){
+
+}
+
+void Moti::resetGreenMaxBrightness(int value){
+
+}
+
+void Moti::resetBlueMaxBrightness(int value){
+
+}
+
 
 
 //###########################//

@@ -11,16 +11,16 @@ class Moti {
 		Moti(int red_led_pin, int green_led_pin, int blue_led_pin, int left_motor_speed_pin, int left_motor_direction_pin, int right_motor_speed_pin, int right_motor_direction_pin);
 
 		//	SET CONSTANTS
-		int setGlobalDelay();
-		int setSleepDelay();
-		int setAwakeThreshold();
-		int setDeltaAccelThreshold();
-		int setCrazyActivityThreshold();
+		void setGlobalDelay(int value);
+		void setSleepDelay(int value);
+		void setAwakeThreshold(int value);
+		void setDeltaAccelThreshold(int value);
+		void setHighActivityThreshold(int value);
 
-		int setLedMaxBrightness();
-		int setRedMaxBrightness();
-		int setGreenMaxBrightness();
-		int setBlueMaxBrightness();
+		void setLedMaxBrightness(int value);
+		void setRedMaxBrightness(int value);
+		void setGreenMaxBrightness(int value);
+		void setBlueMaxBrightness(int value);
 
 		//	GET CONSTANTS
 		int getGlobalDelay();	//	Delay used at the end of void loop() - The higher, the slower the robot is.
@@ -33,6 +33,18 @@ class Moti {
 		int getRedMaxBrightness();
 		int getGreenMaxBrightness();
 		int getBlueMaxBrightness();
+
+		//	RESET CONSTANTS
+		void resetGlobalDelay(int value);
+		void resetSleepDelay(int value);
+		void resetAwakeThreshold(int value);
+		void resetDeltaAccelThreshold(int value);
+		void resetHighActivityThreshold(int value);
+
+		void resetLedMaxBrightness(int value);
+		void resetRedMaxBrightness(int value);
+		void resetGreenMaxBrightness(int value);
+		void resetBlueMaxBrightness(int value);
 
 
 		//	DATA TRANSFER TO COMPUTER
@@ -96,6 +108,17 @@ class Moti {
 		int _redMaxBrightness;
 		int _greenMaxBrightness;
 		int _blueMaxBrightness;
+
+		int _DEFAULT_GLOBAL_DELAY;
+		int _DEFAULT_SLEEP_DELAY;
+		int _DEFAULT_AWAKE_THRESHOLD;
+		int _DEFAULT_DELTA_ACCEL_THRESHOLD;
+		int _DEFAULT_HIGH_ACTIVITY_THRESHOLD;
+
+		int _DEFAULT_LED_MAX_BRIGHTNESS;
+		int _DEFAULT_RED_MAX_BRIGHTNESS;
+		int _DEFAULT_GREEN_MAX_BRIGHTNESS;
+		int _DEFAULT_BLUE_MAX_BRIGHTNESS;
 
 		//	MOTOR PINS
 		int _leftMotorSpeedPin;
