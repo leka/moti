@@ -3,25 +3,25 @@
 	[
 		{
 			"path": "/Users/Ladislas/dev/leka/moti"
+		},
+		{
+			"path": "/Users/Ladislas/dev/leka/moti-processing-app"
 		}
 	],
-
-	 "settings":
-    {
-        "sublimeclang_options":
-        [
-            "-D__AVR_ATmega328P__",
-            "-DARDUINO=100",
-            "-DF_CPU=16000000L",
-            "-Wno-unknown-attributes",
-            "-Wno-attributes",
-            "-I${folder:${project_path:NAME_HERE.sublime-project}}/lib/**",
-            "-I/Applications/Arduino.app/**",
-            "-I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino",
-            "-I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/standard",
-            "-I/Applications/Arduino.app/Contents/Resources/Java/hardware/tools/avr/avr/include",
-            "-I/Applications/Arduino.app/Contents/Resources/Java/hardware/tools/avr/avr/include/**"
-        ]
-    }
+	"settings":
+	{
+		"sublimeclang_options":
+		[
+			"-D__AVR_ATmega328P__",
+			"-DARDUINO=100",
+			"-DF_CPU=16000000L",
+			"-Wno-unknown-attributes",
+			"-Wno-attributes",
+			"-I${folder:${project_path:NAME_HERE.sublime-project}}/lib/**",
+			"-I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino",
+			"-I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/standard",
+			"-I/Applications/Arduino.app/Contents/Resources/Java/hardware/tools/avr/avr/include",
+			"-I/Applications/Arduino.app/Contents/Resources/Java/hardware/tools/avr/avr/include/**"
+		]
+	}
 }
-
