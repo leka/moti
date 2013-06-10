@@ -3,4 +3,3 @@ tmp/*
 *~
 .DS_Store
 build-tmp/
-*.sublime-project
