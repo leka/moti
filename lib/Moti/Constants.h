@@ -26,5 +26,3 @@
 	const int GREEN_PIN = 10;
 	const int BLUE_PIN  = 11;
 
-
-#endif
