@@ -18,6 +18,7 @@
 			"-Wno-unknown-warning-option",
 			"-Wno-attributes",
 			"-I${folder:${project_path:NAME_HERE.sublime-project}}/lib/**",
+			"-I/Applications/Arduino.app/Contents",
 			"-I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino",
 			"-I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/standard",
 			"-I/Applications/Arduino.app/Contents/Resources/Java/hardware/tools/avr/avr/include",
