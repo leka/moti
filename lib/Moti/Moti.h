@@ -6,9 +6,8 @@
 class Moti {
 
 	public:
-		//	CONSTRUCTORS
-		Moti();
-		Moti(int red_led_pin, int green_led_pin, int blue_led_pin, int left_motor_speed_pin, int left_motor_direction_pin, int right_motor_speed_pin, int right_motor_direction_pin);
+
+		static Moti & getInstance();
 
 		//	SET CONSTANTS
 		void setGlobalDelay(int value);
@@ -87,6 +86,9 @@ class Moti {
 
 
 	private:
+
+		//	CONSTRUCTORS
+		Moti();
 
 		//	LED
 		void initLed();

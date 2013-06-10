@@ -7,13 +7,15 @@
 // CONSTRUCTORS //
 //##############//
 
+Moti & Moti::getInstance() {
+	static Moti singleton;
+	return singleton;
+}
+
 Moti::Moti(){
 
 }
 
-Moti::Moti(int red_led_pin, int green_led_pin, int blue_led_pin, int left_motor_speed_pin, int left_motor_direction_pin, int right_motor_speed_pin, int right_motor_direction_pin){
-
-}
 
 //###############//
 // SET CONSTANTS //
