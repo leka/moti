@@ -1,5 +1,10 @@
-#include "Arduino.h"
 #include "Moti.h"
+#include "Constants.h"
+
+#include "Arduino.h"
+
+#include "FreeSixIMU.h"
+#include "RGBLED.h"
 
 
 
@@ -104,7 +109,7 @@ int Moti::getBlueMaxBrightness(){
 //#################//
 
 void Moti::resetGlobalDelay(int value){
-
+	_globalDelay = DEFAUTL_GLOBAL_DELAY;
 }
 
 void Moti::resetSleepDelay(int value){

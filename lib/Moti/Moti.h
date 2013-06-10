@@ -1,7 +1,13 @@
-#ifndef Moti_h
-#define Moti_h
+#ifndef __COM_LEKA_ARDUINO_MOTI_H_
+#define __COM_LEKA_ARDUINO_MOTI_H_
+
+#include "Moti.h"
+#include "Constants.h"
 
 #include "Arduino.h"
+
+#include "FreeSixIMU.h"
+#include "RGBLED.h"
 
 class Moti {
 
@@ -90,16 +96,14 @@ class Moti {
 		//	CONSTRUCTORS
 		Moti();
 
-		//	LED
-		void initLed();
-		void initLed(int Red_Pin, int Green_Pin, int Blue_Pin);
+		//	VARIABLES
+		int i;
+		int rgb[3], rgbBuffer[3];
+		int motor[2], MOTOR_BUFFER[2];
+		float XYZ[3], lastXYZ[3], deltaXYZ[3];
+		float YPR[3], lastYPR[3], deltaYPR[3];
+		int sleepy;
 
-		// MOTORS
-		void initMotors();
-		void initMotors(int left_motor_speed_pin, int left_motor_direction_pin, int right_motor_speed_pin, int right_motor_direction_pin);
-
-
-		//	CONSTANTS
 		int _globalDelay;
 		int _sleepDelay;
 		int _awakeThreshold;
@@ -111,30 +115,13 @@ class Moti {
 		int _greenMaxBrightness;
 		int _blueMaxBrightness;
 
-		int _DEFAULT_GLOBAL_DELAY;
-		int _DEFAULT_SLEEP_DELAY;
-		int _DEFAULT_AWAKE_THRESHOLD;
-		int _DEFAULT_DELTA_ACCEL_THRESHOLD;
-		int _DEFAULT_HIGH_ACTIVITY_THRESHOLD;
+		//	LED
+		void initLed();
+		void initLed(int Red_Pin, int Green_Pin, int Blue_Pin);
 
-		int _DEFAULT_LED_MAX_BRIGHTNESS;
-		int _DEFAULT_RED_MAX_BRIGHTNESS;
-		int _DEFAULT_GREEN_MAX_BRIGHTNESS;
-		int _DEFAULT_BLUE_MAX_BRIGHTNESS;
-
-		//	MOTOR PINS
-		int _leftMotorSpeedPin;
-		int _leftMotorDirectionPin;
-		int _rightMotorSpeedPin;
-		int _rightMotorDirectionPin;
-
-		//	VARIABLES
-		int i;
-		int rgb[3], rgbBuffer[3];
-		int motor[2], MOTOR_BUFFER[2];
-		float XYZ[3], lastXYZ[3], deltaXYZ[3];
-		float YPR[3], lastYPR[3], deltaYPR[3];
-		int sleepy;
+		// MOTORS
+		void initMotors();
+		void initMotors(int left_motor_speed_pin, int left_motor_direction_pin, int right_motor_speed_pin, int right_motor_direction_pin);
 
 		//	DEBUG
 		bool isRemoteCtrl;

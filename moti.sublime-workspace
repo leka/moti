@@ -4,78 +4,26 @@
 		"selected_items":
 		[
 			[
-				"if",
-				"If_no_interaction"
+				"Acc",
+				"AccelGyro"
 			],
 			[
-				"Moti",
-				"Moti_is_on"
+				"ra",
+				"random"
 			],
 			[
-				"Moti_",
-				"Moti_turns_on"
-			],
-			[
-				"If",
-				"If_no_interaction"
-			],
-			[
-				"Moti_i",
-				"Moti_is_shaked"
-			],
-			[
-				"postDat",
-				"postDataChunk"
-			],
-			[
-				"cr",
-				"CRAZY_ACTIVITY_THRESHOLD"
-			],
-			[
-				"ADXL",
-				"ADXL345"
-			],
-			[
-				"Slee",
-				"sleepy"
-			],
-			[
-				"setMoto",
-				"setMotorSpeedAndDirection"
-			],
-			[
-				"FAl",
-				"false"
-			],
-			[
-				"fade",
-				"fadeToBlue"
-			],
-			[
-				"LED",
-				"LEDrgb"
-			],
-			[
-				"blin",
-				"blinkLED"
-			],
-			[
-				"color",
-				"colorRGB"
-			],
-			[
-				"RGB",
-				"RGBLED"
+				"print",
+				"println"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "moti.sublime-project",
+			"file": "lib/Moti/Moti.h",
 			"settings":
 			{
-				"buffer_size": 682,
+				"buffer_size": 3163,
 				"line_ending": "Unix"
 			}
 		},
@@ -83,15 +31,41 @@
 			"file": "lib/Moti/Moti.cpp",
 			"settings":
 			{
-				"buffer_size": 2048,
+				"buffer_size": 3117,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/moti_2/moti_2.ino",
+			"settings":
+			{
+				"buffer_size": 3763,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "lib/Moti/Constants.h",
+			"settings":
+			{
+				"buffer_size": 1472,
+				"line_ending": "Unix",
+				"name": "Constants.h"
+			}
+		},
+		{
+			"file": "lib/Moti/Constants.cpp",
+			"settings":
+			{
+				"buffer_size": 75,
+				"line_ending": "Unix",
+				"name": "Constants.cpp"
 			}
 		},
 		{
 			"file": "/Users/Ladislas/Library/Application Support/Sublime Text 2/Packages/SublimeClang/SublimeClang.sublime-settings",
 			"settings":
 			{
-				"buffer_size": 13844,
+				"buffer_size": 13872,
 				"line_ending": "Unix"
 			}
 		}
@@ -103,51 +77,139 @@
 		"selected_items":
 		[
 			[
-				"node",
-				"Nodejs::Run::Current File + Arguments"
+				"ins",
+				"Package Control: Install Package"
 			],
 			[
-				"run",
-				"Nodejs::Run::Current File + Arguments"
+				"inst",
+				"Package Control: Install Package"
 			],
 			[
-				"node run",
-				"Nodejs::Run::Current File"
+				"list",
+				"Package Control: List Packages"
 			],
 			[
-				"rename",
-				"Nodejs::Run::Current File + Arguments"
+				"install",
+				"Package Control: Install Package"
 			],
 			[
-				"u",
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: List Packages"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"rena",
+				"TernJS: Rename variable"
+			],
+			[
+				"tern",
+				"TernJS: Rename variable"
+			],
+			[
+				"ter",
+				"TernJS: Rename variable"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"veri",
+				"Stino: Verify / Compile"
+			],
+			[
+				"very",
+				"Stino: Verify / Compile"
+			],
+			[
+				"ulo",
 				"Stino: Upload"
 			],
 			[
-				"seri",
-				"Stino: Serial Monitor-Start"
+				"REMOV",
+				"Package Control: Remove Package"
 			],
 			[
-				"seria",
-				"Stino: Serial Monitor-Start"
+				"pa",
+				"Package Control: List Packages"
 			],
 			[
-				"stino com",
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"packa",
+				"Package Control: Remove Package"
+			],
+			[
+				"verify",
 				"Stino: Verify / Compile"
 			],
 			[
-				"verif",
+				"stino veri",
 				"Stino: Verify / Compile"
 			],
 			[
-				"mark",
-				"Markdown Preview: preview in Browser"
+				"stino verif",
+				"Stino: Verify / Compile"
+			],
+			[
+				"stino ver",
+				"Stino: Verify / Compile"
+			],
+			[
+				"sti ver",
+				"Stino: Verify / Compile"
+			],
+			[
+				"set ardu",
+				"Set Syntax: Arduino"
+			],
+			[
+				"set ardio",
+				"Set Syntax: Arduino"
+			],
+			[
+				"set ardui",
+				"Set Syntax: Arduino"
+			],
+			[
+				"uploa",
+				"Stino: Upload"
+			],
+			[
+				"stino port",
+				"Stino: Select Serial Port"
+			],
+			[
+				"indent",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"sti",
+				"Stino: Upload"
+			],
+			[
+				"stino",
+				"Stino: Upload"
+			],
+			[
+				"pac",
+				"Package Control: List Packages"
 			]
 		],
-		"width": 453.0
+		"width": 507.0
 	},
 	"console":
 	{
-		"height": 0.0
+		"height": 167.0
 	},
 	"distraction_free":
 	{
@@ -160,59 +222,77 @@
 	},
 	"file_history":
 	[
-		"/Users/Ladislas/dev/leka/moti/lib/Moti.bak/Moti.h",
-		"/Users/Ladislas/Library/Application Support/Sublime Text 2/Packages/User/SublimeClang.sublime-settings",
-		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FIMU_ADXL345.cpp",
-		"/Users/Ladislas/dev/leka/moti/src/moti_2/sensors.ino",
-		"/Users/Ladislas/dev/leka/moti/src/moti_2/moti_2.ino",
-		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FreeSixIMU.cpp",
-		"/Users/Ladislas/dev/dot/scenario.dot",
-		"/Users/Ladislas/dev/dot/scenario_2.dot",
-		"/Users/Ladislas/dev/dot/moti.dot",
-		"/Users/Ladislas/dev/leka/moti/src/moti_2/data.ino",
-		"/Users/Ladislas/dev/js/index.html",
-		"/Users/Ladislas/dev/node/src/first-node-app/README.md",
-		"/Users/Ladislas/Library/Application Support/Sublime Text 2/Packages/Nodejs/Nodejs.sublime-settings",
+		"/Users/Ladislas/Library/Application Support/Sublime Text 2/Packages/SublimeClang/SublimeClang.sublime-settings",
+		"/Users/Ladislas/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/Ladislas/dev/leka/moti/moti.sublime-project",
 		"/Users/Ladislas/dev/leka/moti-processing-app/src/app3/get_data/get_data.pde",
+		"/Users/Ladislas/dev/leka/moti/lib/Moti.bak/Moti.h",
+		"/Users/Ladislas/dev/leka/moti/lib/Moti.bak/Moti.cpp",
 		"/Users/Ladislas/dev/leka/moti/src/moti_2/setup.ino",
-		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FreeSixIMU.h",
-		"/Users/Ladislas/dev/leka/moti/test/unit/moti_2/Accelerometer/accelerometer.ino",
-		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/examples/FreeSix_cube_Arduino/FreeSix_cube_Arduino.ino",
-		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/CommunicationUtils.cpp",
-		"/Users/Ladislas/dev/leka/moti/lib/RGBLED/RGBLED.h",
-		"/Users/Ladislas/dev/leka/moti/lib/RGBLED/RGBLED.cpp",
-		"/Users/Ladislas/dev/leka/moti/src/moti_2/led.ino",
-		"/Users/Ladislas/dev/leka/moti/src/moti_2/function.ino",
 		"/Users/Ladislas/dev/leka/moti/src/moti_2/motors.ino",
-		"/Users/Ladislas/dev/leka/moti/src/moti_2/settings.ino",
-		"/Users/Ladislas/dev/leka/moti/src/README.md",
-		"/Users/Ladislas/dev/leka/moti/lib/RGBLED/Example/RGB_color/RGB_color.ino",
-		"/Users/Ladislas/dev/leka/moti/lib/RGBLED/Example/HSV_color/HSV_color.ino",
-		"/Users/Ladislas/dev/leka/moti/src/moti_1/moti_1.ino",
-		"/Users/Ladislas/Desktop/SoScience/Expérience/param_foam.txt",
-		"/Users/Ladislas/dev/leka/moti/lib/ADXL335/ADXL335.cpp",
-		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/DebugUtils.h",
-		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FIMU_ADXL345.h",
-		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FIMU_ITG3200.cpp",
+		"/Users/Ladislas/dev/leka/moti/src/moti_2/function.ino",
+		"/Users/Ladislas/dev/leka/moti/src/moti_2/moti_2.ino",
+		"/Users/Ladislas/dev/leka/moti/src/moti_2/sensors.ino",
+		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FreeSixIMU.cpp",
+		"/Users/Ladislas/dev/leka/moti/lib/Moti/Moti.cpp",
+		"/Users/Ladislas/dev/leka/moti/lib/Moti/Moti.h",
+		"/Users/Ladislas/dev/leka/moti/src/moti_2/data.ino",
 		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FIMU_ITG3200.h",
-		"/Users/Ladislas/dev/leka/moti/lib/README.md",
-		"/Users/Ladislas/dev/leka/moti/sketch/README.md",
+		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/FIMU_ADXL345.cpp",
+		"/Users/Ladislas/dev/node/first-node-app/hello.js",
+		"/Users/Ladislas/Library/Application Support/Sublime Text 2/Packages/TernJS/TernJS.sublime-settings",
+		"/Users/Ladislas/dev/node/arduino-server/function.js",
+		"/Users/Ladislas/dev/node/arduino-server/server.js",
+		"/Users/Ladislas/dev/node/arduino-server/index.html",
+		"/private/etc/paths",
+		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/Processing_Example/FreeSix_cube_Processing/FreeSix_cube_Processing.pde",
+		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/Processing_Example/FreeSix_cube_Arduino/FreeSix_cube_Arduino.ino",
+		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/examples/FreeSix_cube_Arduino/FreeSix_cube_Arduino.ino",
+		"/Users/Ladislas/Desktop/6dof(Arduino)[V7]/sixDOF_Example.ino",
+		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/examples/FreeSix_cube_Processing/FreeSix_cube_Processing.pde",
+		"/Users/Ladislas/dev/leka/moti/src/moti_1/moti_1.ino",
 		"/Users/Ladislas/dev/leka/moti/test/unit/moti_2/led/led.ino",
-		"/Users/Ladislas/Dropbox/dev/vhosts/leka.dev/assets/js/leka.js",
-		"/Users/Ladislas/Dropbox/dev/vhosts/leka.dev/assets/js/leka-ck.js",
-		"/Users/Ladislas/Dropbox/dev/vhosts/leka.dev/assets/less/carousel.less",
-		"/Users/Ladislas/Dropbox/dev/vhosts/leka.dev/php/social.php",
-		"/Users/Ladislas/Desktop/index.html",
-		"/Users/Ladislas/dev/node/node_modules/express/Readme.md",
-		"/Users/Ladislas/dev/node/node_modules/socket.io/Readme.md",
-		"/Users/Ladislas/dev/node/node_modules/serialport/README.md",
-		"/Applications/MAMP/conf/apache/httpd.conf",
+		"/Users/Ladislas/dev/leka/moti/lib/RGBLED/Example/RGB_color/RGB_color.ino",
+		"/Users/Ladislas/dev/leka/moti/test/unit/moti_2/Xbee/receive/receive.ino",
+		"/Users/Ladislas/dev/leka/moti/test/unit/moti_2/Xbee/send/send.ino",
+		"/Users/Ladislas/dev/leka/moti/lib/XBee/examples/Series2_Tx/Series2_Tx.pde",
+		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/examples/FreeSix_cube_Processing/FreeSix_cube_Processing.ino",
+		"/Users/Ladislas/dev/leka/moti/lib/PlainProtocol/examples/AdvancedVersionReceivingCode/AdvancedVersionReceivingCode.ino",
+		"/Users/Ladislas/dev/leka/moti/lib/PlainProtocol/examples/AdvancedVersionsendingCode/AdvancedVersionSendingCode.ino",
+		"/Users/Ladislas/Desktop/xbeeSerialTerminal/xbeeSerialTerminal.pde",
+		"/Users/Ladislas/dev/leka/moti/lib/FreeSixIMU/examples/sixDOF_Example/sixDOF_Example.ino",
+		"/Users/Ladislas/dev/leka/moti-processing-app/src/app2/get_data/get_data.pde",
+		"/Users/Ladislas/dev/leka/moti-processing-app/.gitignore",
+		"/Users/Ladislas/dev/leka/moti-processing-app/src/app1/get_data/get_data.pde",
+		"/Users/Ladislas/dev/leka/moti-processing-app/log/2013-05-13-18-04-51-data.log",
+		"/Users/Ladislas/dev/leka/moti-processing-app/src/app1/get_data/2013-05-13-18-11-38-graphs.png",
+		"/Users/Ladislas/dev/leka/moti-processing-app/src/app1/get_data/2013-05-13-18-04-51-graphs.png",
+		"/Users/Ladislas/dev/leka/moti-processing-app/Makefile",
+		"/Users/Ladislas/dev/leka/moti/test/unit/moti_1/leds/leds.ino",
+		"/Users/Ladislas/Dropbox/dev/shell/profile",
 		"/Users/Ladislas/Dropbox/dev/conf/local-httpd-vhosts.conf",
-		"/Applications/MAMP/conf/apache/extra/httpd-vhosts.conf"
+		"/Users/Ladislas/Dropbox/dev/conf/local-development.conf",
+		"/Users/Ladislas/Desktop/antoine.txt",
+		"/Users/Ladislas/Desktop/antoine.pdf",
+		"/Users/Ladislas/dev/rails/treebook/app/views/statuses/show.html.erb",
+		"/Users/Ladislas/dev/rails/treebook/app/models/user.rb",
+		"/Users/Ladislas/dev/rails/treebook/app/views/statuses/_form.html.erb",
+		"/Users/Ladislas/dev/rails/treebook/db/migrate/20130507144711_add_user_id_to_statuses.rb",
+		"/Users/Ladislas/dev/rails/treebook/app/views/statuses/index.html.erb",
+		"/Users/Ladislas/dev/rails/treebook/app/models/status.rb",
+		"/Users/Ladislas/dev/rails/treebook/config/routes.rb",
+		"/Users/Ladislas/dev/rails/treebook/Gemfile",
+		"/Users/Ladislas/dev/rails/treebook/app/views/devise/registrations/new.html.erb",
+		"/Users/Ladislas/dev/rails/treebook/db/migrate/20130507141727_devise_create_users.rb",
+		"/Users/Ladislas/dev/rails/treebook/config/environments/development.rb",
+		"/Users/Ladislas/dev/rails/treebook/app/views/layouts/application.html.erb",
+		"/Users/Ladislas/dev/rails/treebook/config/application.rb",
+		"/Users/Ladislas/dev/rails/treebook/app/assets/javascripts/statuses.js.coffee",
+		"/Users/Ladislas/dev/rails/treebook/app/assets/stylesheets/statuses.css.scss"
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 37.0
 	},
 	"find_in_files":
 	{
@@ -226,52 +306,43 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"XYZ",
-			"yaw",
-			"reacts",
-			"attenton",
-			"Moti_waits_for_interaction",
-			"Moti_reacts -> ",
-			" ",
-			"yaw",
-			"XYZ",
+			"gcc",
+			"gcc\ngcc",
+			"cont",
+			"		",
+			"	",
+			"const int ",
+			";",
+			"CLASSNAME",
+			"MODULE",
+			"warning",
+			"_",
+			" _D",
+			"int",
+			"void ",
+			"int ",
+			"	//",
+			"int ",
+			"	//",
+			"int ",
+			"const",
+			" //",
+			"get",
+			"Morse",
 			"\"",
-			"\");",
-			"Serial.print(",
-			"start",
-			"DELTA_ACCELERO_THRESHOLD",
-			"crazy",
-			"|| deltaXYZ[1] > CRAZY_ACTIVITY_THRESHOLD || deltaXYZ[2] > CRAZY_ACTIVITY_THRESHOLD",
-			"|| deltaXYZ[1] > CRAZY_ACTIVITY_THRESHOLD || deltaXYZ[2] > CRAZY_ACTIVITY_THRESHOLD) {\n				sleepy=0;",
-			"||",
-			"i",
-			"serial",
-			" * 1000",
-			"100",
-			"  ",
-			"setRgbLed",
-			"100",
-			"LEDrgb",
-			"unsigned char",
-			"blink",
-			"int",
-			"uint8_t",
-			"int",
-			"uint8_t",
-			"myled",
-			"rgbLED",
-			"RgbLed",
-			"rgbLED",
-			"RGBLED",
-			"255",
-			"unhex",
+			"random(0,255)",
+			"xbee",
+			"XBee",
+			"xbee",
+			"ecriture",
 			"Development",
-			"Dropbox"
+			"h2",
+			"first_name"
 		],
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": true,
+		"regex": false,
 		"replace_history":
 		[
 		],
@@ -284,29 +355,162 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "moti.sublime-project",
+					"file": "lib/Moti/Moti.h",
 					"settings":
 					{
-						"buffer_size": 682,
+						"buffer_size": 3163,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								86,
-								86
+								193,
+								193
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"tab_size": 4,
+							"BracketHighlighterBusy": false,
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"incomplete_sync": null,
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/C++/C++.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
@@ -320,20 +524,157 @@
 					"file": "lib/Moti/Moti.cpp",
 					"settings":
 					{
-						"buffer_size": 2048,
+						"buffer_size": 3117,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								98,
-								98
+								107,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage"
+							"BracketHighlighterBusy": false,
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"incomplete_sync": null,
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"remote_loading": false,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"synced": false,
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -343,28 +684,655 @@
 				},
 				{
 					"buffer": 2,
-					"file": "/Users/Ladislas/Library/Application Support/Sublime Text 2/Packages/SublimeClang/SublimeClang.sublime-settings",
+					"file": "src/moti_2/moti_2.ino",
 					"settings":
 					{
-						"buffer_size": 13844,
+						"buffer_size": 3763,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1735,
+								1735
 							]
 						],
 						"settings":
 						{
+							"BracketHighlighterBusy": false,
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"incomplete_sync": null,
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"remote_loading": false,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"synced": false,
+							"syntax": "Packages/Arduino-like IDE/Arduino.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "lib/Moti/Constants.h",
+					"settings":
+					{
+						"buffer_size": 1472,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								939,
+								939
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"auto_name": "Constants.h",
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"incomplete_sync": null,
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "lib/Moti/Constants.cpp",
+					"settings":
+					{
+						"buffer_size": 75,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								70,
+								70
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"auto_name": "Constants.cpp",
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"incomplete_sync": null,
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/Users/Ladislas/Library/Application Support/Sublime Text 2/Packages/SublimeClang/SublimeClang.sublime-settings",
+					"settings":
+					{
+						"buffer_size": 13872,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13594,
+								13594
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"incomplete_sync": null,
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"remote_loading": false,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"synced": false,
 							"syntax": "Packages/JavaScript/JSON.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2295.0,
+						"translation.y": 4196.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -389,11 +1357,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -403,805 +1378,413 @@
 		]
 	},
 	"menu_visible": true,
-	"output.Compilation_FreeSix_cube_Arduino_720743":
+	"output.Compilation_6dof(Arduino)[V7]_227820":
 	{
-		"height": 353.0
+		"height": 102.0
 	},
-	"output.Compilation_FreeSix_cube_Arduino_826502":
-	{
-		"height": 112.0
-	},
-	"output.Compilation_FreeSix_cube_Arduino_830785":
-	{
-		"height": 334.0
-	},
-	"output.Compilation_FreeSix_cube_Arduino_898102":
+	"output.Compilation_AdvancedVersionReceivingCode_208068":
 	{
 		"height": 112.0
 	},
-	"output.Compilation_RGBLED_281812":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_RGBLED_493722":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_RGBLED_635865":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_RGBLED_646765":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_RGBLED_650701":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_RGBLED_665207":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_RGBLED_900025":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_RGBLED_927212":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_RGBLED_974977":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_RGB_color_56708":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_RGB_color_932950":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_led_597973":
+	"output.Compilation_AdvancedVersionReceivingCode_239199":
 	{
 		"height": 112.0
 	},
-	"output.Compilation_moti_1_952394":
+	"output.Compilation_AdvancedVersionReceivingCode_253916":
 	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_111401":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_118247":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_119582":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_123924":
-	{
-		"height": 289.0
-	},
-	"output.Compilation_moti_2_125473":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_125631":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_127581":
-	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_127695":
+	"output.Compilation_AdvancedVersionReceivingCode_311604":
 	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_128064":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_128674":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_138913":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_142159":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_150404":
-	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_160877":
+	"output.Compilation_AdvancedVersionReceivingCode_419768":
 	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_164338":
-	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_167111":
+	"output.Compilation_AdvancedVersionReceivingCode_56603":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_170264":
+	"output.Compilation_AdvancedVersionReceivingCode_679241":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_175052":
+	"output.Compilation_AdvancedVersionReceivingCode_69193":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_184291":
+	"output.Compilation_AdvancedVersionReceivingCode_763357":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_198791":
+	"output.Compilation_AdvancedVersionReceivingCode_7912":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_199083":
+	"output.Compilation_AdvancedVersionReceivingCode_800609":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_210108":
+	"output.Compilation_AdvancedVersionReceivingCode_884905":
 	{
-		"height": 305.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_21129":
+	"output.Compilation_AdvancedVersionReceivingCode_929470":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_21886":
+	"output.Compilation_AdvancedVersionReceivingCode_93732":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_22724":
+	"output.Compilation_AdvancedVersionsendingCode_191897":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_229589":
+	"output.Compilation_AdvancedVersionsendingCode_270462":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_232508":
+	"output.Compilation_AdvancedVersionsendingCode_420289":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_23356":
+	"output.Compilation_AdvancedVersionsendingCode_442435":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_235782":
+	"output.Compilation_AdvancedVersionsendingCode_474372":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_242079":
+	"output.Compilation_AdvancedVersionsendingCode_48700":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_242132":
+	"output.Compilation_AdvancedVersionsendingCode_563500":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_243514":
+	"output.Compilation_AdvancedVersionsendingCode_775760":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_243680":
+	"output.Compilation_AdvancedVersionsendingCode_79628":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_250190":
+	"output.Compilation_AdvancedVersionsendingCode_858485":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_253953":
+	"output.Compilation_AdvancedVersionsendingCode_859499":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_262819":
+	"output.Compilation_AdvancedVersionsendingCode_923267":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_263675":
+	"output.Compilation_AdvancedVersionsendingCode_974077":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_266163":
+	"output.Compilation_AdvancedVersionsendingCode_982450":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_266574":
+	"output.Compilation_FreeSix_cube_Arduino_119642":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_moti_2_267943":
+	"output.Compilation_FreeSix_cube_Arduino_262206":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_moti_2_274644":
+	"output.Compilation_FreeSix_cube_Arduino_263004":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_moti_2_278101":
+	"output.Compilation_FreeSix_cube_Arduino_266296":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_moti_2_278418":
+	"output.Compilation_FreeSix_cube_Arduino_291394":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_285441":
+	"output.Compilation_FreeSix_cube_Arduino_299297":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_287477":
+	"output.Compilation_FreeSix_cube_Arduino_302374":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_moti_2_300678":
+	"output.Compilation_FreeSix_cube_Arduino_32215":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_moti_2_300707":
+	"output.Compilation_FreeSix_cube_Arduino_327854":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_302777":
+	"output.Compilation_FreeSix_cube_Arduino_341462":
 	{
-		"height": 102.0
+		"height": 318.0
 	},
-	"output.Compilation_moti_2_307857":
+	"output.Compilation_FreeSix_cube_Arduino_405540":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_313391":
+	"output.Compilation_FreeSix_cube_Arduino_440566":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_313431":
+	"output.Compilation_FreeSix_cube_Arduino_466459":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_moti_2_334366":
+	"output.Compilation_FreeSix_cube_Arduino_491619":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_moti_2_33677":
+	"output.Compilation_FreeSix_cube_Arduino_514269":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_moti_2_337246":
+	"output.Compilation_FreeSix_cube_Arduino_597360":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_moti_2_340054":
+	"output.Compilation_FreeSix_cube_Arduino_604396":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_moti_2_340703":
+	"output.Compilation_FreeSix_cube_Arduino_625192":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_moti_2_365071":
+	"output.Compilation_FreeSix_cube_Arduino_718539":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_368287":
+	"output.Compilation_FreeSix_cube_Arduino_737745":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_373671":
+	"output.Compilation_FreeSix_cube_Arduino_781068":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_moti_2_384011":
+	"output.Compilation_FreeSix_cube_Arduino_796213":
 	{
-		"height": 102.0
+		"height": 341.0
 	},
-	"output.Compilation_moti_2_386928":
+	"output.Compilation_FreeSix_cube_Arduino_875632":
 	{
-		"height": 102.0
+		"height": 285.0
 	},
-	"output.Compilation_moti_2_399260":
+	"output.Compilation_FreeSix_cube_Arduino_929935":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_moti_2_406431":
+	"output.Compilation_FreeSix_cube_Arduino_999227":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_408370":
+	"output.Compilation_FreeSix_cube_Processing_611283":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_408935":
+	"output.Compilation_FreeSix_cube_Processing_749678":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_425407":
+	"output.Compilation_FreeSix_cube_Processing_75441":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_442189":
+	"output.Compilation_RGB_color_194157":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_445792":
+	"output.Compilation_RGB_color_28748":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_446928":
+	"output.Compilation_RGB_color_656908":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_455358":
+	"output.Compilation_RGB_color_751528":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_461280":
+	"output.Compilation_RGB_color_76719":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_465031":
+	"output.Compilation_RGB_color_786405":
 	{
-		"height": 247.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_468319":
+	"output.Compilation_RGB_color_817468":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_485533":
+	"output.Compilation_RGB_color_930517":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_486170":
+	"output.Compilation_RGB_color_96407":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_490458":
+	"output.Compilation_leds_900721":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_506284":
+	"output.Compilation_moti_1_1881":
 	{
 		"height": 114.0
 	},
-	"output.Compilation_moti_2_511274":
+	"output.Compilation_moti_1_207861":
 	{
 		"height": 114.0
 	},
-	"output.Compilation_moti_2_514967":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_515104":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_516654":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_518707":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_520775":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_523076":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_523151":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_532083":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_535093":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_536801":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_539234":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_539658":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_545137":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_547630":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_54868":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_552018":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_552350":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_557074":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_572017":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_580548":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_580998":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_583349":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_589999":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_596066":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_599420":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_612690":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_612965":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_618661":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_620569":
-	{
-		"height": 273.0
-	},
-	"output.Compilation_moti_2_621345":
+	"output.Compilation_moti_1_219731":
 	{
 		"height": 114.0
 	},
-	"output.Compilation_moti_2_627826":
+	"output.Compilation_moti_1_297309":
 	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_628107":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_629651":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_630398":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_632315":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_633926":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_635912":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_640849":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_643404":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_645535":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_651881":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_656556":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_666243":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_67174":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_675176":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_67760":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_688542":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_694751":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_696692":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_69803":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_698726":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_710346":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_71288":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_713323":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_729858":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_747409":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_749674":
-	{
-		"height": 102.0
+		"height": 114.0
 	},
-	"output.Compilation_moti_2_753617":
+	"output.Compilation_moti_2_99722":
 	{
 		"height": 102.0
 	},
-	"output.Compilation_moti_2_789539":
+	"output.Compilation_motors_333659":
 	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_79723":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_801629":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_803160":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_818554":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_831114":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_831992":
-	{
-		"height": 380.0
-	},
-	"output.Compilation_moti_2_832778":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_838977":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_841278":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_84528":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_846149":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_851974":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_852221":
-	{
-		"height": 102.0
+		"height": 114.0
 	},
-	"output.Compilation_moti_2_853412":
+	"output.Compilation_motors_352389":
 	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_853799":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_859333":
-	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_865773":
-	{
-		"height": 102.0
+		"height": 114.0
 	},
-	"output.Compilation_moti_2_866016":
+	"output.Compilation_receive_12992":
 	{
-		"height": 102.0
-	},
-	"output.Compilation_moti_2_873106":
-	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_882918":
+	"output.Compilation_receive_143193":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_883224":
+	"output.Compilation_receive_207747":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_883444":
+	"output.Compilation_receive_211957":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_887176":
+	"output.Compilation_receive_226464":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_890006":
+	"output.Compilation_receive_23336":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_907236":
+	"output.Compilation_receive_242102":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_907423":
+	"output.Compilation_receive_275148":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_908647":
+	"output.Compilation_receive_338275":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_927109":
+	"output.Compilation_receive_393859":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_930697":
+	"output.Compilation_receive_464752":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_935193":
+	"output.Compilation_receive_593826":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_935208":
+	"output.Compilation_receive_717438":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_947182":
+	"output.Compilation_receive_8108":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_947207":
+	"output.Compilation_receive_851671":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_951666":
+	"output.Compilation_receive_995325":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_95253":
+	"output.Compilation_send_179847":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_952544":
+	"output.Compilation_send_364637":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_960475":
+	"output.Compilation_send_410284":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_966740":
+	"output.Compilation_send_453138":
 	{
-		"height": 358.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_967158":
+	"output.Compilation_send_546217":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_971749":
+	"output.Compilation_send_678281":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_974562":
+	"output.Compilation_send_684138":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_982111":
+	"output.Compilation_send_766424":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_986625":
+	"output.Compilation_send_821352":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_987262":
+	"output.Compilation_send_896530":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_989555":
+	"output.Compilation_sixDOF_Example_109631":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
-	"output.Compilation_moti_2_997055":
+	"output.Compilation_sixDOF_Example_429537":
 	{
-		"height": 102.0
+		"height": 112.0
 	},
 	"output.clang":
 	{
@@ -1209,11 +1792,15 @@
 	},
 	"output.exec":
 	{
-		"height": 198.0
+		"height": 262.0
+	},
+	"output.sftp":
+	{
+		"height": 0.0
 	},
 	"output.stino_log":
 	{
-		"height": 102.0
+		"height": 136.0
 	},
 	"replace":
 	{
@@ -1225,6 +1812,14 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"appli",
+				"config/application.rb"
+			],
+			[
+				"gem",
+				"Gemfile"
+			]
 		],
 		"width": 0.0
 	},
@@ -1237,9 +1832,9 @@
 		"width": 0.0
 	},
 	"show_minimap": true,
-	"show_open_files": false,
+	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 250.0,
+	"side_bar_width": 310.0,
 	"status_bar_visible": true
 }
