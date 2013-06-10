@@ -1,7 +1,6 @@
 #ifndef __COM_LEKA_ARDUINO_MOTI_H_
 #define __COM_LEKA_ARDUINO_MOTI_H_
 
-#include "Moti.h"
 #include "Constants.h"
 
 #include "Arduino.h"
