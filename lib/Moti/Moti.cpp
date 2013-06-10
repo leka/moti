@@ -109,40 +109,40 @@ int Moti::getBlueMaxBrightness(){
 //#################//
 
 void Moti::resetGlobalDelay(int value){
-	_globalDelay = DEFAUTL_GLOBAL_DELAY;
+	_globalDelay = DEFAULT_GLOBAL_DELAY;
 }
 
 void Moti::resetSleepDelay(int value){
-
+	_sleepDelay = DEFAULT_SLEEP_DELAY;
 }
 
 void Moti::resetAwakeThreshold(int value){
-
+	_awakeThreshold = DEFAULT_AWAKE_THRESHOLD;
 }
 
 void Moti::resetDeltaAccelThreshold(int value){
-
+	_deltaAccelThreshold = DEFAULT_DELTA_ACCEL_THRESHOLD;
 }
 
 void Moti::resetHighActivityThreshold(int value){
-
+	_highActivityThreshold = DEFAULT_HIGH_ACTIVITY_THRESHOLD;
 }
 
 
 void Moti::resetLedMaxBrightness(int value){
-
+	_ledMaxBrightness = DEFAULT_LED_MAX_BRIGHTNESS;
 }
 
 void Moti::resetRedMaxBrightness(int value){
-
+	_redMaxBrightness = DEFAULT_RED_MAX_BRIGHTNESS;
 }
 
 void Moti::resetGreenMaxBrightness(int value){
-
+	_greenMaxBrightness = DEFAULT_GREEN_MAX_BRIGHTNESS;
 }
 
 void Moti::resetBlueMaxBrightness(int value){
-
+	_blueMaxBrightness = DEFAULT_BLUE_MAX_BRIGHTNESS;
 }
 
 
@@ -152,14 +152,116 @@ void Moti::resetBlueMaxBrightness(int value){
 //###########################//
 
 void Moti::sendDataToProcessing(){
+	Serial.print(XYZ[0]);
+	Serial.print(',');
+	Serial.print(XYZ[1]);
+	Serial.print(',');
+	Serial.print(XYZ[2]);
 
+	Serial.print(',');
+
+	Serial.print(deltaXYZ[0]);
+	Serial.print(',');
+	Serial.print(deltaXYZ[1]);
+	Serial.print(',');
+	Serial.print(deltaXYZ[2]);
+
+	Serial.print(',');
+
+	Serial.print(rgb[0]);
+	Serial.print(',');
+	Serial.print(rgb[1]);
+	Serial.print(',');
+	Serial.print(rgb[2]);
+
+	Serial.print(',');
+	Serial.print(rightMotor);
+	Serial.print(',');
+	Serial.println(leftMotor);
 }
 
 void Moti::sendDataToDebug(){
+	Serial.print(F("Sleep: "));
+	Serial.print(sleepy);
+
+	Serial.print(F("R: "));
+	Serial.print(rgb[0]);
+	Serial.print(F(" G: "));
+	Serial.print(rgb[1]);
+	Serial.print(F(" B: "));
+	Serial.print(rgb[2]);
+
+	Serial.print(F(" | MOTOR 1: "));
+	Serial.print(rightMotor);
+	Serial.print(F(" MOTOR 2: "));
+	Serial.print(leftMotor);
+
+	Serial.print(F(" | X: "));
+	Serial.print(XYZ[0]);
+	Serial.print(F(" Y: "));
+	Serial.print(XYZ[1]);
+	Serial.print(F(" Z: "));
+	Serial.print(XYZ[2]);
+
+	Serial.print(F(" | dX: "));
+	Serial.print(deltaXYZ[0]);
+	Serial.print(F(" dY: "));
+	Serial.print(deltaXYZ[1]);
+	Serial.print(F(" dZ: "));
+	Serial.println(deltaXYZ[2]);
 
 }
 
 void Moti::sendDataToNode(){
+	Serial.print(F("{"));
+		Serial.print(F("\" accel\" : "));
+			Serial.print(F("{"));
+
+				Serial.print(F(" \"x\" : "));
+				Serial.print(XYZ[0]);
+				Serial.print(F(","));
+
+				Serial.print(F(" \"y\" : "));
+				Serial.print(XYZ[1]);
+				Serial.print(F(","));
+
+				Serial.print(F(" \"z\" : "));
+				Serial.print(XYZ[2]);
+
+			Serial.print(F(" },"));
+
+		Serial.print(F("\" gyro\" : "));
+			Serial.print(F("{"));
+
+				Serial.print(F(" \"yaw\" : "));
+				Serial.print(YPR[0]);
+				Serial.print(F(","));
+
+				Serial.print(F(" \"pitch\" : "));
+				Serial.print(YPR[1]);
+				Serial.print(F(","));
+
+				Serial.print(F(" \"roll\" : "));
+				Serial.print(YPR[2]);
+
+			Serial.print(F(" },"));
+
+		Serial.print(F("\" rgb\" : "));
+			Serial.print(F("{"));
+
+				Serial.print(F(" \"red\" : "));
+				Serial.print(rgb[0]);
+				Serial.print(F(","));
+
+				Serial.print(F(" \"green\" : "));
+				Serial.print(rgb[1]);
+				Serial.print(F(","));
+
+				Serial.print(F(" \"blue\" : "));
+				Serial.print(rgb[2]);
+
+			Serial.print(F(" }"));
+	Serial.println(F("}"));
 
 }
 
@@ -253,5 +355,13 @@ void Moti::setAllToLow(){
 
 void Moti::shutDown(){
 
+}
+
+void Moti::softwareReset() {
+	//	this function reset the program so that it can restart before the void setup().
+	//	it is used because we don't know how much time has passed since the last awaken state.
+	//	the environment may have change, so going through the void setup() again is required.
+
+	asm volatile ("  jmp 0");
 }
 

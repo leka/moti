@@ -28,18 +28,18 @@ class Moti {
 		void setBlueMaxBrightness(int value);
 
 		//	GET CONSTANTS
-		int getGlobalDelay();	//	Delay used at the end of void loop() - The higher, the slower the robot is.
-		int getSleepDelay();	//	Time to elapse before the robot goes to sleep
-		int getAwakeThreshold();	//	DO NOT USE A VALUE HIGHER THAN 150 - This threshold is used to wake up the card. The higher, the harder it is to wake up.
-		int getDeltaAccelThreshold();	//	Threshold used to know if the accelerometer has moved between 2 cycles
+		int getGlobalDelay();          	//	Delay used at the end of void loop() - The higher, the slower the robot is.
+		int getSleepDelay();           	//	Time to elapse before the robot goes to sleep
+		int getAwakeThreshold();       	//	DO NOT USE A VALUE HIGHER THAN 150 - This threshold is used to wake up the card. The higher, the harder it is to wake up.
+		int getDeltaAccelThreshold();  	//	Threshold used to know if the accelerometer has moved between 2 cycles
 		int getHighActivityThreshold();	//	Is used to know if the activity around the robot is important. If so, the robot gets excited much faster - Smaller value means more excitement.
 
-		int getLedMaxBrightness();	//	Maximum led brightness
+		int getLedMaxBrightness();     	//	Maximum led brightness
 		int getRedMaxBrightness();
 		int getGreenMaxBrightness();
 		int getBlueMaxBrightness();
 
-		//	RESET CONSTANTS
+    	//	RESET CONSTANTS
 		void resetGlobalDelay(int value);
 		void resetSleepDelay(int value);
 		void resetAwakeThreshold(int value);
@@ -87,6 +87,7 @@ class Moti {
 		//	GENERAL
 		void setAllToLow();
 		void shutDown();
+		void softwareReset();
 
 
 
@@ -99,7 +100,8 @@ class Moti {
 		//	VARIABLES
 		int i;
 		int rgb[3], rgbBuffer[3];
-		int motor[2], MOTOR_BUFFER[2];
+		int rightMotor, rightMotorBuffer;
+		int leftMotor, leftMotorBuffer;
 		float XYZ[3], lastXYZ[3], deltaXYZ[3];
 		float YPR[3], lastYPR[3], deltaYPR[3];
 		int sleepy;
@@ -116,12 +118,10 @@ class Moti {
 		int _blueMaxBrightness;
 
 		//	LED
-		void initLed();
-		void initLed(int Red_Pin, int Green_Pin, int Blue_Pin);
+		void initializeLed();
 
 		// MOTORS
-		void initMotors();
-		void initMotors(int left_motor_speed_pin, int left_motor_direction_pin, int right_motor_speed_pin, int right_motor_direction_pin);
+		void initializeMotors();
 
 		//	DEBUG
 		bool isRemoteCtrl;
