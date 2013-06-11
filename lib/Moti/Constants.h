@@ -1,5 +1,5 @@
-#ifndef __COM_LEKA_ARDUINO_CONSTANTS_H_
-#define __COM_LEKA_ARDUINO_CONSTANTS_H_
+#ifndef __ROBOT_LEKA_ARDUINO_CONSTANTS_H_
+#define __ROBOT_LEKA_ARDUINO_CONSTANTS_H_
 
 #include "Arduino.h"
 
@@ -26,3 +26,4 @@
 	const int GREEN_PIN = 10;
 	const int BLUE_PIN  = 11;
 
+#endif

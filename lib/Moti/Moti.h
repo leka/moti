@@ -1,5 +1,5 @@
-#ifndef __COM_LEKA_ARDUINO_MOTI_H_
-#define __COM_LEKA_ARDUINO_MOTI_H_
+#ifndef __ROBOT_LEKA_ARDUINO_MOTI_H_
+#define __ROBOT_LEKA_ARDUINO_MOTI_H_
 
 #include "Constants.h"
 
