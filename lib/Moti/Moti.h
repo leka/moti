@@ -1,9 +1,10 @@
 #ifndef __ROBOT_LEKA_ARDUINO_MOTI_H_
 #define __ROBOT_LEKA_ARDUINO_MOTI_H_
 
-#include "Constants.h"
-
 #include "Arduino.h"
+
+#include "Constants.h"
+#include "Colors.h"
 
 #include "FreeSixIMU.h"
 #include "RGBLED.h"
@@ -13,6 +14,9 @@ class Moti {
 	public:
 
 		static Moti & getInstance();
+
+		RGBLED rgbled = RGBLED(9, 10,11);
+		FreeSixIMU AccelGyro = FreeSixIMU();
 
 		//	SET CONSTANTS
 		void setGlobalDelay(int value);
@@ -59,11 +63,16 @@ class Moti {
 		//	LED
 		void setRgbValue();
 		void setRgbValue(int value);
+		void setRgbValue(int redValue, int greenValue, int blueValue);
 
 		void printRgbColor();
 		void printRgbColor(int red, int green, int blue);
 
+		void blinkLed(int numberOfBlinks);
+		void fadeLedTo( void (*color) );
+
 		void turnLedOff();
+		void turnLedOn();
 
 		//	MOTORS
 		void goForward();
@@ -78,6 +87,8 @@ class Moti {
 		void goLeft();
 		void goRight();
 
+		void stop();
+
 		//	SENSORS
 		void checkSensors();
 		void checkAccelerometer();
@@ -88,7 +99,8 @@ class Moti {
 		void shutDown();
 		void softwareReset();
 
-
+		//	VARIABLES
+		static int rgb[3], rgbBuffer[3];
 
 
 	private:
@@ -98,7 +110,6 @@ class Moti {
 
 		//	VARIABLES
 		int i;
-		int rgb[3], rgbBuffer[3];
 		int rightMotor, rightMotorBuffer;
 		int leftMotor, leftMotorBuffer;
 		float XYZ[3], lastXYZ[3], deltaXYZ[3];
