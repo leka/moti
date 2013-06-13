@@ -54,7 +54,7 @@ class Moti {
 		//	DATA TRANSFER TO COMPUTER
 		void sendDataToProcessing();
 		void sendDataToDebug();
-		void sendDataToNode();
+		void sendDataJson();
 
 		//	LED
 		void setRgbValue();

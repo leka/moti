@@ -212,7 +212,7 @@ void Moti::sendDataToDebug(){
 
 }
 
-void Moti::sendDataToNode(){
+void Moti::sendDataJson(){
 	Serial.print(F("{"));
 		Serial.print(F("\" accel\" : "));
 			Serial.print(F("{"));
