@@ -18,6 +18,7 @@
 			"-Wno-unknown-warning-option",
 			"-Wno-attributes",
 			"-I${folder:${project_path:moti.sublime-project}}/lib/**",
+			"-I/Users/Ladislas/Documents/Arduino/hardware/**"
 			"-I/Applications/Arduino.app/**"
 		]
 	}
