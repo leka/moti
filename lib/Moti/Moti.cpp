@@ -388,6 +388,7 @@ void Moti::nouvelleFonction(){
 	// Luan s'il te plait, peux tu l'implémenter ? :) merci!
 	// Ok, voilá je travaille.
 	// Okay c'est super mais il manque un truc ! :(
+	// Okay, maintenant c'est bon !!! :)
 }
 
 
