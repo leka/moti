@@ -89,6 +89,8 @@ class Moti {
 
 		void stop();
 
+		void nouvelleFonction();
+
 		//	SENSORS
 		void checkSensors();
 		void checkAccelerometer();

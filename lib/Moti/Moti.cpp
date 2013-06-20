@@ -380,8 +380,12 @@ void Moti::goRight(){
 
 }
 
-void stop(){
+void Moti::stop(){
 
+}
+
+void Moti::nouvelleFonction(){
+	//do something
 }
 
 
