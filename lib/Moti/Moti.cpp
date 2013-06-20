@@ -386,6 +386,7 @@ void Moti::stop(){
 
 void Moti::nouvelleFonction(){
 	// Luan s'il te plait, peux tu l'implémenter ? :) merci!
+	// Ok, voilá je travaille. 
 }
 
 
