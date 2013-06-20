@@ -386,7 +386,7 @@ void Moti::stop(){
 
 void Moti::nouvelleFonction(){
 	//do something
-	//do something else
+	// do something else from github
 }
 
 
