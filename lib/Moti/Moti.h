@@ -110,8 +110,8 @@ class Moti {
 
 		//	VARIABLES
 		int i;
-		int rightMotor, rightMotorBuffer;
-		int leftMotor, leftMotorBuffer;
+		uint8_t rightMotor, rightMotorBuffer;
+		uint8_t leftMotor, leftMotorBuffer;
 		float XYZ[3], lastXYZ[3], deltaXYZ[3];
 		float YPR[3], lastYPR[3], deltaYPR[3];
 		int sleepy;
@@ -122,10 +122,10 @@ class Moti {
 		int _deltaAccelThreshold;
 		int _highActivityThreshold;
 
-		int _ledMaxBrightness;
-		int _redMaxBrightness;
-		int _greenMaxBrightness;
-		int _blueMaxBrightness;
+		uint8_t _ledMaxBrightness;
+		uint8_t _redMaxBrightness;
+		uint8_t _greenMaxBrightness;
+		uint8_t _blueMaxBrightness;
 
 		//	LED
 		void initializeLed();

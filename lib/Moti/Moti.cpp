@@ -17,8 +17,16 @@ Moti & Moti::getInstance() {
 }
 
 Moti::Moti(){
+	delay(50);
+
+	Serial.begin(115200);
+
+	delay(50);
+
 	RGBLED rgbled = RGBLED(RED_PIN, GREEN_PIN, BLUE_PIN);
 	FreeSixIMU AccelGyro = FreeSixIMU();
+
+	delay(50);
 }
 
 
@@ -308,7 +316,7 @@ void Moti::blinkLed(int nbrOfBlinks){
 }
 
 void Moti::fadeLedTo(void (*color)){
-	(*color);
+
 
 	int fadeRed = 0;
 	int fadeGreen = 0;

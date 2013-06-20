@@ -14,9 +14,9 @@ void Colors::getRedFrom(char* colorName){
 }
 
 void Colors::getGreenFrom(char* colorName){
-	
+
 }
 
 void Colors::getBlueFrom(char* colorName){
-	
+
 }
