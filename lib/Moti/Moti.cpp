@@ -382,8 +382,6 @@ void Moti::goRight(){
 
 void Moti::stop(){
 
-	//voici la function stop, elle permet à Moti de s'arrêter en un instant !
-
 }
 
 void Moti::nouvelleFonction(){
