@@ -385,8 +385,7 @@ void Moti::stop(){
 }
 
 void Moti::nouvelleFonction(){
-	//do something
-	// do something else from github
+	// Luan s'il te plait, peux tu l'implémenter ? :) merci!
 }
 
 
