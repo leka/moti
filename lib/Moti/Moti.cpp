@@ -402,11 +402,11 @@ void Moti::checkSensors(){
 }
 
 void Moti::checkAccelerometer(){
-
+	AccelGyro.getRawValues(XYZ);
 }
 
 void Moti::checkGyroscope(){
-
+	AccelGyro.getYawPitchRoll(YPR);
 }
 
 

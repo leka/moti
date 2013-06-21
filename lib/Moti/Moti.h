@@ -102,7 +102,6 @@ class Moti {
 		void softwareReset();
 
 		//	VARIABLES
-		static int rgb[3], rgbBuffer[3];
 
 
 	private:
@@ -111,18 +110,18 @@ class Moti {
 		Moti();
 
 		//	VARIABLES
-		int i;
+		uint8_t rgb[3], rgbBuffer[3];
 		uint8_t rightMotor, rightMotorBuffer;
 		uint8_t leftMotor, leftMotorBuffer;
-		float XYZ[3], lastXYZ[3], deltaXYZ[3];
+		int XYZ[3], lastXYZ[3], deltaXYZ[3];
 		float YPR[3], lastYPR[3], deltaYPR[3];
-		int sleepy;
+		word sleepy;
 
-		int _globalDelay;
-		int _sleepDelay;
-		int _awakeThreshold;
-		int _deltaAccelThreshold;
-		int _highActivityThreshold;
+		word _globalDelay;
+		word _sleepDelay;
+		word _awakeThreshold;
+		word _deltaAccelThreshold;
+		word _highActivityThreshold;
 
 		uint8_t _ledMaxBrightness;
 		uint8_t _redMaxBrightness;
