@@ -5,8 +5,15 @@
 
 #include "Colors.h"
 
-#include "FreeSixIMU.h"
 #include "RGBLED.h"
+
+#include <Wire.h>
+
+#include <CommunicationUtils.h>
+#include <DebugUtils.h>
+#include <FIMU_ADXL345.h>
+#include <FIMU_ITG3200.h>
+#include <FreeSixIMU.h>
 
 
 class Moti {
@@ -23,7 +30,7 @@ class Moti {
 		void initializeConstants();
 
 		//	SET CONSTANTS
-		void setGlobalDelay(int value);
+		void setLoopDelay(int value);
 		void setSleepDelay(int value);
 		void setAwakeThreshold(int value);
 		void setDeltaAccelThreshold(int value);
@@ -39,7 +46,7 @@ class Moti {
 
 
 		//	GET CONSTANTS
-		int getGlobalDelay();          	//	Delay used at the end of void loop() - The higher, the slower the robot is.
+		int getLoopDelay();          	//	Delay used at the end of void loop() - The higher, the slower the robot is.
 		int getSleepDelay();           	//	Time to elapse before the robot goes to sleep
 		int getAwakeThreshold();       	//	DO NOT USE A VALUE HIGHER THAN 150 - This threshold is used to wake up the card. The higher, the harder it is to wake up.
 		int getDeltaAccelThreshold();  	//	Threshold used to know if the accelerometer has moved between 2 cycles
@@ -55,7 +62,7 @@ class Moti {
 
 
     	//	RESET CONSTANTS
-		void resetGlobalDelay();
+		void resetLoopDelay();
 		void resetSleepDelay();
 		void resetAwakeThreshold();
 		void resetDeltaAccelThreshold();
@@ -143,6 +150,7 @@ class Moti {
 		void checkGyroscope();
 
 		void computeSensorValues();
+		void updateLastSensorValues();
 
 
 		//	GENERAL
@@ -163,7 +171,7 @@ class Moti {
 		float YPR[3], lastYPR[3], deltaYPR[3];
 		word sleepy;
 
-		word _globalDelay;
+		word _loopDelay;
 		word _sleepDelay;
 		word _awakeThreshold;
 		word _deltaAccelThreshold;
@@ -187,7 +195,7 @@ class Moti {
 };
 
 	//	CONSTANTS
-	const int DEFAULT_GLOBAL_DELAY            = 75;
+	const int DEFAULT_LOOP_DELAY              = 75;
 	const int DEFAULT_SLEEP_DELAY             = 600;
 	const int DEFAULT_AWAKE_THRESHOLD         = 300;
 	const int DEFAULT_DELTA_ACCEL_THRESHOLD   = 200;

@@ -18,9 +18,7 @@ Moti & Moti::getInstance() {
 Moti::Moti(){
 	delay(50);
 
-	Serial.begin(115200);
-
-	delay(50);
+	Wire.begin();
 
 	RGBLED rgbled = RGBLED(RED_PIN, GREEN_PIN, BLUE_PIN);
 	FreeSixIMU AccelGyro = FreeSixIMU();
@@ -30,9 +28,14 @@ Moti::Moti(){
 
 void Moti::init(){
 	initializeConstants();
+	delay(50);
 	AccelGyro.init();
+	delay(50);
 	initializeMotors();
+	delay(50);
 	initializeLed();
+	delay(50);
+	Serial.begin(115200);
 }
 
 //#########//
@@ -52,7 +55,7 @@ void Moti::checkGyroscope(){
 	AccelGyro.getYawPitchRoll(YPR);
 }
 
-void Moti::computeSensorValues(){
+void Moti::computeSensorValues	(){
 	deltaXYZ[0] = XYZ[0] - lastXYZ[0];
 	deltaXYZ[1] = XYZ[1] - lastXYZ[1];
 	deltaXYZ[2] = XYZ[2] - lastXYZ[2];
@@ -60,6 +63,16 @@ void Moti::computeSensorValues(){
 	deltaYPR[0] = YPR[0] - lastYPR[0];
 	deltaYPR[1] = YPR[1] - lastYPR[1];
 	deltaYPR[2] = YPR[2] - lastYPR[2];
+}
+
+void Moti::updateLastSensorValues(){
+	lastXYZ[0] = XYZ[0];
+	lastXYZ[1] = XYZ[1];
+	lastXYZ[2] = XYZ[2];
+
+	lastYPR[0] = YPR[0];
+	lastYPR[1] = YPR[1];
+	lastYPR[2] = YPR[2];
 }
 
 

@@ -2,7 +2,7 @@
 #include "Arduino.h"
 
 void Moti::initializeConstants(){
-	resetGlobalDelay();
+	resetLoopDelay();
 	resetSleepDelay();
 	resetAwakeThreshold();
 	resetDeltaAccelThreshold();
@@ -21,8 +21,8 @@ void Moti::initializeConstants(){
 // SET CONSTANTS //
 //###############//
 
-void Moti::setGlobalDelay(int value){
-	_globalDelay = value;
+void Moti::setLoopDelay(int value){
+	_loopDelay = value;
 }
 
 void Moti::setSleepDelay(int value){
@@ -70,8 +70,8 @@ void Moti::setMotorMaxSpeed(int value){
 // GET CONSTANTS //
 //###############//
 
-int Moti::getGlobalDelay(){
-	return _globalDelay;
+int Moti::getLoopDelay(){
+	return _loopDelay;
 }
 
 int Moti::getSleepDelay(){
@@ -119,8 +119,8 @@ int Moti::getMotorMaxSpeed(){
 // RESET CONSTANTS //
 //#################//
 
-void Moti::resetGlobalDelay(){
-	_globalDelay = DEFAULT_GLOBAL_DELAY;
+void Moti::resetLoopDelay(){
+	_loopDelay = DEFAULT_LOOP_DELAY;
 }
 
 void Moti::resetSleepDelay(){
