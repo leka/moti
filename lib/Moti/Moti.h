@@ -8,6 +8,7 @@
 #include "FreeSixIMU.h"
 #include "RGBLED.h"
 
+
 class Moti {
 
 	public:
@@ -16,6 +17,7 @@ class Moti {
 
 		RGBLED rgbled = RGBLED(9, 10,11);
 		FreeSixIMU AccelGyro = FreeSixIMU();
+
 
 		//	SET CONSTANTS
 		void setGlobalDelay(int value);
@@ -29,6 +31,7 @@ class Moti {
 		void setGreenMaxBrightness(int value);
 		void setBlueMaxBrightness(int value);
 
+
 		//	GET CONSTANTS
 		int getGlobalDelay();          	//	Delay used at the end of void loop() - The higher, the slower the robot is.
 		int getSleepDelay();           	//	Time to elapse before the robot goes to sleep
@@ -40,6 +43,7 @@ class Moti {
 		int getRedMaxBrightness();
 		int getGreenMaxBrightness();
 		int getBlueMaxBrightness();
+
 
     	//	RESET CONSTANTS
 		void resetGlobalDelay(int value);
@@ -59,8 +63,25 @@ class Moti {
 		void sendDataToDebug();
 		void sendDataJson();
 
+		//	STATE
+		bool isMoving();
+		bool isSleeping();
+		bool isWaiting();
+		bool isAwake();
+		bool isManipulated();
+
+		void setMovingState(bool state);
+		void setSleepingState(bool state);
+		void setWaitingState(bool state);
+		void setAwakeState(bool state);
+		void setManipulatedState(bool state);
+
+
 		//	LED
-		void setRgbValue();
+		void constrainRgbValue();
+
+		void colorSwitcher( char * color);
+
 		void setRgbValue(int value);
 		void setRgbValue(int redValue, int greenValue, int blueValue);
 
@@ -68,10 +89,12 @@ class Moti {
 		void printRgbColor(int red, int green, int blue);
 
 		void blinkLed(int numberOfBlinks);
+		void blinkLed(int numberOfBlinks, char * colorName);
 		void fadeLedTo(char * colorName);
 
 		void turnLedOff();
 		void turnLedOn();
+
 
 		//	MOTORS
 		void goForward();
@@ -90,15 +113,18 @@ class Moti {
 
 		void nouvelleFonction();
 
+
 		//	SENSORS
 		void checkSensors();
 		void checkAccelerometer();
 		void checkGyroscope();
 
+
 		//	GENERAL
 		void setAllToLow();
 		void shutDown();
 		void softwareReset();
+
 
 		//	VARIABLES
 
@@ -126,6 +152,12 @@ class Moti {
 		uint8_t _redMaxBrightness;
 		uint8_t _greenMaxBrightness;
 		uint8_t _blueMaxBrightness;
+
+		bool stateMoving;
+		bool stateSleeping;
+		bool stateWaiting;
+		bool stateAwake;
+		bool stateManipulated;
 
 		//	LED
 		void initializeLed();
