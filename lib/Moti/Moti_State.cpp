@@ -6,49 +6,49 @@
 //########//
 
 bool Moti::isMoving(){
-	return stateMoving;
+	return _stateMoving;
 }
 
 bool Moti::isSleeping(){
-	return stateSleeping;
+	return _stateSleeping;
 }
 
 bool Moti::isWaiting(){
-	return stateWaiting;
+	return _stateWaiting;
 }
 
 bool Moti::isAwake(){
-	return stateAwake;
+	return _stateAwake;
 }
 
 bool Moti::isManipulated(){
-	return stateManipulated;
+	return _stateManipulated;
 }
 
 bool Moti::isRemote(){
-	return stateRemote;
+	return _stateRemote;
 }
 
 void Moti::setMovingState(bool state){
-	stateMoving = state;
+	_stateMoving = state;
 }
 
 void Moti::setSleepingState(bool state){
-	stateSleeping = state;
+	_stateSleeping = state;
 }
 
 void Moti::setWaitingState(bool state){
-	stateWaiting = state;
+	_stateWaiting = state;
 }
 
 void Moti::setAwakeState(bool state){
-	stateAwake = state;
+	_stateAwake = state;
 }
 
 void Moti::setManipulatedState(bool state){
-	stateManipulated = state;
+	_stateManipulated = state;
 }
 
 void Moti::setRemoteState(bool state){
-	stateRemote = state;
+	_stateRemote = state;
 }

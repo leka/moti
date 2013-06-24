@@ -55,16 +55,16 @@ class Moti {
 
 
     	//	RESET CONSTANTS
-		void resetGlobalDelay(int value);
-		void resetSleepDelay(int value);
-		void resetAwakeThreshold(int value);
-		void resetDeltaAccelThreshold(int value);
-		void resetHighActivityThreshold(int value);
+		void resetGlobalDelay();
+		void resetSleepDelay();
+		void resetAwakeThreshold();
+		void resetDeltaAccelThreshold();
+		void resetHighActivityThreshold();
 
-		void resetLedMaxBrightness(int value);
-		void resetRedMaxBrightness(int value);
-		void resetGreenMaxBrightness(int value);
-		void resetBlueMaxBrightness(int value);
+		void resetLedMaxBrightness();
+		void resetRedMaxBrightness();
+		void resetGreenMaxBrightness();
+		void resetBlueMaxBrightness();
 
 		void resetMotorMinSpeed();
 		void resetMotorMaxSpeed();
@@ -142,14 +142,12 @@ class Moti {
 		void checkAccelerometer();
 		void checkGyroscope();
 
+		void computeSensorValues();
+
 
 		//	GENERAL
 		void setAllToLow();
-		void shutDown();
 		void softwareReset();
-
-
-		//	VARIABLES
 
 
 	private:
@@ -179,16 +177,12 @@ class Moti {
 		uint8_t _motorMinSpeed;
 		uint8_t _motorMaxSpeed;
 
-		bool stateMoving;
-		bool stateSleeping;
-		bool stateWaiting;
-		bool stateAwake;
-		bool stateManipulated;
-		bool stateRemote;
-
-		//	DEBUG
-		bool isRemoteCtrl;
-		bool isShutDown;
+		bool _stateMoving;
+		bool _stateSleeping;
+		bool _stateWaiting;
+		bool _stateAwake;
+		bool _stateManipulated;
+		bool _stateRemote;
 
 };
 

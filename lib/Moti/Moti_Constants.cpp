@@ -2,7 +2,19 @@
 #include "Arduino.h"
 
 void Moti::initializeConstants(){
+	resetGlobalDelay();
+	resetSleepDelay();
+	resetAwakeThreshold();
+	resetDeltaAccelThreshold();
+	resetHighActivityThreshold();
 
+	resetLedMaxBrightness();
+	resetRedMaxBrightness();
+	resetGreenMaxBrightness();
+	resetBlueMaxBrightness();
+
+	resetMotorMinSpeed();
+	resetMotorMaxSpeed();
 }
 
 //###############//
@@ -107,38 +119,38 @@ int Moti::getMotorMaxSpeed(){
 // RESET CONSTANTS //
 //#################//
 
-void Moti::resetGlobalDelay(int value){
+void Moti::resetGlobalDelay(){
 	_globalDelay = DEFAULT_GLOBAL_DELAY;
 }
 
-void Moti::resetSleepDelay(int value){
+void Moti::resetSleepDelay(){
 	_sleepDelay = DEFAULT_SLEEP_DELAY;
 }
 
-void Moti::resetAwakeThreshold(int value){
+void Moti::resetAwakeThreshold(){
 	_awakeThreshold = DEFAULT_AWAKE_THRESHOLD;
 }
 
-void Moti::resetDeltaAccelThreshold(int value){
+void Moti::resetDeltaAccelThreshold(){
 	_deltaAccelThreshold = DEFAULT_DELTA_ACCEL_THRESHOLD;
 }
 
-void Moti::resetHighActivityThreshold(int value){
+void Moti::resetHighActivityThreshold(){
 	_highActivityThreshold = DEFAULT_HIGH_ACTIVITY_THRESHOLD;
 }
 
-void Moti::resetLedMaxBrightness(int value){
+void Moti::resetLedMaxBrightness(){
 	_ledMaxBrightness = DEFAULT_LED_MAX_BRIGHTNESS;
 }
 
-void Moti::resetRedMaxBrightness(int value){
+void Moti::resetRedMaxBrightness(){
 	_redMaxBrightness = DEFAULT_RED_MAX_BRIGHTNESS;
 }
 
-void Moti::resetGreenMaxBrightness(int value){
+void Moti::resetGreenMaxBrightness(){
 	_greenMaxBrightness = DEFAULT_GREEN_MAX_BRIGHTNESS;
 }
 
-void Moti::resetBlueMaxBrightness(int value){
+void Moti::resetBlueMaxBrightness(){
 	_blueMaxBrightness = DEFAULT_BLUE_MAX_BRIGHTNESS;
 }

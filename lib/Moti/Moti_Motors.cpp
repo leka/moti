@@ -15,12 +15,12 @@ void Moti::initializeMotors(){
 }
 
 void Moti::spinRightWheel(uint8_t speed, bool direction){
-	digitalWrite(rightMotorSpeedPin, speed);
+	analogWrite(rightMotorSpeedPin, speed);
 	digitalWrite(rightMotorDirectionPin, direction);
 }
 
 void Moti::spinLeftWheel(uint8_t speed, bool direction){
-	digitalWrite(leftMotorSpeedPin, speed);
+	analogWrite(leftMotorSpeedPin, speed);
 	digitalWrite(leftMotorDirectionPin, direction);
 }
 

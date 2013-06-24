@@ -52,17 +52,29 @@ void Moti::checkGyroscope(){
 	AccelGyro.getYawPitchRoll(YPR);
 }
 
+void Moti::computeSensorValues(){
+	deltaXYZ[0] = XYZ[0] - lastXYZ[0];
+	deltaXYZ[1] = XYZ[1] - lastXYZ[1];
+	deltaXYZ[2] = XYZ[2] - lastXYZ[2];
+
+	deltaYPR[0] = YPR[0] - lastYPR[0];
+	deltaYPR[1] = YPR[1] - lastYPR[1];
+	deltaYPR[2] = YPR[2] - lastYPR[2];
+}
+
 
 //#########//
 // GENERAL //
 //#########//
 
 void Moti::setAllToLow(){
-
-}
-
-void Moti::shutDown(){
-
+	digitalWrite(leftMotorSpeedPin, 0);
+	digitalWrite(rightMotorSpeedPin, 0);
+	digitalWrite(leftMotorDirectionPin, 0);
+	digitalWrite(rightMotorDirectionPin, 0);
+	digitalWrite(RED_PIN, 0);
+	digitalWrite(GREEN_PIN, 0);
+	digitalWrite(BLUE_PIN, 0);
 }
 
 void Moti::softwareReset() {
