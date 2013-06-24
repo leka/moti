@@ -68,7 +68,7 @@ class Moti {
 		void printRgbColor(int red, int green, int blue);
 
 		void blinkLed(int numberOfBlinks);
-		void fadeLedTo( void (*color) );
+		void fadeLedTo(char * colorName);
 
 		void turnLedOff();
 		void turnLedOn();

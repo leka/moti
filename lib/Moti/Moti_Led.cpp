@@ -37,16 +37,30 @@ void Moti::printRgbColor(){
 }
 
 void Moti::printRgbColor(int redValue, int greenValue, int blueValue){
+	redValue   = constrain(redValue, 0, getLedMaxBrightness());
+	greenValue = constrain(greenValue, 0, getLedMaxBrightness());
+	blueValue  = constrain(blueValue, 0, getLedMaxBrightness());
+
 	rgbled.colorRGB(redValue, greenValue, blueValue);
 }
 
 void Moti::blinkLed(int nbrOfBlinks){
+	int _timeBtwBlink = 50;
+	int _nbrOfBlinks = nbrOfBlinks;
+	int _iBlink;
 
+	for(_iBlink = 0 ; _iBlink < _nbrOfBlinks ; _iBlink++) {
+		rgbled.colorRGB(255, 255, 255);
+
+		delay(_timeBtwBlink);
+
+		rgbled.colorRGB(0, 0, 0);
+
+		delay(_timeBtwBlink);
+	}
 }
 
-void Moti::fadeLedTo(void (*color)){
-
-
+void Moti::fadeLedTo(char * colorName){
 	int fadeRed = 0;
 	int fadeGreen = 0;
 	int fadeBlue = 0;
