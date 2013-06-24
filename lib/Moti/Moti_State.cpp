@@ -25,6 +25,10 @@ bool Moti::isManipulated(){
 	return stateManipulated;
 }
 
+bool Moti::isRemote(){
+	return stateRemote;
+}
+
 void Moti::setMovingState(bool state){
 	stateMoving = state;
 }
@@ -45,3 +49,6 @@ void Moti::setManipulatedState(bool state){
 	stateManipulated = state;
 }
 
+void Moti::setRemoteState(bool state){
+	stateRemote = state;
+}

@@ -81,12 +81,14 @@ class Moti {
 		bool isWaiting();
 		bool isAwake();
 		bool isManipulated();
+		bool isRemote();
 
 		void setMovingState(bool state);
 		void setSleepingState(bool state);
 		void setWaitingState(bool state);
 		void setAwakeState(bool state);
 		void setManipulatedState(bool state);
+		void setRemoteState(bool state);
 
 
 		//	LED
@@ -182,6 +184,7 @@ class Moti {
 		bool stateWaiting;
 		bool stateAwake;
 		bool stateManipulated;
+		bool stateRemote;
 
 		//	DEBUG
 		bool isRemoteCtrl;

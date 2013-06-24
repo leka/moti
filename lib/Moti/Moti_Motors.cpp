@@ -12,8 +12,6 @@ void Moti::initializeMotors(){
 	pinMode(rightMotorDirectionPin, OUTPUT);
 
 	stop();
-
-	setMovingState(false);
 }
 
 void Moti::spinRightWheel(uint8_t speed, bool direction){

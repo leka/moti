@@ -2,7 +2,7 @@
 #include "Arduino.h"
 
 void Moti::initializeConstants(){
-	
+
 }
 
 //###############//
