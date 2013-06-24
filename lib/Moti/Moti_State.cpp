@@ -5,50 +5,59 @@
 // STATES //
 //########//
 
-bool Moti::isMoving(){
+void MOTI::initializeStates(){
+	setMovingState(false);
+	setSleepingState(false);
+	setWaitingState(true);
+	setAwakeState(true);
+	setManipulatedState(false);
+	setRemoteState(false);
+}
+
+bool MOTI::isMoving(){
 	return _stateMoving;
 }
 
-bool Moti::isSleeping(){
+bool MOTI::isSleeping(){
 	return _stateSleeping;
 }
 
-bool Moti::isWaiting(){
+bool MOTI::isWaiting(){
 	return _stateWaiting;
 }
 
-bool Moti::isAwake(){
+bool MOTI::isAwake(){
 	return _stateAwake;
 }
 
-bool Moti::isManipulated(){
+bool MOTI::isManipulated(){
 	return _stateManipulated;
 }
 
-bool Moti::isRemote(){
+bool MOTI::isRemote(){
 	return _stateRemote;
 }
 
-void Moti::setMovingState(bool state){
+void MOTI::setMovingState(bool state){
 	_stateMoving = state;
 }
 
-void Moti::setSleepingState(bool state){
+void MOTI::setSleepingState(bool state){
 	_stateSleeping = state;
 }
 
-void Moti::setWaitingState(bool state){
+void MOTI::setWaitingState(bool state){
 	_stateWaiting = state;
 }
 
-void Moti::setAwakeState(bool state){
+void MOTI::setAwakeState(bool state){
 	_stateAwake = state;
 }
 
-void Moti::setManipulatedState(bool state){
+void MOTI::setManipulatedState(bool state){
 	_stateManipulated = state;
 }
 
-void Moti::setRemoteState(bool state){
+void MOTI::setRemoteState(bool state){
 	_stateRemote = state;
 }

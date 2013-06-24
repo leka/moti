@@ -5,7 +5,7 @@
 // DATA TRANSFER TO COMPUTER //
 //###########################//
 
-void Moti::sendDataToProcessing(){
+void MOTI::sendDataToProcessing(){
 	Serial.print(XYZ[0]);
 	Serial.print(',');
 	Serial.print(XYZ[1]);
@@ -29,12 +29,12 @@ void Moti::sendDataToProcessing(){
 	Serial.print(rgb[2]);
 
 	Serial.print(',');
-	Serial.print(rightMotor);
+	// Serial.print(rightMotor);
 	Serial.print(',');
-	Serial.println(leftMotor);
+	// Serial.println(leftMotor);
 }
 
-void Moti::sendDataToDebug(){
+void MOTI::sendDataToDebug(){
 	Serial.print(F("Sleep: "));
 	Serial.print(sleepy);
 
@@ -46,9 +46,9 @@ void Moti::sendDataToDebug(){
 	Serial.print(rgb[2]);
 
 	Serial.print(F(" | MOTOR 1: "));
-	Serial.print(rightMotor);
+	// Serial.print(rightMotor);
 	Serial.print(F(" MOTOR 2: "));
-	Serial.print(leftMotor);
+	// Serial.print(leftMotor);
 
 	Serial.print(F(" | X: "));
 	Serial.print(XYZ[0]);
@@ -65,7 +65,7 @@ void Moti::sendDataToDebug(){
 	Serial.println(deltaXYZ[2]);
 }
 
-void Moti::sendDataJson(){
+void MOTI::sendDataJson(){
 	Serial.print(F("{"));
 		Serial.print(F("\" accel\" : "));
 			Serial.print(F("{"));

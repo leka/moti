@@ -1,5 +1,5 @@
-#ifndef __ROBOT_LEKA_ARDUINO_MOTI_H_
-#define __ROBOT_LEKA_ARDUINO_MOTI_H_
+#ifndef ROBOT_LEKA_ARDUINO_MOTI_H_
+#define ROBOT_LEKA_ARDUINO_MOTI_H_
 
 #include "Arduino.h"
 
@@ -16,11 +16,13 @@
 #include <FreeSixIMU.h>
 
 
-class Moti {
+class MOTI {
 
 	public:
 
-		static Moti & getInstance();
+		//	CONSTRUCTORS
+		MOTI();
+		// static MOTI & getInstance();
 
 		RGBLED rgbled = RGBLED(9, 10,11);
 		FreeSixIMU AccelGyro = FreeSixIMU();
@@ -83,6 +85,8 @@ class Moti {
 		void sendDataJson();
 
 		//	STATE
+		void initializeStates();
+
 		bool isMoving();
 		bool isSleeping();
 		bool isWaiting();
@@ -159,9 +163,6 @@ class Moti {
 
 
 	private:
-
-		//	CONSTRUCTORS
-		Moti();
 
 		//	VARIABLES
 		int rgb[3], rgbBuffer[3];

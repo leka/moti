@@ -1,7 +1,7 @@
 #include "Moti.h"
 #include "Arduino.h"
 
-void Moti::initializeConstants(){
+void MOTI::initializeConstants(){
 	resetLoopDelay();
 	resetSleepDelay();
 	resetAwakeThreshold();
@@ -21,47 +21,47 @@ void Moti::initializeConstants(){
 // SET CONSTANTS //
 //###############//
 
-void Moti::setLoopDelay(int value){
+void MOTI::setLoopDelay(int value){
 	_loopDelay = value;
 }
 
-void Moti::setSleepDelay(int value){
+void MOTI::setSleepDelay(int value){
 	_sleepDelay = value;
 }
 
-void Moti::setAwakeThreshold(int value){
+void MOTI::setAwakeThreshold(int value){
 	_awakeThreshold = value;
 }
 
-void Moti::setDeltaAccelThreshold(int value){
+void MOTI::setDeltaAccelThreshold(int value){
 	_deltaAccelThreshold = value;
 }
 
-void Moti::setHighActivityThreshold(int value){
+void MOTI::setHighActivityThreshold(int value){
 	_highActivityThreshold = value;
 }
 
-void Moti::setLedMaxBrightness(int value){
+void MOTI::setLedMaxBrightness(int value){
 	_ledMaxBrightness = value;
 }
 
-void Moti::setRedMaxBrightness(int value){
+void MOTI::setRedMaxBrightness(int value){
 	_redMaxBrightness = value;
 }
 
-void Moti::setGreenMaxBrightness(int value){
+void MOTI::setGreenMaxBrightness(int value){
 	_greenMaxBrightness = value;
 }
 
-void Moti::setBlueMaxBrightness(int value){
+void MOTI::setBlueMaxBrightness(int value){
 	_blueMaxBrightness = value;
 }
 
-void Moti::setMotorMinSpeed(int value){
+void MOTI::setMotorMinSpeed(int value){
 	_motorMinSpeed = value;
 }
 
-void Moti::setMotorMaxSpeed(int value){
+void MOTI::setMotorMaxSpeed(int value){
 	_motorMaxSpeed = value;
 }
 
@@ -70,47 +70,47 @@ void Moti::setMotorMaxSpeed(int value){
 // GET CONSTANTS //
 //###############//
 
-int Moti::getLoopDelay(){
+int MOTI::getLoopDelay(){
 	return _loopDelay;
 }
 
-int Moti::getSleepDelay(){
+int MOTI::getSleepDelay(){
 	return _sleepDelay;
 }
 
-int Moti::getAwakeThreshold(){
+int MOTI::getAwakeThreshold(){
 	return _awakeThreshold;
 }
 
-int Moti::getDeltaAccelThreshold(){
+int MOTI::getDeltaAccelThreshold(){
 	return _deltaAccelThreshold;
 }
 
-int Moti::getHighActivityThreshold(){
+int MOTI::getHighActivityThreshold(){
 	return _highActivityThreshold;
 }
 
-int Moti::getLedMaxBrightness(){
+int MOTI::getLedMaxBrightness(){
 	return _ledMaxBrightness;
 }
 
-int Moti::getRedMaxBrightness(){
+int MOTI::getRedMaxBrightness(){
 	return _redMaxBrightness;
 }
 
-int Moti::getGreenMaxBrightness(){
+int MOTI::getGreenMaxBrightness(){
 	return _greenMaxBrightness;
 }
 
-int Moti::getBlueMaxBrightness(){
+int MOTI::getBlueMaxBrightness(){
 	return _blueMaxBrightness;
 }
 
-int Moti::getMotorMinSpeed(){
+int MOTI::getMotorMinSpeed(){
 	return _motorMinSpeed;
 }
 
-int Moti::getMotorMaxSpeed(){
+int MOTI::getMotorMaxSpeed(){
 	return _motorMaxSpeed;
 }
 
@@ -119,38 +119,38 @@ int Moti::getMotorMaxSpeed(){
 // RESET CONSTANTS //
 //#################//
 
-void Moti::resetLoopDelay(){
+void MOTI::resetLoopDelay(){
 	_loopDelay = DEFAULT_LOOP_DELAY;
 }
 
-void Moti::resetSleepDelay(){
+void MOTI::resetSleepDelay(){
 	_sleepDelay = DEFAULT_SLEEP_DELAY;
 }
 
-void Moti::resetAwakeThreshold(){
+void MOTI::resetAwakeThreshold(){
 	_awakeThreshold = DEFAULT_AWAKE_THRESHOLD;
 }
 
-void Moti::resetDeltaAccelThreshold(){
+void MOTI::resetDeltaAccelThreshold(){
 	_deltaAccelThreshold = DEFAULT_DELTA_ACCEL_THRESHOLD;
 }
 
-void Moti::resetHighActivityThreshold(){
+void MOTI::resetHighActivityThreshold(){
 	_highActivityThreshold = DEFAULT_HIGH_ACTIVITY_THRESHOLD;
 }
 
-void Moti::resetLedMaxBrightness(){
+void MOTI::resetLedMaxBrightness(){
 	_ledMaxBrightness = DEFAULT_LED_MAX_BRIGHTNESS;
 }
 
-void Moti::resetRedMaxBrightness(){
+void MOTI::resetRedMaxBrightness(){
 	_redMaxBrightness = DEFAULT_RED_MAX_BRIGHTNESS;
 }
 
-void Moti::resetGreenMaxBrightness(){
+void MOTI::resetGreenMaxBrightness(){
 	_greenMaxBrightness = DEFAULT_GREEN_MAX_BRIGHTNESS;
 }
 
-void Moti::resetBlueMaxBrightness(){
+void MOTI::resetBlueMaxBrightness(){
 	_blueMaxBrightness = DEFAULT_BLUE_MAX_BRIGHTNESS;
 }

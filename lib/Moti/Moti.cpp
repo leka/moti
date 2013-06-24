@@ -1,5 +1,11 @@
 #include "Moti.h"
 
+#include "Moti_Constants.cpp"
+#include "Moti_Data.cpp"
+#include "Moti_Led.cpp"
+#include "Moti_Motors.cpp"
+#include "Moti_State.cpp"
+
 #include "Arduino.h"
 
 #include "FreeSixIMU.h"
@@ -10,24 +16,27 @@
 // CONSTRUCTORS //
 //##############//
 
-Moti & Moti::getInstance() {
-	static Moti singleton;
-	return singleton;
-}
+// MOTI & MOTI::getInstance() {
+// 	static MOTI singleton;
+// 	return singleton;
+// }
 
-Moti::Moti(){
+MOTI::MOTI(){
 	delay(50);
-
-	Wire.begin();
-
 	RGBLED rgbled = RGBLED(RED_PIN, GREEN_PIN, BLUE_PIN);
+	delay(50);
 	FreeSixIMU AccelGyro = FreeSixIMU();
-
 	delay(50);
 }
 
-void Moti::init(){
+void MOTI::init(){
+	Serial.begin(115200);
+	delay(50);
 	initializeConstants();
+	delay(50);
+	initializeStates();
+	delay(50);
+	Wire.begin();
 	delay(50);
 	AccelGyro.init();
 	delay(50);
@@ -35,27 +44,26 @@ void Moti::init(){
 	delay(50);
 	initializeLed();
 	delay(50);
-	Serial.begin(115200);
 }
 
 //#########//
 // SENSORS //
 //#########//
 
-void Moti::checkSensors(){
+void MOTI::checkSensors(){
 	checkAccelerometer();
 	checkGyroscope();
 }
 
-void Moti::checkAccelerometer(){
+void MOTI::checkAccelerometer(){
 	AccelGyro.getRawValues(XYZ);
 }
 
-void Moti::checkGyroscope(){
+void MOTI::checkGyroscope(){
 	AccelGyro.getYawPitchRoll(YPR);
 }
 
-void Moti::computeSensorValues	(){
+void MOTI::computeSensorValues	(){
 	deltaXYZ[0] = XYZ[0] - lastXYZ[0];
 	deltaXYZ[1] = XYZ[1] - lastXYZ[1];
 	deltaXYZ[2] = XYZ[2] - lastXYZ[2];
@@ -65,7 +73,7 @@ void Moti::computeSensorValues	(){
 	deltaYPR[2] = YPR[2] - lastYPR[2];
 }
 
-void Moti::updateLastSensorValues(){
+void MOTI::updateLastSensorValues(){
 	lastXYZ[0] = XYZ[0];
 	lastXYZ[1] = XYZ[1];
 	lastXYZ[2] = XYZ[2];
@@ -80,7 +88,7 @@ void Moti::updateLastSensorValues(){
 // GENERAL //
 //#########//
 
-void Moti::setAllToLow(){
+void MOTI::setAllToLow(){
 	digitalWrite(leftMotorSpeedPin, 0);
 	digitalWrite(rightMotorSpeedPin, 0);
 	digitalWrite(leftMotorDirectionPin, 0);
@@ -90,7 +98,7 @@ void Moti::setAllToLow(){
 	digitalWrite(BLUE_PIN, 0);
 }
 
-void Moti::softwareReset() {
+void MOTI::softwareReset() {
 	//	this function reset the program so that it can restart before the void setup().
 	//	it is used because we don't know how much time has passed since the last awaken state.
 	//	the environment may have change, so going through the void setup() again is required.

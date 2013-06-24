@@ -5,7 +5,7 @@
 // MOTORS //
 //########//
 
-void Moti::initializeMotors(){
+void MOTI::initializeMotors(){
 	pinMode(leftMotorSpeedPin, OUTPUT);
 	pinMode(leftMotorDirectionPin, OUTPUT);
 	pinMode(rightMotorSpeedPin, OUTPUT);
@@ -14,24 +14,24 @@ void Moti::initializeMotors(){
 	stop();
 }
 
-void Moti::spinRightWheel(uint8_t speed, bool direction){
+void MOTI::spinRightWheel(uint8_t speed, bool direction){
 	analogWrite(rightMotorSpeedPin, speed);
 	digitalWrite(rightMotorDirectionPin, direction);
 }
 
-void Moti::spinLeftWheel(uint8_t speed, bool direction){
+void MOTI::spinLeftWheel(uint8_t speed, bool direction){
 	analogWrite(leftMotorSpeedPin, speed);
 	digitalWrite(leftMotorDirectionPin, direction);
 }
 
-void Moti::goForward(){
+void MOTI::goForward(){
 	spinLeftWheel(255, 1);
 	spinRightWheel(255, 1);
 
 	setMovingState(true);
 }
 
-void Moti::goForward(int speed){
+void MOTI::goForward(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(speed, 1);
 	spinRightWheel(speed, 1);
@@ -39,14 +39,14 @@ void Moti::goForward(int speed){
 	setMovingState(true);
 }
 
-void Moti::goBackward(){
+void MOTI::goBackward(){
 	spinLeftWheel(255, 0);
 	spinRightWheel(255, 0);
 
 	setMovingState(true);
 }
 
-void Moti::goBackward(int speed){
+void MOTI::goBackward(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(speed, 0);
 	spinRightWheel(speed, 0);
@@ -54,14 +54,14 @@ void Moti::goBackward(int speed){
 	setMovingState(true);
 }
 
-void Moti::goLeft(){
+void MOTI::goLeft(){
 	spinLeftWheel(175, 0);
 	spinRightWheel(255, 0);
 
 	setMovingState(true);
 }
 
-void Moti::goLeft(int speed){
+void MOTI::goLeft(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(speed * turnCoefficient, 0);
 	spinRightWheel(speed, 0);
@@ -69,14 +69,14 @@ void Moti::goLeft(int speed){
 	setMovingState(true);
 }
 
-void Moti::goRight(){
+void MOTI::goRight(){
 	spinLeftWheel(255, 0);
 	spinRightWheel(175, 0);
 
 	setMovingState(true);
 }
 
-void Moti::goRight(int speed){
+void MOTI::goRight(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(speed, 0);
 	spinRightWheel(speed * turnCoefficient, 0);
@@ -84,14 +84,14 @@ void Moti::goRight(int speed){
 	setMovingState(true);
 }
 
-void Moti::spinLeft(){
+void MOTI::spinLeft(){
 	spinLeftWheel(255, 0);
 	spinRightWheel(255, 1);
 
 	setMovingState(true);
 }
 
-void Moti::spinLeft(int speed){
+void MOTI::spinLeft(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(speed, 0);
 	spinRightWheel(speed, 1);
@@ -99,14 +99,14 @@ void Moti::spinLeft(int speed){
 	setMovingState(true);
 }
 
-void Moti::spinRight(){
+void MOTI::spinRight(){
 	spinLeftWheel(255, 1);
 	spinRightWheel(255, 0);
 
 	setMovingState(true);
 }
 
-void Moti::spinRight(int speed){
+void MOTI::spinRight(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(speed, 1);
 	spinRightWheel(speed, 0);
@@ -114,7 +114,7 @@ void Moti::spinRight(int speed){
 	setMovingState(true);
 }
 
-void Moti::stop(){
+void MOTI::stop(){
 	digitalWrite(leftMotorDirectionPin, 0);
 	digitalWrite(leftMotorSpeedPin, 0);
 	digitalWrite(rightMotorDirectionPin, 0);
