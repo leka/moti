@@ -10,7 +10,7 @@
 
 #include "Arduino.h"
 
-#include "/Users/Ladislas/dev/leka/moti/lib/Moti/Moti.h"
+#include "Moti.h"
 
 #include "RGBLED.h"
 
@@ -22,13 +22,19 @@
 #include <FIMU_ITG3200.h>
 #include <FreeSixIMU.h>
 
+MOTI Moti = MOTI();
+
+int led = 13;
+
 //#######//
 // SETUP //
 //#######//
 
 void setup() {
+	digitalWrite(led, HIGH);
+	delay(1000);
 	Serial.println("Setup starting");
-	MOTI Moti = MOTI();
+	digitalWrite(led, LOW);
 	Serial.println("Moti instance initialized");
 	Moti.init();
 	Serial.println("Everythink ready");

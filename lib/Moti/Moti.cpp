@@ -22,14 +22,14 @@
 // }
 
 MOTI::MOTI(){
-	delay(50);
-	RGBLED rgbled = RGBLED(RED_PIN, GREEN_PIN, BLUE_PIN);
-	delay(50);
-	FreeSixIMU AccelGyro = FreeSixIMU();
-	delay(50);
 }
 
 void MOTI::init(){
+	delay(50);
+	rgbled = RGBLED(RED_PIN, GREEN_PIN, BLUE_PIN);
+	delay(50);
+	AccelGyro = FreeSixIMU();
+	delay(50);
 	Serial.begin(115200);
 	delay(50);
 	initializeConstants();
@@ -41,8 +41,6 @@ void MOTI::init(){
 	AccelGyro.init();
 	delay(50);
 	initializeMotors();
-	delay(50);
-	initializeLed();
 	delay(50);
 }
 
