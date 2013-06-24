@@ -1,6 +1,10 @@
 #include "Moti.h"
 #include "Arduino.h"
 
+void Moti::initializeConstants(){
+	
+}
+
 //###############//
 // SET CONSTANTS //
 //###############//
@@ -39,6 +43,14 @@ void Moti::setGreenMaxBrightness(int value){
 
 void Moti::setBlueMaxBrightness(int value){
 	_blueMaxBrightness = value;
+}
+
+void Moti::setMotorMinSpeed(int value){
+	_motorMinSpeed = value;
+}
+
+void Moti::setMotorMaxSpeed(int value){
+	_motorMaxSpeed = value;
 }
 
 
@@ -80,6 +92,14 @@ int Moti::getGreenMaxBrightness(){
 
 int Moti::getBlueMaxBrightness(){
 	return _blueMaxBrightness;
+}
+
+int Moti::getMotorMinSpeed(){
+	return _motorMinSpeed;
+}
+
+int Moti::getMotorMaxSpeed(){
+	return _motorMaxSpeed;
 }
 
 
