@@ -18,6 +18,9 @@ class Moti {
 		RGBLED rgbled = RGBLED(9, 10,11);
 		FreeSixIMU AccelGyro = FreeSixIMU();
 
+		void init();
+
+		void initializeConstants();
 
 		//	SET CONSTANTS
 		void setGlobalDelay(int value);
@@ -30,6 +33,9 @@ class Moti {
 		void setRedMaxBrightness(int value);
 		void setGreenMaxBrightness(int value);
 		void setBlueMaxBrightness(int value);
+
+		void setMotorMinSpeed(int value);
+		void setMotorMaxSpeed(int value);
 
 
 		//	GET CONSTANTS
@@ -44,6 +50,9 @@ class Moti {
 		int getGreenMaxBrightness();
 		int getBlueMaxBrightness();
 
+		int getMotorMinSpeed();
+		int getMotorMaxSpeed();
+
 
     	//	RESET CONSTANTS
 		void resetGlobalDelay(int value);
@@ -56,6 +65,9 @@ class Moti {
 		void resetRedMaxBrightness(int value);
 		void resetGreenMaxBrightness(int value);
 		void resetBlueMaxBrightness(int value);
+
+		void resetMotorMinSpeed();
+		void resetMotorMaxSpeed();
 
 
 		//	DATA TRANSFER TO COMPUTER
@@ -78,6 +90,8 @@ class Moti {
 
 
 		//	LED
+		void initializeLed();
+
 		void constrainRgbValue();
 
 		void colorSwitcher( char * color);
@@ -97,21 +111,28 @@ class Moti {
 
 
 		//	MOTORS
+		void initializeMotors();
+
+		void spinRightWheel(uint8_t speed, bool direction);
+		void spinLeftWheel(uint8_t speed, bool direction);
+
 		void goForward();
-		void goForward(int time);
+		void goForward(int speed);
 
 		void goBackward();
-		void goBackward(int time);
-
-		void turnAround();
-		void turnAround(int time);
+		void goBackward(int speed);
 
 		void goLeft();
+		void goLeft(int speed);
 		void goRight();
+		void goRight(int speed);
+
+		void spinLeft();
+		void spinLeft(int speed);
+		void spinRight();
+		void spinRight(int speed);
 
 		void stop();
-
-		void nouvelleFonction();
 
 
 		//	SENSORS
@@ -135,9 +156,9 @@ class Moti {
 		Moti();
 
 		//	VARIABLES
-		uint8_t rgb[3], rgbBuffer[3];
-		uint8_t rightMotor, rightMotorBuffer;
-		uint8_t leftMotor, leftMotorBuffer;
+		int rgb[3], rgbBuffer[3];
+		int rightMotorSpeed, rightMotorSpeedBuffer;
+		int leftMotorSpeed, leftMotorSpeedBuffer;
 		int XYZ[3], lastXYZ[3], deltaXYZ[3];
 		float YPR[3], lastYPR[3], deltaYPR[3];
 		word sleepy;
@@ -153,17 +174,14 @@ class Moti {
 		uint8_t _greenMaxBrightness;
 		uint8_t _blueMaxBrightness;
 
+		uint8_t _motorMinSpeed;
+		uint8_t _motorMaxSpeed;
+
 		bool stateMoving;
 		bool stateSleeping;
 		bool stateWaiting;
 		bool stateAwake;
 		bool stateManipulated;
-
-		//	LED
-		void initializeLed();
-
-		// MOTORS
-		void initializeMotors();
 
 		//	DEBUG
 		bool isRemoteCtrl;
@@ -182,6 +200,11 @@ class Moti {
 	const uint8_t DEFAULT_RED_MAX_BRIGHTNESS   = 255;
 	const uint8_t DEFAULT_GREEN_MAX_BRIGHTNESS = 255;
 	const uint8_t DEFAULT_BLUE_MAX_BRIGHTNESS  = 255;
+
+	const uint8_t DEFAULT_MIN_MOTOR_SPEED = 0;
+	const uint8_t DEFAULT_MAX_MOTOR_SPEED = 255;
+
+	const uint8_t turnCoefficient = 8/10;
 
 	//	MOTOR PINS
 	const uint8_t leftMotorSpeedPin      = 5;
