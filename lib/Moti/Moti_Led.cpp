@@ -5,7 +5,7 @@
 // LED //
 //#####//
 
-void Moti::setRgbValue(){
+void Moti::constrainRgbValue(){
 	rgbBuffer[0] = constrain(rgb[0], 0, getLedMaxBrightness());
 	rgbBuffer[1] = constrain(rgb[1], 0, getLedMaxBrightness());
 	rgbBuffer[2] = constrain(rgb[2], 0, getLedMaxBrightness());
