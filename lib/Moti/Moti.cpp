@@ -26,6 +26,8 @@ Moti::Moti(){
 	FreeSixIMU AccelGyro = FreeSixIMU();
 
 	delay(50);
+
+	AccelGyro.init();
 }
 
 //#########//
