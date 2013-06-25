@@ -3,8 +3,6 @@
 
 #include "Arduino.h"
 
-#include "Colors.h"
-
 #include "RGBLED.h"
 
 #include <Wire.h>
