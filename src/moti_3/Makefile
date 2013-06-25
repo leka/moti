@@ -1,4 +1,4 @@
-BOARD_TAG     = uno
+BOARD_TAG     = mega2560
 
 ARDMK_DIR     = ~/dev/arduino/arduino-makefile
 

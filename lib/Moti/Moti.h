@@ -22,9 +22,6 @@ class MOTI {
 		MOTI();
 		// static MOTI & getInstance();
 
-		RGBLED rgbled = RGBLED(9, 10,11);
-		FreeSixIMU AccelGyro = FreeSixIMU();
-
 		void init();
 
 		void initializeConstants();
@@ -191,34 +188,38 @@ class MOTI {
 		bool _stateManipulated;
 		bool _stateRemote;
 
+
+		//	CONSTANTS
+		const int DEFAULT_LOOP_DELAY              = 75;
+		const int DEFAULT_SLEEP_DELAY             = 600;
+		const int DEFAULT_AWAKE_THRESHOLD         = 300;
+		const int DEFAULT_DELTA_ACCEL_THRESHOLD   = 200;
+		const int DEFAULT_HIGH_ACTIVITY_THRESHOLD = 80;
+
+		const uint8_t DEFAULT_LED_MAX_BRIGHTNESS   = 255;
+		const uint8_t DEFAULT_RED_MAX_BRIGHTNESS   = 255;
+		const uint8_t DEFAULT_GREEN_MAX_BRIGHTNESS = 255;
+		const uint8_t DEFAULT_BLUE_MAX_BRIGHTNESS  = 255;
+
+		const uint8_t DEFAULT_MIN_MOTOR_SPEED = 0;
+		const uint8_t DEFAULT_MAX_MOTOR_SPEED = 255;
+
+		const uint8_t turnCoefficient = 8/10;
+
+		//	MOTOR PINS
+		const uint8_t leftMotorSpeedPin      = 5;
+		const uint8_t leftMotorDirectionPin  = 4;
+		const uint8_t rightMotorSpeedPin     = 6;
+		const uint8_t rightMotorDirectionPin = 7;
+
+		//	LED PINS
+		const uint8_t RED_PIN   = 9;
+		const uint8_t GREEN_PIN = 10;
+		const uint8_t BLUE_PIN  = 11;
+
+		RGBLED rgbled = RGBLED(9, 10,11);
+		FreeSixIMU AccelGyro;
+
 };
-
-	//	CONSTANTS
-	const int DEFAULT_LOOP_DELAY              = 75;
-	const int DEFAULT_SLEEP_DELAY             = 600;
-	const int DEFAULT_AWAKE_THRESHOLD         = 300;
-	const int DEFAULT_DELTA_ACCEL_THRESHOLD   = 200;
-	const int DEFAULT_HIGH_ACTIVITY_THRESHOLD = 80;
-
-	const uint8_t DEFAULT_LED_MAX_BRIGHTNESS   = 255;
-	const uint8_t DEFAULT_RED_MAX_BRIGHTNESS   = 255;
-	const uint8_t DEFAULT_GREEN_MAX_BRIGHTNESS = 255;
-	const uint8_t DEFAULT_BLUE_MAX_BRIGHTNESS  = 255;
-
-	const uint8_t DEFAULT_MIN_MOTOR_SPEED = 0;
-	const uint8_t DEFAULT_MAX_MOTOR_SPEED = 255;
-
-	const uint8_t turnCoefficient = 8/10;
-
-	//	MOTOR PINS
-	const uint8_t leftMotorSpeedPin      = 5;
-	const uint8_t leftMotorDirectionPin  = 4;
-	const uint8_t rightMotorSpeedPin     = 6;
-	const uint8_t rightMotorDirectionPin = 7;
-
-	//	LED PINS
-	const uint8_t RED_PIN   = 9;
-	const uint8_t GREEN_PIN = 10;
-	const uint8_t BLUE_PIN  = 11;
 
 #endif
