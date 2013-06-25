@@ -21,10 +21,10 @@ With these softwares, you should be up and running and ready to hack autism with
 
 ###Advanced
 
-Okay, so you started with the Arduino and Processing IDE, you're now familiarized with the languages, you've already read and write something like a thousand lines of code and you would really love some new tools to speed up your coding and improve your coding experience. Here are some solutions for you that we, at Leka, are using on a daily basis with great pleasure!
+Okay, so you started with the Arduino IDE, you're now familiarized with the languages, you've already read and write something like a thousand lines of code and you would really love some new tools to speed up your coding and improve your coding experience. Here are some solutions for you that we, at Leka, are using on a daily basis with great pleasure!
 
 *	[Sublime Text 2](http://www.sublimetext.com/2) - ST2 is our favorite code editor. It takes some time to familiarize but once you get used to it, you'll have some hard time finding a replacement! The great thing with ST2 is that you can install or develop your own packages to improve your coding experience. Here after are some of theme :)
-*	[ST2 Package Controler](http://wbond.net/sublime_packages/package_control) - First start with this one! It will allow you to manage and install great packages. Follow the instruction provided by the link and your good to go!
+*	[ST2 Package Controler](http://wbond.net/sublime_packages/package_control) - First start with this one! It will allow you to manage and install great packages. Follow the instruction provided by the link and you'll be good to go!
 *	[Arduino-like IDE](https://github.com/Robot-Will/Stino) - This package allow you to develop the Arduino code and upload it to your robot directly from within ST2. Everything is very well explained on their Github. If you are having some troubles, give us a call or contact them directly.
 *	[Sublime - Arduino](https://github.com/theadamlt/Sublime-Arduino) - This package is really usefull because it provides syntax highlighting for Arduino code!
 
@@ -148,78 +148,142 @@ If `avrdude` was not installed, you can do so by typing:
 
 	$ brew install avrdude
 
-And that's it! If something went wrong, fill and issue on Github using [this page](https://github.com/WeAreLeka/moti/issues).
+And that's it! If something went wrong, fill an issue on Github using [this page](https://github.com/WeAreLeka/moti/issues).
 
+####Cloning the moti repository from Github
 
-Note: Make sure Git and cURL are installed.
+If you just want to download the repo and use the code, get updates but don't contribute, you can clone the repo from Github. To do so, there are two ways :
+*	first, you can use your favorite Git GUI and follow **their** instructions.
+*	second, you can use the command line to feel like a boss.
 
-For the project, we use different libraries. Some of them are public, well-known libraries from the Arduino website and some are custom made to suit our needs.
-If you want to be able to compile the project, you need to have our libraries inside your library folder so they can be accessed by the Arduino app.
-[By following this link](http://arduino.cc/en/Guide/Libraries), you'll know here to find yours depending on your OS: Windows or a UNIX based system (OS X, Linux, Debian, etc.)
+For the second way, first, create a directory where you will clone all of our repos. We highly recommend to use something like that: `~/dev/leka` but anything should do, just write this path somewhere, we are going to use it.
+Then, open the Terminal and type:
 
-###Stable on Linux/Unix based systems using make install
-
-####Installing
-
-The following instructions should work on Mac OS X, Debian, Ubuntu, etc. (We haven't tested it yet, if you do, contact us!)
-
-The easiest way is to use Git and make for installing:
-
+	$ cd path/to/wherever/you/want/to/clone/the/repo # e.g. cd ~/dev/leka
 	$ git clone https://github.com/WeAreLeka/moti.git
-	$ cd YOUR/PATH/TO/moti/
-	$ git checkout dev # or master for working versions
-	$ make install
+	$ cd moti
+	$ git checkout dev
 
-Basically it just makes symlinks from ./lib to ./Arduino/libraries. Make sure you don't already have a library with the same name, it can cause troubles. Plus, we may have made some changes to the libraries, so it's better to use our versions.
+You can also `git checkout master` but this branch may be a lot behind `dev`. However, changes in this branch are frequent and things might work one day but not the next day. If you can't fix, fill an issue.
+
+So now, you have all the files needed for programming your own moti.
+
+####Cloning the Arduino-makefile
+
+As we said, we won't use the Arduino IDE, instead we are going to compile everything on our own. This is where things get interesting. To compile, you need a compiler. We do have one, remember, we installed `avr-gcc` earlier today. `avr-gcc` is derived from `gcc` a world famous compiler for C/C++ (our code will be written mostly in C/C++) and we will even use C++11, the last version of C++ which simplify a lot of things (we won't get into the details, but you can read all the documentation you need [here](http://en.wikipedia.org/wiki/C%2B%2B11) and [here](http://gcc.gnu.org/)). We could use pure command line to tell the computer how to compile the code using avr-gcc but as your code gets bigger, it becomes nearly impossible.
+
+That's why some people invented the Makefiles. Makefiles are like a recipe for the computer which explains what to do with what and in which order. Writing a makefile on your own is like climbing Mont Everest with no training: it's impossible and you'll die alone and exhausted.
+
+But here comes the open source community! Some great guys have written a working makefile for Arduino doing exactly what we intend to. You can thank [Sudar](http://hardwarefun.com/tutorials/compiling-arduino-sketches-using-makefile) and [Martin Oldfield](http://www.mjoldfield.com/atelier/2009/02/arduino-cli.html) and all the people who have contributed.
+
+This makefile will be used as our reference, the one makefile to rule them all. We will also have smaller Makefiles later, we'll get to it.
+
+We forked [Sudar's repo](https://github.com/sudar/Arduino-Makefile) to customize the makefile to our needs.
+
+To clone the makefile, the process is quite the same: use your Git GUI or command line.
+
+For the command line:
+
+	$ cd path/to/wherever/you/want/to/clone/the/repo # e.g. cd ~/dev/leka
+	$ git clone https://github.com/WeAreLeka/Arduino-Makefile
+	$ cd Arduino-Makefile
+
+By now, in your local project directory, you should have two directories: `moti` and `Arduino-Makefile`. If not, make sure you're looking at the right place...
+
+####Let's use some Perl to get things up and running
+
+The makefile we use is great, but on its own, it's not sufficient to upload the sketch and configure everything (say like knowing what kind of board you are using and finding its specs for the compiler). To do that, the same Sudar as before has written some perl scripts for us.
+
+But we need to install some perl modules to get them working. Once again, it's quite easy! Open the Terminal and type line by line (you will be asked for you password because of `sudo`) :
+
+	$ sudo perl -MCPAN -e 'install +YAML'
+	$ sudo perl -MCPAN -e 'install +Device::SerialPort'
+
+It may take some time and you may be asked questions, always answer `y` for "yes".
+
+####Let's take a break, you earned it!
+
+By now, things are pretty close to being up and running. We've done a lot of crazy things. It might look a little mysterious now, but as you get used to it, you'll finally understand why we did all that. Feel free to take looks into the different files, repos, folders and stuff we've done, ask Google about everything. You'll need to be a little aware of everything if you really want to enjoy our work.
+
+####Let's take a look the moti directory tree
+
+The moti directory tree looks like that:
+
+	.
+	|____lib
+	| |____FreeSixIMU
+	| |____Moti
+	| |____RGBLED
+	|____script
+	|____sketch
+	|____src
+	| |____moti_1
+	| |____moti_2
+	| |____moti_3
+	| | |____Makefile
+	| | |____moti_3.ino
+	|____test
+
+Some explanations:
+
+*	`lib` - all the libraries we use
+*	`script` - three shell scripts we will use later to copy the libraries
+*	`sketch` - the Fritzing sketches for moti, not up-to-date
+*	`src` - the different version of moti, we are currently working on moti_3
+*	`test` - unit tests
+
+In `./src/moti_3`, you can see there is a Makefile. It looks like that:
+
+	BOARD_TAG     = mega2560
+
+	ARDMK_DIR     = ~/dev/arduino/arduino-makefile
+
+	ARDUINO_DIR   = /Applications/Arduino.app/Contents/Resources/Java
+
+	AVR_TOOLS_DIR = /usr/local
+
+	ARDUINO_PORT  = /dev/tty.usbmodemfa131
+
+	PROJECT_DIR = /Users/Ladislas/dev/leka/moti
+
+	CURRENT_DIR = $(shell basename $(CURDIR))
+
+	include /Users/Ladislas/dev/arduino/arduino-makefile/arduino-mk/Arduino.mk
+
+The Makefile is used to set some parameters for the compiler:
+
+*	`BOARD_TAG` - the board you want to compile your code for (we will use uno or mega2560)
+*	`ARDMK_DIR` - the path to the Arduino-Makefile directory, e.g. `~/dev/leka/Arduino-Makefile`
+*	`ARDUINO_DIR` - the path to the important Arduino components used by the compiler (you can use `/Applications/Arduino.app/Contents/Resources/Java`)
+*	`AVR_TOOLS_DIR` - path to `avr-gcc` and co, use `/usr/local`
+*	`ARDUINO_PORT` - usb port where your arduino is connected. Connect your board to the computer, open the Arduino IDE, go to `Tools -> Serial Port` and look for the port starting with `/dev/tty.usbmodemXXXX` and replace `XXX` by your value.
+*	`PROJECT_DIR` - the actual directory of moti
+*	`CURRRENT_DIR` - the current directory of the makefile, do not touch
+*	`include /path/to/Arduino-Makefile/arduino-mk/Arduino.mk` - use yours as above, it will include the `master Makefile`
+
+####Install the libraries
+
+To compile the code, you need the libraries we use. We wrote scripts that do that for you!
+
+Open Terminal and type:
+
+	$ cd path/to/moti
+	$ cd script
+	$ bash symlink_lib.sh
+
+Then open a Finder windows and go to Documents/Arduino/libraries and check everything is in here.
+
+####Use the makefile to make sure everything is up and running!
+
+Now big time! We are **actually** going to compile our code, get ready!
+
+Open Terminal and type:
+
+	$ cd path/to/moti/src/moti_3
+	make
+
+The code should compile!
 
 
-####Updating
-
-Updating using git:
-
-	$ git pull
-	$ make update
-
-Use update when new libraries are added.
-
-
-##How to use
-
-"Okay, I've cloned the repo, installed all the softwares, but I'm quite new to Arduino and I don't know what to do!" - That's all right! You might not be a geek like us, but you will be sooner than you think.
-
-Here are some things to do for your robot to start living :
-
-1.	Visit our [Bill of Material page](sketch/README.md) and buy the different parts from your favorite retailer.
-1.	Wait a couple of days for the mailman.
-1.	Build the robot, yeah!
-1.	Connect the Arduino board to your computer using the usb cable.
-1.	Open the Arduino IDE or ST2.
-1.	Open the project.
-1.	Go to src/moti_1 or src/moti_2 (depending on the robot you're building) and open moti_1.ino or moti_2.ino (or any version we might be developing in the future!).
-1.	Upload the sketch to the Arduino board. The way of doing this will depend on the software you're using. We advise you to read the necessary documentation.
-1.	Enjoy! :)
-
-
-##Known Issues
-
-###Moti 2 - v1.0
-
-*	none yet (we're so cool!)
-
-###Moti 1 - v0.1
-
-*	the speed and the light depend on the excitement of the robot, but when the motors are running, moti is exciting itself perpetually... need to change that!
-
-
-##Uninstalling
-
-###Linux/Unix based OS
-
-To remove all the libraries used for the Moti project, simply run:
-
-	$ git pull
-	$ make uninstall
-
-The uninstaller is clever! You don't need to worry about your own libraries being removed, only our libraries are targeted and removed.
 
 
