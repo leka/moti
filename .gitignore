@@ -1,5 +1,6 @@
 *log*
 tmp/*
+bin/*
 *~
 .DS_Store
 build-tmp/
