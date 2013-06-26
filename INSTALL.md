@@ -3,13 +3,23 @@
 
 ##About
 
-Here is the guide to correctly setup all you need to peacefully develop awesome code for Moti.
+Here is the guide to correctly setup all you need to peacefully develop awesome code for Moti. Usually, you won't find instructions as detailed as this one, because it's part of the "hacker thing" to know what you're doing and/or to make it work by trials and errors.
+
+That could work for us, but it's a little different. This project is not a small part in a bigger project. It actually is the bigger project and here after you'll find all the steps to successfully code/debug/compile/upload/test everything on your own robot.
+
+The thing is, it took us quite some time to figure out what to do, how to do it, which Homebrew `formula` to install, how to use the makefile and so on. When we say quite some time, you can count full working weeks of reading, trying, trying again, cursing because nothing is working, dead ends, new ideas, clearer vision and finally a working process.
+
+It's our present to the world!
+
+You can follow two directions: the detailed way (perfect for beginners) or the more advanced way (perfect for highly talented hackers).
+
+Have fun! :)
 
 ##Toolbox
 
 ###Basic
 
-To help us develop our product, you'll first need to different softwares:
+To help us develop our product, you'll first need to install different softwares:
 
 *	[Arduino IDE](http://arduino.cc/en/main/software) - this software is used to develop the source code and to upload it to your Arduino board. We recommend going for the 1.0.5 version. If you are a little more advanced user feel free to try the new beta version 1.5. Please note that you may encounter strange behaviors (we do sometimes), so please, take the time to report them in the [Due Forum](http://forum.arduino.cc/index.php?board=87.0) and/or here.
 *	[Homebrew](http://mxcl.github.io/homebrew/) - Homebrew is our best package manager for OS X (a Linux version is under development). Homebrew helps you download and install packages to do whatever your need to do, without compromising your computer and the weird stuff going on in `/usr/local/`
@@ -45,7 +55,7 @@ Go visit the [Arduino website](http://arduino.cc/en/Main/Software), download the
 
 For comfort, we like like to use a Git GUI. For beginners, we recommend the Github Git GUI. Go visit the [Github for Mac website](http://mac.github.com/), download the package and install it as you would do with any other application.
 
-For those on Linux or Windows, there [apps](http://git-scm.com/downloads/guis) for you as well but we're assuming that if you are using Linux, you don't need one of them.
+For those on Linux or Windows, there are [apps](http://git-scm.com/downloads/guis) for you as well but we assume that if you are using Linux, you don't need one of them.
 
 ####Installing Homebrew
 
@@ -53,7 +63,7 @@ As we said earlier, Homebrew is a package manager. It's not a standard applicati
 If command line is really not your cup of tea, maybe you should just give up because we are going to use plenty of those later on! Come back when you're ready.
 
 
-For those who want to fight, go visit the [Homebrew website](http://mxcl.github.io/homebrew/) and follow all the instructions. And because we are so generous, we put them here: open Terminal.app, copy/paste the following line and let the magic begin (don't copy the `$` sign, it is used to say we are using the command line...):
+For those who want to fight, go visit the [Homebrew website](http://mxcl.github.io/homebrew/) and follow all the instructions. And because we are so generous, we also put them here: open Terminal.app, copy/paste the following line and let the magic begin (don't copy the `$` sign, it is used to say we are using the command line...):
 
 	$ ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
 
@@ -125,7 +135,7 @@ To do this, we are going to use Homebrew, one more time! Type each of the follow
 
 This should install all you need. It may take some time to compile (up to one hour), so grab a coffee and a book and be patient. It is also normal, if you are using a laptop, to hear the fan. Compiling needs a lot of power.
 
-One it's done, you can check everything is fine by typing:
+Once it's done, you can check everything is fine by typing:
 
 	$ avr-gcc -v
 	$ avrdude -v
