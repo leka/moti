@@ -37,6 +37,8 @@ It's not a real `API` but it will eventually become one.
 
 ##Branches
 
+**IMPORTANT:** Our model is based on [A successful Git branching Model](http://nvie.com/posts/a-successful-git-branching-model/). PLEASE, take the time to read it carefully before starting. We don't want you to mess things up! :)
+
 *	`master` is the stable branch for production and tests.
 *	`dev` (origin HEAD) is the development branch for unit/lab tests and behaviour development. if the lab tests are concluding, a pull request to the master can be made.
 *	`feature branches` are transitory branches used to develop new features to incorporate to the dev branch. when the feature is bugless, a pull request may be made to merge the concluding results inside the dev branch.
