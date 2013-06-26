@@ -44,7 +44,7 @@ Okay, so you started with the Arduino IDE, you're now familiarized with the lang
 ##Installing, Updating & Removing
 
 
-###Hackers' guide
+###Hacker's guide
 
 For you, it should be pretty easy.
 
@@ -82,7 +82,7 @@ Simply clone the repo:
 
 ####4. Install the perl dependencies needed to use the `makefile`
 
-You need `YAML` and `Device::SerialPort` to upload with the `makefile`. Simply type:
+You need `YAML` and `Device::SerialPort` to upload with the `.hex` file. Simply type:
 
 	$ sudo perl -MCPAN -e 'install +YAML'
 	$ sudo perl -MCPAN -e 'install +Device::SerialPort'
@@ -120,7 +120,7 @@ Everywhere your `.ino` files are, you want to put a makefile to compile the code
 Simply run `make` from `./src/moti_3` and it should compile. To upload, use `make upload`. For further information, visit [sudar's Arduin-Makefile repo](https://github.com/sudar/Arduino-Makefile).
 
 
-###Installing from scratch on OS X/Unix (beginner guide)
+###Beginner's guide - Installing from scratch on OS X/Unix
 
 
 ####Downloading and installing Sublime Text 2
