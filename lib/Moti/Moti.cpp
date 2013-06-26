@@ -8,9 +8,6 @@
 
 #include "Arduino.h"
 
-#include "FreeSixIMU.h"
-#include "RGBLED.h"
-
 
 //##############//
 // CONSTRUCTORS //
@@ -26,26 +23,52 @@ MOTI::MOTI(){
 
 void MOTI::init(){
 	delay(500);
-	Serial.println("Initialize Constants");
+	Serial.begin(115200);
+	delay(500);
+	blinkLed(4);
+	delay(500);
 	initializeConstants();
-	Serial.println("Initialize Constants - OK");
 	delay(500);
-	Serial.println("Initialize States");
 	initializeStates();
-	Serial.println("Initialize States - OK");
 	delay(500);
-	Serial.println("Initialize Wire");
 	Wire.begin();
-	Serial.println("Initialize Wire - OK");
 	delay(500);
-	Serial.println("Initialize AccelGyro");
 	AccelGyro.init();
-	Serial.println("Initialize AccelGyro - OK");
 	delay(500);
-	Serial.println("Initialize Motors");
 	initializeMotors();
-	Serial.println("Initialize Motors - OK");
 	delay(500);
+}
+
+void MOTI::initVerbose(){
+	delay(500);
+	Serial.begin(115200);
+	delay(500);
+	Serial.println("Serial communication has begun.");
+	delay(500);
+	Serial.println("Starting Moti.init();");
+	blinkLed(4);
+	delay(500);
+	Serial.print("Initializing Constants");
+	initializeConstants();
+	Serial.println(" ---> Constants OK");
+	delay(500);
+	Serial.print("Initializing States");
+	initializeStates();
+	Serial.println(" ---> States OK");
+	delay(500);
+	Serial.print("Initializing Wire communication");
+	Wire.begin();
+	Serial.println(" ---> Wire OK");
+	delay(500);
+	Serial.print("Initializing Accelerometer and Gyroscope");
+	AccelGyro.init();
+	Serial.println(" ---> AccelGyro OK");
+	delay(500);
+	Serial.print("Initializing Motors");
+	initializeMotors();
+	Serial.println(" ---> Motors OK");
+	delay(500);
+	Serial.println(" Moti has been initialized correctly, void loop(); is starting......");
 }
 
 //#########//

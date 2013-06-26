@@ -10,6 +10,8 @@
 
 #include "Arduino.h"
 
+#include "Moti.h"
+
 #include "RGBLED.h"
 
 #include <Wire.h>
@@ -20,29 +22,15 @@
 #include <FIMU_ITG3200.h>
 #include <FreeSixIMU.h>
 
-#include "Moti.h"
-
 MOTI Moti = MOTI();
-RGBLED rgbled = RGBLED(9, 10,11);
-FreeSixIMU AccelGyro = FreeSixIMU();
 
-int led = 13;
 
 //#######//
 // SETUP //
 //#######//
 
 void setup() {
-	Serial.begin(115200);
-	pinMode(led, OUTPUT);
-	digitalWrite(led, HIGH);
-	delay(1000);
-	Serial.println("Setup starting");
-	digitalWrite(led, LOW);
-	Serial.println("Moti instance initialized");
-	Moti.init();
-	Serial.println("Everythink ready");
-	Moti.blinkLed(4);
+	Moti.initVerbose();
 }
 
 

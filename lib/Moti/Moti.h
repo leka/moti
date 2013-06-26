@@ -23,6 +23,7 @@ class MOTI {
 		// static MOTI & getInstance();
 
 		void init();
+		void initVerbose();
 
 		void initializeConstants();
 
