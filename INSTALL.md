@@ -15,7 +15,9 @@ You can follow two directions: the detailed way (perfect for beginners) or the m
 
 Have fun! :)
 
+
 ##Toolbox
+
 
 ###Basic
 
@@ -41,15 +43,95 @@ Okay, so you started with the Arduino IDE, you're now familiarized with the lang
 
 ##Installing, Updating & Removing
 
+
+###Hackers' guide
+
+For you, it should be pretty easy.
+
+Make sure you've installed the Arduino IDE.
+
+
+####1. Installing `avr-gcc`, `binutils`, `avr-libc` and `avrdude`
+
+We've made a Homebrew `formula` that you can `tap` like that:
+
+	$ brew tap WeAreLeka/avr
+	$ brew install avr-libc
+
+Check that everything has been installed properly. If `avrdude` is missing, install it with:
+
+	$ brew install avrdude
+
+
+####2. Clone moti repository from Github
+
+Simply clone the repo:
+
+	$ cd path/to/wherever/you/want/to/clone/the/repo
+	$ git clone https://github.com/WeAreLeka/moti.git
+	$ cd moti
+	$ git checkout dev
+
+####3. Clone the Arduino-Makefile repo from Github
+
+Simply clone the repo:
+
+	$ cd path/to/wherever/you/want/to/clone/the/repo
+	$ git clone https://github.com/WeAreLeka/Arduino-Makefile
+
+
+####4. Install the perl dependencies needed to use the `makefile`
+
+You need `YAML` and `Device::SerialPort` to upload with the `makefile`. Simply type:
+
+	$ sudo perl -MCPAN -e 'install +YAML'
+	$ sudo perl -MCPAN -e 'install +Device::SerialPort'
+
+
+####5. Symlinking the libraries
+
+We've made some `shell scripts` to symlink all the libraries. In your Terminal, type:
+
+	$ bash /path/to/moti/script/symlink_lib.sh
+
+
+####6. Using the makefiles to compile your code
+
+Take a look in `./src/moti_3`, you can see there is a Makefile. It looks like that:
+
+	BOARD_TAG     = uno
+
+	ARDMK_DIR     = ~/dev/arduino/arduino-makefile
+
+	ARDUINO_DIR   = /Applications/Arduino.app/Contents/Resources/Java
+
+	AVR_TOOLS_DIR = /usr/local
+
+	ARDUINO_PORT  = /dev/tty.usbmodemfa131
+
+	PROJECT_DIR = /Users/Ladislas/dev/leka/moti
+
+	CURRENT_DIR = $(shell basename $(CURDIR))
+
+	include /Users/Ladislas/dev/arduino/arduino-makefile/arduino-mk/Arduino.mk
+
+Everywhere your `.ino` files are, you want to put a makefile to compile the code. **Don't forget to configure it to suit your needs.**
+
+Simply run `make` from `./src/moti_3` and it should compile. To upload, use `make upload`. For further information, visit [sudar's Arduin-Makefile repo](https://github.com/sudar/Arduino-Makefile).
+
+
 ###Installing from scratch on OS X/Unix (beginner guide)
+
 
 ####Downloading and installing Sublime Text 2
 
 Go visit the [Sublime Text 2 website](http://www.sublimetext.com/), download the package and install it as you would do with any other application.
 
+
 ####Downloading and installing the Arduino IDE
 
 Go visit the [Arduino website](http://arduino.cc/en/Main/Software), download the package and install it as you would do with any other application.
+
 
 ####Downloading and installing a Git GUI
 
@@ -57,17 +139,18 @@ For comfort, we like like to use a Git GUI. For beginners, we recommend the Gith
 
 For those on Linux or Windows, there are [apps](http://git-scm.com/downloads/guis) for you as well but we assume that if you are using Linux, you don't need one of them.
 
+
 ####Installing Homebrew
 
 As we said earlier, Homebrew is a package manager. It's not a standard application with a graphical user interface (GUI). You have to open the Terminal.app to use Homebrew and type some command lines. If you're afraid, fear not my friend! We will guide you all along the way and you will eventually feel all the power of your computer!
 If command line is really not your cup of tea, maybe you should just give up because we are going to use plenty of those later on! Come back when you're ready.
-
 
 For those who want to fight, go visit the [Homebrew website](http://mxcl.github.io/homebrew/) and follow all the instructions. And because we are so generous, we also put them here: open Terminal.app, copy/paste the following line and let the magic begin (don't copy the `$` sign, it is used to say we are using the command line...):
 
 	$ ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
 
 For troubleshooting, [Google](http://lmgtfy.com/?q=homebrew) is your best friend. You can also try typing `brew doctor` in your Terminal to see what is wrong. Please don't fill issues on Github regarding the installation of Homebrew, we won't read them.
+
 
 ####Installing Git with Homebrew
 
@@ -79,6 +162,7 @@ Open the Terminal.app and then type:
 
 And that's it! It will download the source and compile it. Everything should be OK.
 Now you have the last Git version on your system which is pretty awesome you must say!
+
 
 ####Check Git version and amend `$PATH` if necessary
 
@@ -118,11 +202,13 @@ Quit (`cmd+q`) the Terminal.app, reopen the Terminal.app and type:
 
 To check your version. If it's not working, do the `$PATH` part again.
 
+
 ####Getting ready for the next part
 
 **IMPORTANT: From here, things get a little more complex. If you follow up and take your time, everything should work fine. Please, before starting, read the whole procedure so you'll know where we are going.**
 
 Remember that you installed the Arduino IDE, maybe you even started coding with it. We hope you didn't like it because, guess what! We're not going to use it! Yes, you've heard me, we think the Arduino IDE sucks (for now, it may become awesome one day, but we're waiting...) so we want to compile and upload everything on our own. Don't leave! It's not as complicated as it looks, plus some great minds have done most of the work for us! Ready? Let's get going! :)
+
 
 ####Installing avr-gcc and co
 
@@ -160,6 +246,7 @@ If `avrdude` was not installed, you can do so by typing:
 
 And that's it! If something went wrong, fill an issue on Github using [this page](https://github.com/WeAreLeka/moti/issues).
 
+
 ####Cloning the moti repository from Github
 
 If you just want to download the repo and use the code, get updates but don't contribute, you can clone the repo from Github. To do so, there are two ways :
@@ -177,6 +264,7 @@ Then, open the Terminal and type:
 You can also `git checkout master` but this branch may be a lot behind `dev`. However, changes in this branch are frequent and things might work one day but not the next day. If you can't fix, fill an issue.
 
 So now, you have all the files needed for programming your own moti.
+
 
 ####Cloning the Arduino-makefile
 
@@ -200,6 +288,7 @@ For the command line:
 
 By now, in your local project directory, you should have two directories: `moti` and `Arduino-Makefile`. If not, make sure you're looking at the right place...
 
+
 ####Let's use some Perl to get things up and running
 
 The makefile we use is great, but on its own, it's not sufficient to upload the sketch and configure everything (say like knowing what kind of board you are using and finding its specs for the compiler). To do that, the same Sudar as before has written some perl scripts for us.
@@ -211,9 +300,11 @@ But we need to install some perl modules to get them working. Once again, it's q
 
 It may take some time and you may be asked questions, always answer `y` for "yes".
 
+
 ####Let's take a break, you earned it!
 
 By now, things are pretty close to being up and running. We've done a lot of crazy things. It might look a little mysterious now, but as you get used to it, you'll finally understand why we did all that. Feel free to take looks into the different files, repos, folders and stuff we've done, ask Google about everything. You'll need to be a little aware of everything if you really want to enjoy our work.
+
 
 ####Let's take a look the moti directory tree
 
@@ -271,6 +362,7 @@ The Makefile is used to set some parameters for the compiler:
 *	`CURRRENT_DIR` - the current directory of the makefile, do not touch
 *	`include /path/to/Arduino-Makefile/arduino-mk/Arduino.mk` - use yours as above, it will include the `master Makefile`
 
+
 ####Install the libraries
 
 To compile the code, you need the libraries we use. We wrote scripts that do that for you!
@@ -282,6 +374,7 @@ Open Terminal and type:
 	$ bash symlink_lib.sh
 
 Then open a Finder windows and go to Documents/Arduino/libraries and check everything is in here.
+
 
 ####Use the makefile to make sure everything is up and running!
 

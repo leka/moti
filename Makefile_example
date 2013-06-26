@@ -1,3 +1,6 @@
+### ATTENTION
+### This is an example Makefile and it MUST be configured to suit your needs.
+
 BOARD_TAG     = uno
 
 ARDMK_DIR     = ~/dev/arduino/arduino-makefile
@@ -12,4 +15,4 @@ PROJECT_DIR = /Users/Ladislas/dev/leka/moti
 
 CURRENT_DIR = $(shell basename $(CURDIR))
 
-include /Users/Ladislas/dev/arduino/arduino-makefile/arduino-mk/Arduino.mk
+include /YOUR/PATH/TO/arduino-makefile/arduino-mk/Arduino.mk

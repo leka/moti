@@ -31,7 +31,7 @@ Feel free to notify us if you find cheaper retailers in your country, we'll add 
 *	[Plastic Wheels GMW](http://www.robotshop.com/eu/solarbotics-gmw-gear-motor-mounts-2.html) x2
 *	[Gear Motor Bracket GMB28](http://www.robotshop.com/eu/solarbotics-gmb28-gear-motor-bracket-2.html) x2
 *	9V Battery x2
-*	Endless supply of Jumper Wires X∞
+*	Endless supply of Jumper Wires x∞
 
 
 ###Moti_1 - v0.1 - obsolete
