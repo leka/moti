@@ -17,11 +17,22 @@ For us, the answer is an absolute YES! We want people to be able to look at our 
 
 ##Actual Version
 
-The actual development version is v2.0, it uses the MOTI Class and Makefiles.
+We are now working with `MOTI v1.0`.
 
-It is also used with our 2nd and 3rd prototypes. They use special sensors as described [here](./sketch/README.md)
+From now on, the old moti versions (moti_1 & moti_2) are **deprecated** and will only be accessible from the `oldies` branch [here](https://github.com/WeAreLeka/moti/tree/oldies).
 
-The new v1.0 version is a little more expensive than v0.1, so do not hesitate to fork the master branch tagged 0.1 to continue the development of v0.1 cheaper version.
+We are building a super class called `MOTI` to simplify the development of the robot behaviors. To put it in a nut shell, it will look like that:
+
+	Moti.goForward(); //Moti goes forward
+	Moti.stop();
+	Moti.spinRight();
+	Moti.blinkLed(5); //the led blink 5 times
+	Moti.checkSensors();
+	Moti.sendData();
+
+It is a lot easier for everyone to write code and to understand what you do. It is also easier for the other people who will read your code to understand what you're trying to do.
+
+It's not a real `API` but it will eventually become one.
 
 
 ##Branches
@@ -42,21 +53,22 @@ The full procedure is detailed in [INSTALL.md](./INSTALL.md). It has been writte
 The full procedure on how to use everything you've just installed is described in [USE.md](./USE.md).
 
 
+##How to contribute
+
+Thanks to Github, the best way to help us is by `forking` the project, coding and then making pull requests.
+
+We will only accept direct merging of pull request, so make sure your code is OK for that.
+
+
 ##Known Issues
 
-###Moti 2 - v1.0
-
-*	none yet (we're so cool!)
-
-###Moti 1 - v0.1
-
-*	the speed and the light depend on the excitement of the robot, but when the motors are running, moti is exciting itself perpetually... need to change that!
-
+None yet.
 
 
 ##TODO
 
-*	Implement the todo list...
+*	Document the code
+*	Generate documentation with Doxygen
 
 
 ##Copyright and License
