@@ -154,3 +154,12 @@ void MOTI::resetGreenMaxBrightness(){
 void MOTI::resetBlueMaxBrightness(){
 	_blueMaxBrightness = DEFAULT_BLUE_MAX_BRIGHTNESS;
 }
+
+void MOTI::resetMotorMinSpeed(){
+	_motorMinSpeed = DEFAULT_MIN_MOTOR_SPEED;
+}
+
+void MOTI::resetMotorMaxSpeed(){
+	_motorMaxSpeed = DEFAULT_MAX_MOTOR_SPEED;
+}
+

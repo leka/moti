@@ -22,28 +22,30 @@
 // }
 
 MOTI::MOTI(){
-	delay(50);
-	RGBLED rgbled = RGBLED(RED_PIN, GREEN_PIN, BLUE_PIN);
-	delay(50);
-	FreeSixIMU AccelGyro = FreeSixIMU();
-	delay(50);
 }
 
 void MOTI::init(){
-	Serial.begin(115200);
-	delay(50);
+	delay(500);
+	Serial.println("Initialize Constants");
 	initializeConstants();
-	delay(50);
+	Serial.println("Initialize Constants - OK");
+	delay(500);
+	Serial.println("Initialize States");
 	initializeStates();
-	delay(50);
+	Serial.println("Initialize States - OK");
+	delay(500);
+	Serial.println("Initialize Wire");
 	Wire.begin();
-	delay(50);
+	Serial.println("Initialize Wire - OK");
+	delay(500);
+	Serial.println("Initialize AccelGyro");
 	AccelGyro.init();
-	delay(50);
+	Serial.println("Initialize AccelGyro - OK");
+	delay(500);
+	Serial.println("Initialize Motors");
 	initializeMotors();
-	delay(50);
-	initializeLed();
-	delay(50);
+	Serial.println("Initialize Motors - OK");
+	delay(500);
 }
 
 //#########//

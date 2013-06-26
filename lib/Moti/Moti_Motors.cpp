@@ -32,9 +32,9 @@ void MOTI::goForward(){
 }
 
 void MOTI::goForward(int speed){
-	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
-	spinLeftWheel(speed, 1);
-	spinRightWheel(speed, 1);
+	int _speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
+	spinLeftWheel(_speed, 1);
+	spinRightWheel(_speed, 1);
 
 	setMovingState(true);
 }
@@ -47,9 +47,9 @@ void MOTI::goBackward(){
 }
 
 void MOTI::goBackward(int speed){
-	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
-	spinLeftWheel(speed, 0);
-	spinRightWheel(speed, 0);
+	int _speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
+	spinLeftWheel(_speed, 0);
+	spinRightWheel(_speed, 0);
 
 	setMovingState(true);
 }
