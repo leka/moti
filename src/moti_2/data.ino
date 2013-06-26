@@ -66,3 +66,57 @@ void sendProcessingFeedback() {
 }
 
 
+
+void sendJSON(){
+	Serial.print('{');
+		Serial.print('" accel" : ');
+		Serial.print('{');
+
+			Serial.print(' "x" : "');
+			Serial.print(XYZ[0]);
+			Serial.print('",');
+
+			Serial.print(' "y" : "');
+			Serial.print(XYZ[1]);
+			Serial.print('",');
+
+			Serial.print(' "z" : "');
+			Serial.print(XYZ[2]);
+			Serial.print('"');
+
+		Serial.print(' },');
+		Serial.print('" gyro" : ');
+		Serial.print('{');
+
+			Serial.print(' "yaw" : "');
+			Serial.print(XYZ[3]);
+			Serial.print('",');
+
+			Serial.print(' "pitch" : "');
+			Serial.print(XYZ[4]);
+			Serial.print('",');
+
+			Serial.print(' "roll" : "');
+			Serial.print(XYZ[4]);
+			Serial.print('"');
+
+		Serial.print(' },');
+		Serial.print('" rgb" : ');
+		Serial.print('{');
+
+			Serial.print(' "red" : "');
+			Serial.print(RGB[0]);
+			Serial.print('",');
+
+			Serial.print(' "green" : "');
+			Serial.print(RGB[1]);
+			Serial.print('",');
+
+			Serial.print(' "blue" : "');
+			Serial.print(RGB[2]);
+			Serial.print('"');
+
+		Serial.print(' }');
+	Serial.print('}');
+}
+

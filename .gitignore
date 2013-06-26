@@ -1,5 +1,9 @@
 *log*
 tmp/*
+bin/*
 *~
 .DS_Store
 build-tmp/
+*.sublime-*
+moti.sublime-project
+moti.sublime-workspace

@@ -17,11 +17,18 @@ For us, the answer is an absolute YES! We want people to be able to look at our 
 
 ##Actual Version
 
-The actual development version is v1.0, but it hasn't been pushed on Github yet.
+We are now working with `MOTI v1.0`.
 
-The working version is 0.1 - please note that this was our first prototype. Due to heavy development we are going a little faster than we thought and we are now developing a new version with different components.
+From now on, the old moti versions (moti_1 & moti_2) are **deprecated** and will only be accessible from the `oldies` branch [here](https://github.com/WeAreLeka/moti/tree/oldies).
 
-The new v1.0 version is a little more expensive than v0.1, so do not hesitate to fork the master branch tagged 0.1 to continue the development of v0.1 cheaper version.
+We are building a super class called `MOTI` to simplify the development of the robot behaviors. To put it in a nut shell, it will look like that:
+
+	Moti.goForward(); //Moti goes forward
+	Moti.stop();
+	Moti.spinRight();
+	Moti.blinkLed(5); //the led blink 5 times
+	Moti.checkSensors();
+	Moti.sendData();
 
 
 ##Branches
@@ -57,83 +64,32 @@ Okay, so you started with the Arduino and Processing IDE, you're now familiarize
 *	[Processing-like IDE](https://github.com/b-g/processing-sublime) - Same as above but for Processing!
 
 
-##Installing & Updating
+##How to install
 
-Note: Make sure Git and cURL are installed.
-
-For the project, we use different libraries. Some of them are public, well-known libraries from the Arduino website and some are custom made to suit our needs.
-If you want to be able to compile the project, you need to have our libraries inside your library folder so they can be accessed by the Arduino app.
-[By following this link](http://arduino.cc/en/Guide/Libraries), you'll know here to find yours depending on your OS: Windows or a UNIX based system (OS X, Linux, Debian, etc.)
-
-###Stable on Linux/Unix based systems using make install
-
-####Installing
-
-The following instructions should work on Mac OS X, Debian, Ubuntu, etc. (We haven't tested it yet, if you do, contact us!)
-
-The easiest way is to use Git and make for installing:
-
-	$ git clone https://github.com/WeAreLeka/moti.git
-	$ cd YOUR/PATH/TO/moti/
-	$ git checkout dev # or master for working versions
-	$ make install
-
-Basically it just makes symlinks from ./lib to ./Arduino/libraries. Make sure you don't already have a library with the same name, it can cause troubles. Plus, we may have made some changes to the libraries, so it's better to use our versions.
-
-
-####Updating
-
-Updating using git:
-
-	$ git pull
-	$ make update
-
-Use update when new libraries are added.
+The full procedure is detailed in [INSTALL.md](./INSTALL.md). It has been written for beginners as well as for advanced hackers.
 
 
 ##How to use
 
-"Okay, I've cloned the repo, installed all the softwares, but I'm quite new to Arduino and I don't know what to do!" - That's all right! You might not be a geek like us, but you will be sooner than you think.
+The full procedure on how to use everything you've just installed is described in [USE.md](./USE.md).
 
-Here are some things to do for your robot to start living :
 
-1.	Visit our [Bill of Material page](sketch/README.md) and buy the different parts from your favorite retailer.
-1.	Wait a couple of days for the mailman.
-1.	Build the robot, yeah!
-1.	Connect the Arduino board to your computer using the usb cable.
-1.	Open the Arduino IDE or ST2.
-1.	Open the project.
-1.	Go to src/moti_1 or src/moti_2 (depending on the robot you're building) and open moti_1.ino or moti_2.ino (or any version we might be developing in the future!).
-1.	Upload the sketch to the Arduino board. The way of doing this will depend on the software you're using. We advise you to read the necessary documentation.
-1.	Enjoy! :)
+##How to contribute
+
+Thanks to Github, the best way to help us is by `forking` the project, coding and then making pull requests.
+
+We will only accept direct merging of pull request, so make sure your code is OK for that.
 
 
 ##Known Issues
 
-###Moti 2 - v1.0
-
-*	none yet (we're so cool!)
-
-###Moti 1 - v0.1
-
-*	the speed and the light depend on the excitement of the robot, but when the motors are running, moti is exciting itself perpetually... need to change that!
-
-
-##Uninstalling
-
-###Linux/Unix based OS
-
-To remove all the libraries used for the Moti project, simply run:
-
-	$ git pull
-	$ make uninstall
-
-The uninstaller is clever! You don't need to worry about your own libraries being removed, only our libraries are targeted and removed.
+None yet.
 
 
 ##TODO
 
-*	Implement the todo list...
+*	Document the code
+*	Generate documentation with Doxygen
 
 
 ##Copyright and License

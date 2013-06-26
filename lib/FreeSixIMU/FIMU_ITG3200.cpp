@@ -40,16 +40,16 @@ ITG3200::ITG3200() {
 
 void ITG3200::init(unsigned int  address) {
   // Uncomment or change your default ITG3200 initialization
-  
+
   // fast sample rate - divisor = 0 filter = 0 clocksrc = 0, 1, 2, or 3  (raw values)
   init(address, NOSRDIVIDER, RANGE2000, BW256_SR8, PLL_XGYRO_REF, true, true);
-  
+
   // slow sample rate - divisor = 0  filter = 1,2,3,4,5, or 6  clocksrc = 0, 1, 2, or 3  (raw values)
   //init(NOSRDIVIDER, RANGE2000, BW010_SR1, INTERNALOSC, true, true);
-  
+
   // fast sample rate 32Khz external clock - divisor = 0  filter = 0  clocksrc = 4  (raw values)
   //init(NOSRDIVIDER, RANGE2000, BW256_SR8, PLL_EXTERNAL32, true, true);
-  
+
   // slow sample rate 32Khz external clock - divisor = 0  filter = 1,2,3,4,5, or 6  clocksrc = 4  (raw values)
   //init(NOSRDIVIDER, RANGE2000, BW010_SR1, PLL_EXTERNAL32, true, true);
 }
@@ -61,18 +61,18 @@ void ITG3200::init(unsigned int address, byte _SRateDiv, byte _Range, byte _filt
   setFilterBW(_filterBW);
   setClockSource(_ClockSrc);
   setITGReady(_ITGReady);
-  setRawDataReady(_INTRawDataReady);  
-  delay(GYROSTART_UP_DELAY);  // startup 
+  setRawDataReady(_INTRawDataReady);
+  delay(GYROSTART_UP_DELAY);  // startup
 }
 
 byte ITG3200::getDevAddr() {
-  /*readmem(WHO_AM_I, 1, &_buff[0]); 
+  /*readmem(WHO_AM_I, 1, &_buff[0]);
   return _buff[0];  */
   return _dev_address;
 }
 
 void ITG3200::setDevAddr(unsigned int  _addr) {
-  writemem(WHO_AM_I, _addr); 
+  writemem(WHO_AM_I, _addr);
   _dev_address = _addr;
 }
 
@@ -91,68 +91,68 @@ byte ITG3200::getFSRange() {
 }
 
 void ITG3200::setFSRange(byte _Range) {
-  readmem(DLPF_FS, 1, &_buff[0]);   
-  writemem(DLPF_FS, ((_buff[0] & ~DLPFFS_FS_SEL) | (_Range << 3)) ); 
-}
-
-byte ITG3200::getFilterBW() {  
   readmem(DLPF_FS, 1, &_buff[0]);
-  return (_buff[0] & DLPFFS_DLPF_CFG); 
+  writemem(DLPF_FS, ((_buff[0] & ~DLPFFS_FS_SEL) | (_Range << 3)) );
 }
 
-void ITG3200::setFilterBW(byte _BW) {   
+byte ITG3200::getFilterBW() {
   readmem(DLPF_FS, 1, &_buff[0]);
-  writemem(DLPF_FS, ((_buff[0] & ~DLPFFS_DLPF_CFG) | _BW)); 
+  return (_buff[0] & DLPFFS_DLPF_CFG);
 }
 
-bool ITG3200::isINTActiveOnLow() {  
+void ITG3200::setFilterBW(byte _BW) {
+  readmem(DLPF_FS, 1, &_buff[0]);
+  writemem(DLPF_FS, ((_buff[0] & ~DLPFFS_DLPF_CFG) | _BW));
+}
+
+bool ITG3200::isINTActiveOnLow() {
   readmem(INT_CFG, 1, &_buff[0]);
   return ((_buff[0] & INTCFG_ACTL) >> 7);
 }
 
 void ITG3200::setINTLogiclvl(bool _State) {
   readmem(INT_CFG, 1, &_buff[0]);
-  writemem(INT_CFG, ((_buff[0] & ~INTCFG_ACTL) | (_State << 7))); 
+  writemem(INT_CFG, ((_buff[0] & ~INTCFG_ACTL) | (_State << 7)));
 }
 
-bool ITG3200::isINTOpenDrain() {  
+bool ITG3200::isINTOpenDrain() {
   readmem(INT_CFG, 1, &_buff[0]);
   return ((_buff[0] & INTCFG_OPEN) >> 6);
 }
 
 void ITG3200::setINTDriveType(bool _State) {
   readmem(INT_CFG, 1, &_buff[0]);
-  writemem(INT_CFG, ((_buff[0] & ~INTCFG_OPEN) | _State << 6)); 
+  writemem(INT_CFG, ((_buff[0] & ~INTCFG_OPEN) | _State << 6));
 }
 
-bool ITG3200::isLatchUntilCleared() {    
+bool ITG3200::isLatchUntilCleared() {
   readmem(INT_CFG, 1, &_buff[0]);
   return ((_buff[0] & INTCFG_LATCH_INT_EN) >> 5);
 }
 
 void ITG3200::setLatchMode(bool _State) {
   readmem(INT_CFG, 1, &_buff[0]);
-  writemem(INT_CFG, ((_buff[0] & ~INTCFG_LATCH_INT_EN) | _State << 5)); 
+  writemem(INT_CFG, ((_buff[0] & ~INTCFG_LATCH_INT_EN) | _State << 5));
 }
 
-bool ITG3200::isAnyRegClrMode() {    
+bool ITG3200::isAnyRegClrMode() {
   readmem(INT_CFG, 1, &_buff[0]);
   return ((_buff[0] & INTCFG_INT_ANYRD_2CLEAR) >> 4);
 }
 
 void ITG3200::setLatchClearMode(bool _State) {
   readmem(INT_CFG, 1, &_buff[0]);
-  writemem(INT_CFG, ((_buff[0] & ~INTCFG_INT_ANYRD_2CLEAR) | _State << 4)); 
+  writemem(INT_CFG, ((_buff[0] & ~INTCFG_INT_ANYRD_2CLEAR) | _State << 4));
 }
 
-bool ITG3200::isITGReadyOn() {   
+bool ITG3200::isITGReadyOn() {
   readmem(INT_CFG, 1, &_buff[0]);
   return ((_buff[0] & INTCFG_ITG_RDY_EN) >> 2);
 }
 
 void ITG3200::setITGReady(bool _State) {
   readmem(INT_CFG, 1, &_buff[0]);
-  writemem(INT_CFG, ((_buff[0] & ~INTCFG_ITG_RDY_EN) | _State << 2)); 
+  writemem(INT_CFG, ((_buff[0] & ~INTCFG_ITG_RDY_EN) | _State << 2));
 }
 
 bool ITG3200::isRawDataReadyOn() {
@@ -162,7 +162,7 @@ bool ITG3200::isRawDataReadyOn() {
 
 void ITG3200::setRawDataReady(bool _State) {
   readmem(INT_CFG, 1, &_buff[0]);
-  writemem(INT_CFG, ((_buff[0] & ~INTCFG_RAW_RDY_EN) | _State)); 
+  writemem(INT_CFG, ((_buff[0] & ~INTCFG_RAW_RDY_EN) | _State));
 }
 
 bool ITG3200::isITGReady() {
@@ -177,13 +177,13 @@ bool ITG3200::isRawDataReady() {
 
 void ITG3200::readTemp(float *_Temp) {
   readmem(TEMP_OUT,2,_buff);
-  *_Temp = 35 + (((_buff[0] << 8) | _buff[1]) + 13200) / 280.0;    // F=C*9/5+32  
+  *_Temp = 35 + (((_buff[0] << 8) | _buff[1]) + 13200) / 280.0;    // F=C*9/5+32
 }
 
 void ITG3200::readGyroRaw(int *_GyroX, int *_GyroY, int *_GyroZ){
   readmem(GYRO_XOUT, 6, _buff);
   *_GyroX = ((_buff[0] << 8) | _buff[1]);
-  *_GyroY = ((_buff[2] << 8) | _buff[3]); 
+  *_GyroY = ((_buff[2] << 8) | _buff[3]);
   *_GyroZ = ((_buff[4] << 8) | _buff[5]);
 }
 
@@ -210,7 +210,7 @@ void ITG3200::setOffsets(int _Xoffset, int _Yoffset, int _Zoffset) {
 }
 
 void ITG3200::zeroCalibrate(unsigned int totSamples, unsigned int sampleDelayMS) {
-  int xyz[3]; 
+  int xyz[3];
   float tmpOffsets[] = {0,0,0};
 
   for (int i = 0;i < totSamples;i++){
@@ -218,7 +218,7 @@ void ITG3200::zeroCalibrate(unsigned int totSamples, unsigned int sampleDelayMS)
     readGyroRaw(xyz);
     tmpOffsets[0] += xyz[0];
     tmpOffsets[1] += xyz[1];
-    tmpOffsets[2] += xyz[2];  
+    tmpOffsets[2] += xyz[2];
   }
   setOffsets(-tmpOffsets[0] / totSamples, -tmpOffsets[1] / totSamples, -tmpOffsets[2] / totSamples);
 }
@@ -236,7 +236,7 @@ void ITG3200::readGyroRawCal(int *_GyroXYZ) {
 
 void ITG3200::readGyro(float *_GyroX, float *_GyroY, float *_GyroZ){
   int x, y, z;
-  
+
   readGyroRawCal(&x, &y, &z); // x,y,z will contain calibrated integer values from the sensor
   *_GyroX =  x / 14.375 * polarities[0] * gains[0];
   *_GyroY =  y / 14.375 * polarities[1] * gains[1];
@@ -247,19 +247,19 @@ void ITG3200::readGyro(float *_GyroXYZ){
   readGyro(_GyroXYZ, _GyroXYZ+1, _GyroXYZ+2);
 }
 
-void ITG3200::reset() {     
-  writemem(PWR_MGM, PWRMGM_HRESET); 
-  delay(GYROSTART_UP_DELAY); //gyro startup 
+void ITG3200::reset() {
+  writemem(PWR_MGM, PWRMGM_HRESET);
+  delay(GYROSTART_UP_DELAY); //gyro startup
 }
 
-bool ITG3200::isLowPower() {   
+bool ITG3200::isLowPower() {
   readmem(PWR_MGM, 1, &_buff[0]);
   return (_buff[0] & PWRMGM_SLEEP) >> 6;
 }
-  
+
 void ITG3200::setPowerMode(bool _State) {
   readmem(PWR_MGM, 1, &_buff[0]);
-  writemem(PWR_MGM, ((_buff[0] & ~PWRMGM_SLEEP) | _State << 6));  
+  writemem(PWR_MGM, ((_buff[0] & ~PWRMGM_SLEEP) | _State << 6));
 }
 
 bool ITG3200::isXgyroStandby() {
@@ -292,31 +292,31 @@ void ITG3200::setZgyroStandby(bool _Status) {
   writemem(PWR_MGM, ((_buff[0] & PWRMGM_STBY_ZG) | _Status << 3));
 }
 
-byte ITG3200::getClockSource() {  
+byte ITG3200::getClockSource() {
   readmem(PWR_MGM, 1, &_buff[0]);
   return (_buff[0] & PWRMGM_CLK_SEL);
 }
 
-void ITG3200::setClockSource(byte _CLKsource) {   
+void ITG3200::setClockSource(byte _CLKsource) {
   readmem(PWR_MGM, 1, &_buff[0]);
-  writemem(PWR_MGM, ((_buff[0] & ~PWRMGM_CLK_SEL) | _CLKsource)); 
+  writemem(PWR_MGM, ((_buff[0] & ~PWRMGM_CLK_SEL) | _CLKsource));
 }
 
 void ITG3200::writemem(uint8_t _addr, uint8_t _val) {
-  Wire.beginTransmission(_dev_address);   // start transmission to device 
+  Wire.beginTransmission(_dev_address);   // start transmission to device
   Wire.write(_addr); // send register address
   Wire.write(_val); // send value to write
   Wire.endTransmission(); // end transmission
 }
 
 void ITG3200::readmem(uint8_t _addr, uint8_t _nbytes, uint8_t __buff[]) {
-  Wire.beginTransmission(_dev_address); // start transmission to device 
+  Wire.beginTransmission(_dev_address); // start transmission to device
   Wire.write(_addr); // sends register address to read from
   Wire.endTransmission(); // end transmission
-  
-  Wire.beginTransmission(_dev_address); // start transmission to device 
+
+  Wire.beginTransmission(_dev_address); // start transmission to device
   Wire.requestFrom(_dev_address, _nbytes);// send data n-bytes read
-  uint8_t i = 0; 
+  uint8_t i = 0;
   while (Wire.available()) {
     __buff[i] = Wire.read(); // receive DATA
     i++;

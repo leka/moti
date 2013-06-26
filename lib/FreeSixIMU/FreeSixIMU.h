@@ -58,13 +58,13 @@ class FreeSixIMU
     void getEuler(float * angles);
     void getYawPitchRoll(float * ypr);
     void getAngles(float * angles);
-    
-    
+
+
 	ADXL345 acc;
     ITG3200 gyro;
-    
+
     int* raw_acc, raw_gyro, raw_magn;
-    
+
   private:
     void AHRSupdate(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz);
     //float q0, q1, q2, q3; // quaternion elements representing the estimated orientation
