@@ -4,4 +4,3 @@ bin/*
 build-tmp/
 moti.sublime-*
 Makefile
-/src/moti_main/Makefile
