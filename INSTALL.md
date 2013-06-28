@@ -124,7 +124,7 @@ Simply run `make` from `./src/moti_3` and it should compile. To upload, use `mak
 
 For you Linux users, the recipe is pretty much the same as for OS X, except that you can't use Homebrew so you need to use `apt-get`, `yum`, `synaptic` or any package manager. Make sure to install `avr-gcc 4.7.1` or higher and all the dependencies: `binutils 2.23.1`, `avr-libc 1.8.0`, `gmp`, `libmpc`, `mpfr` and `avrdude`.
 
-Inside the [Makefile_exemple](./Makefile_exemple), you will find all you need to customize to properly compile your code.
+Inside the [Makefile_example](./Makefile_example), you will find all you need to customize to properly compile your code.
 
 ###Beginner's guide - Installing from scratch on OS X/Unix
 
