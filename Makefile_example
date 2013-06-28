@@ -3,6 +3,8 @@
 
 BOARD_TAG     = uno
 
+MONITOR_BAUDRATE = 115200
+
 ARDMK_DIR     = ~/dev/arduino/arduino-makefile
 
 ARDUINO_DIR   = /Applications/Arduino.app/Contents/Resources/Java
