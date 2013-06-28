@@ -65,6 +65,26 @@ void MOTI::sendDataToDebug(){
 	Serial.println(deltaXYZ[2]);
 }
 
+void MOTI::sendDataLearning(){
+
+	Serial.print(XYZ[0]);
+	Serial.print(F(" "));
+
+	Serial.print(XYZ[1]);
+	Serial.print(F(" "));
+
+	Serial.print(XYZ[2]);
+	Serial.print(F(" "));
+
+	Serial.print(YPR[0]);
+	Serial.print(F(" "));
+
+	Serial.print(YPR[1]);
+	Serial.print(F(" "));
+
+	Serial.println(YPR[2]);
+}
+
 void MOTI::sendDataJson(){
 	Serial.print(F("{"));
 		Serial.print(F("\" accel\" : "));

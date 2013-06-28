@@ -43,32 +43,32 @@ void MOTI::initVerbose(){
 	delay(500);
 	Serial.begin(115200);
 	delay(500);
-	Serial.println("Serial communication has begun.");
+	Serial.println(F("Serial communication has begun."));
 	delay(500);
-	Serial.println("Starting Moti.init();");
+	Serial.println(F("Starting Moti.init();"));
 	blinkLed(4);
 	delay(500);
-	Serial.print("Initializing Constants");
+	Serial.print(F("Initializing Constants"));
 	initializeConstants();
-	Serial.println(" ---> Constants OK");
+	Serial.println(F(" ---> Constants OK"));
 	delay(500);
-	Serial.print("Initializing States");
+	Serial.print(F("Initializing States"));
 	initializeStates();
-	Serial.println(" ---> States OK");
+	Serial.println(F(" ---> States OK"));
 	delay(500);
-	Serial.print("Initializing Wire communication");
+	Serial.print(F("Initializing Wire communication"));
 	Wire.begin();
-	Serial.println(" ---> Wire OK");
+	Serial.println(F(" ---> Wire OK"));
 	delay(500);
-	Serial.print("Initializing Accelerometer and Gyroscope");
+	Serial.print(F("Initializing Accelerometer and Gyroscope"));
 	AccelGyro.init();
-	Serial.println(" ---> AccelGyro OK");
+	Serial.println(F(" ---> AccelGyro OK"));
 	delay(500);
-	Serial.print("Initializing Motors");
+	Serial.print(F("Initializing Motors"));
 	initializeMotors();
-	Serial.println(" ---> Motors OK");
+	Serial.println(F(" ---> Motors OK"));
 	delay(500);
-	Serial.println(" Moti has been initialized correctly, void loop(); is starting......");
+	Serial.println(F(" Moti has been initialized correctly, void loop(); is starting......"));
 }
 
 //#########//
