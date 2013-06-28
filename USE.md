@@ -31,7 +31,18 @@ Make sure that the name of the `.ino` file is always the same as the directory i
 In your favorite text editor (like Sublime Text 2), open `moti_bhvr_happy.ino`. You can use the following example if you want:
 
 	#include "Arduino.h"
+
 	#include "Moti.h"
+
+	#include "RGBLED.h"
+
+	#include <Wire.h>
+
+	#include <CommunicationUtils.h>
+	#include <DebugUtils.h>
+	#include <FIMU_ADXL345.h>
+	#include <FIMU_ITG3200.h>
+	#include <FreeSixIMU.h>
 
 	MOTI Moti = MOTI();
 

@@ -145,7 +145,7 @@ For those on Linux or Windows, there are [apps](http://git-scm.com/downloads/gui
 As we said earlier, Homebrew is a package manager. It's not a standard application with a graphical user interface (GUI). You have to open the Terminal.app to use Homebrew and type some command lines. If you're afraid, fear not my friend! We will guide you all along the way and you will eventually feel all the power of your computer!
 If command line is really not your cup of tea, maybe you should just give up because we are going to use plenty of those later on! Come back when you're ready.
 
-For those who want to fight, go visit the [Homebrew website](http://mxcl.github.io/homebrew/) and follow all the instructions. And because we are so generous, we also put them here: open Terminal.app, copy/paste the following line and let the magic begin (don't copy the `$` sign, it is used to say we are using the command line...):
+For those who want to fight, go visit the [Homebrew website](http://mxcl.github.io/homebrew/) and follow all the instructions. And because we are so generous, we also put them here: open Terminal.app, copy/paste the following line and let the magic begin (**don't copy the `$` sign**, it is used to say we are using the command line...):
 
 	$ ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
 
