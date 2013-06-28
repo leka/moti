@@ -85,6 +85,24 @@ void MOTI::sendDataLearning(){
 	Serial.println(YPR[2]);
 }
 
+void MOTI::sendDataPi(){
+	Serial.write(42);
+
+	Serial.write((short) XYZ[0]);
+
+	Serial.write((short) XYZ[1]);
+
+	Serial.write((short) XYZ[2]);
+
+	Serial.write((short) YPR[0]);
+
+	Serial.write((short) YPR[1]);
+
+	Serial.write((short) YPR[2]);
+
+	Serial.write(21);
+}
+
 void MOTI::sendDataJson(){
 	Serial.print(F("{"));
 		Serial.print(F("\" accel\" : "));

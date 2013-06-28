@@ -80,6 +80,7 @@ class MOTI {
 		void sendDataToDebug();
 		void sendDataJson();
 		void sendDataLearning();
+		void sendDataPi();
 
 		//	STATE
 		void initializeStates();
