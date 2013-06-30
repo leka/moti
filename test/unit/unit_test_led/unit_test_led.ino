@@ -36,7 +36,23 @@ void setup() {
 //######//
 
 void loop() {
-	Moti.checkSensors();
-	Moti.sendDataPi();
-	delay(100);
+ loop() {
+	Serial.println();
+	Serial.println(F("Starting Loop"));
+	delay(1000);
+
+	Serial.println();
+	Serial.println(F("Setting  Sensors"));
+
+
+
+	Serial.println(F("Pause for 1 second"));
+	delay(1000);
+
+
+	Serial.println();
+	Serial.println(F("Ending Loop"));
+	delay(1000);
+
+	delay(4000);
 }
