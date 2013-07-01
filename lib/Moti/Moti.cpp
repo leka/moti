@@ -25,7 +25,7 @@ void MOTI::init(){
 	delay(500);
 	Serial.begin(115200);
 	delay(500);
-	blinkLed("rand", 10, 400);
+	blinkLed("rand", 4, 50);
 	delay(500);
 	initializeConstants();
 	delay(500);
@@ -48,7 +48,7 @@ void MOTI::initVerbose(){
 	Serial.println(F("Serial communication has begun."));
 	delay(500);
 	Serial.println(F("Starting Moti.init();"));
-	blinkLed("rand", 10, 400);
+	blinkLed("rand", 4, 50);
 	delay(500);
 	Serial.print(F("Initializing Constants"));
 	initializeConstants();
@@ -75,43 +75,6 @@ void MOTI::initVerbose(){
 	Serial.println(F(" ---> Motors OK"));
 	delay(500);
 	Serial.println(F(" Moti has been initialized correctly, void loop(); is starting......"));
-}
-
-//#########//
-// SENSORS //
-//#########//
-
-void MOTI::checkSensors(){
-	checkAccelerometer();
-	checkGyroscope();
-}
-
-void MOTI::checkAccelerometer(){
-	AccelGyro.getRawValues(XYZ);
-}
-
-void MOTI::checkGyroscope(){
-	AccelGyro.getYawPitchRoll(YPR);
-}
-
-void MOTI::computeSensorValues	(){
-	deltaXYZ[0] = XYZ[0] - lastXYZ[0];
-	deltaXYZ[1] = XYZ[1] - lastXYZ[1];
-	deltaXYZ[2] = XYZ[2] - lastXYZ[2];
-
-	deltaYPR[0] = YPR[0] - lastYPR[0];
-	deltaYPR[1] = YPR[1] - lastYPR[1];
-	deltaYPR[2] = YPR[2] - lastYPR[2];
-}
-
-void MOTI::updateLastSensorValues(){
-	lastXYZ[0] = XYZ[0];
-	lastXYZ[1] = XYZ[1];
-	lastXYZ[2] = XYZ[2];
-
-	lastYPR[0] = YPR[0];
-	lastYPR[1] = YPR[1];
-	lastYPR[2] = YPR[2];
 }
 
 

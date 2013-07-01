@@ -159,6 +159,9 @@ class MOTI {
 		void checkAccelerometer();
 		void checkGyroscope();
 
+		int getXYZ(uint8_t index);
+		int getYPR(uint8_t index);
+
 		void computeSensorValues();
 		void updateLastSensorValues();
 
