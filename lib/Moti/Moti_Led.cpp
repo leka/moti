@@ -99,6 +99,7 @@ void MOTI::fadeLedTo(String colorName){
 	colorSwitcher(colorName);
 
 	while(fadeRed <= rgb[0] || fadeGreen <= rgb[1] || fadeBlue <= rgb[2]){
+		colorSwitcher(colorName);
 		if (fadeRed < rgb[0]){
 			fadeRed+=3;
 		}
