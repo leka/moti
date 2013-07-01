@@ -103,19 +103,27 @@ class MOTI {
 		//	LED
 		void initializeLed();
 
-		void constrainRgbValue();
+		void colorSwitcher(String color);
 
-		void colorSwitcher( char * color);
-
-		void setRgbValue(int value);
+		void setRgbValue(int8_t index, int value);
+		void setRed(int value);
+		void setGreen(int value);
+		void setBlue(int value);
 		void setRgbValue(int redValue, int greenValue, int blueValue);
 
+		uint8_t getRgbValue(uint8_t index);
+		uint8_t getRed();
+		uint8_t getGreen();
+		uint8_t getBlue();
+
 		void printRgbColor();
+		void printRgbColor(String colorName);
 		void printRgbColor(int red, int green, int blue);
 
-		void blinkLed(int numberOfBlinks);
-		void blinkLed(int numberOfBlinks, char * colorName);
-		void fadeLedTo(char * colorName);
+		void blinkLed(String colorName, int numberOfBlinks, int timeBtwBlink);
+		void blinkLed(int red, int green, int blue, int numberOfBlinks, int timeBtwBlink);
+
+		void fadeLedTo(String colorName);
 
 		void turnLedOff();
 		void turnLedOn();
