@@ -1,6 +1,11 @@
 #ifndef ROBOT_LEKA_ARDUINO_MOTI_H_
 #define ROBOT_LEKA_ARDUINO_MOTI_H_
 
+/// \file Moti.h
+/// \brief Moti, a new interactive spherical smart toy for children with Autism Spectrum Disorders
+/// \author Ladislas de Toldi
+/// \version 1.0
+
 #include "Arduino.h"
 
 #include "RGBLED.h"
@@ -16,15 +21,40 @@
 
 class MOTI {
 
+/// \class MOTI
+/// \brief MOTI class represents the robot
+///
+/// For simplicity purpose, we decided to build a class for the whole robot that would simplify the way we design and code the robot's behaviors and algorithms.
+/// With MOTI class, you can access and manipulate everything you need, from motors to sensors and led.
+
 	public:
 
-		//	CONSTRUCTORS
+		///
+		/// \brief Constructor
+		///
+		/// MOTI class constructor
+		///
 		MOTI();
-		// static MOTI & getInstance();
 
+		///
+		/// \brief Initilization method
+		///
+		/// init() initialized everything at the beginning of the program. It must be called inside void setup().
+		///
 		void init();
+
+		///
+		/// \brief Initilization method with verbose output
+		///
+		/// initVerbose() does the same as init() but adds text output for debugging purpose. It should be used ONLY for development and NOT for production.
+		///
 		void initVerbose();
 
+		///
+		/// \brief Constants initialization method
+		///
+		/// initializeConstants() is used to set all the constants to their default values.
+		///
 		void initializeConstants();
 
 		//	SET CONSTANTS
