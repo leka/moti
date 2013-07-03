@@ -28,7 +28,7 @@ MOTI Moti = MOTI();
 void MotorSpinRightAngle(int Aspeed, int angle) {
 
 	Moti.spinRight(Aspeed);
-	delay(angle*22);
+	delay(angle*25);
 	Moti.stop();
 
 }
@@ -36,7 +36,7 @@ void MotorSpinRightAngle(int Aspeed, int angle) {
 void MotorSpinLeftAngle(int Aspeed, int angle) {
 
 	Moti.spinLeft(Aspeed);
-	delay(angle*22);
+	delay(angle*25);
 	Moti.stop();
 }
 
