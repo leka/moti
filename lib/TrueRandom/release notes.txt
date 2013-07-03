@@ -1,0 +1,6 @@
+TrueRandom library
+by Peter Knight, Tinker.it! 2010
+http://code.google.com/p/tinkerit
+
+v1: First release
+v1.1: Bug fix for rand and random functions

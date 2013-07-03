@@ -25,7 +25,10 @@
 
 MOTI Moti = MOTI();
 
+int angle1, angle2, delta = 0;
 
+int spin = 90;
+int i = 0;
 //#######//
 // SETUP //
 //#######//
@@ -41,23 +44,37 @@ void setup() {
 //######//
 
 void loop() {
-	Moti.goForward();
-	Moti.printRgbColor(35, 167, 210);
-	delay(5000);
-	Moti.printRgbColor(35, 167, 210);
-	Moti.blinkLed(4);
-	Moti.printRgbColor(35, 167, 210);
-	delay(2000);
-	Moti.printRgbColor(35, 167, 210);
-	Moti.spinRight();
-	Moti.printRgbColor(35, 167, 210);
-	delay(2000);
-	Moti.printRgbColor(35, 167, 210);
-	Moti.stop();
-	Moti.printRgbColor(35, 167, 210);
-	delay(2000);
-	Moti.printRgbColor(35, 167, 210);
-	Moti.blinkLed(10);
-	delay(1000);
+	Moti.checkSensors();
+
+
+	angle1 = Moti.getYPR(0);
+	angle2 = angle1;
+
+	delta = angle1 - angle2;
+
+
+	while(abs(delta) < spin){
+		Moti.spinLeft();
+		Moti.checkSensors();
+
+		angle2 = Moti.getYPR(0);
+
+		delta = angle2 - angle1;
+
+		Serial.print(angle1);
+		Serial.print(" | ");
+		Serial.print(angle2);
+		Serial.print(" | ");
+		Serial.print(delta);
+		Serial.print(" | ");
+		Serial.println("Pas bon");
+
+		delay(500);
+
+	}
+
+	Serial.println("OK!");
+
+	delay(500);
 
 }
