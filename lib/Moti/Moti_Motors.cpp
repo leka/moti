@@ -63,7 +63,7 @@ void MOTI::goLeft(){
 
 void MOTI::goLeft(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
-	spinLeftWheel(speed * turnCoefficient, 0);
+	spinLeftWheel((uint8_t) speed * turnCoefficientTime / turnCoefficientDiv, 0);
 	spinRightWheel(speed, 0);
 
 	setMovingState(true);
@@ -79,7 +79,7 @@ void MOTI::goRight(){
 void MOTI::goRight(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(speed, 0);
-	spinRightWheel(speed * turnCoefficient, 0);
+	spinRightWheel((uint8_t) speed * turnCoefficientTime / turnCoefficientDiv, 0);
 
 	setMovingState(true);
 }

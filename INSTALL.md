@@ -44,7 +44,7 @@ Okay, so you started with the Arduino IDE, you're now familiarized with the lang
 ##Installing, Updating & Removing
 
 
-###Hacker's guide
+###Hacker's guide - OS X Edition
 
 For you, it should be pretty easy.
 
@@ -119,6 +119,12 @@ Everywhere your `.ino` files are, you want to put a makefile to compile the code
 
 Simply run `make` from `./src/moti_3` and it should compile. To upload, use `make upload`. For further information, visit [sudar's Arduin-Makefile repo](https://github.com/sudar/Arduino-Makefile).
 
+
+###Hacker's guide - Linux Edition
+
+For you Linux users, the recipe is pretty much the same as for OS X, except that you can't use Homebrew so you need to use `apt-get`, `yum`, `synaptic` or any package manager. Make sure to install `avr-gcc 4.7.1` or higher and all the dependencies: `binutils 2.23.1`, `avr-libc 1.8.0`, `gmp`, `libmpc`, `mpfr` and `avrdude`.
+
+Inside the [Makefile_example](./Makefile_example), you will find all you need to customize to properly compile your code.
 
 ###Beginner's guide - Installing from scratch on OS X/Unix
 
