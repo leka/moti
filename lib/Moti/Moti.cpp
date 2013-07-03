@@ -28,19 +28,20 @@ void MOTI::init(){
 	delay(500);
 	Serial.begin(115200);
 	delay(50);
-	blinkLed(RAND, 4, 50);
+	blinkLed(RED, 2, 200);
 	delay(50);
 	initializeConstants();
-	delay(50);
-	initializeLed();
-	delay(50);
-	initializeStates();
 	delay(50);
 	Wire.begin();
 	delay(50);
 	AccelGyro.init();
 	delay(50);
+	initializeLed();
+	delay(50);
+	initializeStates();
+	delay(50);
 	initializeMotors();
+	blinkLed(GREEN, 4, 200);
 	delay(50);
 }
 
@@ -58,15 +59,16 @@ void MOTI::initVerbose(){
 	delay(500);
 	Serial.begin(115200);
 	delay(100);
-	Serial.println(F("\nSC"));
+	Serial.println();
+	Serial.println(F("SC"));
 	delay(100);
-	blinkLed(RAND, 4, 50);
+	blinkLed(RED, 2, 200);
 	delay(100);
 	initializeConstants();
 	Serial.println(F("CST"));
 	delay(100);
 	Wire.begin();
-	Serial.println(F("Wire"));
+	Serial.println(F("WIRE"));
 	delay(100);
 	AccelGyro.init();
 	Serial.println(F("IMU"));
@@ -79,6 +81,7 @@ void MOTI::initVerbose(){
 	delay(100);
 	initializeMotors();
 	Serial.println(F("MOTORS"));
+	blinkLed(GREEN, 4, 200);
 	delay(20);
 }
 

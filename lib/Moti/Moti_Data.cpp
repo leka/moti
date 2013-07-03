@@ -54,9 +54,9 @@ void MOTI::sendDataBinaries(){
 	sendBinaryByte(GYR_SENSOR);
 	sendBinaryInt(GYR_DATA);
 
-	sendBinaryInt((int) getYPR(0));
-	sendBinaryInt((int) getYPR(1));
-	sendBinaryInt((int) getYPR(2));
+	sendBinaryInt(getYPR(0));
+	sendBinaryInt(getYPR(1));
+	sendBinaryInt(getYPR(2));
 
 	sendBinaryByte(END_ANSWER);
 }
