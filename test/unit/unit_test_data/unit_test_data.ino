@@ -43,14 +43,6 @@ void loop() {
 	Serial.println();
 	Serial.println(F("Checking Sensors"));
 	Moti.checkSensors();
-	Serial.println(F("Sending Data to Raspberry Pi"));
-	Moti.sendDataPi();
-	Serial.println(F("Pause for 1 second"));
-	delay(1000);
-
-	Serial.println();
-	Serial.println(F("Checking Sensors"));
-	Moti.checkSensors();
 	Serial.println(F("Sending Data for machine learning"));
 	Moti.sendDataLearning();
 	Serial.println(F("Pause for 1 second"));
