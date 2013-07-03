@@ -199,6 +199,8 @@ Cercle(70,255);
 
 }
 
+int spin = 90;
+int delta1, delta2, delta3, delta;
 
 //#######//
 // SETUP //
@@ -216,9 +218,45 @@ void setup() {
 
 void loop() {
 	
+
 delay(2000);
+Moti.checkGyroscope();
 //Behaviour();
-Serial.println(Moti.getYPR(0));
+
+int angle1 = Moti.getYPR(0); 
+int angle2 = Moti.getYPR(1); 
+int angle3 = Moti.getYPR(2); 
+
+int delta = 0;
+
+while (abs(delta) <= spin){
+
+	Moti.checkGyroscope();
+	delta1 = Moti.getYPR(0) - angle1;
+	delta2 = Moti.getYPR(1) - angle2;
+	delta3 = Moti.getYPR(2) - angle3;
+
+	delta = sqrt(sq(delta1) + sq(delta2) + sq(delta3));
+
+	Serial.println(angle1);
+	Serial.println("| |");
+	Serial.println(angle2);
+	Serial.println("| |");
+	Serial.println(angle3);
+	Serial.println("| |");
+	Serial.println(delta1);
+	Serial.println("| |");
+	Serial.println(delta2);
+	Serial.println("| |");
+	Serial.println(delta3);
+	Serial.println("| |");
+	Serial.println(delta);
+
+}
+
+
+
+Serial.print(Moti.getYPR(0));
 
 
 
