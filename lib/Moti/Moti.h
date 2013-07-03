@@ -18,14 +18,14 @@
 #include <FIMU_ITG3200.h>
 #include <FreeSixIMU.h>
 
-
+/**
+ * @class MOTI
+ * @brief The MOTI class represent the robot.
+ *
+ * For simplicity purpose, we decided to build a class for the whole robot that would simplify the way we design and code the robot's behaviors and algorithms.
+ * With MOTI class, you can access and manipulate everything you need, from motors to sensors and led.
+ */
 class MOTI {
-
-/// \class MOTI
-/// \brief MOTI class represents the robot
-///
-/// For simplicity purpose, we decided to build a class for the whole robot that would simplify the way we design and code the robot's behaviors and algorithms.
-/// With MOTI class, you can access and manipulate everything you need, from motors to sensors and led.
 
 	public:
 
@@ -43,9 +43,9 @@ class MOTI {
 			ORANGE,
 			DARK_ORANGE,
 			LIGHT_GREEN,
-			GREEN
+			GREEN,
+			RAND
 		};
-
 
 		MOTI();
 
@@ -54,7 +54,6 @@ class MOTI {
 
 
 		void initVerbose();
-
 
 
 
@@ -224,7 +223,6 @@ class MOTI {
 		//	GENERAL
 		void setAllToLow();
 		void softwareReset();
-
 
 	private:
 
