@@ -18,37 +18,33 @@
 #include <FIMU_ITG3200.h>
 #include <FreeSixIMU.h>
 
-
+/**
+ * @class MOTI
+ * @brief The MOTI class represent the robot.
+ *
+ * For simplicity purpose, we decided to build a class for the whole robot that would simplify the way we design and code the robot's behaviors and algorithms.
+ * With MOTI class, you can access and manipulate everything you need, from motors to sensors and led.
+ */
 class MOTI {
-
-/// \class MOTI
-/// \brief MOTI class represents the robot
-///
-/// For simplicity purpose, we decided to build a class for the whole robot that would simplify the way we design and code the robot's behaviors and algorithms.
-/// With MOTI class, you can access and manipulate everything you need, from motors to sensors and led.
 
 	public:
 
-		///
-		/// \brief Constructor
-		///
-		/// MOTI class constructor
-		///
+		enum ColorName {
+			DARK_RED, RED, LIGHT_RED, PURPLE, BLUE, LIGHT_BLUE, WHITE, LIGHT_PINK, YELLOW, DARK_YELLOW, ORANGE, DARK_ORANGE, LIGHT_GREEN, GREEN, RAND
+		};
+
 		MOTI();
 
-		///
-		/// \brief Initilization method
-		///
-		/// init() initialized everything at the beginning of the program. It must be called inside void setup().
-		///
+
 		void init();
 
-		///
-		/// \brief Initilization method with verbose output
-		///
-		/// initVerbose() does the same as init() but adds text output for debugging purpose. It should be used ONLY for development and NOT for production.
-		///
+
 		void initVerbose();
+
+
+
+		//	SET CONSTANTS
+
 
 		///
 		/// \brief Constants initialization method
@@ -57,9 +53,23 @@ class MOTI {
 		///
 		void initializeConstants();
 
-		//	SET CONSTANTS
+		///
+		/// \brief Setter method for #_loopDelay
+		/// \param value the value of #_loopDelay
+		/// It is used to set the #_loopDelay.
+		///
 		void setLoopDelay(int value);
+		///
+		/// \brief Setter method for #_sleepDelay
+		///
+		/// It is used to set the #_sleepDelay.
+		///
 		void setSleepDelay(int value);
+		///
+		/// \brief Setter method for #_awakeThreshold
+		///
+		/// It is used to set theMOTI# _awakeThreshold.
+		///
 		void setAwakeThreshold(int value);
 		void setDeltaAccelThreshold(int value);
 		void setHighActivityThreshold(int value);
@@ -106,11 +116,11 @@ class MOTI {
 
 
 		//	DATA TRANSFER TO COMPUTER
-		void sendDataToProcessing();
-		void sendDataToDebug();
 		void sendDataJson();
 		void sendDataLearning();
-		void sendDataPi();
+		void sendDataBinaries();
+		void sendBinaryByte(uint8_t value);
+		void sendBinaryInt(int value);
 
 		//	STATE
 		void initializeStates();
@@ -133,7 +143,7 @@ class MOTI {
 		//	LED
 		void initializeLed();
 
-		void colorSwitcher(String color);
+		void colorSwitcher(ColorName color);
 
 		void setRgbValue(int8_t index, int value);
 		void setRed(int value);
@@ -147,13 +157,13 @@ class MOTI {
 		uint8_t getBlue();
 
 		void printRgbColor();
-		void printRgbColor(String colorName);
+		void printRgbColor(ColorName color);
 		void printRgbColor(int red, int green, int blue);
 
-		void blinkLed(String colorName, int numberOfBlinks, int timeBtwBlink);
+		void blinkLed(ColorName color, int numberOfBlinks, int timeBtwBlink);
 		void blinkLed(int red, int green, int blue, int numberOfBlinks, int timeBtwBlink);
 
-		void fadeLedTo(String colorName);
+		void fadeLedTo(ColorName color);
 
 		void turnLedOff();
 		void turnLedOn();
@@ -200,22 +210,21 @@ class MOTI {
 		void setAllToLow();
 		void softwareReset();
 
-
 	private:
 
 		//	VARIABLES
-		int rgb[3], rgbBuffer[3];
-		int rightMotorSpeed, rightMotorSpeedBuffer;
-		int leftMotorSpeed, leftMotorSpeedBuffer;
+		int16_t rgb[3], rgbBuffer[3];
+		uint16_t rightMotorSpeed, rightMotorSpeedBuffer;
+		uint16_t leftMotorSpeed, leftMotorSpeedBuffer;
 		int XYZ[3], lastXYZ[3], deltaXYZ[3];
-		float YPR[3], lastYPR[3], deltaYPR[3];
-		word sleepy;
+		int YPR[3], lastYPR[3], deltaYPR[3];
+		uint16_t sleepy;
 
-		word _loopDelay;
-		word _sleepDelay;
-		word _awakeThreshold;
-		word _deltaAccelThreshold;
-		word _highActivityThreshold;
+		uint16_t _loopDelay;
+		uint16_t _sleepDelay;
+		uint16_t _awakeThreshold;
+		uint16_t _deltaAccelThreshold;
+		uint16_t _highActivityThreshold;
 
 		uint8_t _ledMaxBrightness;
 		uint8_t _redMaxBrightness;
@@ -234,11 +243,11 @@ class MOTI {
 
 
 		//	CONSTANTS
-		static const int DEFAULT_LOOP_DELAY              = 75;
-		static const int DEFAULT_SLEEP_DELAY             = 600;
-		static const int DEFAULT_AWAKE_THRESHOLD         = 300;
-		static const int DEFAULT_DELTA_ACCEL_THRESHOLD   = 200;
-		static const int DEFAULT_HIGH_ACTIVITY_THRESHOLD = 80;
+		static const uint8_t DEFAULT_LOOP_DELAY              = 75;
+		static const uint16_t DEFAULT_SLEEP_DELAY            = 600;
+		static const uint16_t DEFAULT_AWAKE_THRESHOLD        = 300;
+		static const uint16_t DEFAULT_DELTA_ACCEL_THRESHOLD  = 200;
+		static const uint8_t DEFAULT_HIGH_ACTIVITY_THRESHOLD = 80;
 
 		static const uint8_t DEFAULT_LED_MAX_BRIGHTNESS   = 255;
 		static const uint8_t DEFAULT_RED_MAX_BRIGHTNESS   = 255;
@@ -248,7 +257,8 @@ class MOTI {
 		static const uint8_t DEFAULT_MIN_MOTOR_SPEED = 0;
 		static const uint8_t DEFAULT_MAX_MOTOR_SPEED = 255;
 
-		const float turnCoefficient = 0.8;
+		static const uint8_t turnCoefficientTime = 80;
+		static const uint8_t turnCoefficientDiv = 100;
 
 		//	MOTOR PINS
 		static const uint8_t leftMotorSpeedPin      = 5;
@@ -260,6 +270,18 @@ class MOTI {
 		static const uint8_t RED_PIN   = 9;
 		static const uint8_t GREEN_PIN = 10;
 		static const uint8_t BLUE_PIN  = 11;
+
+		//	DATA TRANSFERT
+		static const uint8_t INIT_PHASE        = 0xAA;
+
+		static const uint8_t START_ANSWER      = 0x0F;
+		static const uint8_t END_ANSWER        = 0xF0;
+		static const uint8_t NUMBER_OF_SENSORS = 0x02;
+
+		static const uint8_t ACC_SENSOR        = 0x01;
+		static const uint8_t ACC_DATA          = 0x06;
+		static const uint8_t GYR_SENSOR        = 0x02;
+		static const uint8_t GYR_DATA          = 0x06;
 
 		RGBLED rgbled = RGBLED(9, 10,11);
 		FreeSixIMU AccelGyro;
