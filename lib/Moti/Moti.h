@@ -30,21 +30,7 @@ class MOTI {
 	public:
 
 		enum ColorName {
-			DARK_RED,
-			RED,
-			PINK,
-			PURPLE,
-			BLUE,
-			LIGHT_BLUE,
-			WHITE,
-			LIGHT_PINK,
-			YELLOW,
-			DARK_YELLOW,
-			ORANGE,
-			DARK_ORANGE,
-			LIGHT_GREEN,
-			GREEN,
-			RAND
+			DARK_RED, RED, LIGHT_RED, PURPLE, BLUE, LIGHT_BLUE, WHITE, LIGHT_PINK, YELLOW, DARK_YELLOW, ORANGE, DARK_ORANGE, LIGHT_GREEN, GREEN, RAND
 		};
 
 		MOTI();
@@ -171,13 +157,13 @@ class MOTI {
 		uint8_t getBlue();
 
 		void printRgbColor();
-		void printRgbColor(ColorName colorName);
+		void printRgbColor(ColorName color);
 		void printRgbColor(int red, int green, int blue);
 
-		void blinkLed(ColorName colorName, int numberOfBlinks, int timeBtwBlink);
+		void blinkLed(ColorName color, int numberOfBlinks, int timeBtwBlink);
 		void blinkLed(int red, int green, int blue, int numberOfBlinks, int timeBtwBlink);
 
-		void fadeLedTo(ColorName colorName);
+		void fadeLedTo(ColorName color);
 
 		void turnLedOff();
 		void turnLedOn();
@@ -230,8 +216,8 @@ class MOTI {
 		int16_t rgb[3], rgbBuffer[3];
 		uint16_t rightMotorSpeed, rightMotorSpeedBuffer;
 		uint16_t leftMotorSpeed, leftMotorSpeedBuffer;
-		int16_t XYZ[3], lastXYZ[3], deltaXYZ[3];
-		float YPR[3], lastYPR[3], deltaYPR[3];
+		int XYZ[3], lastXYZ[3], deltaXYZ[3];
+		int YPR[3], lastYPR[3], deltaYPR[3];
 		uint16_t sleepy;
 
 		uint16_t _loopDelay;
@@ -258,9 +244,9 @@ class MOTI {
 
 		//	CONSTANTS
 		static const uint8_t DEFAULT_LOOP_DELAY              = 75;
-		static const uint16_t DEFAULT_SLEEP_DELAY             = 600;
-		static const uint16_t DEFAULT_AWAKE_THRESHOLD         = 300;
-		static const uint16_t DEFAULT_DELTA_ACCEL_THRESHOLD   = 200;
+		static const uint16_t DEFAULT_SLEEP_DELAY            = 600;
+		static const uint16_t DEFAULT_AWAKE_THRESHOLD        = 300;
+		static const uint16_t DEFAULT_DELTA_ACCEL_THRESHOLD  = 200;
 		static const uint8_t DEFAULT_HIGH_ACTIVITY_THRESHOLD = 80;
 
 		static const uint8_t DEFAULT_LED_MAX_BRIGHTNESS   = 255;
@@ -293,9 +279,9 @@ class MOTI {
 		static const uint8_t NUMBER_OF_SENSORS = 0x02;
 
 		static const uint8_t ACC_SENSOR        = 0x01;
-		static const uint8_t ACC_DATA        = 0x06;
+		static const uint8_t ACC_DATA          = 0x06;
 		static const uint8_t GYR_SENSOR        = 0x02;
-		static const uint8_t GYR_DATA       = 0x06;
+		static const uint8_t GYR_DATA          = 0x06;
 
 		RGBLED rgbled = RGBLED(9, 10,11);
 		FreeSixIMU AccelGyro;

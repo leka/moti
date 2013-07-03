@@ -135,7 +135,7 @@ void MOTI::colorSwitcher(ColorName color){
 			rgb[2] = 48;
 			break;
 
-		case PINK:
+		case LIGHT_RED:
 			rgb[0] = 222;
 			rgb[1] = 63;
 			rgb[2] = 89;
