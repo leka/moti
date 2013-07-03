@@ -13,15 +13,17 @@
 // CONSTRUCTORS //
 //##############//
 
-// MOTI & MOTI::getInstance() {
-// 	static MOTI singleton;
-// 	return singleton;
-// }
+/**
+ * @brief MOTI Class Constructor
+ */
+MOTI::MOTI(){}
 
-MOTI::MOTI(){
-
-}
-
+/**
+ * @brief Initialization method
+ *
+ * init() initialized everything at the beginning of the program. It must be called inside void setup().
+ * The list of all the methods it calls is as follow: Serial.begin(), initializeConstants(), initializeLed(), initializeStates(), Wire.begin(), AccelGyro.init(), initiliazeMotors().
+ */
 void MOTI::init(){
 	delay(500);
 	Serial.begin(115200);
@@ -42,6 +44,12 @@ void MOTI::init(){
 	delay(500);
 }
 
+/**
+ * @brief Initialization method with verbose output
+ *
+ * initVerbose() does the same as init() but adds text output for debugging purpose. It should be used ONLY for development and NOT for production.
+ * The list of all the methods it calls is as follow: Serial.begin(), initializeConstants(), initializeLed(), initializeStates(), Wire.begin(), AccelGyro.init(), initiliazeMotors().
+ */
 void MOTI::initVerbose(){
 	delay(500);
 	Serial.begin(115200);
@@ -83,6 +91,11 @@ void MOTI::initVerbose(){
 // GENERAL //
 //#########//
 
+/**
+ * @brief Setting all outputs to LOW
+ *
+ * setAllToLow() is used at in init() to set all output pins to LOW. This makes sure the led are off and the motors are not running.
+ */
 void MOTI::setAllToLow(){
 	digitalWrite(leftMotorSpeedPin, 0);
 	digitalWrite(rightMotorSpeedPin, 0);
@@ -93,11 +106,14 @@ void MOTI::setAllToLow(){
 	digitalWrite(BLUE_PIN, 0);
 }
 
+/**
+ * @brief Reseting software
+ *
+ * softwareReset() resets the program so that it can restart before the void setup().
+ * It may be used if you don't know how much time has passed since the last awaken state.
+ * The environment may have change, so going through the void setup() again is required to re- init() everything.
+ */
 void MOTI::softwareReset() {
-	//	this function reset the program so that it can restart before the void setup().
-	//	it is used because we don't know how much time has passed since the last awaken state.
-	//	the environment may have change, so going through the void setup() again is required.
-
 	asm volatile ("  jmp 0");
 }
 
