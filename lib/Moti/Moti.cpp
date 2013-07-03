@@ -48,7 +48,11 @@ void MOTI::init(){
  * @brief Initialization method with verbose output
  *
  * initVerbose() does the same as init() but adds text output for debugging purpose. It should be used ONLY for development and NOT for production.
- * The list of all the methods it calls is as follow: Serial.begin(), initializeConstants(), initializeLed(), initializeStates(), Wire.begin(), AccelGyro.init(), initiliazeMotors().
+ * The list of all the methods it calls is as follow: Serial.begin(), initializeConstants(), Wire.begin(), AccelGyro.init(), initializeLed(), initializeStates(), initiliazeMotors().
+ * If everything works fine it should output a list with "SC" --> "CST" --> "WIRE" --> "IMU" --> "LED" --> "STATES" --> "MOTORS".
+ * If the list is not complete, it means that the initialization of the n+1 failed.
+ *
+ * For example, if the serial outputs "SC" --> "CST" --> "WIRE", it means that IMU is failing and needs a fix.
  */
 void MOTI::initVerbose(){
 	delay(500);
@@ -59,7 +63,7 @@ void MOTI::initVerbose(){
 	blinkLed(RAND, 4, 50);
 	delay(100);
 	initializeConstants();
-	Serial.println(F("Cst"));
+	Serial.println(F("CST"));
 	delay(100);
 	Wire.begin();
 	Serial.println(F("Wire"));
@@ -71,10 +75,10 @@ void MOTI::initVerbose(){
 	Serial.println(F("LED"));
 	delay(100);
 	initializeStates();
-	Serial.println(F("States"));
+	Serial.println(F("STATES"));
 	delay(100);
 	initializeMotors();
-	Serial.println(F("Motors"));
+	Serial.println(F("MOTORS"));
 	delay(20);
 }
 
