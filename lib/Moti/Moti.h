@@ -1,10 +1,12 @@
 #ifndef ROBOT_LEKA_ARDUINO_MOTI_H_
 #define ROBOT_LEKA_ARDUINO_MOTI_H_
 
-/// \file Moti.h
-/// \brief Moti, a new interactive spherical smart toy for children with Autism Spectrum Disorders
-/// \author Ladislas de Toldi
-/// \version 1.0
+/**
+ * @file Moti.h
+ * @brief Moti is a new interactive spherical smart toy for children with Autism Spectrum Disorders
+ * @author Ladislas de Toldi
+ * @version 1.0
+ */
 
 #include "Arduino.h"
 
