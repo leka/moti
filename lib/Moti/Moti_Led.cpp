@@ -207,6 +207,12 @@ void MOTI::colorSwitcher(ColorName color){
 			rgb[2] = 75;
 			break;
 
+		case RAND:
+			rgb[0] = random(0, 255);
+			rgb[1] = random(0, 255);
+			rgb[2] = random(0, 255);
+			break;
+
 		default:
 			rgb[0] = random(0, 255);
 			rgb[1] = random(0, 255);
