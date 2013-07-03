@@ -96,7 +96,9 @@ uint8_t MOTI::getBlue(){
 	return rgb[2];
 }
 
-
+/**
+ * @brief Outputs the rgb[] values with the RGB Led
+ */
 void MOTI::printRgbColor(){
 	rgbled.colorRGB(rgb[0], rgb[1], rgb[2]);
 }
@@ -106,6 +108,13 @@ void MOTI::printRgbColor(ColorName color){
 	printRgbColor();
 }
 
+/**
+ * @brief Outputs the rgb[] values with the RGB Led
+ *
+ * @param redValue red value to output
+ * @param greenValue green value to output
+ * @param blueValue blue value to output
+ */
 void MOTI::printRgbColor(int redValue, int greenValue, int blueValue){
 	rgb[0] = constrain(redValue, 0, getLedMaxBrightness());
 	rgb[1] = constrain(greenValue, 0, getLedMaxBrightness());
@@ -114,6 +123,13 @@ void MOTI::printRgbColor(int redValue, int greenValue, int blueValue){
 	printRgbColor();
 }
 
+/**
+ * @brief Blinks the led with a certain color, a certain number of time with certain delay between blinks
+ *
+ * @param color the name of the color from enum ColorName{}
+ * @param numberOfBlinks number of blinks
+ * @param timeBtwBlink delay between each blinks - a good value is 50
+ */
 void MOTI::blinkLed(ColorName color, int numberOfBlinks, int timeBtwBlink){
 	for(int i = 0 ; i < numberOfBlinks ; i++) {
 		colorSwitcher(color);
@@ -124,6 +140,15 @@ void MOTI::blinkLed(ColorName color, int numberOfBlinks, int timeBtwBlink){
 	}
 }
 
+/**
+ * @brief Blinks the led with a certain value of red/green/blue, a certain number of time with certain delay between blinks
+ *
+ * @param red red value to output
+ * @param green green value to output
+ * @param blue blue value to output
+ * @param numberOfBlinks number of blinks
+ * @param timeBtwBlink delay between each blinks - a good value is 50
+ */
 void MOTI::blinkLed(int red, int green, int blue, int numberOfBlinks, int timeBtwBlink){
 	for(int i = 0 ; i < numberOfBlinks ; i++) {
 		printRgbColor(red, green, blue);
@@ -133,6 +158,11 @@ void MOTI::blinkLed(int red, int green, int blue, int numberOfBlinks, int timeBt
 	}
 }
 
+/**
+ * @brief Fades the led to a certain color
+ *
+ * @param color the name of the color from enum ColorName{}
+ */
 void MOTI::fadeLedTo(ColorName color){
 	int fadeRed = 0;
 	int fadeGreen = 0;
@@ -157,14 +187,25 @@ void MOTI::fadeLedTo(ColorName color){
 	}
 }
 
+/**
+ * @brief Turns led ON - white color.
+ */
 void MOTI::turnLedOn(){
 	printRgbColor(255, 255, 255);
 }
 
+/**
+ * @brief Turns led OFF.
+ */
 void MOTI::turnLedOff(){
 	printRgbColor(0, 0, 0);
 }
 
+/**
+ * @brief Color switcher used to get rgb[] values of different colors by their name such as RED, GREEN, BLUE, etc.
+ *
+ * @param color the name of the color from enum ColorName{}
+ */
 void MOTI::colorSwitcher(ColorName color){
 	switch(color){
 		case DARK_RED:
