@@ -238,19 +238,20 @@ while (abs(delta) <= spin){
 
 	delta = sqrt(sq(delta1) + sq(delta2) + sq(delta3));
 
-	Serial.println(angle1);
-	Serial.println("| |");
-	Serial.println(angle2);
-	Serial.println("| |");
-	Serial.println(angle3);
-	Serial.println("| |");
-	Serial.println(delta1);
-	Serial.println("| |");
-	Serial.println(delta2);
-	Serial.println("| |");
-	Serial.println(delta3);
-	Serial.println("| |");
-	Serial.println(delta);
+	Serial.print(angle1);
+	Serial.print("| |");
+	Serial.print(angle2);
+	Serial.print("| |");
+	Serial.print(angle3);
+	Serial.print("| |");
+	Serial.print(delta1);
+	Serial.print("| |");
+	Serial.print(delta2);
+	Serial.print("| |");
+	Serial.print(delta3);
+	Serial.print("| |");
+	Serial.print(delta);
+	Serial.print("\n");
 
 }
 
