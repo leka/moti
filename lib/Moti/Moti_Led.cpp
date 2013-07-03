@@ -5,6 +5,9 @@
 // LED //
 //#####//
 
+/**
+ * @brief Method used to initialize the rgb[] and rgbBuffer[] to zero
+ */
 void MOTI::initializeLed(){
 	rgb[0]       = 0;
 	rgb[1]       = 0;
@@ -14,44 +17,85 @@ void MOTI::initializeLed(){
 	rgbBuffer[2] = 0;
 }
 
+/**
+ * @brief Method used to set the value of red, green or blue
+ * @param index 0, 1 or 2 for red, green or blue.
+ * @param value value for the corresponding led. It must be between 0-255
+ */
 void MOTI::setRgbValue(int8_t index, int value){
 	index = constrain(index, 0, 2);
 	rgb[index] = constrain(value, 0, getLedMaxBrightness());
 }
 
+/**
+ * @brief Method used to set the red led value
+ * @param value value for the red led. It must be between 0-255
+ */
 void MOTI::setRed(int value){
 	rgb[0] = constrain(value, 0, getLedMaxBrightness());
 }
 
+/**
+ * @brief Method used to set the green led value
+ * @param value value for the green led. It must be between 0-255
+ */
 void MOTI::setGreen(int value){
 	rgb[1] = constrain(value, 0, getLedMaxBrightness());
 }
 
+/**
+ * @brief Method used to set the blue led value
+ * @param value value for the blue led. It must be between 0-255
+ */
 void MOTI::setBlue(int value){
 	rgb[2] = constrain(value, 0, getLedMaxBrightness());
 }
 
+/**
+ * @brief Method used to set red, green and blue all at once
+ * @param redValue   the red led value, must be between 0-255
+ * @param greenValue the green led value, must be between 0-255
+ * @param blueValue  the blue led value, must be between 0-255
+ */
 void MOTI::setRgbValue(int redValue, int greenValue, int blueValue){
 	rgb[0] = constrain(redValue, 0, getLedMaxBrightness());
 	rgb[1] = constrain(greenValue, 0, getLedMaxBrightness());
 	rgb[2] = constrain(blueValue, 0, getLedMaxBrightness());
 }
 
+/**
+ * @brief Getter method to get the value of red, green or blue
+ * @param  index 0, 1 or 2 for red, green or blue.
+ * @return       returns the corresponding value, an uint8_t between 0-255
+ */
 uint8_t MOTI::getRgbValue(uint8_t index){
 	return rgb[index];
 }
 
+/**
+ * @brief Getter method for the red value
+ * @return returns the red value, an uint8_t between 0-255
+ */
 uint8_t MOTI::getRed(){
 	return rgb[0];
 }
 
+/**
+ * @brief Getter method for the red value
+ * @return returns the red value, an uint8_t between 0-255
+ */
 uint8_t MOTI::getGreen(){
 	return rgb[1];
 }
 
+/**
+ * @brief Getter method for the blue value
+ * @return returns the blue value, an uint8_t between 0-255
+ */
 uint8_t MOTI::getBlue(){
 	return rgb[2];
 }
+
 
 void MOTI::printRgbColor(){
 	rgbled.colorRGB(rgb[0], rgb[1], rgb[2]);
