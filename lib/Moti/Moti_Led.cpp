@@ -57,8 +57,8 @@ void MOTI::printRgbColor(){
 	rgbled.colorRGB(rgb[0], rgb[1], rgb[2]);
 }
 
-void MOTI::printRgbColor(String colorName){
-	colorSwitcher(colorName);
+void MOTI::printRgbColor(ColorName color){
+	colorSwitcher(color);
 	printRgbColor();
 }
 
@@ -70,9 +70,9 @@ void MOTI::printRgbColor(int redValue, int greenValue, int blueValue){
 	printRgbColor();
 }
 
-void MOTI::blinkLed(String colorName, int numberOfBlinks, int timeBtwBlink){
+void MOTI::blinkLed(ColorName color, int numberOfBlinks, int timeBtwBlink){
 	for(int i = 0 ; i < numberOfBlinks ; i++) {
-		colorSwitcher(colorName);
+		colorSwitcher(color);
 		printRgbColor();
 		delay(timeBtwBlink);
 		printRgbColor(0, 0, 0);
@@ -89,17 +89,17 @@ void MOTI::blinkLed(int red, int green, int blue, int numberOfBlinks, int timeBt
 	}
 }
 
-void MOTI::fadeLedTo(String colorName){
+void MOTI::fadeLedTo(ColorName color){
 	int fadeRed = 0;
 	int fadeGreen = 0;
 	int fadeBlue = 0;
 
 	initializeLed();
 
-	colorSwitcher(colorName);
+	colorSwitcher(color);
 
 	while(fadeRed <= rgb[0] || fadeGreen <= rgb[1] || fadeBlue <= rgb[2]){
-		colorSwitcher(colorName);
+		colorSwitcher(color);
 		if (fadeRed < rgb[0]){
 			fadeRed+=3;
 		}
@@ -121,81 +121,98 @@ void MOTI::turnLedOff(){
 	printRgbColor(0, 0, 0);
 }
 
-void MOTI::colorSwitcher(String colorName){
-	if(colorName == "dark red"){
-		rgb[0] = 186;
-		rgb[1] = 48;
-		rgb[2] = 42;
+void MOTI::colorSwitcher(ColorName color){
+	switch(color){
+		case DARK_RED:
+			rgb[0] = 186;
+			rgb[1] = 48;
+			rgb[2] = 42;
+			break;
+
+		case RED:
+			rgb[0] = 221;
+			rgb[1] = 60;
+			rgb[2] = 48;
+			break;
+
+		case PINK:
+			rgb[0] = 222;
+			rgb[1] = 63;
+			rgb[2] = 89;
+			break;
+
+		case PURPLE:
+			rgb[0] = 165;
+			rgb[1] = 67;
+			rgb[2] = 188;
+			break;
+
+		case BLUE:
+			rgb[0] = 41;
+			rgb[1] = 133;
+			rgb[2] = 220;
+			break;
+
+		case LIGHT_BLUE:
+			rgb[0] = 95;
+			rgb[1] = 184;
+			rgb[2] = 224;
+			break;
+
+		case WHITE:
+			rgb[0] = 248;
+			rgb[1] = 253;
+			rgb[2] = 253;
+			break;
+
+		case LIGHT_PINK:
+			rgb[0] = 255;
+			rgb[1] = 232;
+			rgb[2] = 225;
+			break;
+
+		case YELLOW:
+			rgb[0] = 250;
+			rgb[1] = 211;
+			rgb[2] = 51;
+			break;
+
+		case DARK_YELLOW:
+			rgb[0] = 244;
+			rgb[1] = 174;
+			rgb[2] = 51;
+			break;
+
+		case ORANGE:
+			rgb[0] = 240;
+			rgb[1] = 143;
+			rgb[2] = 51;
+			break;
+
+		case DARK_ORANGE:
+			rgb[0] = 239;
+			rgb[1] = 134;
+			rgb[2] = 59;
+			break;
+
+		case LIGHT_GREEN:
+			rgb[0] = 216;
+			rgb[1] = 255;
+			rgb[2] = 56;
+			break;
+
+		case GREEN:
+			rgb[0] = 98;
+			rgb[1] = 163;
+			rgb[2] = 75;
+			break;
+
+		default:
+			rgb[0] = random(0, 255);
+			rgb[1] = random(0, 255);
+			rgb[2] = random(0, 255);
+			break;
 	}
-	else if(colorName == "red"){
-		rgb[0] = 221;
-		rgb[1] = 60;
-		rgb[2] = 48;
-	}
-	else if(colorName == "pink"){
-		rgb[0] = 222;
-		rgb[1] = 63;
-		rgb[2] = 89;
-	}
-	else if(colorName == "purple"){
-		rgb[0] = 165;
-		rgb[1] = 67;
-		rgb[2] = 188;
-	}
-	else if(colorName == "blue"){
-		rgb[0] = 41;
-		rgb[1] = 133;
-		rgb[2] = 220;
-	}
-	else if(colorName == "light blue"){
-		rgb[0] = 95;
-		rgb[1] = 184;
-		rgb[2] = 224;
-	}
-	else if(colorName == "white"){
-		rgb[0] = 248;
-		rgb[1] = 253;
-		rgb[2] = 253;
-	}
-	else if(colorName == "light pink"){
-		rgb[0] = 255;
-		rgb[1] = 232;
-		rgb[2] = 225;
-	}
-	else if(colorName == "yellow"){
-		rgb[0] = 250;
-		rgb[1] = 211;
-		rgb[2] = 51;
-	}
-	else if(colorName == "dark yellow"){
-		rgb[0] = 244;
-		rgb[1] = 174;
-		rgb[2] = 51;
-	}
-	else if(colorName == "orange"){
-		rgb[0] = 240;
-		rgb[1] = 143;
-		rgb[2] = 51;
-	}
-	else if(colorName == "dark orange"){
-		rgb[0] = 239;
-		rgb[1] = 134;
-		rgb[2] = 59;
-	}
-	else if(colorName == "light green"){
-		rgb[0] = 216;
-		rgb[1] = 255;
-		rgb[2] = 56;
-	}
-	else if(colorName == "green"){
-		rgb[0] = 98;
-		rgb[1] = 163;
-		rgb[2] = 75;
-	}
-	else {
-		rgb[0] = random(0, 255);
-		rgb[1] = random(0, 255);
-		rgb[2] = random(0, 255);
-	}
+
 }
 

@@ -30,9 +30,20 @@ class MOTI {
 	public:
 
 		enum ColorName {
+			DARK_RED,
 			RED,
+			PINK,
+			PURPLE,
 			BLUE,
-			DARK_RED
+			LIGHT_BLUE,
+			WHITE,
+			LIGHT_PINK,
+			YELLOW,
+			DARK_YELLOW,
+			ORANGE,
+			DARK_ORANGE,
+			LIGHT_GREEN,
+			GREEN
 		};
 
 
@@ -147,7 +158,7 @@ class MOTI {
 		//	LED
 		void initializeLed();
 
-		void colorSwitcher(String color);
+		void colorSwitcher(ColorName color);
 
 		void setRgbValue(int8_t index, int value);
 		void setRed(int value);
@@ -161,13 +172,13 @@ class MOTI {
 		uint8_t getBlue();
 
 		void printRgbColor();
-		void printRgbColor(String colorName);
+		void printRgbColor(ColorName colorName);
 		void printRgbColor(int red, int green, int blue);
 
-		void blinkLed(String colorName, int numberOfBlinks, int timeBtwBlink);
+		void blinkLed(ColorName colorName, int numberOfBlinks, int timeBtwBlink);
 		void blinkLed(int red, int green, int blue, int numberOfBlinks, int timeBtwBlink);
 
-		void fadeLedTo(String colorName);
+		void fadeLedTo(ColorName colorName);
 
 		void turnLedOff();
 		void turnLedOn();
