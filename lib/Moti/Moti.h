@@ -1,6 +1,13 @@
 #ifndef ROBOT_LEKA_ARDUINO_MOTI_H_
 #define ROBOT_LEKA_ARDUINO_MOTI_H_
 
+/**
+ * @file Moti.h
+ * @brief Moti is a new interactive spherical smart toy for children with Autism Spectrum Disorders
+ * @author Ladislas de Toldi
+ * @version 1.0
+ */
+
 #include "Arduino.h"
 
 #include "RGBLED.h"
@@ -13,23 +20,39 @@
 #include <FIMU_ITG3200.h>
 #include <FreeSixIMU.h>
 
-
+/**
+ * @class MOTI
+ * @brief The MOTI class represent the robot.
+ *
+ * For simplicity purpose, we decided to build a class for the whole robot that would simplify the way we design and code the robot's behaviors and algorithms.
+ * With MOTI class, you can access and manipulate everything you need, from motors to sensors and led.
+ */
 class MOTI {
 
 	public:
 
-		//	CONSTRUCTORS
+		enum ColorName {
+			DARK_RED, RED, LIGHT_RED, PURPLE, BLUE, LIGHT_BLUE, WHITE, LIGHT_PINK, YELLOW, DARK_YELLOW, ORANGE, DARK_ORANGE, LIGHT_GREEN, GREEN, RAND
+		};
+
 		MOTI();
-		// static MOTI & getInstance();
+
 
 		void init();
+
+
 		void initVerbose();
+
+
+
+		//	SET CONSTANTS
 
 		void initializeConstants();
 
-		//	SET CONSTANTS
 		void setLoopDelay(int value);
+
 		void setSleepDelay(int value);
+
 		void setAwakeThreshold(int value);
 		void setDeltaAccelThreshold(int value);
 		void setHighActivityThreshold(int value);
@@ -76,10 +99,11 @@ class MOTI {
 
 
 		//	DATA TRANSFER TO COMPUTER
-		void sendDataToProcessing();
-		void sendDataToDebug();
 		void sendDataJson();
 		void sendDataLearning();
+		void sendDataBinaries();
+		void sendBinaryByte(uint8_t value);
+		void sendBinaryInt(int value);
 
 		//	STATE
 		void initializeStates();
@@ -102,19 +126,27 @@ class MOTI {
 		//	LED
 		void initializeLed();
 
-		void constrainRgbValue();
+		void colorSwitcher(ColorName color);
 
-		void colorSwitcher( char * color);
-
-		void setRgbValue(int value);
+		void setRgbValue(int8_t index, int value);
+		void setRed(int value);
+		void setGreen(int value);
+		void setBlue(int value);
 		void setRgbValue(int redValue, int greenValue, int blueValue);
 
+		uint8_t getRgbValue(uint8_t index);
+		uint8_t getRed();
+		uint8_t getGreen();
+		uint8_t getBlue();
+
 		void printRgbColor();
+		void printRgbColor(ColorName color);
 		void printRgbColor(int red, int green, int blue);
 
-		void blinkLed(int numberOfBlinks);
-		void blinkLed(int numberOfBlinks, char * colorName);
-		void fadeLedTo(char * colorName);
+		void blinkLed(ColorName color, int numberOfBlinks, int timeBtwBlink);
+		void blinkLed(int red, int green, int blue, int numberOfBlinks, int timeBtwBlink);
+
+		void fadeLedTo(ColorName color);
 
 		void turnLedOff();
 		void turnLedOn();
@@ -150,6 +182,9 @@ class MOTI {
 		void checkAccelerometer();
 		void checkGyroscope();
 
+		int getXYZ(uint8_t index);
+		int getYPR(uint8_t index);
+
 		void computeSensorValues();
 		void updateLastSensorValues();
 
@@ -158,22 +193,21 @@ class MOTI {
 		void setAllToLow();
 		void softwareReset();
 
-
 	private:
 
 		//	VARIABLES
-		int rgb[3], rgbBuffer[3];
-		int rightMotorSpeed, rightMotorSpeedBuffer;
-		int leftMotorSpeed, leftMotorSpeedBuffer;
+		int16_t rgb[3], rgbBuffer[3];
+		uint16_t rightMotorSpeed, rightMotorSpeedBuffer;
+		uint16_t leftMotorSpeed, leftMotorSpeedBuffer;
 		int XYZ[3], lastXYZ[3], deltaXYZ[3];
-		float YPR[3], lastYPR[3], deltaYPR[3];
-		word sleepy;
+		int YPR[3], lastYPR[3], deltaYPR[3];
+		uint16_t sleepy;
 
-		word _loopDelay;
-		word _sleepDelay;
-		word _awakeThreshold;
-		word _deltaAccelThreshold;
-		word _highActivityThreshold;
+		uint16_t _loopDelay;
+		uint16_t _sleepDelay;
+		uint16_t _awakeThreshold;
+		uint16_t _deltaAccelThreshold;
+		uint16_t _highActivityThreshold;
 
 		uint8_t _ledMaxBrightness;
 		uint8_t _redMaxBrightness;
@@ -192,11 +226,11 @@ class MOTI {
 
 
 		//	CONSTANTS
-		static const int DEFAULT_LOOP_DELAY              = 75;
-		static const int DEFAULT_SLEEP_DELAY             = 600;
-		static const int DEFAULT_AWAKE_THRESHOLD         = 300;
-		static const int DEFAULT_DELTA_ACCEL_THRESHOLD   = 200;
-		static const int DEFAULT_HIGH_ACTIVITY_THRESHOLD = 80;
+		static const uint8_t DEFAULT_LOOP_DELAY              = 75;
+		static const uint16_t DEFAULT_SLEEP_DELAY            = 600;
+		static const uint16_t DEFAULT_AWAKE_THRESHOLD        = 300;
+		static const uint16_t DEFAULT_DELTA_ACCEL_THRESHOLD  = 200;
+		static const uint8_t DEFAULT_HIGH_ACTIVITY_THRESHOLD = 80;
 
 		static const uint8_t DEFAULT_LED_MAX_BRIGHTNESS   = 255;
 		static const uint8_t DEFAULT_RED_MAX_BRIGHTNESS   = 255;
@@ -206,7 +240,8 @@ class MOTI {
 		static const uint8_t DEFAULT_MIN_MOTOR_SPEED = 0;
 		static const uint8_t DEFAULT_MAX_MOTOR_SPEED = 255;
 
-		const float turnCoefficient = 0.8;
+		static const uint8_t turnCoefficientTime = 80;
+		static const uint8_t turnCoefficientDiv = 100;
 
 		//	MOTOR PINS
 		static const uint8_t leftMotorSpeedPin      = 5;
@@ -218,6 +253,18 @@ class MOTI {
 		static const uint8_t RED_PIN   = 9;
 		static const uint8_t GREEN_PIN = 10;
 		static const uint8_t BLUE_PIN  = 11;
+
+		//	DATA TRANSFERT
+		static const uint8_t INIT_PHASE        = 0xAA;
+
+		static const uint8_t START_ANSWER      = 0x0F;
+		static const uint8_t END_ANSWER        = 0xF0;
+		static const uint8_t NUMBER_OF_SENSORS = 0x02;
+
+		static const uint8_t ACC_SENSOR        = 0x01;
+		static const uint8_t ACC_DATA          = 0x06;
+		static const uint8_t GYR_SENSOR        = 0x02;
+		static const uint8_t GYR_DATA          = 0x06;
 
 		RGBLED rgbled = RGBLED(9, 10,11);
 		FreeSixIMU AccelGyro;
