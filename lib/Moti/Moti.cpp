@@ -27,21 +27,21 @@ MOTI::MOTI(){}
 void MOTI::init(){
 	delay(500);
 	Serial.begin(115200);
-	delay(500);
-	blinkLed("rand", 4, 50);
-	delay(500);
+	delay(50);
+	blinkLed(RAND, 4, 50);
+	delay(50);
 	initializeConstants();
-	delay(500);
+	delay(50);
 	initializeLed();
-	delay(500);
+	delay(50);
 	initializeStates();
-	delay(500);
+	delay(50);
 	Wire.begin();
-	delay(500);
+	delay(50);
 	AccelGyro.init();
-	delay(500);
+	delay(50);
 	initializeMotors();
-	delay(500);
+	delay(50);
 }
 
 /**
@@ -53,37 +53,29 @@ void MOTI::init(){
 void MOTI::initVerbose(){
 	delay(500);
 	Serial.begin(115200);
-	delay(500);
-	Serial.println(F("Serial communication has begun."));
-	delay(500);
-	Serial.println(F("Starting Moti.init();"));
-	blinkLed("rand", 4, 50);
-	delay(500);
-	Serial.print(F("Initializing Constants"));
+	delay(100);
+	Serial.println(F("\nSC"));
+	delay(100);
+	blinkLed(RAND, 4, 50);
+	delay(100);
 	initializeConstants();
-	Serial.println(F(" ---> Constants OK"));
-	delay(500);
-	Serial.print(F("Initializing LED"));
-	initializeLed();
-	Serial.println(F(" ---> LED OK"));
-	delay(500);
-	Serial.print(F("Initializing States"));
-	initializeStates();
-	Serial.println(F(" ---> States OK"));
-	delay(500);
-	Serial.print(F("Initializing Wire communication"));
+	Serial.println(F("Cst"));
+	delay(100);
 	Wire.begin();
-	Serial.println(F(" ---> Wire OK"));
-	delay(500);
-	Serial.print(F("Initializing Accelerometer and Gyroscope"));
+	Serial.println(F("Wire"));
+	delay(100);
 	AccelGyro.init();
-	Serial.println(F(" ---> AccelGyro OK"));
-	delay(500);
-	Serial.print(F("Initializing Motors"));
+	Serial.println(F("IMU"));
+	delay(100);
+	initializeLed();
+	Serial.println(F("LED"));
+	delay(100);
+	initializeStates();
+	Serial.println(F("States"));
+	delay(100);
 	initializeMotors();
-	Serial.println(F(" ---> Motors OK"));
-	delay(500);
-	Serial.println(F(" Moti has been initialized correctly, void loop(); is starting......"));
+	Serial.println(F("Motors"));
+	delay(20);
 }
 
 
