@@ -47,31 +47,12 @@ class MOTI {
 
 		//	SET CONSTANTS
 
-
-		///
-		/// \brief Constants initialization method
-		///
-		/// initializeConstants() is used to set all the constants to their default values.
-		///
 		void initializeConstants();
 
-		///
-		/// \brief Setter method for #_loopDelay
-		/// \param value the value of #_loopDelay
-		/// It is used to set the #_loopDelay.
-		///
 		void setLoopDelay(int value);
-		///
-		/// \brief Setter method for #_sleepDelay
-		///
-		/// It is used to set the #_sleepDelay.
-		///
+
 		void setSleepDelay(int value);
-		///
-		/// \brief Setter method for #_awakeThreshold
-		///
-		/// It is used to set theMOTI# _awakeThreshold.
-		///
+
 		void setAwakeThreshold(int value);
 		void setDeltaAccelThreshold(int value);
 		void setHighActivityThreshold(int value);
