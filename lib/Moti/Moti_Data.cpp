@@ -39,7 +39,6 @@ void MOTI::sendDataLearning(){
 void MOTI::sendDataBinaries(){
 	checkSensors();
 
-
 	sendBinaryByte(START_ANSWER);
 
 	sendBinaryByte(NUMBER_OF_SENSORS);

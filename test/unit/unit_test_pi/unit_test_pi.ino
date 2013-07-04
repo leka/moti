@@ -36,7 +36,9 @@ void setup() {
 //######//
 
 void loop() {
-	Moti.checkSensors();
-	Moti.sendDataPi();
+	if(Serial.available() > 0){
+		int incomingByte = Serial.read();
+		Moti.sendDataBinaries();
+	}
 	delay(100);
 }
