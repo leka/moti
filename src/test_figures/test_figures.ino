@@ -23,25 +23,45 @@
 #include <FreeSixIMU.h>
 
 
+int theta, delta;
+
+
 MOTI Moti = MOTI();
 
-void MotorSpinRightAngle(int Aspeed, int angle) {
+void MotorSpinRightAngle(int Aspeed, int spin) {
 
 	Moti.checkGyroscope();
-	int x = Moti.getYPR(0);	int y = Moti.getYPR(1); int z = Moti.getYPR(2);
-
-
+	theta = Moti.getYPR(0);
+	delta = 0;
 	Moti.spinRight(Aspeed);
-	delay(angle*25);            // Le coefficient 22 depend de la montage pour la vitesse angulaire en fonction du moteur.
+	
+	while (abs(delta) < spin) {
+	
+	Moti.checkGyroscope();	
+	delta = Moti.getYPR(0) - theta;
+	
+	}
+
 	Moti.stop();
 
 }
 
-void MotorSpinLeftAngle(int Aspeed, int angle) {
+void MotorSpinLeftAngle(int Aspeed, int spin) {
 
-	Moti.spinLeft(Aspeed);
-	delay(angle*25);			// Le coefficient 22 depend de la montage pour la vitesse angulaire en fonction du moteur.
+	Moti.checkGyroscope();
+	theta = Moti.getYPR(0);
+	delta = 0;
+	Moti.spinRight(Aspeed);
+	
+	while (abs(delta) < spin) {
+
+	Moti.checkGyroscope();	
+	delta = Moti.getYPR(0) - theta;
+	
+	}
+
 	Moti.stop();
+
 }
 
 void Square(int distance) {
@@ -107,12 +127,22 @@ Cspeed = constrain(Cspeed, Moti.getMotorMinSpeed(), Moti.getMotorMaxSpeed());
 
 int _coeff = 1 - (0.1*0.1*Cspeed/255)/radius ;   // On considere distance entre roues = 0.1 et vitesse lineaire a 255 comme 0.1 m/s. 
 
+Moti.checkGyroscope();
+theta = Moti.getYPR(0);
+delta = 360;
+
 Moti.spinLeftWheel(Cspeed, 0);
 Moti.spinRightWheel(Cspeed * _coeff, 0); 	   // Radius egale a: distance entre roues * vitesse lineaire maximun / (1 - coeff)
-
 Moti.setMovingState(true);
+delay (1000);
 
-delay((2000*3.14*radius/(0.1*Cspeed/255)));    // Temps egale a 2*pi*Radius/Vitesse, d'où vitesse est egale a 0.1*speed/255
+while (abs(delta) > 5){
+
+Moti.checkGyroscope();
+delta = Moti.getYPR(0) - theta;
+
+}
+
 
 Moti.stop();
 
@@ -199,8 +229,6 @@ Cercle(70,255);
 
 }
 
-int spin = 90;
-int delta1, delta2, delta3, delta;
 
 //#######//
 // SETUP //
@@ -220,46 +248,7 @@ void loop() {
 	
 
 delay(2000);
-Moti.checkGyroscope();
-//Behaviour();
-
-int angle1 = Moti.getYPR(0); 
-int angle2 = Moti.getYPR(1); 
-int angle3 = Moti.getYPR(2); 
-
-int delta = 0;
-
-while (abs(delta) <= spin){
-
-	Moti.checkGyroscope();
-	delta1 = Moti.getYPR(0) - angle1;
-	delta2 = Moti.getYPR(1) - angle2;
-	delta3 = Moti.getYPR(2) - angle3;
-
-	delta = sqrt(sq(delta1) + sq(delta2) + sq(delta3));
-
-	Serial.print(angle1);
-	Serial.print("| |");
-	Serial.print(angle2);
-	Serial.print("| |");
-	Serial.print(angle3);
-	Serial.print("| |");
-	Serial.print(delta1);
-	Serial.print("| |");
-	Serial.print(delta2);
-	Serial.print("| |");
-	Serial.print(delta3);
-	Serial.print("| |");
-	Serial.print(delta);
-	Serial.print("\n");
-
-}
-
-
-
-Serial.print(Moti.getYPR(0));
-
-
+Behaviour();
 
 }
 
