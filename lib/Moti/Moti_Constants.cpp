@@ -257,46 +257,79 @@ int MOTI::getMotorMaxSpeed(){
 // RESET CONSTANTS //
 //#################//
 
+/**
+ * @brief Reset method for _loopDelay to initial value
+ */
 void MOTI::resetLoopDelay(){
 	_loopDelay = DEFAULT_LOOP_DELAY;
 }
 
+/**
+ * @brief Reset method for _sleepDelay to initial value
+ */
 void MOTI::resetSleepDelay(){
 	_sleepDelay = DEFAULT_SLEEP_DELAY;
 }
 
+/**
+ * @brief Reset method for _awakeThreshold to initial value
+ */
 void MOTI::resetAwakeThreshold(){
 	_awakeThreshold = DEFAULT_AWAKE_THRESHOLD;
 }
 
+/**
+ * @brief Reset method for _deltaAccelThreshold to initial value
+ */
 void MOTI::resetDeltaAccelThreshold(){
 	_deltaAccelThreshold = DEFAULT_DELTA_ACCEL_THRESHOLD;
 }
 
+/**
+ * @brief Reset method for _highActivityThreshold to initial value
+ */
 void MOTI::resetHighActivityThreshold(){
 	_highActivityThreshold = DEFAULT_HIGH_ACTIVITY_THRESHOLD;
 }
 
+/**
+ * @brief Reset method for _ledMaxBrightness to initial value
+ */
 void MOTI::resetLedMaxBrightness(){
 	_ledMaxBrightness = DEFAULT_LED_MAX_BRIGHTNESS;
 }
 
+/**
+ * @brief Reset method for _redMaxBrightness to initial value
+ */
 void MOTI::resetRedMaxBrightness(){
 	_redMaxBrightness = DEFAULT_RED_MAX_BRIGHTNESS;
 }
 
+/**
+ * @brief Reset method for _greenMaxBrightness to initial value
+ */
 void MOTI::resetGreenMaxBrightness(){
 	_greenMaxBrightness = DEFAULT_GREEN_MAX_BRIGHTNESS;
 }
 
+/**
+ * @brief Reset method for _blueMaxBrightness to initial value
+ */
 void MOTI::resetBlueMaxBrightness(){
 	_blueMaxBrightness = DEFAULT_BLUE_MAX_BRIGHTNESS;
 }
 
+/**
+ * @brief Reset method for _motorMinSpeed to initial value
+ */
 void MOTI::resetMotorMinSpeed(){
 	_motorMinSpeed = DEFAULT_MIN_MOTOR_SPEED;
 }
 
+/**
+ * @brief Reset method for _motorMaxSpeed to initial value
+ */
 void MOTI::resetMotorMaxSpeed(){
 	_motorMaxSpeed = DEFAULT_MAX_MOTOR_SPEED;
 }
