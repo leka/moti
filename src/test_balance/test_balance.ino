@@ -23,56 +23,76 @@
 #include <FreeSixIMU.h>
 
 
-int theta, delta;
-
-
 MOTI Moti = MOTI();
 
+void Balance (){
 
-void MotorSpinRightAngle(int Aspeed, int spin) {
 
 	Moti.checkGyroscope();
-	theta = Moti.getYPR(0);
-	delta = 0;
-	Moti.spinRight(Aspeed);
+	Serial.println(Moti.getYPR(0));
+
+
+	while (abs(Moti.getYPR(0)) > 3) { 	
+
+
+		Moti.checkGyroscope();	
+
+
+		if(Moti.getYPR(0) < 0){
+
+			Moti.spinRight();
+		
+		}
 	
-	while (abs(delta) < spin) {
-	
-	Moti.checkGyroscope();	
-	delta = Moti.getYPR(0) - theta;
-	
+		else {
+
+			Moti.spinLeft();
+
+		}
+
 	}
 
+
+	while (abs(Moti.getYPR(1)) > 3) { 	
+
+
+		Moti.checkGyroscope();	
+
+
+		if(Moti.getYPR(1) < 0){
+
+			Moti.goForward();
+		
+		}
+	
+		else {
+
+			Moti.goBackward();
+
+		}
+	}
+
+	//Je dois penser comme corriger l'axis R 
+
+
 	Moti.stop();
+
 
 }
 
 
-void MotorSpinLeftAngle(int Aspeed, int spin) {
-
-	Moti.checkGyroscope();
-	theta = Moti.getYPR(0);
-	delta = 0;
-	Moti.spinRight(Aspeed);
-	
-	while (abs(delta) < spin) {
-
-	Moti.checkGyroscope();	
-	delta = Moti.getYPR(0) - theta;
-	
-	}
-
-	Moti.stop();
-
-}
 
 
 //#######//
 // SETUP //
 //#######//
 
+
+
 void setup() {
+
 	Moti.initVerbose();
+
 }
 
 
@@ -81,22 +101,11 @@ void setup() {
 // LOOP //
 //######//
 
+
+
 void loop() {
 	
-delay(5000);	
-MotorSpinRightAngle(255,90);
-delay(2000);
-MotorSpinLeftAngle(255,90);
-delay(2000);
-MotorSpinRightAngle(255,180);
-delay(2000);
-MotorSpinLeftAngle(255,180);
-delay(2000);
-MotorSpinRightAngle(255,360);
-delay(2000);
-MotorSpinLeftAngle(255,360);
-delay(2000);
-
+	Balance();
 
 }
 
