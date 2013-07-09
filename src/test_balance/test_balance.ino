@@ -29,7 +29,6 @@ void Balance (){
 
 
 	Moti.checkGyroscope();
-	Serial.println(Moti.getYPR(0));
 
 
 	while (abs(Moti.getYPR(0)) > 3) { 	
@@ -37,20 +36,25 @@ void Balance (){
 
 		Moti.checkGyroscope();	
 
-
-		if(Moti.getYPR(0) < 0){
-
-			Moti.spinRight();
-		
-		}
+		if(Moti.getYPR(0) < 0){		Moti.spinRight();		}
 	
-		else {
+		else {		Moti.spinLeft();		}
 
-			Moti.spinLeft();
 
-		}
+	} 
 
-	}
+
+	while (abs(Moti.getYPR(2)) > 10) { 	
+
+
+		Moti.checkGyroscope();	
+
+		if(Moti.getYPR(2) > 0){ Moti.spinRight(); }
+	
+		else { Moti.spinLeft(); }
+
+
+	} 
 
 
 	while (abs(Moti.getYPR(1)) > 3) { 	
@@ -58,35 +62,22 @@ void Balance (){
 
 		Moti.checkGyroscope();	
 
-
-		if(Moti.getYPR(1) < 0){
-
-			Moti.goForward();
-		
-		}
+		if(Moti.getYPR(1) < 0){ Moti.goForward(); }
 	
-		else {
+		else { Moti.goBackward(); }
 
-			Moti.goBackward();
 
-		}
-	}
-
-	//Je dois penser comme corriger l'axis R 
+	} 
 
 
 	Moti.stop();
 
-
 }
-
-
 
 
 //#######//
 // SETUP //
 //#######//
-
 
 
 void setup() {
@@ -104,8 +95,8 @@ void setup() {
 
 
 void loop() {
-	
-	Balance();
+
+Balance();
 
 }
 

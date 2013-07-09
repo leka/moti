@@ -23,46 +23,127 @@
 #include <FreeSixIMU.h>
 
 
-int theta, delta;
+int theta, delta, mcycle, angle;
+
 
 
 MOTI Moti = MOTI();
 
-void MotorSpinRightAngle(int Aspeed, int spin) {
+void MotorSpinRightAngle(int spin) { // Angle quelconque 
+	
+	Moti.checkGyroscope();
+	
+	mcycle = int(spin/360);
+	spin = spin%360;
+
+	
+	for (int i = 0; i < mcycle; i++) {
+
+		theta = Moti.getYPR(0);
+		delta = 0;
+		
+		while (abs(delta - 360) > 5) { 	
+
+		Moti.checkGyroscope();	
+
+		if(delta < 360){ Moti.spinRight(); }
+	
+		else { Moti.spinLeft(); }
+
+		angle = Moti.getYPR(0);
+
+		if (angle < theta){angle = angle + 360;}
+		
+		delta = abs(angle - theta);
+	
+		}
+
+	
+	}
+
 
 	Moti.checkGyroscope();
 	theta = Moti.getYPR(0);
 	delta = 0;
-	Moti.spinRight(Aspeed);
 	
-	while (abs(delta) < spin) {
+
+	while (abs(delta - spin) > 5) { 	
+
+		Moti.checkGyroscope();	
+
+		if(delta < spin){ Moti.spinRight(); }
 	
-	Moti.checkGyroscope();	
-	delta = Moti.getYPR(0) - theta;
-	
+		else { Moti.spinLeft(); }
+
+		angle = Moti.getYPR(0);
+
+		if (angle < theta){angle = angle + 360;}
+		delta = abs(angle - theta);
+
 	}
 
 	Moti.stop();
 
-}
+	}
 
-void MotorSpinLeftAngle(int Aspeed, int spin) {
+
+void MotorSpinLeftAngle(int spin) {  // Angle quelconque 
+
+	Moti.checkGyroscope();
+	
+	mcycle = int(spin/360);
+	spin = spin%360;
+
+	
+	for (int i = 0; i < mcycle; i++) {
+
+		theta = Moti.getYPR(0);
+		delta = 0;
+		
+		while (abs(delta - 360) > 5) { 	
+
+		Moti.checkGyroscope();	
+
+		if(delta < 360){ Moti.spinLeft(); }
+	
+		else { Moti.spinRight(); }
+
+		angle = Moti.getYPR(0);
+
+		if (angle > theta){angle = angle - 360;}
+		
+		delta = abs(angle - theta);
+	
+		}
+
+	
+	}
+
 
 	Moti.checkGyroscope();
 	theta = Moti.getYPR(0);
 	delta = 0;
-	Moti.spinRight(Aspeed);
-	
-	while (abs(delta) < spin) {
 
-	Moti.checkGyroscope();	
-	delta = Moti.getYPR(0) - theta;
 	
+	while (abs(delta - spin) > 5) { 	
+
+		Moti.checkGyroscope();	
+
+		if(delta < spin){ Moti.spinLeft(); }
+	
+		else { Moti.spinRight(); }
+
+		angle = Moti.getYPR(0);
+
+		if (angle > theta){angle = angle - 360;}
+		
+		delta = abs(angle - theta);
+
 	}
 
 	Moti.stop();
+	}
 
-}
 
 void Square(int distance) {
 
@@ -71,30 +152,31 @@ void Square(int distance) {
 	Moti.stop();
 	delay(500);
 	
-	MotorSpinRightAngle(255,90);
+	MotorSpinRightAngle(90);
 	
 	Moti.goForward();
 	delay(100*distance); 			// Le coefficient 100 depend de la vitesse lineaire du moteur en fonction de distance en cm.            
 	Moti.stop();
 	delay(500);
 
-	MotorSpinRightAngle(255,90);
+	MotorSpinRightAngle(90);
 	
 	Moti.goForward();
 	delay(100*distance); 			// Le coefficient 100 depend de la vitesse lineaire du moteur en fonction de distance en cm.            
 	Moti.stop();
 	delay(500);
 	
-	MotorSpinRightAngle(255,90);
+	MotorSpinRightAngle(90);
 	
 	Moti.goForward();
 	delay(100*distance); 			// Le coefficient 100 depend de la vitesse lineaire du moteur en fonction de distance en cm.            
 	Moti.stop();
 	delay(500);
 	
-	MotorSpinRightAngle(255,90);
+	MotorSpinRightAngle(90);
 
-}
+	}
+
 
 void Rectangle(int distance1, int distance2) {
 
@@ -102,22 +184,22 @@ void Rectangle(int distance1, int distance2) {
 	delay(100*distance1); 			// Le coefficient 100 depend de la vitesse lineaire du moteur en fonction de distance en cm.            
 	Moti.stop();
 	delay(500);
-	MotorSpinRightAngle(255,90);
+	MotorSpinRightAngle(90);
 	Moti.goForward();
 	delay(100*distance2); 			// Le coefficient 100 depend de la vitesse lineaire du moteur en fonction de distance en cm.            
 	Moti.stop();
 	delay(500);
-	MotorSpinRightAngle(255,90);
+	MotorSpinRightAngle(90);
 	Moti.goForward();
 	delay(100*distance1); 			// Le coefficient 100 depend de la vitesse lineaire du moteur en fonction de distance en cm.            
 	Moti.stop();
 	delay(500);
-	MotorSpinRightAngle(255,90);
+	MotorSpinRightAngle(90);
 	Moti.goForward();
 	delay(100*distance2); 			// Le coefficient 100 depend de la vitesse lineaire du moteur en fonction de distance en cm.            
 	Moti.stop();
 	delay(500);
-	MotorSpinRightAngle(255,90);
+	MotorSpinRightAngle(90);
 
 }
 
@@ -155,22 +237,22 @@ Moti.goForward();
 delay(100*distance);
 Moti.goBackward();
 delay(100*distance);
-MotorSpinRightAngle(255,90);      // On marche une distance en centimetre, on revient et apres on tourne 90 degrees.
+MotorSpinRightAngle(90);      // On marche une distance en centimetre, on revient et apres on tourne 90 degrees.
 Moti.goForward();
 delay(100*distance);
 Moti.goBackward();
 delay(100*distance);
-MotorSpinRightAngle(255,90);
+MotorSpinRightAngle(90);
 Moti.goForward();
 delay(100*distance);
 Moti.goBackward();
 delay(100*distance);
-MotorSpinRightAngle(255,90);
+MotorSpinRightAngle(90);
 Moti.goForward();
 delay(100*distance);
 Moti.goBackward();
 delay(100*distance);
-MotorSpinRightAngle(255,90);
+MotorSpinRightAngle(90);
 
 }
 
