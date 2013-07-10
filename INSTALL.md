@@ -122,7 +122,7 @@ Simply run `make` from `./src/moti_3` and it should compile. To upload, use `mak
 
 ###Hacker's guide - Linux Edition
 
-For you Linux users, the recipe is pretty much the same as for OS X, except that you can't use Homebrew so you need to use `apt-get`, `yum`, `synaptic` or any package manager. Make sure to install `avr-gcc 4.7.1` or higher and all the dependencies: `binutils 2.23.1`, `avr-libc 1.8.0`, `gmp`, `libmpc`, `mpfr` and `avrdude`.
+For you Linux users, the recipe is pretty much the same as for OS X, except that you can't use Homebrew so you need to use `apt-get`, `yum`, `synaptic` or any package manager. Make sure to install `gcc-avr 4.7.1` or higher and all the dependencies: `binutils 2.23.1`, `avr-libc 1.8.0`, `gmp`, `libmpc`, `mpfr` and `avrdude`.
 
 Inside the [Makefile_example](./Makefile_example), you will find all you need to customize to properly compile your code.
 
