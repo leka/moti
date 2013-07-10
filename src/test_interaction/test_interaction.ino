@@ -41,37 +41,37 @@ delay (1000);
 
 Moti.checkSensors();
 
-if ((Moti.getYPR(0) - thetaY) > 10){ gyroY = "Oui"; }
+if ((Moti.getYPR(0) - thetaY) > 8){ gyroY = "Oui"; }
 
 else { gyroY = "Non"; }
 
 
 
-if ((Moti.getYPR(1) - thetaP) > 10){ gyroP = "Oui"; }
+if ((Moti.getYPR(1) - thetaP) > 8){ gyroP = "Oui"; }
 
 else { gyroP = "Non"; }
 
 
 
-if ((Moti.getYPR(2) - thetaR) > 10){ gyroR = "Oui"; }
+if ((Moti.getYPR(2) - thetaR) > 8){ gyroR = "Oui"; }
 
 else { gyroR = "Non"; }
 
 
 
-if ((Moti.getXYZ(0) - accX) > 10){ accelX = "Oui"; }
+if ((Moti.getXYZ(0) - accX) > 8){ accelX = "Oui"; }
 
 else { accelX = "Non"; }
 
 
 
-if ((Moti.getXYZ(1) - accY) > 10){ accelY = "Oui"; }
+if ((Moti.getXYZ(1) - accY) > 8){ accelY = "Oui"; }
 
 else { accelY = "Non"; }
 
 
 
-if ((Moti.getXYZ(2) - accZ) > 10){ accelZ = "Oui"; }
+if ((Moti.getXYZ(2) - accZ) > 8){ accelZ = "Oui"; }
 
 else { accelZ = "Non"; }
 

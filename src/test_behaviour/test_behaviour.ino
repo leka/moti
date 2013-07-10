@@ -23,54 +23,61 @@
 #include <FreeSixIMU.h>
 
 
+String status;
+
+
 MOTI Moti = MOTI();
 
-void Balance (){
 
 
-	Moti.checkGyroscope();
+void behaviour() {
 
 
-	while (abs(Moti.getYPR(0)) > 3) { 	
+switch (status) {
 
-
-		Moti.checkGyroscope();	
-
-		if(Moti.getYPR(0) < 0){		Moti.spinRight();		}
 	
-		else {		Moti.spinLeft();		}
+	case happy: 
+
+	Moti.
 
 
-	} 
 
 
-	while (abs(Moti.getYPR(2)) > 10) { 	
+	case sad: 
 
 
-		Moti.checkGyroscope();	
-
-		if(Moti.getYPR(2) > 0){ Moti.spinRight(); }
-	
-		else { Moti.spinLeft(); }
 
 
-	} 
 
 
-	while (abs(Moti.getYPR(1)) > 3) { 	
+	case stressed:
 
 
-		Moti.checkGyroscope();	
-
-		if(Moti.getYPR(1) < 0){ Moti.goForward(); }
-	
-		else { Moti.goBackward(); }
 
 
-	} 
 
 
-	Moti.stop();
+
+	case lazy:
+
+
+
+
+
+
+
+	case tired:
+
+
+
+
+
+
+
+	case excited:
+
+}
+
 
 }
 
@@ -79,11 +86,8 @@ void Balance (){
 // SETUP //
 //#######//
 
-
 void setup() {
-
 	Moti.initVerbose();
-
 }
 
 
@@ -92,12 +96,10 @@ void setup() {
 // LOOP //
 //######//
 
-
-
 void loop() {
 
-Balance();
-//Moti.spinRight();
+interaction();
+Serial.println(status);
 
 }
 
