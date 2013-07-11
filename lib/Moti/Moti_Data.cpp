@@ -94,50 +94,50 @@ void MOTI::sendBinaryInt(int value){
  */
 void MOTI::sendDataJson(){
 	Serial.print(F("{"));
-		Serial.print(F("\" accel\" : "));
+		Serial.print(F("\" accel\": "));
 			Serial.print(F("{"));
 
-				Serial.print(F(" \"x\" : "));
+				Serial.print(F(" \"x\": "));
 				Serial.print(XYZ[0]);
 				Serial.print(F(","));
 
-				Serial.print(F(" \"y\" : "));
+				Serial.print(F(" \"y\": "));
 				Serial.print(XYZ[1]);
 				Serial.print(F(","));
 
-				Serial.print(F(" \"z\" : "));
+				Serial.print(F(" \"z\": "));
 				Serial.print(XYZ[2]);
 
 			Serial.print(F(" },"));
 
-		Serial.print(F("\" gyro\" : "));
+		Serial.print(F("\" gyro\": "));
 			Serial.print(F("{"));
 
-				Serial.print(F(" \"yaw\" : "));
+				Serial.print(F(" \"yaw\": "));
 				Serial.print(YPR[0]);
 				Serial.print(F(","));
 
-				Serial.print(F(" \"pitch\" : "));
+				Serial.print(F(" \"pitch\": "));
 				Serial.print(YPR[1]);
 				Serial.print(F(","));
 
-				Serial.print(F(" \"roll\" : "));
+				Serial.print(F(" \"roll\": "));
 				Serial.print(YPR[2]);
 
 			Serial.print(F(" },"));
 
-		Serial.print(F("\" rgb\" : "));
+		Serial.print(F("\" rgb\": "));
 			Serial.print(F("{"));
 
-				Serial.print(F(" \"red\" : "));
+				Serial.print(F(" \"red\": "));
 				Serial.print(rgb[0]);
 				Serial.print(F(","));
 
-				Serial.print(F(" \"green\" : "));
+				Serial.print(F(" \"green\": "));
 				Serial.print(rgb[1]);
 				Serial.print(F(","));
 
-				Serial.print(F(" \"blue\" : "));
+				Serial.print(F(" \"blue\": "));
 				Serial.print(rgb[2]);
 
 			Serial.print(F(" }"));
