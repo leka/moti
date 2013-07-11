@@ -28,7 +28,7 @@ void MOTI::init(){
 	delay(500);
 	Serial.begin(115200);
 	delay(50);
-	blinkLed(RED, 2, 200);
+	blinkLed(RAND, 2, 200);
 	delay(50);
 	initializeConstants();
 	delay(50);
@@ -41,7 +41,7 @@ void MOTI::init(){
 	initializeStates();
 	delay(50);
 	initializeMotors();
-	blinkLed(GREEN, 4, 200);
+	blinkLed(RAND, 4, 200);
 	delay(50);
 }
 
@@ -62,7 +62,7 @@ void MOTI::initVerbose(){
 	Serial.println();
 	Serial.println(F("SC"));
 	delay(100);
-	blinkLed(RED, 2, 200);
+	blinkLed(RAND, 2, 200);
 	delay(100);
 	initializeConstants();
 	Serial.println(F("CST"));
@@ -81,7 +81,7 @@ void MOTI::initVerbose(){
 	delay(100);
 	initializeMotors();
 	Serial.println(F("MOTORS"));
-	blinkLed(GREEN, 4, 200);
+	blinkLed(RAND, 4, 200);
 	delay(20);
 }
 

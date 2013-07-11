@@ -20,6 +20,10 @@
 #include <FIMU_ITG3200.h>
 #include <FreeSixIMU.h>
 
+enum ColorName {
+			DARK_RED, RED, LIGHT_RED, PURPLE, BLUE, LIGHT_BLUE, WHITE, LIGHT_PINK, YELLOW, DARK_YELLOW, ORANGE, DARK_ORANGE, LIGHT_GREEN, GREEN, RAND
+	};
+
 /**
  * @class MOTI
  * @brief The MOTI class represent the robot.
@@ -30,10 +34,6 @@
 class MOTI {
 
 	public:
-
-		enum ColorName {
-			DARK_RED, RED, LIGHT_RED, PURPLE, BLUE, LIGHT_BLUE, WHITE, LIGHT_PINK, YELLOW, DARK_YELLOW, ORANGE, DARK_ORANGE, LIGHT_GREEN, GREEN, RAND
-		};
 
 		MOTI();
 
