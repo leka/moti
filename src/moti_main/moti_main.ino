@@ -42,22 +42,22 @@ void setup() {
 
 void loop() {
 	Moti.goForward();
-	Moti.printRgbColor(35, 167, 210);
-	delay(5000);
-	Moti.printRgbColor(35, 167, 210);
-	Moti.blinkLed(4);
-	Moti.printRgbColor(35, 167, 210);
+	Moti.printRgbColor(RED);
+	delay(10000);
+	Moti.printRgbColor(BLUE);
+	Moti.blinkLed(RAND, 4, 50);
+	Moti.printRgbColor(GREEN);
 	delay(2000);
-	Moti.printRgbColor(35, 167, 210);
+	Moti.printRgbColor(DARK_ORANGE);
 	Moti.spinRight();
-	Moti.printRgbColor(35, 167, 210);
-	delay(2000);
-	Moti.printRgbColor(35, 167, 210);
+	Moti.printRgbColor(YELLOW);
+	delay(4000);
+	Moti.printRgbColor(WHITE);
 	Moti.stop();
-	Moti.printRgbColor(35, 167, 210);
+	Moti.printRgbColor(RAND);
 	delay(2000);
-	Moti.printRgbColor(35, 167, 210);
-	Moti.blinkLed(10);
+	Moti.printRgbColor(RAND);
+	Moti.blinkLed(RAND, 10, 50);
 	delay(1000);
 
 }
