@@ -108,12 +108,12 @@ class MOTI {
 		//	STATE
 		void initializeStates();
 
-		bool isMoving();
-		bool isSleeping();
-		bool isWaiting();
-		bool isAwake();
-		bool isManipulated();
-		bool isRemote();
+		bool getMovingState();
+		bool getSleepingState();
+		bool getWaitingState();
+		bool getAwakeState();
+		bool getManipulatedState();
+		bool getRemoteState();
 
 		void setMovingState(bool state);
 		void setSleepingState(bool state);
@@ -266,7 +266,7 @@ class MOTI {
 		static const uint8_t GYR_SENSOR        = 0x02;
 		static const uint8_t GYR_DATA          = 0x06;
 
-		RGBLED rgbled = RGBLED(9, 10,11);
+		RGBLED rgbled = RGBLED(RED_PIN, GREEN_PIN, BLUE_PIN);
 		FreeSixIMU AccelGyro;
 
 };
