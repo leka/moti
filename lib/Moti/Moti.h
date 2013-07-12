@@ -105,6 +105,12 @@ class MOTI {
 		void sendBinaryByte(uint8_t value);
 		void sendBinaryInt(int value);
 
+		//	REMOTE CONTROL
+		void remoteDisplayHelp();
+		void serialRouter();
+		void serialServer();
+
+
 		//	STATE
 		void initializeStates();
 
