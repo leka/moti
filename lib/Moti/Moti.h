@@ -20,6 +20,10 @@
 #include <FIMU_ITG3200.h>
 #include <FreeSixIMU.h>
 
+enum ColorName {
+			DARK_RED, RED, LIGHT_RED, PURPLE, BLUE, LIGHT_BLUE, WHITE, LIGHT_PINK, YELLOW, DARK_YELLOW, ORANGE, DARK_ORANGE, LIGHT_GREEN, GREEN, RAND
+	};
+
 /**
  * @class MOTI
  * @brief The MOTI class represent the robot.
@@ -30,10 +34,6 @@
 class MOTI {
 
 	public:
-
-		enum ColorName {
-			DARK_RED, RED, LIGHT_RED, PURPLE, BLUE, LIGHT_BLUE, WHITE, LIGHT_PINK, YELLOW, DARK_YELLOW, ORANGE, DARK_ORANGE, LIGHT_GREEN, GREEN, RAND
-		};
 
 		MOTI();
 
@@ -105,15 +105,21 @@ class MOTI {
 		void sendBinaryByte(uint8_t value);
 		void sendBinaryInt(int value);
 
+		//	REMOTE CONTROL
+		void remoteDisplayHelp();
+		void serialRouter();
+		void serialServer();
+
+
 		//	STATE
 		void initializeStates();
 
-		bool isMoving();
-		bool isSleeping();
-		bool isWaiting();
-		bool isAwake();
-		bool isManipulated();
-		bool isRemote();
+		bool getMovingState();
+		bool getSleepingState();
+		bool getWaitingState();
+		bool getAwakeState();
+		bool getManipulatedState();
+		bool getRemoteState();
 
 		void setMovingState(bool state);
 		void setSleepingState(bool state);
@@ -266,7 +272,7 @@ class MOTI {
 		static const uint8_t GYR_SENSOR        = 0x02;
 		static const uint8_t GYR_DATA          = 0x06;
 
-		RGBLED rgbled = RGBLED(9, 10,11);
+		RGBLED rgbled = RGBLED(RED_PIN, GREEN_PIN, BLUE_PIN);
 		FreeSixIMU AccelGyro;
 
 };

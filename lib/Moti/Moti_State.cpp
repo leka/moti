@@ -27,7 +27,7 @@ void MOTI::initializeStates(){
  *
  * @return true if motors are ON, false if motors are OFF.
  */
-bool MOTI::isMoving(){
+bool MOTI::getMovingState(){
 	return _stateMoving;
 }
 
@@ -36,7 +36,7 @@ bool MOTI::isMoving(){
  *
  * @return true if Moti's sleeping (not moving, not waiting, not awake), false if Moti's not sleeping.
  */
-bool MOTI::isSleeping(){
+bool MOTI::getSleepingState(){
 	return _stateSleeping;
 }
 
@@ -45,7 +45,7 @@ bool MOTI::isSleeping(){
  *
  * @return true if Moti's waiting for the child to interact.
  */
-bool MOTI::isWaiting(){
+bool MOTI::getWaitingState(){
 	return _stateWaiting;
 }
 
@@ -54,7 +54,7 @@ bool MOTI::isWaiting(){
  *
  * @return true if Moti's sleeping (not moving, not waiting, not awake), false if Moti's not sleeping.
  */
-bool MOTI::isAwake(){
+bool MOTI::getAwakeState(){
 	return _stateAwake;
 }
 
@@ -63,7 +63,7 @@ bool MOTI::isAwake(){
  *
  * @return true if Moti's is being manipulated by the child or if he has a shock.
  */
-bool MOTI::isManipulated(){
+bool MOTI::getManipulatedState(){
 	return _stateManipulated;
 }
 
@@ -72,7 +72,7 @@ bool MOTI::isManipulated(){
  *
  * @return true if Moti's is waiting for instruction from the computer.
  */
-bool MOTI::isRemote(){
+bool MOTI::getRemoteState(){
 	return _stateRemote;
 }
 
