@@ -5,6 +5,9 @@
 // REMOTE CONTROL FROM COMPUTER //
 //##############################//
 
+/**
+ * @brief Display the help options when using remote control from the Arduino Serial Monitor
+ */
 void MOTI::remoteDisplayHelp(){
 	Serial.println(F("\n========== Moti's Help =========="));
 	Serial.println(F("h       ---> Show help"));
@@ -18,20 +21,22 @@ void MOTI::remoteDisplayHelp(){
 	Serial.println(F("q       ---> Quit remote control"));
 }
 
+/**
+ * @brief Check for serial commands from computer.
+ *
+ * Command are send as bytes and note as ASCII characters. Therefore, to activate the remote, you have to press "r" from the Arduino Serial Monitor or send a byte with the value "114" otherwise.
+ */
 void MOTI::serialServer(){
 	if(getRemoteState() == false){
 		while(Serial.available() > 0){
 			byte recievedByte = Serial.read();
 
-			if(recievedByte == 104){
-				remoteDisplayHelp();
-			}
-			else if(recievedByte == 114){
+			if(recievedByte == 114){
 				Serial.println(F("Remote control activated"));
 				setRemoteState(true);
 			}
 			else {
-				Serial.println(F("Before sending command, you must enable the remote control mode by sending \"r\"."));
+				Serial.println(F("Press \"r\" to activate remote control."));
 			}
 		}
 	}
@@ -41,6 +46,12 @@ void MOTI::serialServer(){
 	}
 }
 
+/**
+ * @brief This method acts like a router for the serial commands.
+ *
+ * It treats and interprets the serial byte to execute certain commands.
+ * Read the code to know exactly what should be send and the corresponding action.
+ */
 void MOTI::serialRouter(){
 	while(getRemoteState() == true){
 
