@@ -34,30 +34,25 @@ void setup() {
 	Moti.initVerbose();
 }
 
-
-
 //######//
 // LOOP //
 //######//
 
 void loop() {
-	Moti.goForward();
-	Moti.printRgbColor(35, 167, 210);
-	delay(5000);
-	Moti.printRgbColor(35, 167, 210);
-	Moti.blinkLed(4);
-	Moti.printRgbColor(35, 167, 210);
-	delay(2000);
-	Moti.printRgbColor(35, 167, 210);
-	Moti.spinRight();
-	Moti.printRgbColor(35, 167, 210);
-	delay(2000);
-	Moti.printRgbColor(35, 167, 210);
-	Moti.stop();
-	Moti.printRgbColor(35, 167, 210);
-	delay(2000);
-	Moti.printRgbColor(35, 167, 210);
-	Moti.blinkLed(10);
-	delay(1000);
+	/**
+	 * First, we check if any serial commands were sent to the robot. If so, we enter the remote control state and stop the standard execution of void loop().
+	 */
+	Moti.serialServer();
 
+	/**
+	 * Then, if there is no serial command to execute, the robot goes on and lives a happy life.
+	 */
+
+	Serial.println("Just chillin'...");
+
+	delay(Moti.getLoopDelay());
 }
+
+
+
+

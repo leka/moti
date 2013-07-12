@@ -31,6 +31,32 @@ void MOTI::sendDataLearning(){
 }
 
 /**
+ * @brief Send the value of a uint8_t as a 8 bits (1 byte) binary
+ *
+ * sendBinaryByte() sends values as 8 bits binaries. It uses Serial.write() and is used inside sendDataBinary().
+ *
+ * @param value the value you need to send.
+ */
+void MOTI::sendBinaryByte(uint8_t value){
+	Serial.write(value);
+}
+
+/**
+ * @brief Send the value of a int16_t as a 16 bits (2 bytes) binary
+ *
+ * sendBinaryInt() is used to send the two bytes that comprise a two byte (16 bit) integer.
+ *
+ * Serial.write(lowByte(value)) sends the low byte
+ * Serial.write(highByte(value)) sends the high byte
+ *
+ * @param value [description]
+ */
+void MOTI::sendBinaryInt(int value){
+	Serial.println(lowByte(value));
+	Serial.println(highByte(value));
+}
+
+/**
  * @brief send the sensors' values as binaries
  *
  * sendDataBinaries is used to send the accelerometer and gyroscope values to the compter/Raspberry-Pi as binaries and NOT as strings.
@@ -61,32 +87,6 @@ void MOTI::sendDataBinaries(){
 }
 
 /**
- * @brief Send the value of a uint8_t as a 8 bits (1 byte) binary
- *
- * sendBinaryByte() sends values as 8 bits binaries. It uses Serial.write() and is used inside sendDataBinary().
- *
- * @param value the value you need to send.
- */
-void MOTI::sendBinaryByte(uint8_t value){
-	Serial.write(value);
-}
-
-/**
- * @brief Send the value of a int16_t as a 16 bits (2 bytes) binary
- *
- * sendBinaryInt() is used to send the two bytes that comprise a two byte (16 bit) integer.
- *
- * Serial.write(lowByte(value)) sends the low byte
- * Serial.write(highByte(value)) sends the high byte
- *
- * @param value [description]
- */
-void MOTI::sendBinaryInt(int value){
-	Serial.println(lowByte(value));
-	Serial.println(highByte(value));
-}
-
-/**
  * @brief Send data formated as a JSON string
  *
  * sendDataJson() is used to interface the robot with other high level languages such as Processing or Javascript.
@@ -94,52 +94,52 @@ void MOTI::sendBinaryInt(int value){
  */
 void MOTI::sendDataJson(){
 	Serial.print(F("{"));
-		Serial.print(F("\" accel\" : "));
+		Serial.print(F("\"accel\":"));
 			Serial.print(F("{"));
 
-				Serial.print(F(" \"x\" : "));
+				Serial.print(F("\"x\":"));
 				Serial.print(XYZ[0]);
 				Serial.print(F(","));
 
-				Serial.print(F(" \"y\" : "));
+				Serial.print(F("\"y\":"));
 				Serial.print(XYZ[1]);
 				Serial.print(F(","));
 
-				Serial.print(F(" \"z\" : "));
+				Serial.print(F("\"z\":"));
 				Serial.print(XYZ[2]);
 
-			Serial.print(F(" },"));
+			Serial.print(F("},"));
 
-		Serial.print(F("\" gyro\" : "));
+		Serial.print(F("\"gyro\":"));
 			Serial.print(F("{"));
 
-				Serial.print(F(" \"yaw\" : "));
+				Serial.print(F("\"yaw\":"));
 				Serial.print(YPR[0]);
 				Serial.print(F(","));
 
-				Serial.print(F(" \"pitch\" : "));
+				Serial.print(F("\"pitch\":"));
 				Serial.print(YPR[1]);
 				Serial.print(F(","));
 
-				Serial.print(F(" \"roll\" : "));
+				Serial.print(F("\"roll\":"));
 				Serial.print(YPR[2]);
 
-			Serial.print(F(" },"));
+			Serial.print(F("},"));
 
-		Serial.print(F("\" rgb\" : "));
+		Serial.print(F("\"rgb\":"));
 			Serial.print(F("{"));
 
-				Serial.print(F(" \"red\" : "));
+				Serial.print(F("\"red\":"));
 				Serial.print(rgb[0]);
 				Serial.print(F(","));
 
-				Serial.print(F(" \"green\" : "));
+				Serial.print(F("\"green\":"));
 				Serial.print(rgb[1]);
 				Serial.print(F(","));
 
-				Serial.print(F(" \"blue\" : "));
+				Serial.print(F("\"blue\":"));
 				Serial.print(rgb[2]);
 
-			Serial.print(F(" }"));
+			Serial.print(F("}"));
 	Serial.println(F("}"));
 }
