@@ -120,6 +120,7 @@ class MOTI {
 		bool getAwakeState();
 		bool getManipulatedState();
 		bool getRemoteState();
+		bool getLearningState();
 
 		void setMovingState(bool state);
 		void setSleepingState(bool state);
@@ -127,7 +128,7 @@ class MOTI {
 		void setAwakeState(bool state);
 		void setManipulatedState(bool state);
 		void setRemoteState(bool state);
-
+		void setLearningState(bool state);
 
 		//	LED
 		void initializeLed();
@@ -229,6 +230,7 @@ class MOTI {
 		bool _stateAwake;
 		bool _stateManipulated;
 		bool _stateRemote;
+		bool _stateLearning;
 
 
 		//	CONSTANTS
