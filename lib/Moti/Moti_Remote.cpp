@@ -78,6 +78,7 @@ void MOTI::serialRouter(){
 				while(getLearningState() == true){
 					checkSensors();
 					sendDataJson();
+					delay(getLoopDelay());
 					while(Serial.available() > 0){
 						byte recievedByte = Serial.read();
 						if(recievedByte == 77){ ///< corresponds to the letter h in Arduino Serial Monitor
