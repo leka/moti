@@ -20,6 +20,7 @@ void MOTI::initializeStates(){
 	setAwakeState(true);
 	setManipulatedState(false);
 	setRemoteState(false);
+	setLearningState(false);
 }
 
 /**
@@ -77,6 +78,15 @@ bool MOTI::getRemoteState(){
 }
 
 /**
+ * @brief Is Moti sending data for machine learning
+ *
+ * @return true if Moti's is sending data for machine learning to the computer.
+ */
+bool MOTI::getLearningState(){
+	return _stateLearning;
+}
+
+/**
  * @brief Setter method for the moving state
  *
  * @param state can be true or false
@@ -128,4 +138,13 @@ void MOTI::setManipulatedState(bool state){
  */
 void MOTI::setRemoteState(bool state){
 	_stateRemote = state;
+}
+
+/**
+ * @brief Setter method for the learning state
+ *
+ * @param state can be true or false
+ */
+void MOTI::setLearningState(bool state){
+	_stateLearning = state;
 }
