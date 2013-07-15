@@ -1,0 +1,3 @@
+[submodule "arduino-makefile"]
+	path = arduino-makefile
+	url = https://tinyladi@github.com/WeAreLeka/Arduino-Makefile.git
