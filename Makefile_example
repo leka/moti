@@ -2,34 +2,37 @@
 ### This is an example Makefile and it MUST be configured to suit your needs.
 
 ### the boardtag represents the board you're currently using. select the right one (uno, mega2560, etc.)
-BOARD_TAG     = uno
+BOARD_TAG         = uno
 
 ### don't change this, our Serial communication are always using the 115200 baudrate
-MONITOR_BAUDRATE = 115200
+MONITOR_BAUDRATE  = 115200
 
 ### this is the path to the Arduino-Makefile directory.
-ARDMK_DIR     = ~/dev/arduino/arduino-makefile
+ARDMK_DIR         = /Users/Ladislas/dev/leka/moti/arduino-makefile
 
 
 ### path to the Arduino.app directory.
 ### or linux, use something like:
-### ARDUINO_DIR = /usr/share/arduino
-ARDUINO_DIR   = /Applications/Arduino.app/Contents/Resources/Java
+### ARDUINO_DIR   = /usr/share/arduino
+ARDUINO_DIR       = /Applications/Arduino.app/Contents/Resources/Java
 
 ### path to avr-gcc and co.
 ### for linux, just use:
 ### AVR_TOOLS_DIR = /usr
 ### because it adds the rest (like "/bin")
-AVR_TOOLS_DIR = /usr/local
+AVR_TOOLS_DIR     = /usr/local
+
+### your path to avrdude. if you used homebrew, it should be something like that
+AVRDDUDE          = /usr/local/bin/avrdude
 
 ### connect your arduino, open the IDE and look for the port
-ARDUINO_PORT  = /dev/tty.usbmodemfa131
+MONITOR_PORT      = /dev/tty.usbmodemfa131
 
 ### path to where you clone the moti repository
-PROJECT_DIR = /Users/Ladislas/dev/leka/moti
+PROJECT_DIR       = /Users/Ladislas/dev/leka/moti
 
 ### don't touch this
-CURRENT_DIR = $(shell basename $(CURDIR))
+CURRENT_DIR       = $(shell basename $(CURDIR))
 
 ### path to Arduino.mk, inside the ARDMK_DIR, don't touch.
 include $(ARDMK_DIR)/arduino-mk/Arduino.mk
