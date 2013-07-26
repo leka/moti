@@ -70,14 +70,14 @@ void MOTI::serialRouter(){
 			else if(recievedByte == 100){ ///< corresponds to the letter d in Arduino Serial Monitor
 				Serial.println(F("Sending data as JSON"));
 				checkSensors();
-				sendDataJson();
+				sendJson();
 			}
 			else if(recievedByte == 109){ ///< corresponds to the letter m in Arduino Serial Monitor
 				Serial.println(F("Entering Machine Learning state"));
 				setLearningState(true);
 				while(getLearningState() == true){
 					checkSensors();
-					sendDataJson();
+					sendJson();
 					delay(getLoopDelay());
 					while(Serial.available() > 0){
 						byte recievedByte = Serial.read();
