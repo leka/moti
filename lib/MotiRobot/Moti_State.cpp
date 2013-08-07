@@ -23,14 +23,7 @@ void MOTI::initializeStates(){
 	setLearningState(false);
 }
 
-/**
- * @brief Is Moti moving method
- *
- * @return true if motors are ON, false if motors are OFF.
- */
-bool MOTI::getMovingState(){
-	return _stateMoving;
-}
+
 
 /**
  * @brief Is Moti sleeping method
@@ -86,14 +79,7 @@ bool MOTI::getLearningState(){
 	return _stateLearning;
 }
 
-/**
- * @brief Setter method for the moving state
- *
- * @param state can be true or false
- */
-void MOTI::setMovingState(bool state){
-	_stateMoving = state;
-}
+
 
 /**
  * @brief Setter method for the sleeping state

@@ -1,13 +1,11 @@
 #include "Arduino.h"
-#include "MotiLED.h"
+#include "MotiLed.h"
 
 /**
- * @file MotiLED.cpp
+ * @file MotiLed.cpp
  * @author Ladislas de Toldi
  * @version 1.0
  */
-
-
 
 
 // CONSTRUCTORS //
@@ -16,152 +14,41 @@
 
 
 /**
- * @brief MotiLED Class Constructor
+ * @brief MotiLed Class Constructor
  *
  * @param redPin Red pin
  * @param greenPin Green pin
  * @param bluePin Blue pin
  */
-MotiLED::MotiLED(uint8_t redPin, uint8_t greenPin, uint8_t bluePin){
+MotiLed::MotiLed(uint8_t redPin, uint8_t greenPin, uint8_t bluePin){
 	this -> redPin   = redPin;
 	this -> greenPin = greenPin;
 	this -> bluePin  = bluePin;
-}
 
-/**
- * @brief MotiLED Class Constructor
- */
-MotiLED::MotiLED(){
-	this -> redPin   = DEFAULT_RED_PIN;
-	this -> greenPin = DEFAULT_GREEN_PIN;
-	this -> bluePin  = DEFAULT_BLUE_PIN;
-}
+	rgb[0] = 0;
+	rgb[1] = 0;
+	rgb[2] = 0;
 
-/**
- * @brief Method used to initialize the rgb[] and rgbBuffer[] to zero
- */
-void MotiLED::initializeLed(){
-	rgb[0]       = 0;
-	rgb[1]       = 0;
-	rgb[2]       = 0;
 	rgbBuffer[0] = 0;
 	rgbBuffer[1] = 0;
 	rgbBuffer[2] = 0;
 }
 
-
-
-
-// CONSTANTS //
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
 /**
- * @brief Setter method for _ledMaxBrightness
- *
- * Once set, the _sleepDelay can be accessed by calling getLedMaxBrightness()
- * @param value the value you want to assign to _ledMaxBrightness.
+ * @brief MotiLed Class Constructor
  */
-void MotiLED::setLedMaxBrightness(int value){
-	_ledMaxBrightness = value;
-}
+MotiLed::MotiLed(){
+	this -> redPin   = DEFAULT_RED_PIN;
+	this -> greenPin = DEFAULT_GREEN_PIN;
+	this -> bluePin  = DEFAULT_BLUE_PIN;
 
-/**
- * @brief Setter method for _redMaxBrightness
- *
- * Once set, the _sleepDelay can be accessed by calling getRedMaxBrightness()
- * @param value the value you want to assign to _redMaxBrightness.
- */
-void MotiLED::setRedMaxBrightness(int value){
-	_redMaxBrightness = value;
-}
-
-/**
- * @brief Setter method for _greenMaxBrightness
- *
- * Once set, the _sleepDelay can be accessed by calling getGreenMaxBrightness()
- * @param value the value you want to assign to _greenMaxBrightness.
- */
-void MotiLED::setGreenMaxBrightness(int value){
-	_greenMaxBrightness = value;
-}
-
-/**
- * @brief Setter method for _blueMaxBrightness
- *
- * Once set, the _sleepDelay can be accessed by calling getBlueMaxBrightness()
- * @param value the value you want to assign to _blueMaxBrightness.
- */
-void MotiLED::setBlueMaxBrightness(int value){
-	_blueMaxBrightness = value;
-}
-
-/**
- * @brief Getter method for _ledMaxBrightness
- *
- * It is used to get the maximum brightness of the led.
- * @return the value of _ledMaxBrightness
- */
-int MotiLED::getLedMaxBrightness(){
-	return _ledMaxBrightness;
-}
-
-/**
- * @brief Getter method for _redMaxBrightness
- *
- * It is used to get the maximum brightness of the red led.
- * @return the value of _redMaxBrightness
- */
-int MotiLED::getRedMaxBrightness(){
-	return _redMaxBrightness;
-}
-
-/**
- * @brief Getter method for _greenMaxBrightness
- *
- * It is used to get the maximum brightness of the green led.
- * @return the value of _greenMaxBrightness
- */
-int MotiLED::getGreenMaxBrightness(){
-	return _greenMaxBrightness;
-}
-
-/**
- * @brief Getter method for _blueMaxBrightness
- *
- * It is used to get the maximum brightness of the blue led.
- * @return the value of _blueMaxBrightness
- */
-int MotiLED::getBlueMaxBrightness(){
-	return _blueMaxBrightness;
-}
-
-/**
- * @brief Reset method for _ledMaxBrightness to initial value
- */
-void MotiLED::resetLedMaxBrightness(){
-	_ledMaxBrightness = DEFAULT_LED_MAX_BRIGHTNESS;
-}
-
-/**
- * @brief Reset method for _redMaxBrightness to initial value
- */
-void MotiLED::resetRedMaxBrightness(){
-	_redMaxBrightness = DEFAULT_RED_MAX_BRIGHTNESS;
-}
-
-/**
- * @brief Reset method for _greenMaxBrightness to initial value
- */
-void MotiLED::resetGreenMaxBrightness(){
-	_greenMaxBrightness = DEFAULT_GREEN_MAX_BRIGHTNESS;
-}
-
-/**
- * @brief Reset method for _blueMaxBrightness to initial value
- */
-void MotiLED::resetBlueMaxBrightness(){
-	_blueMaxBrightness = DEFAULT_BLUE_MAX_BRIGHTNESS;
+	rgb[0] = 0;
+	rgb[1] = 0;
+	rgb[2] = 0;
+	
+	rgbBuffer[0] = 0;
+	rgbBuffer[1] = 0;
+	rgbBuffer[2] = 0;
 }
 
 
@@ -176,33 +63,9 @@ void MotiLED::resetBlueMaxBrightness(){
  * @param index 0, 1 or 2 for red, green or blue.
  * @param value value for the corresponding led. It must be between 0-255
  */
-void MotiLED::setRgbValue(int8_t index, int value){
+void MotiLed::setRgb(int8_t index, int value){
 	index = constrain(index, 0, 2);
 	rgb[index] = constrain(value, 0, getLedMaxBrightness());
-}
-
-/**
- * @brief Method used to set the red led value
- * @param value value for the red led. It must be between 0-255
- */
-void MotiLED::setRed(int value){
-	rgb[0] = constrain(value, 0, getLedMaxBrightness());
-}
-
-/**
- * @brief Method used to set the green led value
- * @param value value for the green led. It must be between 0-255
- */
-void MotiLED::setGreen(int value){
-	rgb[1] = constrain(value, 0, getLedMaxBrightness());
-}
-
-/**
- * @brief Method used to set the blue led value
- * @param value value for the blue led. It must be between 0-255
- */
-void MotiLED::setBlue(int value){
-	rgb[2] = constrain(value, 0, getLedMaxBrightness());
 }
 
 /**
@@ -211,10 +74,34 @@ void MotiLED::setBlue(int value){
  * @param greenValue the green led value, must be between 0-255
  * @param blueValue  the blue led value, must be between 0-255
  */
-void MotiLED::setRgbValue(int redValue, int greenValue, int blueValue){
+void MotiLed::setRgb(int redValue, int greenValue, int blueValue){
 	rgb[0] = constrain(redValue, 0, getLedMaxBrightness());
 	rgb[1] = constrain(greenValue, 0, getLedMaxBrightness());
 	rgb[2] = constrain(blueValue, 0, getLedMaxBrightness());
+}
+
+/**
+ * @brief Method used to set the red led value
+ * @param value value for the red led. It must be between 0-255
+ */
+void MotiLed::setRed(int value){
+	rgb[0] = constrain(value, 0, getLedMaxBrightness());
+}
+
+/**
+ * @brief Method used to set the green led value
+ * @param value value for the green led. It must be between 0-255
+ */
+void MotiLed::setGreen(int value){
+	rgb[1] = constrain(value, 0, getLedMaxBrightness());
+}
+
+/**
+ * @brief Method used to set the blue led value
+ * @param value value for the blue led. It must be between 0-255
+ */
+void MotiLed::setBlue(int value){
+	rgb[2] = constrain(value, 0, getLedMaxBrightness());
 }
 
 /**
@@ -222,7 +109,7 @@ void MotiLED::setRgbValue(int redValue, int greenValue, int blueValue){
  * @param  index 0, 1 or 2 for red, green or blue.
  * @return       returns the corresponding value, an uint8_t between 0-255
  */
-uint8_t MotiLED::getRgbValue(uint8_t index){
+uint8_t MotiLed::getRgb(uint8_t index){
 	return rgb[index];
 }
 
@@ -230,7 +117,7 @@ uint8_t MotiLED::getRgbValue(uint8_t index){
  * @brief Getter method for the red value
  * @return returns the red value, an uint8_t between 0-255
  */
-uint8_t MotiLED::getRed(){
+uint8_t MotiLed::getRed(){
 	return rgb[0];
 }
 
@@ -238,7 +125,7 @@ uint8_t MotiLED::getRed(){
  * @brief Getter method for the red value
  * @return returns the red value, an uint8_t between 0-255
  */
-uint8_t MotiLED::getGreen(){
+uint8_t MotiLed::getGreen(){
 	return rgb[1];
 }
 
@@ -246,22 +133,22 @@ uint8_t MotiLED::getGreen(){
  * @brief Getter method for the blue value
  * @return returns the blue value, an uint8_t between 0-255
  */
-uint8_t MotiLED::getBlue(){
+uint8_t MotiLed::getBlue(){
 	return rgb[2];
 }
 
 /**
  * @brief Outputs the rgb[] values with the RGB Led
  */
-void MotiLED::printRgbColor(){
+void MotiLed::printRgb(){
 	analogWrite(redPin, rgb[0]);
 	analogWrite(greenPin, rgb[1]);
 	analogWrite(bluePin, rgb[2]);
 }
 
-void MotiLED::printRgbColor(ColorName color){
+void MotiLed::printRgb(ColorName color){
 	colorSwitcher(color);
-	printRgbColor();
+	printRgb();
 }
 
 /**
@@ -271,12 +158,12 @@ void MotiLED::printRgbColor(ColorName color){
  * @param greenValue green value to output
  * @param blueValue blue value to output
  */
-void MotiLED::printRgbColor(int redValue, int greenValue, int blueValue){
+void MotiLed::printRgb(int redValue, int greenValue, int blueValue){
 	rgb[0] = constrain(redValue, 0, getLedMaxBrightness());
 	rgb[1] = constrain(greenValue, 0, getLedMaxBrightness());
 	rgb[2] = constrain(blueValue, 0, getLedMaxBrightness());
 
-	printRgbColor();
+	printRgb();
 }
 
 /**
@@ -287,12 +174,12 @@ void MotiLED::printRgbColor(int redValue, int greenValue, int blueValue){
  * @param numberOfBlinks number of blinks
  * @param timeBtwBlink delay between each blinks - a good value is 50
  */
-void MotiLED::blinkLed(ColorName color, int numberOfBlinks, int timeBtwBlink){
+void MotiLed::blinkLed(ColorName color, int numberOfBlinks, int timeBtwBlink){
 	for(int i = 0 ; i < numberOfBlinks ; i++) {
 		colorSwitcher(color);
-		printRgbColor();
+		printRgb();
 		delay(timeBtwBlink);
-		printRgbColor(0, 0, 0);
+		printRgb(0, 0, 0);
 		delay(timeBtwBlink);
 	}
 }
@@ -307,11 +194,11 @@ void MotiLED::blinkLed(ColorName color, int numberOfBlinks, int timeBtwBlink){
  * @param numberOfBlinks number of blinks
  * @param timeBtwBlink delay between each blinks - a good value is 50
  */
-void MotiLED::blinkLed(int red, int green, int blue, int numberOfBlinks, int timeBtwBlink){
+void MotiLed::blinkLed(int red, int green, int blue, int numberOfBlinks, int timeBtwBlink){
 	for(int i = 0 ; i < numberOfBlinks ; i++) {
-		printRgbColor(red, green, blue);
+		printRgb(red, green, blue);
 		delay(timeBtwBlink);
-		printRgbColor(0, 0, 0);
+		printRgb(0, 0, 0);
 		delay(timeBtwBlink);
 	}
 }
@@ -321,12 +208,12 @@ void MotiLED::blinkLed(int red, int green, int blue, int numberOfBlinks, int tim
  *
  * @param color the name of the color from enum ColorName{}
  */
-void MotiLED::fadeLedTo(ColorName color){
+void MotiLed::fadeLedTo(ColorName color){
 	int fadeRed = 0;
 	int fadeGreen = 0;
 	int fadeBlue = 0;
 
-	initializeLed();
+	setRgb(0, 0, 0);
 
 	colorSwitcher(color);
 
@@ -341,22 +228,22 @@ void MotiLED::fadeLedTo(ColorName color){
 		if (fadeBlue < rgb[2]){
 			fadeBlue+=3;
 		}
-		printRgbColor(fadeRed, fadeGreen, fadeBlue);
+		printRgb(fadeRed, fadeGreen, fadeBlue);
 	}
 }
 
 /**
  * @brief Turns led ON - white color.
  */
-void MotiLED::turnLedOn(){
-	printRgbColor(255, 255, 255);
+void MotiLed::turnLedOn(){
+	printRgb(255, 255, 255);
 }
 
 /**
  * @brief Turns led OFF.
  */
-void MotiLED::turnLedOff(){
-	printRgbColor(0, 0, 0);
+void MotiLed::turnLedOff(){
+	printRgb(0, 0, 0);
 }
 
 /**
@@ -365,7 +252,7 @@ void MotiLED::turnLedOff(){
  *
  * @param color the name of the color from enum ColorName{}
  */
-void MotiLED::colorSwitcher(ColorName color){
+void MotiLed::colorSwitcher(ColorName color){
 	switch(color){
 		case DARK_RED:
 			rgb[0] = 186;
@@ -464,4 +351,119 @@ void MotiLED::colorSwitcher(ColorName color){
 			break;
 	}
 
+}
+
+
+
+
+// CONSTANTS //
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Setter method for _ledMaxBrightness
+ *
+ * Once set, the _sleepDelay can be accessed by calling getLedMaxBrightness()
+ * @param value the value you want to assign to _ledMaxBrightness.
+ */
+void MotiLed::setLedMaxBrightness(int value){
+	_ledMaxBrightness = value;
+}
+
+/**
+ * @brief Setter method for _redMaxBrightness
+ *
+ * Once set, the _sleepDelay can be accessed by calling getRedMaxBrightness()
+ * @param value the value you want to assign to _redMaxBrightness.
+ */
+void MotiLed::setRedMaxBrightness(int value){
+	_redMaxBrightness = value;
+}
+
+/**
+ * @brief Setter method for _greenMaxBrightness
+ *
+ * Once set, the _sleepDelay can be accessed by calling getGreenMaxBrightness()
+ * @param value the value you want to assign to _greenMaxBrightness.
+ */
+void MotiLed::setGreenMaxBrightness(int value){
+	_greenMaxBrightness = value;
+}
+
+/**
+ * @brief Setter method for _blueMaxBrightness
+ *
+ * Once set, the _sleepDelay can be accessed by calling getBlueMaxBrightness()
+ * @param value the value you want to assign to _blueMaxBrightness.
+ */
+void MotiLed::setBlueMaxBrightness(int value){
+	_blueMaxBrightness = value;
+}
+
+/**
+ * @brief Getter method for _ledMaxBrightness
+ *
+ * It is used to get the maximum brightness of the led.
+ * @return the value of _ledMaxBrightness
+ */
+int MotiLed::getLedMaxBrightness(){
+	return _ledMaxBrightness;
+}
+
+/**
+ * @brief Getter method for _redMaxBrightness
+ *
+ * It is used to get the maximum brightness of the red led.
+ * @return the value of _redMaxBrightness
+ */
+int MotiLed::getRedMaxBrightness(){
+	return _redMaxBrightness;
+}
+
+/**
+ * @brief Getter method for _greenMaxBrightness
+ *
+ * It is used to get the maximum brightness of the green led.
+ * @return the value of _greenMaxBrightness
+ */
+int MotiLed::getGreenMaxBrightness(){
+	return _greenMaxBrightness;
+}
+
+/**
+ * @brief Getter method for _blueMaxBrightness
+ *
+ * It is used to get the maximum brightness of the blue led.
+ * @return the value of _blueMaxBrightness
+ */
+int MotiLed::getBlueMaxBrightness(){
+	return _blueMaxBrightness;
+}
+
+/**
+ * @brief Reset method for _ledMaxBrightness to initial value
+ */
+void MotiLed::resetLedMaxBrightness(){
+	_ledMaxBrightness = DEFAULT_LED_MAX_BRIGHTNESS;
+}
+
+/**
+ * @brief Reset method for _redMaxBrightness to initial value
+ */
+void MotiLed::resetRedMaxBrightness(){
+	_redMaxBrightness = DEFAULT_RED_MAX_BRIGHTNESS;
+}
+
+/**
+ * @brief Reset method for _greenMaxBrightness to initial value
+ */
+void MotiLed::resetGreenMaxBrightness(){
+	_greenMaxBrightness = DEFAULT_GREEN_MAX_BRIGHTNESS;
+}
+
+/**
+ * @brief Reset method for _blueMaxBrightness to initial value
+ */
+void MotiLed::resetBlueMaxBrightness(){
+	_blueMaxBrightness = DEFAULT_BLUE_MAX_BRIGHTNESS;
 }

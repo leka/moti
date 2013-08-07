@@ -79,25 +79,7 @@ void MOTI::setHighActivityThreshold(int value){
 
 
 
-/**
- * @brief Setter method for _motorMinSpeed
- *
- * Once set, the _sleepDelay can be accessed by calling getMotorMinSpeed()
- * @param value the value you want to assign to _motorMinSpeed.
- */
-void MOTI::setMotorMinSpeed(int value){
-	_motorMinSpeed = value;
-}
 
-/**
- * @brief Setter method for _motorMaxSpeed
- *
- * Once set, the _sleepDelay can be accessed by calling getMotorMaxSpeed()
- * @param value the value you want to assign to _motorMaxSpeed.
- */
-void MOTI::setMotorMaxSpeed(int value){
-	_motorMaxSpeed = value;
-}
 
 
 //###############//
@@ -156,25 +138,7 @@ int MOTI::getHighActivityThreshold(){
 
 
 
-/**
- * @brief Getter method for _motorMinSpeed
- *
- * It is used to get the minimum speed needed to get the wheels spinning.
- * @return the value of _motorMinSpeed
- */
-int MOTI::getMotorMinSpeed(){
-	return _motorMinSpeed;
-}
 
-/**
- * @brief Getter method for _motorMaxSpeed
- *
- * It is used to get the maximum speed at which the wheels should be spinning.
- * @return the value of _motorMaxSpeed
- */
-int MOTI::getMotorMaxSpeed(){
-	return _motorMaxSpeed;
-}
 
 
 //#################//
@@ -218,17 +182,5 @@ void MOTI::resetHighActivityThreshold(){
 
 
 
-/**
- * @brief Reset method for _motorMinSpeed to initial value
- */
-void MOTI::resetMotorMinSpeed(){
-	_motorMinSpeed = DEFAULT_MIN_MOTOR_SPEED;
-}
 
-/**
- * @brief Reset method for _motorMaxSpeed to initial value
- */
-void MOTI::resetMotorMaxSpeed(){
-	_motorMaxSpeed = DEFAULT_MAX_MOTOR_SPEED;
-}
 

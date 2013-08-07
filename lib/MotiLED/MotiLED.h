@@ -2,7 +2,7 @@
 #define LEKA_ARDUINO_ROBOT_MOTI_LED_H_
 
 /**
- * @file MotiLED.h
+ * @file MotiLed.h
  * @author Ladislas de Toldi
  * @version 1.0
  */
@@ -15,16 +15,16 @@ enum ColorName {
 
 
 /**
- * @class MotiLED
- * @brief MotiLED class gathers all the LED functions for Moti.
+ * @class MotiLed
+ * @brief MotiLed class gathers all the LED functions for Moti.
  */
-class MotiLED {
+class MotiLed {
 
 	public:
 
-		MotiLED(uint8_t redPin, uint8_t greenPin, uint8_t bluePin);
+		MotiLed(uint8_t redPin, uint8_t greenPin, uint8_t bluePin);
 
-		MotiLED();
+		MotiLed();
 
 		//	SET CONSTANTS
 		void setLedMaxBrightness(int value);
@@ -48,24 +48,22 @@ class MotiLED {
 
 
 		//	LED
-		void initializeLed();
-
 		void colorSwitcher(ColorName color);
 
-		void setRgbValue(int8_t index, int value);
+		void setRgb(int8_t index, int value);
+		void setRgb(int redValue, int greenValue, int blueValue); 
 		void setRed(int value);
 		void setGreen(int value);
 		void setBlue(int value);
-		void setRgbValue(int redValue, int greenValue, int blueValue);
 
-		uint8_t getRgbValue(uint8_t index);
+		uint8_t getRgb(uint8_t index);
 		uint8_t getRed();
 		uint8_t getGreen();
 		uint8_t getBlue();
 
-		void printRgbColor();
-		void printRgbColor(ColorName color);
-		void printRgbColor(int red, int green, int blue);
+		void printRgb();
+		void printRgb(ColorName color);
+		void printRgb(int red, int green, int blue);
 
 		void blinkLed(ColorName color, int numberOfBlinks, int timeBtwBlink);
 		void blinkLed(int red, int green, int blue, int numberOfBlinks, int timeBtwBlink);
