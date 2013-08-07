@@ -48,14 +48,20 @@ void loop() {
 	 * Then, if there is no serial command to execute, the robot goes on and lives a happy life.
 	 */
 	Moti.goForward();
-	delay(5000);
+	delay(7000);
 	Moti.spinRight();
-	delay(3000);
+	delay(600);
 	Moti.goForward();
 	delay(5000);
 	Moti.spinLeft();
-	delay(3000);
-	Serial.println("Just chillin'...");
+	delay(1200);
+	Moti.goRight();
+	delay(7000);
+	Moti.stop();
+	delay(2000);
+
+	Moti.checkSensors();
+	Moti.sendDataJson();
 
 	delay(Moti.getLoopDelay());
 }
