@@ -6,7 +6,7 @@
 //###########################//
 
 /**
- * @brief Send sensors data formated for machine learning
+ * @brief DEPRECATED - Send sensors data formated for machine learning
  *
  * sendDataLearning() is used to stream data separated with a "space" so that they can be saved and imported directly in Excel as .csv for analysis.
  */
@@ -89,57 +89,26 @@ void MOTI::sendDataBinaries(){
 /**
  * @brief Send data formated as a JSON string
  *
- * sendDataJson() is used to interface the robot with other high level languages such as Processing or Javascript.
+ * sendJson() is used to interface the robot with other high level languages such as Processing or Javascript.
  * It can also be useful as a debug print out to check the consistency of the sensors.
  */
-void MOTI::sendDataJson(){
-	Serial.print(F("{"));
-		Serial.print(F("\"accel\":"));
-			Serial.print(F("{"));
+void MOTI::sendJson(){
 
-				Serial.print(F("\"x\":"));
-				Serial.print(XYZ[0]);
-				Serial.print(F(","));
+	String json;
 
-				Serial.print(F("\"y\":"));
-				Serial.print(XYZ[1]);
-				Serial.print(F(","));
+	json = "{\"accel\":{\"x\":";
+	json = json + XYZ[0];
+	json = json + ",\"y\":";
+	json = json + XYZ[1];
+	json = json + ",\"z\":";
+	json = json + XYZ[2];
+	json = json + "},\"gyro\":{\"yaw\":";
+	json = json + YPR[0];
+	json = json + ",\"pitch\":";
+	json = json + YPR[1];
+	json = json + ",\"roll\":";
+	json = json + YPR[2];
+	json = json + "}}";
 
-				Serial.print(F("\"z\":"));
-				Serial.print(XYZ[2]);
-
-			Serial.print(F("},"));
-
-		Serial.print(F("\"gyro\":"));
-			Serial.print(F("{"));
-
-				Serial.print(F("\"yaw\":"));
-				Serial.print(YPR[0]);
-				Serial.print(F(","));
-
-				Serial.print(F("\"pitch\":"));
-				Serial.print(YPR[1]);
-				Serial.print(F(","));
-
-				Serial.print(F("\"roll\":"));
-				Serial.print(YPR[2]);
-
-			Serial.print(F("},"));
-
-		Serial.print(F("\"rgb\":"));
-			Serial.print(F("{"));
-
-				Serial.print(F("\"red\":"));
-				Serial.print(rgb[0]);
-				Serial.print(F(","));
-
-				Serial.print(F("\"green\":"));
-				Serial.print(rgb[1]);
-				Serial.print(F(","));
-
-				Serial.print(F("\"blue\":"));
-				Serial.print(rgb[2]);
-
-			Serial.print(F("}"));
-	Serial.println(F("}"));
+	Serial.print(json);
 }

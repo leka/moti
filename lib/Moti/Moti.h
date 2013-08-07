@@ -99,7 +99,7 @@ class MOTI {
 
 
 		//	DATA TRANSFER TO COMPUTER
-		void sendDataJson();
+		void sendJson();
 		void sendDataLearning();
 		void sendDataBinaries();
 		void sendBinaryByte(uint8_t value);
