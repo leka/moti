@@ -1,8 +1,8 @@
 #include "Arduino.h"
-#include "MotiMotors.h"
+#include "MotiSensors.h"
 
 /**
- * @file MotiMotors.cpp
+ * @file MotiSensors.cpp
  * @author Ladislas de Toldi
  * @version 1.0
  */
@@ -13,273 +13,109 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 /**
- * @brief MotiMotors Class Constructor
+ * @brief MotiSensors Class Constructor
  */
-MotiMotors::MotiMotors(){
-	pinMode(DEFAULT_LEFT_MOTOR_SPEED_PIN     , OUTPUT);
-	pinMode(DEFAULT_LEFT_MOTOR_DIRECTION_PIN , OUTPUT);
-
-	pinMode(DEFAULT_RIGHT_MOTOR_SPEED_PIN    , OUTPUT);
-	pinMode(DEFAULT_RIGHT_MOTOR_DIRECTION_PIN, OUTPUT);
-
-	stop();
+MotiSensors::MotiSensors(){
+	for(int i = 0 ; i < 3 ; i++){
+		XYZ[i] = 0;
+		lastXYZ[i] = 0;
+		deltaXYZ[i] = 0;
+		YPR[i] = 0;
+		lastYPR[i] = 0;
+		deltaYPR[i] = 0;
+	}
 }
 
 
-// MOVING STATE //
+// GENERAL FUNCTIONS //
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
 /**
- * @brief Is Moti moving method
+ * @brief Checking accelerometer and gyroscope
  *
- * @return true if motors are ON, false if motors are OFF.
+ * checkSensors() is used to check the accelerometer and the gyroscope. It calls two other functions: checkAccelerometer() and checkGyroscope().
+ * Values can be accessed with getXYZ(uint8_t i) and getYPR(uint8_t i)
  */
-bool MotiMotors::getMovingState(){
-	return _stateMoving;
+void MotiSensors::checkSensors(){
+	checkAccelerometer();
+	checkGyroscope();
 }
 
 /**
- * @brief Setter method for the moving state
+ * @brief Checking accelerometer
  *
- * @param state can be true or false
+ * checkAccelerometer() is used to check the accelerometer. It calls FreeSixIMU#getRawValues().
+ * Values can be accessed with getXYZ(uint8_t index).
  */
-void MotiMotors::setMovingState(bool state){
-	_stateMoving = state;
+void MotiSensors::checkAccelerometer(){
+	AccelGyro.getRawValues(XYZ);
 }
 
-
-// GENERAL METHODS //
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
 /**
- * @ brief Method used to spin the right wheel of the robot.
+ * @brief Checking gyroscope
  *
- * @param speed the speed of the wheel, between 0-255
- * @param direction the direction of the wheel, 1 for to go forward,  0 to go backwar
+ * checkGyroscope() is used to check the gyroscope. It calls FreeSixIMU#getYawPitchRoll().
+ * Values can be accessed with getYPR(uint8_t index).
  */
-void MotiMotors::spinRightWheel(uint8_t speed, bool direction){
-	analogWrite(rightMotorSpeedPin, speed);
-	digitalWrite(rightMotorDirectionPin, direction);
+void MotiSensors::checkGyroscope(){
+	float tmpYPR[3];
+	AccelGyro.getYawPitchRoll(tmpYPR);
+	YPR[0] = (int) tmpYPR[0];
+	YPR[1] = (int) tmpYPR[1];
+	YPR[2] = (int) tmpYPR[2];
 }
 
 /**
- * @ brief Method used to spin the left wheel of the robot.
+ * @brief Accessing X, Y, Z acceleration
  *
- * @param speed the speed of the wheel, between 0-255
- * @param direction the direction of the wheel, 1 for to go forward,  0 to go backwar
+ * getXYZ() is used to access the acceleration values of X, Y and Z.
+ * @param index index of the value you want to access: 0 -> X || 1 -> Y || 2 -> Z
+ * @return acceleration for X, Y or Z
  */
-void MotiMotors::spinLeftWheel(uint8_t speed, bool direction){
-	analogWrite(leftMotorSpeedPin, speed);
-	digitalWrite(leftMotorDirectionPin, direction);
+int MotiSensors::getXYZ(uint8_t index){
+	return XYZ[index];
 }
 
 /**
- * @brief Method used to go forward at full speed.
- */
-void MotiMotors::goForward(){
-	spinLeftWheel(255, 1);
-	spinRightWheel(255, 1);
-
-	setMovingState(true);
-}
-
-/**
- * @brief Method used to go forward
+ * @brief Accessing Yaw, Pitch, Roll angles
  *
- * @param speed the speed wanted, should be between 0-255
+ * getXYZ() is used to access the angle values of Yaw, Pitch and Roll
+ * @param index index of the value you want to access: 0 -> Y || 1 -> P || 2 -> R
+ * @return angle of Y, P, R
  */
-void MotiMotors::goForward(int speed){
-	int _speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
-	spinLeftWheel(_speed, 1);
-	spinRightWheel(_speed, 1);
-
-	setMovingState(true);
+int MotiSensors::getYPR(uint8_t index){
+	return YPR[index];
 }
 
 /**
- * @brief Method used to go backward at full speed.
- */
-void MotiMotors::goBackward(){
-	spinLeftWheel(255, 0);
-	spinRightWheel(255, 0);
-
-	setMovingState(true);
-}
-
-/**
- * @brief Method used to go backward
+ * @brief Calculate the delta between the present and the past values
  *
- * @param speed the speed wanted, should be between 0-255
+ * computeSensorValues() is used compute the delta between the present and the past values of the acceleration and yaw/pitch/roll.
+ * Then, it can be accessed with getDeltaXYZ() or getDeltaYPR().
  */
-void MotiMotors::goBackward(int speed){
-	int _speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
-	spinLeftWheel(_speed, 0);
-	spinRightWheel(_speed, 0);
+void MotiSensors::computeDelta(){
+	deltaXYZ[0] = XYZ[0] - lastXYZ[0];
+	deltaXYZ[1] = XYZ[1] - lastXYZ[1];
+	deltaXYZ[2] = XYZ[2] - lastXYZ[2];
 
-	setMovingState(true);
+	deltaYPR[0] = YPR[0] - lastYPR[0];
+	deltaYPR[1] = YPR[1] - lastYPR[1];
+	deltaYPR[2] = YPR[2] - lastYPR[2];
 }
 
 /**
- * @brief Method used to go left at full speed.
- */
-void MotiMotors::goLeft(){
-	spinLeftWheel(175, 0);
-	spinRightWheel(255, 0);
-
-	setMovingState(true);
-}
-
-/**
- * @brief Method used to go left
+ * @brief Update last sensor values with present values
  *
- * @param speed the speed wanted, should be between 0-255
+ * updateLastSensorValues() saves the last sensors values for computeSensorValues().
+ * The values can be accessed using getLastXYZ() and getLastYPR().
  */
-void MotiMotors::goLeft(int speed){
-	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
-	spinLeftWheel((uint8_t) speed * turnCoefficientTime / turnCoefficientDiv, 0);
-	spinRightWheel(speed, 0);
+void MotiSensors::updateLastValues(){
+	lastXYZ[0] = XYZ[0];
+	lastXYZ[1] = XYZ[1];
+	lastXYZ[2] = XYZ[2];
 
-	setMovingState(true);
-}
-
-/**
- * @brief Method used to go right at full speed.
- */
-void MotiMotors::goRight(){
-	spinLeftWheel(255, 0);
-	spinRightWheel(175, 0);
-
-	setMovingState(true);
-}
-
-/**
- * @brief Method used to go right
- *
- * @param speed the speed wanted, should be between 0-255
- */
-void MotiMotors::goRight(int speed){
-	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
-	spinLeftWheel(speed, 0);
-	spinRightWheel((uint8_t) speed * turnCoefficientTime / turnCoefficientDiv, 0);
-
-	setMovingState(true);
-}
-
-/**
- * @brief Method used to spin left at full speed.
- */
-void MotiMotors::spinLeft(){
-	spinLeftWheel(255, 0);
-	spinRightWheel(255, 1);
-
-	setMovingState(true);
-}
-
-/**
- * @brief Method used to spin left
- *
- * @param speed the speed wanted, should be between 0-255
- */
-void MotiMotors::spinLeft(int speed){
-	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
-	spinLeftWheel(speed, 0);
-	spinRightWheel(speed, 1);
-
-	setMovingState(true);
-}
-
-/**
- * @brief Method used to spin right at full speed.
- */
-void MotiMotors::spinRight(){
-	spinLeftWheel(255, 1);
-	spinRightWheel(255, 0);
-
-	setMovingState(true);
-}
-
-/**
- * @brief Method used to spin right
- *
- * @param speed the speed wanted, should be between 0-255
- */
-void MotiMotors::spinRight(int speed){
-	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
-	spinLeftWheel(speed, 1);
-	spinRightWheel(speed, 0);
-
-	setMovingState(true);
-}
-
-/**
- * @brief Method used to stop all motors.
- */
-void MotiMotors::stop(){
-	digitalWrite(leftMotorDirectionPin, 0);
-	digitalWrite(leftMotorSpeedPin, 0);
-	digitalWrite(rightMotorDirectionPin, 0);
-	digitalWrite(rightMotorSpeedPin, 0);
-
-	setMovingState(false);
-}
-
-
-// CONSTANTS //
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-/**
- * @brief Setter method for _motorMinSpeed
- *
- * Once set, the _sleepDelay can be accessed by calling getMotorMinSpeed()
- * @param value the value you want to assign to _motorMinSpeed.
- */
-void MotiMotors::setMotorMinSpeed(int value){
-	_motorMinSpeed = value;
-}
-
-/**
- * @brief Setter method for _motorMaxSpeed
- *
- * Once set, the _sleepDelay can be accessed by calling getMotorMaxSpeed()
- * @param value the value you want to assign to _motorMaxSpeed.
- */
-void MotiMotors::setMotorMaxSpeed(int value){
-	_motorMaxSpeed = value;
-}
-
-/**
- * @brief Getter method for _motorMinSpeed
- *
- * It is used to get the minimum speed needed to get the wheels spinning.
- * @return the value of _motorMinSpeed
- */
-int MotiMotors::getMotorMinSpeed(){
-	return _motorMinSpeed;
-}
-
-/**
- * @brief Getter method for _motorMaxSpeed
- *
- * It is used to get the maximum speed at which the wheels should be spinning.
- * @return the value of _motorMaxSpeed
- */
-int MotiMotors::getMotorMaxSpeed(){
-	return _motorMaxSpeed;
-}
-
-/**
- * @brief Reset method for _motorMinSpeed to initial value
- */
-void MotiMotors::resetMotorMinSpeed(){
-	_motorMinSpeed = DEFAULT_MIN_MOTOR_SPEED;
-}
-
-/**
- * @brief Reset method for _motorMaxSpeed to initial value
- */
-void MotiMotors::resetMotorMaxSpeed(){
-	_motorMaxSpeed = DEFAULT_MAX_MOTOR_SPEED;
+	lastYPR[0] = YPR[0];
+	lastYPR[1] = YPR[1];
+	lastYPR[2] = YPR[2];
 }

@@ -1,5 +1,5 @@
-#ifndef LEKA_ARDUINO_ROBOT_MOTI_Motors_H_
-#define LEKA_ARDUINO_ROBOT_MOTI_Motors_H_
+#ifndef LEKA_ARDUINO_ROBOT_MOTI_MOTORS_H_
+#define LEKA_ARDUINO_ROBOT_MOTI_MOTORS_H_
 
 /**
  * @file MotiMotors.h
