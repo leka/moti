@@ -29,10 +29,28 @@ MOTI Moti = MOTI();
 // SETUP //
 //#######//
 
+float Map [];
+int theta0;
 
-void ultrasonDetection () {}
+void ultrasonDetection () {   //@ Depends of the sensor that has been choosed. 
 
-void ultrasonMap () {}
+pulseIn ();
+
+DigitalRead ();	
+
+}
+
+
+void ultrasonMap (int n) {  //@ Mapping of the distances in 360 degrees
+
+	theta0 = Moti.getGyro(P); //@ Get starting angle 
+	
+	for (i = 0; i< n ; i ++){
+	SpinLeftAngle(360/n);			//@ Rotate Step 
+	Map[i] = ultrasonDetection();}	//@ Get the distance during one rotation
+
+}
+
 
 void ultrasonSettings () {}
 
@@ -48,6 +66,8 @@ void setup() {
 //######//
 
 void loop() {
+
+ultrasonMap();
 
 
 }
