@@ -1,5 +1,5 @@
-#include "Moti.h"
-#include "Arduino.h"
+#include <Arduino.h>
+#include <MotiRobot.h>
 
 //###########################//
 // DATA TRANSFER TO COMPUTER //
@@ -110,5 +110,5 @@ void MOTI::sendJson(){
 	json = json + YPR[2];
 	json = json + "}}";
 
-	Serial.print(json);
+	Serial.println(json);
 }

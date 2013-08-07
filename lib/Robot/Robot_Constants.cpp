@@ -1,5 +1,5 @@
-#include "Moti.h"
-#include "Arduino.h"
+#include <Arduino.h>
+#include <MotiRobot.h>
 
 /**
  * @brief Constant initialization method
@@ -13,14 +13,6 @@ void MOTI::initializeConstants(){
 	resetAwakeThreshold();
 	resetDeltaAccelThreshold();
 	resetHighActivityThreshold();
-
-	resetLedMaxBrightness();
-	resetRedMaxBrightness();
-	resetGreenMaxBrightness();
-	resetBlueMaxBrightness();
-
-	resetMotorMinSpeed();
-	resetMotorMaxSpeed();
 }
 
 //###############//

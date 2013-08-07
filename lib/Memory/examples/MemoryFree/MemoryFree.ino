@@ -1,5 +1,5 @@
 #include <MemoryFree.h>
-
+#include <Arduino.h>
 // On Arduino Duemilanove with ATmega328:
 //
 // Reported free memory with str commented out:

@@ -1,12 +1,5 @@
-#include "Moti.h"
-
-#include "Moti_Constants.cpp"
-#include "Moti_Data.cpp"
-#include "Moti_Led.cpp"
-#include "Moti_Motors.cpp"
-#include "Moti_State.cpp"
-
-#include "Arduino.h"
+#include <Arduino.h>
+#include <MotiRobot.h>
 
 
 //##############//
@@ -28,21 +21,6 @@ void MOTI::init(){
 	delay(500);
 	Serial.begin(115200);
 	delay(50);
-	blinkLed(RAND, 2, 200);
-	delay(50);
-	initializeConstants();
-	delay(50);
-	Wire.begin();
-	delay(50);
-	AccelGyro.init();
-	delay(50);
-	initializeLed();
-	delay(50);
-	initializeStates();
-	delay(50);
-	initializeMotors();
-	blinkLed(RAND, 4, 200);
-	delay(50);
 }
 
 /**
@@ -59,51 +37,12 @@ void MOTI::initVerbose(){
 	delay(500);
 	Serial.begin(115200);
 	delay(100);
-	Serial.println();
-	Serial.println(F("SC"));
-	delay(100);
-	blinkLed(RAND, 2, 200);
-	delay(100);
-	initializeConstants();
-	Serial.println(F("CST"));
-	delay(100);
-	Wire.begin();
-	Serial.println(F("WIRE"));
-	delay(100);
-	AccelGyro.init();
-	Serial.println(F("IMU"));
-	delay(100);
-	initializeLed();
-	Serial.println(F("LED"));
-	delay(100);
-	initializeStates();
-	Serial.println(F("STATES"));
-	delay(100);
-	initializeMotors();
-	Serial.println(F("MOTORS"));
-	blinkLed(RAND, 4, 200);
-	delay(20);
 }
 
 
 //#########//
 // GENERAL //
 //#########//
-
-/**
- * @brief Setting all outputs to LOW
- *
- * setAllToLow() is used at in init() to set all output pins to LOW. This makes sure the led are off and the motors are not running.
- */
-void MOTI::setAllToLow(){
-	digitalWrite(leftMotorSpeedPin, 0);
-	digitalWrite(rightMotorSpeedPin, 0);
-	digitalWrite(leftMotorDirectionPin, 0);
-	digitalWrite(rightMotorDirectionPin, 0);
-	digitalWrite(RED_PIN, 0);
-	digitalWrite(GREEN_PIN, 0);
-	digitalWrite(BLUE_PIN, 0);
-}
 
 /**
  * @brief Reseting software
