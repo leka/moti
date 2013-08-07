@@ -77,45 +77,7 @@ void MOTI::setHighActivityThreshold(int value){
 	_highActivityThreshold = value;
 }
 
-/**
- * @brief Setter method for _ledMaxBrightness
- *
- * Once set, the _sleepDelay can be accessed by calling getLedMaxBrightness()
- * @param value the value you want to assign to _ledMaxBrightness.
- */
-void MOTI::setLedMaxBrightness(int value){
-	_ledMaxBrightness = value;
-}
 
-/**
- * @brief Setter method for _redMaxBrightness
- *
- * Once set, the _sleepDelay can be accessed by calling getRedMaxBrightness()
- * @param value the value you want to assign to _redMaxBrightness.
- */
-void MOTI::setRedMaxBrightness(int value){
-	_redMaxBrightness = value;
-}
-
-/**
- * @brief Setter method for _greenMaxBrightness
- *
- * Once set, the _sleepDelay can be accessed by calling getGreenMaxBrightness()
- * @param value the value you want to assign to _greenMaxBrightness.
- */
-void MOTI::setGreenMaxBrightness(int value){
-	_greenMaxBrightness = value;
-}
-
-/**
- * @brief Setter method for _blueMaxBrightness
- *
- * Once set, the _sleepDelay can be accessed by calling getBlueMaxBrightness()
- * @param value the value you want to assign to _blueMaxBrightness.
- */
-void MOTI::setBlueMaxBrightness(int value){
-	_blueMaxBrightness = value;
-}
 
 /**
  * @brief Setter method for _motorMinSpeed
@@ -192,45 +154,7 @@ int MOTI::getHighActivityThreshold(){
 	return _highActivityThreshold;
 }
 
-/**
- * @brief Getter method for _ledMaxBrightness
- *
- * It is used to get the maximum brightness of the led.
- * @return the value of _ledMaxBrightness
- */
-int MOTI::getLedMaxBrightness(){
-	return _ledMaxBrightness;
-}
 
-/**
- * @brief Getter method for _redMaxBrightness
- *
- * It is used to get the maximum brightness of the red led.
- * @return the value of _redMaxBrightness
- */
-int MOTI::getRedMaxBrightness(){
-	return _redMaxBrightness;
-}
-
-/**
- * @brief Getter method for _greenMaxBrightness
- *
- * It is used to get the maximum brightness of the green led.
- * @return the value of _greenMaxBrightness
- */
-int MOTI::getGreenMaxBrightness(){
-	return _greenMaxBrightness;
-}
-
-/**
- * @brief Getter method for _blueMaxBrightness
- *
- * It is used to get the maximum brightness of the blue led.
- * @return the value of _blueMaxBrightness
- */
-int MOTI::getBlueMaxBrightness(){
-	return _blueMaxBrightness;
-}
 
 /**
  * @brief Getter method for _motorMinSpeed
@@ -292,33 +216,7 @@ void MOTI::resetHighActivityThreshold(){
 	_highActivityThreshold = DEFAULT_HIGH_ACTIVITY_THRESHOLD;
 }
 
-/**
- * @brief Reset method for _ledMaxBrightness to initial value
- */
-void MOTI::resetLedMaxBrightness(){
-	_ledMaxBrightness = DEFAULT_LED_MAX_BRIGHTNESS;
-}
 
-/**
- * @brief Reset method for _redMaxBrightness to initial value
- */
-void MOTI::resetRedMaxBrightness(){
-	_redMaxBrightness = DEFAULT_RED_MAX_BRIGHTNESS;
-}
-
-/**
- * @brief Reset method for _greenMaxBrightness to initial value
- */
-void MOTI::resetGreenMaxBrightness(){
-	_greenMaxBrightness = DEFAULT_GREEN_MAX_BRIGHTNESS;
-}
-
-/**
- * @brief Reset method for _blueMaxBrightness to initial value
- */
-void MOTI::resetBlueMaxBrightness(){
-	_blueMaxBrightness = DEFAULT_BLUE_MAX_BRIGHTNESS;
-}
 
 /**
  * @brief Reset method for _motorMinSpeed to initial value
