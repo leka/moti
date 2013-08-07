@@ -13,6 +13,8 @@
 #include <Led.h>
 #include <Motors.h>
 #include <Speakers.h>
+#include <Memory.h>
+
 
 /**
  * @class MOTI
@@ -144,7 +146,6 @@ class MOTI {
 		Led led;
 		Motors motors;
 		Speakers speakers;
-		Memory memory;
 };
 
 #endif
