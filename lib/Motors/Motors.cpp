@@ -1,8 +1,8 @@
-#include "Arduino.h"
-#include "MotiMotors.h"
+#include <Arduino.h>
+#include <Motors.h>
 
 /**
- * @file MotiMotors.cpp
+ * @file Motors.cpp
  * @author Ladislas de Toldi
  * @version 1.0
  */
@@ -13,9 +13,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 /**
- * @brief MotiMotors Class Constructor
+ * @brief Motors Class Constructor
  */
-MotiMotors::MotiMotors(){
+Motors::Motors(){
 	pinMode(DEFAULT_LEFT_MOTOR_SPEED_PIN     , OUTPUT);
 	pinMode(DEFAULT_LEFT_MOTOR_DIRECTION_PIN , OUTPUT);
 
@@ -35,7 +35,7 @@ MotiMotors::MotiMotors(){
  *
  * @return true if motors are ON, false if motors are OFF.
  */
-bool MotiMotors::getMovingState(){
+bool Motors::getMovingState(){
 	return _stateMoving;
 }
 
@@ -44,7 +44,7 @@ bool MotiMotors::getMovingState(){
  *
  * @param state can be true or false
  */
-void MotiMotors::setMovingState(bool state){
+void Motors::setMovingState(bool state){
 	_stateMoving = state;
 }
 
@@ -59,7 +59,7 @@ void MotiMotors::setMovingState(bool state){
  * @param speed the speed of the wheel, between 0-255
  * @param direction the direction of the wheel, 1 for to go forward,  0 to go backwar
  */
-void MotiMotors::spinRightWheel(uint8_t speed, bool direction){
+void Motors::spinRightWheel(uint8_t speed, bool direction){
 	analogWrite(rightMotorSpeedPin, speed);
 	digitalWrite(rightMotorDirectionPin, direction);
 }
@@ -70,7 +70,7 @@ void MotiMotors::spinRightWheel(uint8_t speed, bool direction){
  * @param speed the speed of the wheel, between 0-255
  * @param direction the direction of the wheel, 1 for to go forward,  0 to go backwar
  */
-void MotiMotors::spinLeftWheel(uint8_t speed, bool direction){
+void Motors::spinLeftWheel(uint8_t speed, bool direction){
 	analogWrite(leftMotorSpeedPin, speed);
 	digitalWrite(leftMotorDirectionPin, direction);
 }
@@ -78,7 +78,7 @@ void MotiMotors::spinLeftWheel(uint8_t speed, bool direction){
 /**
  * @brief Method used to go forward at full speed.
  */
-void MotiMotors::goForward(){
+void Motors::goForward(){
 	spinLeftWheel(255, 1);
 	spinRightWheel(255, 1);
 
@@ -90,7 +90,7 @@ void MotiMotors::goForward(){
  *
  * @param speed the speed wanted, should be between 0-255
  */
-void MotiMotors::goForward(int speed){
+void Motors::goForward(int speed){
 	int _speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(_speed, 1);
 	spinRightWheel(_speed, 1);
@@ -101,7 +101,7 @@ void MotiMotors::goForward(int speed){
 /**
  * @brief Method used to go backward at full speed.
  */
-void MotiMotors::goBackward(){
+void Motors::goBackward(){
 	spinLeftWheel(255, 0);
 	spinRightWheel(255, 0);
 
@@ -113,7 +113,7 @@ void MotiMotors::goBackward(){
  *
  * @param speed the speed wanted, should be between 0-255
  */
-void MotiMotors::goBackward(int speed){
+void Motors::goBackward(int speed){
 	int _speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(_speed, 0);
 	spinRightWheel(_speed, 0);
@@ -124,7 +124,7 @@ void MotiMotors::goBackward(int speed){
 /**
  * @brief Method used to go left at full speed.
  */
-void MotiMotors::goLeft(){
+void Motors::goLeft(){
 	spinLeftWheel(175, 0);
 	spinRightWheel(255, 0);
 
@@ -136,7 +136,7 @@ void MotiMotors::goLeft(){
  *
  * @param speed the speed wanted, should be between 0-255
  */
-void MotiMotors::goLeft(int speed){
+void Motors::goLeft(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel((uint8_t) speed * turnCoefficientTime / turnCoefficientDiv, 0);
 	spinRightWheel(speed, 0);
@@ -147,7 +147,7 @@ void MotiMotors::goLeft(int speed){
 /**
  * @brief Method used to go right at full speed.
  */
-void MotiMotors::goRight(){
+void Motors::goRight(){
 	spinLeftWheel(255, 0);
 	spinRightWheel(175, 0);
 
@@ -159,7 +159,7 @@ void MotiMotors::goRight(){
  *
  * @param speed the speed wanted, should be between 0-255
  */
-void MotiMotors::goRight(int speed){
+void Motors::goRight(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(speed, 0);
 	spinRightWheel((uint8_t) speed * turnCoefficientTime / turnCoefficientDiv, 0);
@@ -170,7 +170,7 @@ void MotiMotors::goRight(int speed){
 /**
  * @brief Method used to spin left at full speed.
  */
-void MotiMotors::spinLeft(){
+void Motors::spinLeft(){
 	spinLeftWheel(255, 0);
 	spinRightWheel(255, 1);
 
@@ -182,7 +182,7 @@ void MotiMotors::spinLeft(){
  *
  * @param speed the speed wanted, should be between 0-255
  */
-void MotiMotors::spinLeft(int speed){
+void Motors::spinLeft(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(speed, 0);
 	spinRightWheel(speed, 1);
@@ -193,7 +193,7 @@ void MotiMotors::spinLeft(int speed){
 /**
  * @brief Method used to spin right at full speed.
  */
-void MotiMotors::spinRight(){
+void Motors::spinRight(){
 	spinLeftWheel(255, 1);
 	spinRightWheel(255, 0);
 
@@ -205,7 +205,7 @@ void MotiMotors::spinRight(){
  *
  * @param speed the speed wanted, should be between 0-255
  */
-void MotiMotors::spinRight(int speed){
+void Motors::spinRight(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(speed, 1);
 	spinRightWheel(speed, 0);
@@ -216,7 +216,7 @@ void MotiMotors::spinRight(int speed){
 /**
  * @brief Method used to stop all motors.
  */
-void MotiMotors::stop(){
+void Motors::stop(){
 	digitalWrite(leftMotorDirectionPin, 0);
 	digitalWrite(leftMotorSpeedPin, 0);
 	digitalWrite(rightMotorDirectionPin, 0);
@@ -236,7 +236,7 @@ void MotiMotors::stop(){
  * Once set, the _sleepDelay can be accessed by calling getMotorMinSpeed()
  * @param value the value you want to assign to _motorMinSpeed.
  */
-void MotiMotors::setMotorMinSpeed(int value){
+void Motors::setMotorMinSpeed(int value){
 	_motorMinSpeed = value;
 }
 
@@ -246,7 +246,7 @@ void MotiMotors::setMotorMinSpeed(int value){
  * Once set, the _sleepDelay can be accessed by calling getMotorMaxSpeed()
  * @param value the value you want to assign to _motorMaxSpeed.
  */
-void MotiMotors::setMotorMaxSpeed(int value){
+void Motors::setMotorMaxSpeed(int value){
 	_motorMaxSpeed = value;
 }
 
@@ -256,7 +256,7 @@ void MotiMotors::setMotorMaxSpeed(int value){
  * It is used to get the minimum speed needed to get the wheels spinning.
  * @return the value of _motorMinSpeed
  */
-int MotiMotors::getMotorMinSpeed(){
+int Motors::getMotorMinSpeed(){
 	return _motorMinSpeed;
 }
 
@@ -266,20 +266,20 @@ int MotiMotors::getMotorMinSpeed(){
  * It is used to get the maximum speed at which the wheels should be spinning.
  * @return the value of _motorMaxSpeed
  */
-int MotiMotors::getMotorMaxSpeed(){
+int Motors::getMotorMaxSpeed(){
 	return _motorMaxSpeed;
 }
 
 /**
  * @brief Reset method for _motorMinSpeed to initial value
  */
-void MotiMotors::resetMotorMinSpeed(){
+void Motors::resetMotorMinSpeed(){
 	_motorMinSpeed = DEFAULT_MIN_MOTOR_SPEED;
 }
 
 /**
  * @brief Reset method for _motorMaxSpeed to initial value
  */
-void MotiMotors::resetMotorMaxSpeed(){
+void Motors::resetMotorMaxSpeed(){
 	_motorMaxSpeed = DEFAULT_MAX_MOTOR_SPEED;
 }

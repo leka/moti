@@ -1,5 +1,5 @@
-#ifndef ROBOT_LEKA_ARDUINO_MOTI_H_
-#define ROBOT_LEKA_ARDUINO_MOTI_H_
+#ifndef LEKA_MOTI_ARDUINO_ROBOT_H_
+#define LEKA_MOTI_ARDUINO_ROBOT_H_
 
 /**
  * @file Moti.h
@@ -9,10 +9,10 @@
  */
 
 #include <Arduino.h>
-#include <MotiSensors.h>
-#include <MotiLed.h>
-#include <MotiMotors.h>
-#include <MotiSpeakers.h>
+#include <Sensors.h>
+#include <Led.h>
+#include <Motors.h>
+#include <Speakers.h>
 
 /**
  * @class MOTI
@@ -49,11 +49,11 @@ class MOTI {
 
 
 		//	GET CONSTANTS
-		int getLoopDelay();          	
-		int getSleepDelay();           	
-		int getAwakeThreshold();       	
-		int getDeltaAccelThreshold();  	
-		int getHighActivityThreshold();	
+		int getLoopDelay();
+		int getSleepDelay();
+		int getAwakeThreshold();
+		int getDeltaAccelThreshold();
+		int getHighActivityThreshold();
 
 
     	//	RESET CONSTANTS
@@ -140,11 +140,11 @@ class MOTI {
 		static const uint8_t GYR_DATA          = 0x06;
 
 		// RELATED CLASSES
-		MotiSensors sensors;
-		MotiLed led;
-		MotiMotors motors;
-		MotiSpeakers speakers;
-
+		Sensors sensors;
+		Led led;
+		Motors motors;
+		Speakers speakers;
+		Memory memory;
 };
 
 #endif

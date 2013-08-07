@@ -1,8 +1,8 @@
-#include "Arduino.h"
-#include "MotiSensors.h"
+#include <Arduino.h>
+#include <Sensors.h>
 
 /**
- * @file MotiSensors.cpp
+ * @file Sensors.cpp
  * @author Ladislas de Toldi
  * @version 1.0
  */
@@ -13,9 +13,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 /**
- * @brief MotiSensors Class Constructor
+ * @brief Sensors Class Constructor
  */
-MotiSensors::MotiSensors(){
+Sensors::Sensors(){
 	Wire.begin();
 	AccelGyro.init();
 	for(int i = 0 ; i < 3 ; i++){
@@ -39,7 +39,7 @@ MotiSensors::MotiSensors(){
  * checkSensors() is used to check the accelerometer and the gyroscope. It calls two other functions: checkAccelerometer() and checkGyroscope().
  * Values can be accessed with getXYZ(uint8_t i) and getYPR(uint8_t i)
  */
-void MotiSensors::checkSensors(){
+void Sensors::checkSensors(){
 	checkAccelerometer();
 	checkGyroscope();
 }
@@ -50,7 +50,7 @@ void MotiSensors::checkSensors(){
  * checkAccelerometer() is used to check the accelerometer. It calls FreeSixIMU#getRawValues().
  * Values can be accessed with getXYZ(uint8_t index).
  */
-void MotiSensors::checkAccelerometer(){
+void Sensors::checkAccelerometer(){
 	AccelGyro.getRawValues(XYZ);
 }
 
@@ -60,7 +60,7 @@ void MotiSensors::checkAccelerometer(){
  * checkGyroscope() is used to check the gyroscope. It calls FreeSixIMU#getYawPitchRoll().
  * Values can be accessed with getYPR(uint8_t index).
  */
-void MotiSensors::checkGyroscope(){
+void Sensors::checkGyroscope(){
 	float tmpYPR[3];
 	AccelGyro.getYawPitchRoll(tmpYPR);
 	YPR[0] = (int) tmpYPR[0];
@@ -75,7 +75,7 @@ void MotiSensors::checkGyroscope(){
  * @param index index of the value you want to access: 0 -> X || 1 -> Y || 2 -> Z
  * @return acceleration for X, Y or Z
  */
-int MotiSensors::getXYZ(uint8_t index){
+int Sensors::getXYZ(uint8_t index){
 	return XYZ[index];
 }
 
@@ -86,7 +86,7 @@ int MotiSensors::getXYZ(uint8_t index){
  * @param index index of the value you want to access: 0 -> Y || 1 -> P || 2 -> R
  * @return angle of Y, P, R
  */
-int MotiSensors::getYPR(uint8_t index){
+int Sensors::getYPR(uint8_t index){
 	return YPR[index];
 }
 
@@ -96,7 +96,7 @@ int MotiSensors::getYPR(uint8_t index){
  * computeSensorValues() is used compute the delta between the present and the past values of the acceleration and yaw/pitch/roll.
  * Then, it can be accessed with getDeltaXYZ() or getDeltaYPR().
  */
-void MotiSensors::computeDelta(){
+void Sensors::computeDelta(){
 	deltaXYZ[0] = XYZ[0] - lastXYZ[0];
 	deltaXYZ[1] = XYZ[1] - lastXYZ[1];
 	deltaXYZ[2] = XYZ[2] - lastXYZ[2];
@@ -112,7 +112,7 @@ void MotiSensors::computeDelta(){
  * updateLastSensorValues() saves the last sensors values for computeSensorValues().
  * The values can be accessed using getLastXYZ() and getLastYPR().
  */
-void MotiSensors::updateLastValues(){
+void Sensors::updateLastValues(){
 	lastXYZ[0] = XYZ[0];
 	lastXYZ[1] = XYZ[1];
 	lastXYZ[2] = XYZ[2];

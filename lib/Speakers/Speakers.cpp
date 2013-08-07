@@ -1,8 +1,8 @@
-#include "Arduino.h"
-#include "MotiSpeakers.h"
+#include <Arduino.h>
+#include <Speakers.h>
 
 /**
- * @file MotiSpeakers.cpp
+ * @file Speakers.cpp
  * @author Ladislas de Toldi
  * @version 1.0
  */
@@ -13,8 +13,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 /**
- * @brief MotiSpeakers Class Constructor
+ * @brief Speakers Class Constructor
  */
-MotiSpeakers::MotiSpeakers(){
+Speakers::Speakers(){
 
 }

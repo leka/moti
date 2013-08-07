@@ -1,8 +1,8 @@
-#ifndef LEKA_ARDUINO_ROBOT_MOTI_SPEAKERS_H_
-#define LEKA_ARDUINO_ROBOT_MOTI_SPEAKERS_H_
+#ifndef LEKA_MOTI_ARDUINO_SPEAKERS_H_
+#define LEKA_MOTI_ARDUINO_SPEAKERS_H_
 
 /**
- * @file MotiSpeakers.h
+ * @file Speakers.h
  * @author Ladislas de Toldi
  * @version 1.0
  */
@@ -11,16 +11,16 @@
 
 
 /**
- * @class MotiSpeakers
- * @brief MotiSpeakers class gathers all the Motors functions for Moti.
+ * @class Speakers
+ * @brief Speakers class gathers all the Motors functions for Moti.
  */
-class MotiSpeakers {
+class Speakers {
 
 	public:
 
-		MotiSpeakers();
+		Speakers();
 
-		
+
 
 	private:
 

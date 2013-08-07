@@ -1,24 +1,24 @@
-#ifndef LEKA_ARDUINO_ROBOT_MOTI_MOTORS_H_
-#define LEKA_ARDUINO_ROBOT_MOTI_MOTORS_H_
+#ifndef LEKA_MOTI_ARDUINO_MOTORS_H_
+#define LEKA_MOTI_ARDUINO_MOTORS_H_
 
 /**
- * @file MotiMotors.h
+ * @file Motors.h
  * @author Ladislas de Toldi
  * @version 1.0
  */
 
-#include "Arduino.h"
+#include <Arduino.h>
 
 
 /**
- * @class MotiMotors
- * @brief MotiMotors class gathers all the Motors functions for Moti.
+ * @class Motors
+ * @brief Motors class gathers all the Motors functions for Moti.
  */
-class MotiMotors {
+class Motors {
 
 	public:
 
-		MotiMotors();
+		Motors();
 
 		//	SET CONSTANTS
 		void setMotorMinSpeed(int value);
@@ -65,7 +65,7 @@ class MotiMotors {
 	private:
 
 		//	VARIABLES
-		
+
 		uint8_t rightMotorSpeedPin;
 		uint8_t rightMotorDirectionPin;
 		uint8_t leftMotorSpeedPin;

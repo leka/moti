@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <MotiRobot.h>
+#include <Moti.h>
 
 //########//
 // STATES //

@@ -1,8 +1,8 @@
-#ifndef LEKA_ARDUINO_ROBOT_MOTI_SENSORS_H_
-#define LEKA_ARDUINO_ROBOT_MOTI_SENSORS_H_
+#ifndef LEKA_MOTI_ARDUINO_SENSORS_H_
+#define LEKA_MOTI_ARDUINO_SENSORS_H_
 
 /**
- * @file MotiSensors.h
+ * @file Sensors.h
  * @author Ladislas de Toldi
  * @version 1.0
  */
@@ -18,14 +18,14 @@
 
 
 /**
- * @class MotiSensors
- * @brief MotiSensors class gathers all the Motors functions for Moti.
+ * @class Sensors
+ * @brief Sensors class gathers all the Motors functions for Moti.
  */
-class MotiSensors {
+class Sensors {
 
 	public:
 
-		MotiSensors();
+		Sensors();
 
 		//	SENSORS
 		void checkSensors();

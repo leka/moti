@@ -1,30 +1,30 @@
-#ifndef LEKA_ARDUINO_ROBOT_MOTI_LED_H_
-#define LEKA_ARDUINO_ROBOT_MOTI_LED_H_
+#ifndef LEKA_MOTI_ARDUINO_LED_H_
+#define LEKA_MOTI_ARDUINO_LED_H_
 
 /**
- * @file MotiLed.h
+ * @file Led.h
  * @author Ladislas de Toldi
  * @version 1.0
  */
 
-#include "Arduino.h"
+#include <Arduino.h>
 
 enum ColorName {
-			DARK_RED, RED, LIGHT_RED, PURPLE, BLUE, LIGHT_BLUE, WHITE, LIGHT_PINK, YELLOW, DARK_YELLOW, ORANGE, DARK_ORANGE, LIGHT_GREEN, GREEN, RAND
+		DARK_RED, RED, LIGHT_RED, PURPLE, BLUE, LIGHT_BLUE, WHITE, LIGHT_PINK, YELLOW, DARK_YELLOW, ORANGE, DARK_ORANGE, LIGHT_GREEN, GREEN, RAND
 	};
 
 
 /**
- * @class MotiLed
- * @brief MotiLed class gathers all the LED functions for Moti.
+ * @class Led
+ * @brief Led class gathers all the LED functions for Moti.
  */
-class MotiLed {
+class Led {
 
 	public:
 
-		MotiLed(uint8_t redPin, uint8_t greenPin, uint8_t bluePin);
+		Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin);
 
-		MotiLed();
+		Led();
 
 		//	SET CONSTANTS
 		void setLedMaxBrightness(int value);
@@ -51,7 +51,7 @@ class MotiLed {
 		void colorSwitcher(ColorName color);
 
 		void setRgb(int8_t index, int value);
-		void setRgb(int redValue, int greenValue, int blueValue); 
+		void setRgb(int redValue, int greenValue, int blueValue);
 		void setRed(int value);
 		void setGreen(int value);
 		void setBlue(int value);
@@ -88,13 +88,11 @@ class MotiLed {
 		uint8_t _greenMaxBrightness;
 		uint8_t _blueMaxBrightness;
 
-
 		//	CONSTANTS
 		static const uint8_t DEFAULT_LED_MAX_BRIGHTNESS   = 255;
 		static const uint8_t DEFAULT_RED_MAX_BRIGHTNESS   = 255;
 		static const uint8_t DEFAULT_GREEN_MAX_BRIGHTNESS = 255;
 		static const uint8_t DEFAULT_BLUE_MAX_BRIGHTNESS  = 255;
-
 
 		//	DEFAULT LED PINS
 		static const uint8_t DEFAULT_RED_PIN   = 9;
