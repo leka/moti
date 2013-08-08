@@ -13,7 +13,7 @@
  *
  * The methods used are setMovingState(false), setSleepingState(false), setWaitingState(true), setAwakeState(true), setManipulatedState(false), setRemoteState(false)
  */
-void MOTI::initializeStates(){
+void Moti::initializeStates(){
 	setMovingState(false);
 	setSleepingState(false);
 	setWaitingState(true);
@@ -30,7 +30,7 @@ void MOTI::initializeStates(){
  *
  * @return true if Moti's sleeping (not moving, not waiting, not awake), false if Moti's not sleeping.
  */
-bool MOTI::getSleepingState(){
+bool Moti::getSleepingState(){
 	return _stateSleeping;
 }
 
@@ -39,7 +39,7 @@ bool MOTI::getSleepingState(){
  *
  * @return true if Moti's waiting for the child to interact.
  */
-bool MOTI::getWaitingState(){
+bool Moti::getWaitingState(){
 	return _stateWaiting;
 }
 
@@ -48,7 +48,7 @@ bool MOTI::getWaitingState(){
  *
  * @return true if Moti's sleeping (not moving, not waiting, not awake), false if Moti's not sleeping.
  */
-bool MOTI::getAwakeState(){
+bool Moti::getAwakeState(){
 	return _stateAwake;
 }
 
@@ -57,7 +57,7 @@ bool MOTI::getAwakeState(){
  *
  * @return true if Moti's is being manipulated by the child or if he has a shock.
  */
-bool MOTI::getManipulatedState(){
+bool Moti::getManipulatedState(){
 	return _stateManipulated;
 }
 
@@ -66,7 +66,7 @@ bool MOTI::getManipulatedState(){
  *
  * @return true if Moti's is waiting for instruction from the computer.
  */
-bool MOTI::getRemoteState(){
+bool Moti::getRemoteState(){
 	return _stateRemote;
 }
 
@@ -75,7 +75,7 @@ bool MOTI::getRemoteState(){
  *
  * @return true if Moti's is sending data for machine learning to the computer.
  */
-bool MOTI::getLearningState(){
+bool Moti::getLearningState(){
 	return _stateLearning;
 }
 
@@ -86,7 +86,7 @@ bool MOTI::getLearningState(){
  *
  * @param state can be true or false
  */
-void MOTI::setSleepingState(bool state){
+void Moti::setSleepingState(bool state){
 	_stateSleeping = state;
 }
 
@@ -95,7 +95,7 @@ void MOTI::setSleepingState(bool state){
  *
  * @param state can be true or false
  */
-void MOTI::setWaitingState(bool state){
+void Moti::setWaitingState(bool state){
 	_stateWaiting = state;
 }
 
@@ -104,7 +104,7 @@ void MOTI::setWaitingState(bool state){
  *
  * @param state can be true or false
  */
-void MOTI::setAwakeState(bool state){
+void Moti::setAwakeState(bool state){
 	_stateAwake = state;
 }
 
@@ -113,7 +113,7 @@ void MOTI::setAwakeState(bool state){
  *
  * @param state can be true or false
  */
-void MOTI::setManipulatedState(bool state){
+void Moti::setManipulatedState(bool state){
 	_stateManipulated = state;
 }
 
@@ -122,7 +122,7 @@ void MOTI::setManipulatedState(bool state){
  *
  * @param state can be true or false
  */
-void MOTI::setRemoteState(bool state){
+void Moti::setRemoteState(bool state){
 	_stateRemote = state;
 }
 
@@ -131,6 +131,6 @@ void MOTI::setRemoteState(bool state){
  *
  * @param state can be true or false
  */
-void MOTI::setLearningState(bool state){
+void Moti::setLearningState(bool state){
 	_stateLearning = state;
 }

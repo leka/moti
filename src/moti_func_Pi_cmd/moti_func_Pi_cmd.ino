@@ -12,18 +12,8 @@
 
 #include "Moti.h"
 
-#include "RGBLED.h"
 
-#include <Wire.h>
-
-#include <CommunicationUtils.h>
-#include <DebugUtils.h>
-#include <FIMU_ADXL345.h>
-#include <FIMU_ITG3200.h>
-#include <FreeSixIMU.h>
-
-
-MOTI Moti = MOTI();
+Moti moti = Moti();
 
 // Stream scheme:
 
@@ -82,16 +72,16 @@ void serverPi(){
 				}
 
 				if(actionType == 0x01 && actionType != dataFooter){
-					Moti.spinRightWheel(dataBuffer[0], dataBuffer[1]);
+					motors.spinRightWheel(dataBuffer[0], dataBuffer[1]);
 				}
 				else if(actionType == 0x02 && actionType != dataFooter){
-					Moti.spinLeftWheel(dataBuffer[0], dataBuffer[1]);
+					motors.spinLeftWheel(dataBuffer[0], dataBuffer[1]);
 				}
 				else if(actionType == 0x03 && actionType != dataFooter){
-					Moti.printRgbColor(dataBuffer[0], dataBuffer[1], dataBuffer[2]);
+					motors.printRgbColor(dataBuffer[0], dataBuffer[1], dataBuffer[2]);
 				}
 				else if(actionType == 0x04 && actionType != dataFooter){
-					Moti.checkSensors();
+					motors.checkSensors();
 				}
 			}
 		}
@@ -105,7 +95,7 @@ void serverPi(){
 //#######//
 
 void setup() {
-	Moti.initVerbose();
+	moti.initVerbose();
 	pinMode(13, OUTPUT);
 }
 
@@ -123,7 +113,7 @@ void loop() {
 	 * Then, if there is no serial command to execute, the robot goes on and lives a happy life.
 	 */
 
-	delay(Moti.getLoopDelay());
+	delay(moti.getLoopDelay());
 }
 
 

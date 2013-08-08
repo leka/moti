@@ -17,17 +17,17 @@
 
 
 /**
- * @class MOTI
- * @brief The MOTI class represent the robot.
+ * @class Moti
+ * @brief The Moti class represent the robot.
  *
  * For simplicity purpose, we decided to build a class for the whole robot that would simplify the way we design and code the robot's behaviors and algorithms.
- * With MOTI class, you can access and manipulate everything you need, from motors to sensors and led.
+ * With Moti class, you can access and manipulate everything you need, from motors to sensors and led.
  */
-class MOTI {
+class Moti {
 
 	public:
 
-		MOTI();
+		Moti();
 
 
 		void init();
@@ -38,7 +38,6 @@ class MOTI {
 
 
 		//	SET CONSTANTS
-
 		void initializeConstants();
 
 		void setLoopDelay(int value);
@@ -68,13 +67,13 @@ class MOTI {
 
 		//	DATA TRANSFER TO COMPUTER
 		void sendJson();
-		void sendDataLearning();
 		void sendDataBinaries();
 		void sendBinaryByte(uint8_t value);
 		void sendBinaryInt(int value);
 
+
 		//	REMOTE CONTROL
-		void remoteDisplayHelp();
+		void readCommands();
 		void serialRouter();
 		void serialServer();
 
@@ -129,7 +128,10 @@ class MOTI {
 		static const uint16_t DEFAULT_DELTA_ACCEL_THRESHOLD  = 200;
 		static const uint8_t DEFAULT_HIGH_ACTIVITY_THRESHOLD = 80;
 
-		//	DATA TRANSFERT
+		//	DATA TRANSFERT I/O
+		static const uint8_t DATA_HEADER = 0x0f;
+		static const uint8_t DATA_FOOTER = 0xf0;
+
 		static const uint8_t INIT_PHASE        = 0xAA;
 
 		static const uint8_t START_ANSWER      = 0x0F;

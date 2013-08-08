@@ -7,9 +7,9 @@
 //##############//
 
 /**
- * @brief MOTI Class Constructor
+ * @brief Moti Class Constructor
  */
-MOTI::MOTI(){}
+Moti::Moti(){}
 
 /**
  * @brief Initialization method
@@ -17,7 +17,7 @@ MOTI::MOTI(){}
  * init() initialized everything at the beginning of the program. It must be called inside void setup().
  * The list of all the methods it calls is as follow: Serial.begin(), initializeConstants(), initializeLed(), initializeStates(), Wire.begin(), AccelGyro.init(), initiliazeMotors().
  */
-void MOTI::init(){
+void Moti::init(){
 	delay(500);
 	Serial.begin(115200);
 	delay(50);
@@ -33,7 +33,7 @@ void MOTI::init(){
  *
  * For example, if the serial outputs "SC" --> "CST" --> "WIRE", it means that IMU is failing and needs a fix.
  */
-void MOTI::initVerbose(){
+void Moti::initVerbose(){
 	delay(500);
 	Serial.begin(115200);
 	delay(100);
@@ -51,7 +51,7 @@ void MOTI::initVerbose(){
  * It may be used if you don't know how much time has passed since the last awaken state.
  * The environment may have change, so going through the void setup() again is required to re- init() everything.
  */
-void MOTI::softwareReset() {
+void Moti::softwareReset() {
 	asm volatile ("  jmp 0");
 }
 

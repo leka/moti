@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <MotiRobot.h>
+#include <Moti.h>
 
 /**
  * @brief Constant initialization method
@@ -7,7 +7,7 @@
  * initializeConstants() is used to set all the constants to their default values.
  * It calls for resetLoopDelay(), resetSleepDelay(), resetAwakeThreshold(), resetDeltaAccelThreshold(), resetHighActivityThreshold(), resetLedMaxBrightness(), resetRedMaxBrightness(), resetGreenMaxBrightness(), resetBlueMaxBrightness(), resetMotorMinSpeed(), resetMotorMaxSpeed().
  */
-void MOTI::initializeConstants(){
+void Moti::initializeConstants(){
 	resetLoopDelay();
 	resetSleepDelay();
 	resetAwakeThreshold();
@@ -25,7 +25,7 @@ void MOTI::initializeConstants(){
  * Once set, the _loopDelay can be accessed by calling getLoopDelay()
  * @param value the value you want to assign to _loopDelay.
  */
-void MOTI::setLoopDelay(int value){
+void Moti::setLoopDelay(int value){
 	_loopDelay = value;
 }
 
@@ -35,7 +35,7 @@ void MOTI::setLoopDelay(int value){
  * Once set, the _sleepDelay can be accessed by calling getSleepDelay()
  * @param value the value you want to assign to _sleepDelay.
  */
-void MOTI::setSleepDelay(int value){
+void Moti::setSleepDelay(int value){
 	_sleepDelay = value;
 }
 
@@ -45,7 +45,7 @@ void MOTI::setSleepDelay(int value){
  * Once set, the _sleepDelay can be accessed by calling getAwakeThreshold()
  * @param value the value you want to assign to _awakeThreshold.
  */
-void MOTI::setAwakeThreshold(int value){
+void Moti::setAwakeThreshold(int value){
 	_awakeThreshold = value;
 }
 
@@ -55,7 +55,7 @@ void MOTI::setAwakeThreshold(int value){
  * Once set, the _sleepDelay can be accessed by calling getDeltaAccelThreshold()
  * @param value the value you want to assign to _delatAccelThreshold.
  */
-void MOTI::setDeltaAccelThreshold(int value){
+void Moti::setDeltaAccelThreshold(int value){
 	_deltaAccelThreshold = value;
 }
 
@@ -65,7 +65,7 @@ void MOTI::setDeltaAccelThreshold(int value){
  * Once set, the _sleepDelay can be accessed by calling getHighAccelThreshold()
  * @param value the value you want to assign to _highAccelThreshold.
  */
-void MOTI::setHighActivityThreshold(int value){
+void Moti::setHighActivityThreshold(int value){
 	_highActivityThreshold = value;
 }
 
@@ -84,7 +84,7 @@ void MOTI::setHighActivityThreshold(int value){
  * It is used to modify the speed of the loop: higher value means slower robot.
  * @return the value of _loopDelay
  */
-int MOTI::getLoopDelay(){
+int Moti::getLoopDelay(){
 	return _loopDelay;
 }
 
@@ -94,7 +94,7 @@ int MOTI::getLoopDelay(){
  * It is used to as a counter to determine the moment the robot should got to sleep. Higher value means longer awaken state.
  * @return the value of _sleepDelay
  */
-int MOTI::getSleepDelay(){
+int Moti::getSleepDelay(){
 	return _sleepDelay;
 }
 
@@ -104,7 +104,7 @@ int MOTI::getSleepDelay(){
  * It is used to set the accelerometer variation above which the robot should wake up if touched.
  * @return the value of _awakeThreshold
  */
-int MOTI::getAwakeThreshold(){
+int Moti::getAwakeThreshold(){
 	return _awakeThreshold;
 }
 
@@ -114,7 +114,7 @@ int MOTI::getAwakeThreshold(){
  * It is used as a comparison to check whether or not the robot has been touched. Higher value means a need for stronger interaction
  * @return the value of _deltaAccelThreshold
  */
-int MOTI::getDeltaAccelThreshold(){
+int Moti::getDeltaAccelThreshold(){
 	return _deltaAccelThreshold;
 }
 
@@ -124,7 +124,7 @@ int MOTI::getDeltaAccelThreshold(){
  * It is used as a comparison to check whether or not the robot has been violently touched. Higher value means a need for ultraviolent interactions!
  * @return the value of _highActivityThreshold
  */
-int MOTI::getHighActivityThreshold(){
+int Moti::getHighActivityThreshold(){
 	return _highActivityThreshold;
 }
 
@@ -140,35 +140,35 @@ int MOTI::getHighActivityThreshold(){
 /**
  * @brief Reset method for _loopDelay to initial value
  */
-void MOTI::resetLoopDelay(){
+void Moti::resetLoopDelay(){
 	_loopDelay = DEFAULT_LOOP_DELAY;
 }
 
 /**
  * @brief Reset method for _sleepDelay to initial value
  */
-void MOTI::resetSleepDelay(){
+void Moti::resetSleepDelay(){
 	_sleepDelay = DEFAULT_SLEEP_DELAY;
 }
 
 /**
  * @brief Reset method for _awakeThreshold to initial value
  */
-void MOTI::resetAwakeThreshold(){
+void Moti::resetAwakeThreshold(){
 	_awakeThreshold = DEFAULT_AWAKE_THRESHOLD;
 }
 
 /**
  * @brief Reset method for _deltaAccelThreshold to initial value
  */
-void MOTI::resetDeltaAccelThreshold(){
+void Moti::resetDeltaAccelThreshold(){
 	_deltaAccelThreshold = DEFAULT_DELTA_ACCEL_THRESHOLD;
 }
 
 /**
  * @brief Reset method for _highActivityThreshold to initial value
  */
-void MOTI::resetHighActivityThreshold(){
+void Moti::resetHighActivityThreshold(){
 	_highActivityThreshold = DEFAULT_HIGH_ACTIVITY_THRESHOLD;
 }
 
