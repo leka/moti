@@ -9,6 +9,7 @@
  */
 
 #include <Arduino.h>
+#include <Wire.h>
 #include <Sensors.h>
 #include <Led.h>
 #include <Motors.h>
@@ -120,17 +121,17 @@ class Moti {
 		bool _stateRemote;
 		bool _stateLearning;
 
-
 		//	CONSTANTS
 		static const uint8_t DEFAULT_LOOP_DELAY              = 75;
+		static const uint8_t DEFAULT_HIGH_ACTIVITY_THRESHOLD = 80;
 		static const uint16_t DEFAULT_SLEEP_DELAY            = 600;
 		static const uint16_t DEFAULT_AWAKE_THRESHOLD        = 300;
 		static const uint16_t DEFAULT_DELTA_ACCEL_THRESHOLD  = 200;
-		static const uint8_t DEFAULT_HIGH_ACTIVITY_THRESHOLD = 80;
 
 		//	DATA TRANSFERT I/O
 		static const uint8_t DATA_HEADER = 0x0f;
 		static const uint8_t DATA_FOOTER = 0xf0;
+		static const uint8_t READY_TO_ANSWER = 0xff;
 
 		static const uint8_t INIT_PHASE        = 0xAA;
 

@@ -16,15 +16,9 @@ void Moti::readCommands(){
 
 		// If first byte is equal to dataHeader, start recording
 		if(recievedByte == DATA_HEADER){
+			delay(10);
 
-			digitalWrite(13, HIGH);
-			delay(200);
-			digitalWrite(13, LOW);
-			delay(200);
-			digitalWrite(13, HIGH);
-			delay(200);
-			digitalWrite(13, LOW);
-
+			Serial.write(READY_TO_ANSWER);
 
 			delay(200);
 

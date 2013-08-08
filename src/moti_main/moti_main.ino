@@ -8,64 +8,38 @@
 // LIBRARIES //
 //###########//
 
-#include "Arduino.h"
 
-#include "Moti.h"
+#include <Arduino.h>
 
-#include "RGBLED.h"
+// Include all the classes needed to beautifully develop your robot.
+#include <Moti.h>
+#include <Sensors.h>
+#include <Led.h>
+#include <Motors.h>
+#include <Speakers.h>
+#include <Memory.h>
 
-#include <Wire.h>
-
-#include <CommunicationUtils.h>
-#include <DebugUtils.h>
-#include <FIMU_ADXL345.h>
-#include <FIMU_ITG3200.h>
-#include <FreeSixIMU.h>
-
-
-MOTI Moti = MOTI();
-
-
-//#######//
-// SETUP //
-//#######//
+// Then create instances of every classes
+Moti moti;
+Sensors sensors;
+Led led;
+Motors motors;
+Speakers speakers;
 
 void setup() {
-	Moti.initVerbose();
+	// Initialize moti
+	moti.init();
 }
-
-//######//
-// LOOP //
-//######//
 
 void loop() {
-	/**
-	 * First, we check if any serial commands were sent to the robot. If so, we enter the remote control state and stop the standard execution of void loop().
-	 */
-	Moti.serialServer();
-
-	/**
-	 * Then, if there is no serial command to execute, the robot goes on and lives a happy life.
-	 */
-	Moti.goForward();
-	delay(7000);
-	Moti.spinRight();
-	delay(600);
-	Moti.goForward();
+	motors.goForward();
 	delay(5000);
-	Moti.spinLeft();
-	delay(1200);
-	Moti.goRight();
-	delay(7000);
-	Moti.stop();
+	led.blinkLed(RAND, 5, 200);
 	delay(2000);
-
-	Moti.checkSensors();
-	Moti.sendDataJson();
-
-	delay(Moti.getLoopDelay());
+	motors.spinRight();
+	delay(2000);
+	motors.stop();
+	delay(2000);
+	led.blinkLed(RAND, 5, 100);
+	delay(1000);
 }
-
-
-
-
