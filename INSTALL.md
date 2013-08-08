@@ -55,65 +55,77 @@ Make sure you've installed the Arduino IDE.
 
 We've made a Homebrew `formula` that you can `tap` like that:
 
-	$ brew tap WeAreLeka/avr
-	$ brew install avr-libc
+```Bash
+$ brew tap WeAreLeka/avr
+$ brew install avr-libc
+```
 
 Check that everything has been installed properly. If `avrdude` is missing, install it with:
 
-	$ brew install avrdude
-
+```Bash
+$ brew install avrdude
+```
 
 ####2. Clone moti repository from Github
 
 Simply clone the repo:
 
-	$ cd path/to/wherever/you/want/to/clone/the/repo
-	$ git clone https://github.com/WeAreLeka/moti.git
-	$ cd moti
-	$ git checkout dev
+```Bash
+$ cd path/to/wherever/you/want/to/clone/the/repo
+$ git clone https://github.com/WeAreLeka/moti.git
+$ cd moti
+$ git checkout dev
+```
 
 ####3. Clone the Arduino-Makefile repo from Github
 
 Simply clone the repo:
 
-	$ cd path/to/wherever/you/want/to/clone/the/repo
-	$ git clone https://github.com/WeAreLeka/Arduino-Makefile
+```Bash
+$ cd path/to/wherever/you/want/to/clone/the/repo
+$ git clone https://github.com/WeAreLeka/Arduino-Makefile
+```
 
 
 ####4. Install the perl dependencies needed to use the `makefile`
 
 You need `YAML` and `Device::SerialPort` to upload with the `.hex` file. Simply type:
 
-	$ sudo perl -MCPAN -e 'install +YAML'
-	$ sudo perl -MCPAN -e 'install +Device::SerialPort'
+```Bash
+$ sudo perl -MCPAN -e 'install +YAML'
+$ sudo perl -MCPAN -e 'install +Device::SerialPort'
+```
 
 
 ####5. Symlinking the libraries
 
 We've made some `shell scripts` to symlink all the libraries. In your Terminal, type:
 
-	$ bash /path/to/moti/script/symlink_lib.sh
-
+```Bash
+$ bash /path/to/moti/script/symlink_lib.sh
+```
 
 ####6. Using the makefiles to compile your code
 
 Take a look in `./src/moti_3`, you can see there is a Makefile. It looks like that:
 
-	BOARD_TAG     = uno
+```Makefile
+BOARD_TAG     = uno
 
-	ARDMK_DIR     = ~/dev/arduino/arduino-makefile
+ARDMK_DIR     = ~/dev/arduino/arduino-makefile
 
-	ARDUINO_DIR   = /Applications/Arduino.app/Contents/Resources/Java
+ARDUINO_DIR   = /Applications/Arduino.app/Contents/Resources/Java
 
-	AVR_TOOLS_DIR = /usr/local
+AVR_TOOLS_DIR = /usr/local
 
-	ARDUINO_PORT  = /dev/tty.usbmodemfa131
+ARDUINO_PORT  = /dev/tty.usbmodemfa131
 
-	PROJECT_DIR = /Users/Ladislas/dev/leka/moti
+PROJECT_DIR = /Users/Ladislas/dev/leka/moti
 
-	CURRENT_DIR = $(shell basename $(CURDIR))
+CURRENT_DIR = $(shell basename $(CURDIR))
 
-	include /Users/Ladislas/dev/arduino/arduino-makefile/arduino-mk/Arduino.mk
+include /Users/Ladislas/dev/arduino/arduino-makefile/arduino-mk/Arduino.mk
+```
 
 Everywhere your `.ino` files are, you want to put a makefile to compile the code. **Don't forget to configure it to suit your needs.**
 
@@ -153,7 +165,9 @@ If command line is really not your cup of tea, maybe you should just give up bec
 
 For those who want to fight, go visit the [Homebrew website](http://mxcl.github.io/homebrew/) and follow all the instructions. And because we are so generous, we also put them here: open Terminal.app, copy/paste the following line and let the magic begin (**don't copy the `$` sign**, it is used to say we are using the command line...):
 
-	$ ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+```Bash
+$ ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+```
 
 For troubleshooting, [Google](http://lmgtfy.com/?q=homebrew) is your best friend. You can also try typing `brew doctor` in your Terminal to see what is wrong. Please don't fill issues on Github regarding the installation of Homebrew, we won't read them.
 
@@ -164,7 +178,9 @@ Now we are going to install/update Git with Homebrew.
 
 Open the Terminal.app and then type:
 
-	$ brew install git
+```Bash
+$ brew install git
+```
 
 And that's it! It will download the source and compile it. Everything should be OK.
 Now you have the last Git version on your system which is pretty awesome you must say!
@@ -174,18 +190,24 @@ Now you have the last Git version on your system which is pretty awesome you mus
 
 Now we're going to do a quick test to check that everything is up and running. In your terminal, type:
 
-	$ git --version
+```Bash
+$ git --version
+```
 
 And it should output something like that:
 
-	$ git --version
-	$ git version 1.8.3.1
+```Bash
+$ git --version
+$ git version 1.8.3.1
+```
 
 If you have the 1.8.X version, it means that your are using the most recent version. If not, say you have 1.7.X, it "means" you are using the system version of Git because of a "path issue". But don't worry, we're going to fix this.
 
 In your Terminal type:
 
-	$ open /etc
+```Bash
+$ open /etc
+```
 
 The finder should open a new window to `/private/etc`, look for a file called `paths`. Right click on the file, choose `Open With` and choose Sublime Text 2 (if ST2 is not in the list, click Other... and look for it).
 
@@ -204,7 +226,9 @@ Type `cmd+s` to save the file, you should be prompted to enter your password, so
 
 Quit (`cmd+q`) the Terminal.app, reopen the Terminal.app and type:
 
-	$ git --version
+```Bash
+$ git --version
+```
 
 To check your version. If it's not working, do the `$PATH` part again.
 
@@ -222,33 +246,43 @@ In this part, we are going to install `avr-gcc`, `binutils`, `avr-libc` and `avr
 
 To do this, we are going to use Homebrew, one more time! Type each of the following lines one by one:
 
-	$ brew tap WeAreLeka/avr
-	$ brew install avr-libc
+```Bash
+$ brew tap WeAreLeka/avr
+$ brew install avr-libc
+```
 
 This should install all you need. It may take some time to compile (up to one hour), so grab a coffee and a book and be patient. It is also normal, if you are using a laptop, to hear the fan. Compiling needs a lot of power.
 
 Once it's done, you can check everything is fine by typing:
 
-	$ avr-gcc -v
-	$ avrdude -v
+```Bash
+$ avr-gcc -v
+$ avrdude -v
+```
 
 You should get something like that:
 
-	$ avr-gcc -v
-	Using built-in specs.
-	... //	lots of stuff...
-	Thread model: single
-	gcc version 4.8.1 (GCC)
+```Bash
+$ avr-gcc -v
+Using built-in specs.
+... //	lots of stuff...
+Thread model: single
+gcc version 4.8.1 (GCC)
+```
 
 and
 
-	$ avrdude -v
-	avrdude: Version 5.11.1, compiled on Jun 20 2013 at 11:55:07
-	...	// lots of stuff
+```Bash
+$ avrdude -v
+avrdude: Version 5.11.1, compiled on Jun 20 2013 at 11:55:07
+...	// lots of stuff
+```
 
 If `avrdude` was not installed, you can do so by typing:
 
-	$ brew install avrdude
+```Bash
+$ brew install avrdude
+```
 
 And that's it! If something went wrong, fill an issue on Github using [this page](https://github.com/WeAreLeka/moti/issues).
 
@@ -262,10 +296,12 @@ If you just want to download the repo and use the code, get updates but don't co
 For the second way, first, create a directory where you will clone all of our repos. We highly recommend to use something like that: `~/dev/leka` but anything should do, just write this path somewhere, we are going to use it.
 Then, open the Terminal and type:
 
-	$ cd path/to/wherever/you/want/to/clone/the/repo # e.g. cd ~/dev/leka
-	$ git clone https://github.com/WeAreLeka/moti.git
-	$ cd moti
-	$ git checkout dev
+```Bash
+$ cd path/to/wherever/you/want/to/clone/the/repo # e.g. cd ~/dev/leka
+$ git clone https://github.com/WeAreLeka/moti.git
+$ cd moti
+$ git checkout dev
+```
 
 You can also `git checkout master` but this branch may be a lot behind `dev`. However, changes in this branch are frequent and things might work one day but not the next day. If you can't fix, fill an issue.
 
@@ -288,9 +324,11 @@ To clone the makefile, the process is quite the same: use your Git GUI or comman
 
 For the command line:
 
-	$ cd path/to/wherever/you/want/to/clone/the/repo # e.g. cd ~/dev/leka
-	$ git clone https://github.com/WeAreLeka/Arduino-Makefile
-	$ cd Arduino-Makefile
+```Bash
+$ cd path/to/wherever/you/want/to/clone/the/repo # e.g. cd ~/dev/leka
+$ git clone https://github.com/WeAreLeka/Arduino-Makefile
+$ cd Arduino-Makefile
+```
 
 By now, in your local project directory, you should have two directories: `moti` and `Arduino-Makefile`. If not, make sure you're looking at the right place...
 
@@ -301,8 +339,10 @@ The makefile we use is great, but on its own, it's not sufficient to upload the 
 
 But we need to install some perl modules to get them working. Once again, it's quite easy! Open the Terminal and type line by line (you will be asked for you password because of `sudo`) :
 
-	$ sudo perl -MCPAN -e 'install +YAML'
-	$ sudo perl -MCPAN -e 'install +Device::SerialPort'
+```Bash
+$ sudo perl -MCPAN -e 'install +YAML'
+$ sudo perl -MCPAN -e 'install +Device::SerialPort'
+```
 
 It may take some time and you may be asked questions, always answer `y` for "yes".
 
@@ -341,21 +381,23 @@ Some explanations:
 
 In `./src/moti_3`, you can see there is a Makefile. It looks like that:
 
-	BOARD_TAG     = mega2560
+```Makefile
+BOARD_TAG     = mega2560
 
-	ARDMK_DIR     = ~/dev/arduino/arduino-makefile
+ARDMK_DIR     = ~/dev/arduino/arduino-makefile
 
-	ARDUINO_DIR   = /Applications/Arduino.app/Contents/Resources/Java
+ARDUINO_DIR   = /Applications/Arduino.app/Contents/Resources/Java
 
-	AVR_TOOLS_DIR = /usr/local
+AVR_TOOLS_DIR = /usr/local
 
-	ARDUINO_PORT  = /dev/tty.usbmodemfa131
+ARDUINO_PORT  = /dev/tty.usbmodemfa131
 
-	PROJECT_DIR = /Users/Ladislas/dev/leka/moti
+PROJECT_DIR = /Users/Ladislas/dev/leka/moti
 
-	CURRENT_DIR = $(shell basename $(CURDIR))
+CURRENT_DIR = $(shell basename $(CURDIR))
 
-	include /Users/Ladislas/dev/arduino/arduino-makefile/arduino-mk/Arduino.mk
+include /Users/Ladislas/dev/arduino/arduino-makefile/arduino-mk/Arduino.mk
+```
 
 The Makefile is used to set some parameters for the compiler:
 
@@ -375,9 +417,11 @@ To compile the code, you need the libraries we use. We wrote scripts that do tha
 
 Open Terminal and type:
 
-	$ cd path/to/moti
-	$ cd script
-	$ bash symlink_lib.sh
+```Bash
+$ cd path/to/moti
+$ cd script
+$ bash symlink_lib.sh
+```
 
 Then open a Finder windows and go to Documents/Arduino/libraries and check everything is in here.
 
@@ -388,8 +432,10 @@ Now big time! We are **actually** going to compile our code, get ready!
 
 Open Terminal and type:
 
-	$ cd path/to/moti/src/moti_3
-	make
+```Bash
+$ cd path/to/moti/src/moti_3
+$ make
+```
 
 The code should compile!
 
