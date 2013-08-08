@@ -16,6 +16,9 @@
  * @brief Motors Class Constructor
  */
 Motors::Motors(){
+}
+
+void Motors::init(){
 	pinMode(DEFAULT_LEFT_MOTOR_SPEED_PIN     , OUTPUT);
 	pinMode(DEFAULT_LEFT_MOTOR_DIRECTION_PIN , OUTPUT);
 
@@ -60,8 +63,8 @@ void Motors::setMovingState(bool state){
  * @param direction the direction of the wheel, 1 for to go forward,  0 to go backwar
  */
 void Motors::spinRightWheel(uint8_t speed, bool direction){
-	analogWrite(rightMotorSpeedPin, speed);
-	digitalWrite(rightMotorDirectionPin, direction);
+	analogWrite(DEFAULT_RIGHT_MOTOR_SPEED_PIN, speed);
+	digitalWrite(DEFAULT_RIGHT_MOTOR_DIRECTION_PIN, direction);
 }
 
 /**
@@ -71,8 +74,8 @@ void Motors::spinRightWheel(uint8_t speed, bool direction){
  * @param direction the direction of the wheel, 1 for to go forward,  0 to go backwar
  */
 void Motors::spinLeftWheel(uint8_t speed, bool direction){
-	analogWrite(leftMotorSpeedPin, speed);
-	digitalWrite(leftMotorDirectionPin, direction);
+	analogWrite(DEFAULT_LEFT_MOTOR_SPEED_PIN, speed);
+	digitalWrite(DEFAULT_LEFT_MOTOR_DIRECTION_PIN, direction);
 }
 
 /**
@@ -217,10 +220,10 @@ void Motors::spinRight(int speed){
  * @brief Method used to stop all motors.
  */
 void Motors::stop(){
-	digitalWrite(leftMotorDirectionPin, 0);
-	digitalWrite(leftMotorSpeedPin, 0);
-	digitalWrite(rightMotorDirectionPin, 0);
-	digitalWrite(rightMotorSpeedPin, 0);
+	digitalWrite(DEFAULT_LEFT_MOTOR_DIRECTION_PIN, 0);
+	digitalWrite(DEFAULT_LEFT_MOTOR_SPEED_PIN, 0);
+	digitalWrite(DEFAULT_RIGHT_MOTOR_DIRECTION_PIN, 0);
+	digitalWrite(DEFAULT_RIGHT_MOTOR_SPEED_PIN, 0);
 
 	setMovingState(false);
 }

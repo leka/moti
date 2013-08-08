@@ -27,6 +27,8 @@ class Sensors {
 
 		Sensors();
 
+		void init();
+
 		//	SENSORS
 		void checkSensors();
 		void checkAccelerometer();
@@ -37,6 +39,8 @@ class Sensors {
 
 		void computeDelta();
 		void updateLastValues();
+
+		void sendJson();
 
 
 	private:

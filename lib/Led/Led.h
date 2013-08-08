@@ -26,6 +26,8 @@ class Led {
 
 		Led();
 
+		void init();
+
 		//	SET CONSTANTS
 		void setLedMaxBrightness(int value);
 		void setRedMaxBrightness(int value);

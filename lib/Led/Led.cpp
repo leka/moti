@@ -25,14 +25,6 @@ Led::Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin){
 	this -> redPin   = redPin;
 	this -> greenPin = greenPin;
 	this -> bluePin  = bluePin;
-
-	rgb[0] = 0;
-	rgb[1] = 0;
-	rgb[2] = 0;
-
-	rgbBuffer[0] = 0;
-	rgbBuffer[1] = 0;
-	rgbBuffer[2] = 0;
 }
 
 /**
@@ -42,7 +34,9 @@ Led::Led(){
 	this -> redPin   = DEFAULT_RED_PIN;
 	this -> greenPin = DEFAULT_GREEN_PIN;
 	this -> bluePin  = DEFAULT_BLUE_PIN;
+}
 
+void Led::init(){
 	rgb[0] = 0;
 	rgb[1] = 0;
 	rgb[2] = 0;

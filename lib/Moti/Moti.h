@@ -13,7 +13,6 @@
 #include <Sensors.h>
 #include <Led.h>
 #include <Motors.h>
-#include <Speakers.h>
 #include <Memory.h>
 
 
@@ -32,10 +31,7 @@ class Moti {
 
 
 		void init();
-
-
-		void initVerbose();
-
+		void initDebug();
 
 
 		//	SET CONSTANTS
@@ -145,10 +141,6 @@ class Moti {
 		static const uint8_t GYR_DATA          = 0x06;
 
 		// RELATED CLASSES
-		Sensors sensors;
-		Led led;
-		Motors motors;
-		Speakers speakers;
 };
 
 #endif

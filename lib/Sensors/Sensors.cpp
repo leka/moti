@@ -16,8 +16,9 @@
  * @brief Sensors Class Constructor
  */
 Sensors::Sensors(){
-	Wire.begin();
-	AccelGyro.init();
+}
+
+void Sensors::init(){
 	for(int i = 0 ; i < 3 ; i++){
 		XYZ[i] = 0;
 		lastXYZ[i] = 0;
@@ -26,6 +27,13 @@ Sensors::Sensors(){
 		lastYPR[i] = 0;
 		deltaYPR[i] = 0;
 	}
+
+	delay(500);
+	Wire.begin();
+	AccelGyro.init();
+	Wire.begin();
+	delay(50);
+	AccelGyro.init();
 }
 
 
@@ -66,6 +74,32 @@ void Sensors::checkGyroscope(){
 	YPR[0] = (int) tmpYPR[0];
 	YPR[1] = (int) tmpYPR[1];
 	YPR[2] = (int) tmpYPR[2];
+}
+
+/**
+ * @brief Send data formated as a JSON string
+ *
+ * sendJson() is used to interface the robot with other high level languages such as Processing or Javascript.
+ * It can also be useful as a debug print out to check the consistency of the sensors.
+ */
+void Sensors::sendJson(){
+	String json;
+
+	json = "{\"accel\":{\"x\":";
+	json = json + getXYZ(0);
+	json = json + ",\"y\":";
+	json = json + getXYZ(1);
+	json = json + ",\"z\":";
+	json = json + getXYZ(2);
+	json = json + "},\"gyro\":{\"yaw\":";
+	json = json + getYPR(0);
+	json = json + ",\"pitch\":";
+	json = json + getYPR(1);
+	json = json + ",\"roll\":";
+	json = json + getYPR(2);
+	json = json + "}}";
+
+	Serial.println(json);
 }
 
 /**

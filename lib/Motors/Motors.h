@@ -20,6 +20,8 @@ class Motors {
 
 		Motors();
 
+		void init();
+
 		//	SET CONSTANTS
 		void setMotorMinSpeed(int value);
 		void setMotorMaxSpeed(int value);

@@ -33,10 +33,15 @@ void Moti::init(){
  *
  * For example, if the serial outputs "SC" --> "CST" --> "WIRE", it means that IMU is failing and needs a fix.
  */
-void Moti::initVerbose(){
+void Moti::initDebug(){
 	delay(500);
 	Serial.begin(115200);
-	delay(100);
+	delay(50);
+	Serial.println("SC");
+	delay(50);
+
+	delay(50);
+	Serial.println("IMU");
 }
 
 
