@@ -22,29 +22,20 @@
 #include <Led.h>
 #include <Motors.h>
 #include <Memory.h>
+#include <Moti.h>
 
 // Then create instances of every classes
 Sensors sensors;
 Led led;
 Motors motors;
+Moti moti;
 
 void setup() {
-	// Initialize moti
-	Serial.begin(115200);
-	Serial.println("SC");
-	led.init();
-	Serial.println("LED");
-	motors.init();
-	Serial.println("MT");
-	sensors.init();
-	Serial.println("IMU");
+	moti.initDebug(sensors, motors, led);
 }
 
 void loop() {
-	motors.goForward();
-	delay(2000);
-	motors.stop();
 	sensors.checkSensors();
-	sensors.sendJson();
-	delay(200);
+	moti.sendJson(sensors);
+	delay(moti.getLoopDelay());
 }

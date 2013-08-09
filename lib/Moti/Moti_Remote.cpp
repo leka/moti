@@ -6,7 +6,7 @@
 //##############################//
 
 
-void Moti::readCommands(){
+void Moti::readCommands(Motors& motors, Led& led, Sensors& sensors){
 	while(Serial.available() > 0){
 
 		uint8_t numberOfActions;
@@ -54,6 +54,7 @@ void Moti::readCommands(){
 				}
 				else if(actionType == 0x04 && actionType != DATA_FOOTER){
 					sensors.checkSensors();
+					sendBinaryData(sensors);
 				}
 			}
 		}

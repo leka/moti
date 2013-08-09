@@ -17,9 +17,16 @@ Moti::Moti(){}
  * init() initialized everything at the beginning of the program. It must be called inside void setup().
  * The list of all the methods it calls is as follow: Serial.begin(), initializeConstants(), initializeLed(), initializeStates(), Wire.begin(), AccelGyro.init(), initiliazeMotors().
  */
-void Moti::init(){
+void Moti::init(Sensors& sensors, Motors& motors, Led& led){
 	delay(500);
 	Serial.begin(115200);
+	delay(50);
+	delay(50);
+	led.init();
+	delay(50);
+	motors.init();
+	delay(50);
+	sensors.init();
 	delay(50);
 }
 
@@ -33,15 +40,20 @@ void Moti::init(){
  *
  * For example, if the serial outputs "SC" --> "CST" --> "WIRE", it means that IMU is failing and needs a fix.
  */
-void Moti::initDebug(){
+void Moti::initDebug(Sensors& sensors, Motors& motors, Led& led){
 	delay(500);
 	Serial.begin(115200);
-	delay(50);
 	Serial.println("SC");
 	delay(50);
-
+	led.init();
+	Serial.println("LED");
 	delay(50);
+	motors.init();
+	Serial.println("MOTORS");
+	delay(50);
+	sensors.init();
 	Serial.println("IMU");
+	delay(50);
 }
 
 

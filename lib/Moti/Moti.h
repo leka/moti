@@ -30,8 +30,8 @@ class Moti {
 		Moti();
 
 
-		void init();
-		void initDebug();
+		void init(Sensors& sensors, Motors& motors, Led& led);
+		void initDebug(Sensors& sensors, Motors& motors, Led& led);
 
 
 		//	SET CONSTANTS
@@ -63,14 +63,14 @@ class Moti {
 
 
 		//	DATA TRANSFER TO COMPUTER
-		void sendJson();
-		void sendDataBinaries();
-		void sendBinaryByte(uint8_t value);
-		void sendBinaryInt(int value);
+		void sendJson(Sensors& sensors);
+		void sendBinaryData(Sensors& sensors);
+		void writeBinaryByte(uint8_t value);
+		void writeBinaryInt(int value);
 
 
 		//	REMOTE CONTROL
-		void readCommands();
+		void readCommands(Motors& motors, Led& led, Sensors& sensors);
 		void serialRouter();
 		void serialServer();
 
