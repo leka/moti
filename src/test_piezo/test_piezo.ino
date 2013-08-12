@@ -28,7 +28,7 @@
 #define e 1482 //       329 Hz       3038       	
 #define f 1397 //       349 Hz       2864       	
 #define g 1241 //       392 Hz       2550        	
-#define a 1102 //       440 Hz       2272        // Valeur changé en fonction des mesures	
+#define a 1102 //       440 Hz       2272        // Valeurs changés en fonction des mesures des temps en microseconds pour un son parfaitement en frequence desiré. 	
 #define b 981  //       493 Hz       2028       	
 #define C 923  //       523 Hz       1912       
 
@@ -37,7 +37,7 @@
 #define fe 329 //       329 Hz       3038       	
 #define ff 349 //       349 Hz       2864       	
 #define fg 392 //       392 Hz       2550        	
-#define fa 440 //       440 Hz       2272        // Valeur changé en fonction des mesures	
+#define fa 440 //       440 Hz       2272        // Valeurs changés en fonction des mesures des temps en microseconds pour un son parfaitement en frequence desiré. 	
 #define fb 493 //       493 Hz       2028       	
 #define fC 523 //       523 Hz       1912 
 
@@ -85,7 +85,7 @@ int port = 3;
 
 void Sound(int melody[], int duration[], int pause[]){ // Fonction pour jouer les Melodies en Array de Frequence
 
-	for (int nota = 0; nota < 24; nota++) {
+	for (int nota = 0; nota < 24; nota++) {   // Sound est en fonction de frequence, duration du son avec cette frequence et la pause apres la duration. 
  
         int dur = duration[nota];
         tone(port, 2*melody[nota],dur);

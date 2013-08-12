@@ -29,12 +29,77 @@ MOTI Moti = MOTI();
 // SETUP //
 //#######//
 
+int infraRougePinAvance = A0, infraRougePinGauche = A1, infraRougePinDroite = A2;
+int readAvance, readGauche, readDroite;
 
-void infraRougeDetection () {}
+/**
+ * @class INFRAREDDETECTION
+ * @brief The INFRAREDDETECTION class is used to detect the value of the infrared sensor.
+ *
+ * This class reads 10 followed values from the sensor and does the median. 
+ */
 
-void infraRougeMap () {}
+void infraRedDetection (int n) {
 
-void infraRougeSettings () {}
+int some1 = 0, some2 = 0, some3 = 0;
+
+for (int i = 1; i<=n; i++){
+
+some1 += analogRead(infraRougePinAvance);       
+some2 += analogRead(infraRougePinGauche);
+some3 += analogRead(infraRougePinDroite);
+
+}
+
+readAvance = some1/n; 	  		 // @ Median mesure for filter the extremes values. 
+readGauche = some2/n;			 // @ Median mesure for filter the extremes values. 
+readDroite = some3/n; 			 // @ Median mesure for filter the extremes values. 
+
+}
+
+/**
+ * @class INFRAREDDETECTION
+ * @brief The INFRAREDDETECTION class is used to detect the value of the infrared sensor.
+ *
+ * This class reads 10 followed values from the sensor and does the median. 
+ */
+
+void infraRedBehaviour() {
+
+Moti.stop();
+int aux1, aux2, aux3;		// @ Auxiliaires Variables for save the informations of the past and allows to analyse and calculate the dynamics.
+infraRedDetection(10);
+aux1 = readAvance;
+aux2 = readGauche;
+aux3 = readDroite;
+infraRedDetection(10);
+
+
+int mod = sqrt((readAvance - aux1)*(readAvance - aux1) + (readGauche - aux2)*(readGauche - aux2) + (readDroite - aux3)*(readDroite - aux3)); 
+// @ Calculation of variation module for allow to differentiate sweet movements and sudden movements.
+
+
+if (readAvance > ((readDroite + readGauche)/2) + 100) {   // @ Comparation between goForward and goBackward in fonction of the three infrared sensors.
+
+	Moti.goForward();
+	delay (100);
+
+}
+
+
+else if (readAvance + 100 < ((readDroite + readGauche)/2)) {   // @ Comparation between goForward and goBackward in fonction of the three infrared sensors.
+
+	Moti.goBackward();
+	delay (100);
+
+}
+
+}
+
+
+void infraRedMap () {}
+
+void infraRedSettings () {}
 
 
 
@@ -50,6 +115,16 @@ void setup() {
 
 void loop() {
 
+delay(100);
+
+infraRedDetection(10);
+Serial.print(readAvance);
+Serial.print(" ");
+Serial.print(readGauche);
+Serial.print(" ");
+Serial.print(readDroite);
+Serial.print("\n");
+infraRedBehaviour();
 
 }
 

@@ -3,6 +3,12 @@
 //	COPYRIGHT WE ARE LEKA! - SOURCE CODE DISTRIBUTED UNDER MIT LICENCE	//
 //######################################################################//
 
+/**
+ * @file figures.ino
+ * @brief figures.ino is used for define the robot behaviours need to draw one figure.
+ * @author Luan Ferrari
+ * @version 1.0
+ */
 
 //###########//
 // LIBRARIES //
@@ -23,38 +29,45 @@
 #include <FreeSixIMU.h>
 
 
-int theta, delta, mcycle, angle;
-
-
+int initialAngle, deviationAngle, fullTurns, instantAngle;
 
 MOTI Moti = MOTI();
 
-void MotorSpinRightAngle(int spin) { // Angle quelconque 
+
+/**
+ * @class MOTORSPINRIGHTANGLE
+ * @brief The MOTORSPINRIGHTANGLE class is used to say for the robot to turn one specific angle in the right direction.
+ *
+ * This class reads the initial angle and compare with the giroscope for turn the angle specified in the right direction.
+ * It uses the algorithm of angle mesure correction to allow turn angles that are higher than one full turn.
+ */
+
+void MotorSpinRightAngle(int spin) { // Faire une fonction de spin avec un angle quelconque. 
 	
 	Moti.checkGyroscope();
 	
-	mcycle = int(spin/360);
-	spin = spin%360;
+	fullTurns = int(spin/360);   // Partie entier avec les quantités des tours complet. 
+	spin = spin%360;          // Reste avec l'angle mineur que un tour. 
 
 	
-	for (int i = 0; i < mcycle; i++) {
+	for (int i = 0; i < fullTurns; i++) {    //Faire des tours complet
 
-		theta = Moti.getYPR(0);
-		delta = 0;
+		initialAngle = Moti.getYPR(0);
+		deviationAngle = 0;
 		
-		while (abs(delta - 360) > 5) { 	
+		while (abs(deviationAngle - 360) > 5) { 	
 
 		Moti.checkGyroscope();	
 
-		if(delta < 360){ Moti.spinRight(); }
+		if(deviationAngle < 360){ Moti.spinRight(); }
 	
 		else { Moti.spinLeft(); }
 
-		angle = Moti.getYPR(0);
+		instantAngle = Moti.getYPR(0);
 
-		if (angle < theta){angle = angle + 360;}
+		if (instantAngle < initialAngle){instantAngle = instantAngle + 360;}     //Compensation for the signal change of the sensor at -180 and 180.
 		
-		delta = abs(angle - theta);
+		deviationAngle = abs(instantAngle - initialAngle);
 	
 		}
 
@@ -63,22 +76,22 @@ void MotorSpinRightAngle(int spin) { // Angle quelconque
 
 
 	Moti.checkGyroscope();
-	theta = Moti.getYPR(0);
-	delta = 0;
+	initialAngle = Moti.getYPR(0);
+	deviationAngle = 0;
 	
 
-	while (abs(delta - spin) > 5) { 	
+	while (abs(deviationAngle - spin) > 5) { 	
 
 		Moti.checkGyroscope();	
 
-		if(delta < spin){ Moti.spinRight(); }
+		if(deviationAngle < spin){ Moti.spinRight(); }		// During this time it did not reach the value, it continues turning. 
 	
-		else { Moti.spinLeft(); }
+		else { Moti.spinLeft(); }			// If for inercie it passes the exact value, it will return.
 
-		angle = Moti.getYPR(0);
+		instantAngle = Moti.getYPR(0);
 
-		if (angle < theta){angle = angle + 360;}
-		delta = abs(angle - theta);
+		if (instantAngle < initialAngle){instantAngle = instantAngle + 360;}        //Compensation for the signal change of the sensor at -180 and 180.
+		deviationAngle = abs(instantAngle - initialAngle);
 
 	}
 
@@ -87,32 +100,40 @@ void MotorSpinRightAngle(int spin) { // Angle quelconque
 	}
 
 
-void MotorSpinLeftAngle(int spin) {  // Angle quelconque 
+/**
+ * @class MOTORSPINLEFTANGLE
+ * @brief The MOTORSPINLEFTANGLE class is used to say for the robot to turn one specific angle in the left direction.
+ *
+ * This class reads the initial angle and compare with the giroscope for turn the angle specified in the left direction.
+ * It uses the algorithm of angle mesure correction to allow turn angles that are higher than one full turn.
+ */
+
+void MotorSpinLeftAngle(int spin) {  // Any angle
 
 	Moti.checkGyroscope();
 	
-	mcycle = int(spin/360);
+	fullTurns = int(spin/360);
 	spin = spin%360;
 
 	
-	for (int i = 0; i < mcycle; i++) {
+	for (int i = 0; i < fullTurns; i++) {
 
-		theta = Moti.getYPR(0);
-		delta = 0;
+		initialAngle = Moti.getYPR(0);
+		deviationAngle = 0;
 		
-		while (abs(delta - 360) > 5) { 	
+		while (abs(deviationAngle - 360) > 5) { 	
 
 		Moti.checkGyroscope();	
 
-		if(delta < 360){ Moti.spinLeft(); }
+		if(deviationAngle < 360){ Moti.spinLeft(); }
 	
 		else { Moti.spinRight(); }
 
-		angle = Moti.getYPR(0);
+		instantAngle = Moti.getYPR(0);
 
-		if (angle > theta){angle = angle - 360;}
+		if (instantAngle > initialAngle){instantAngle = instantAngle - 360;}	//Compensation for the signal change of the sensor at -180 and 180.
 		
-		delta = abs(angle - theta);
+		deviationAngle = abs(instantAngle - initialAngle);
 	
 		}
 
@@ -121,55 +142,61 @@ void MotorSpinLeftAngle(int spin) {  // Angle quelconque
 
 
 	Moti.checkGyroscope();
-	theta = Moti.getYPR(0);
-	delta = 0;
+	initialAngle = Moti.getYPR(0);
+	deviationAngle = 0;
 
 	
-	while (abs(delta - spin) > 5) { 	
+	while (abs(deviationAngle - spin) > 5) { 	
 
 		Moti.checkGyroscope();	
 
-		if(delta < spin){ Moti.spinLeft(); }
+		if(deviationAngle < spin){ Moti.spinLeft(); }		// During this time it did not reach the value, it continues turning. 
 	
-		else { Moti.spinRight(); }
+		else { Moti.spinRight(); }		// If for inercie it passes the exact value, it will return.
 
-		angle = Moti.getYPR(0);
+		instantAngle = Moti.getYPR(0);
 
-		if (angle > theta){angle = angle - 360;}
+		if (instantAngle > initialAngle){instantAngle = instantAngle - 360;}		//Compensation for the signal change of the sensor at -180 and 180.
 		
-		delta = abs(angle - theta);
+		deviationAngle = abs(instantAngle - initialAngle);
 
 	}
 
 	Moti.stop();
 	}
 
+/**
+ * @class SQUARE
+ * @brief The SQUARE class is used to describe for the robot what is the sequence of moviments to draw one square.
+ *
+ * The square is formed by the sequence of four straight moviments (same distance) followed by one turn of 90 degrees.
+ */
 
-void Square(int distance) {
+void Square(int distance) {			// Figure of one square according to the width.
 
 	Moti.goForward();
-	delay(100*distance); 			// Le coefficient 100 depend de la vitesse lineaire du moteur en fonction de distance en cm.            
+	delay(100*distance); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
+	Moti.stop();
+	delay(500);
+	
+	MotorSpinRightAngle(90);	
+	
+	Moti.goForward();
+	delay(100*distance); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
+	Moti.stop();
+	delay(500);
+
+	MotorSpinRightAngle(90);
+	
+	Moti.goForward();
+	delay(100*distance); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
 	Moti.stop();
 	delay(500);
 	
 	MotorSpinRightAngle(90);
 	
 	Moti.goForward();
-	delay(100*distance); 			// Le coefficient 100 depend de la vitesse lineaire du moteur en fonction de distance en cm.            
-	Moti.stop();
-	delay(500);
-
-	MotorSpinRightAngle(90);
-	
-	Moti.goForward();
-	delay(100*distance); 			// Le coefficient 100 depend de la vitesse lineaire du moteur en fonction de distance en cm.            
-	Moti.stop();
-	delay(500);
-	
-	MotorSpinRightAngle(90);
-	
-	Moti.goForward();
-	delay(100*distance); 			// Le coefficient 100 depend de la vitesse lineaire du moteur en fonction de distance en cm.            
+	delay(100*distance); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
 	Moti.stop();
 	delay(500);
 	
@@ -177,138 +204,168 @@ void Square(int distance) {
 
 	}
 
+/**
+ * @class RECTANGLE
+ * @brief The RECTANGLE class is used to describe for the robot what is the sequence of moviments to draw one rectangle.
+ *
+ * The square is formed by the sequence of four straight moviments (same distance 2 by 2) followed by one turn of 90 degrees.
+ */
 
-void Rectangle(int distance1, int distance2) {
+void Rectangle(int distance1, int distance2) {   // Figure of one rectangle according to the width and the length. 
 
 	Moti.goForward();
-	delay(100*distance1); 			// Le coefficient 100 depend de la vitesse lineaire du moteur en fonction de distance en cm.            
+	delay(100*distance1); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
 	Moti.stop();
 	delay(500);
 	MotorSpinRightAngle(90);
 	Moti.goForward();
-	delay(100*distance2); 			// Le coefficient 100 depend de la vitesse lineaire du moteur en fonction de distance en cm.            
+	delay(100*distance2); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
 	Moti.stop();
 	delay(500);
 	MotorSpinRightAngle(90);
 	Moti.goForward();
-	delay(100*distance1); 			// Le coefficient 100 depend de la vitesse lineaire du moteur en fonction de distance en cm.            
+	delay(100*distance1); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
 	Moti.stop();
 	delay(500);
 	MotorSpinRightAngle(90);
 	Moti.goForward();
-	delay(100*distance2); 			// Le coefficient 100 depend de la vitesse lineaire du moteur en fonction de distance en cm.            
+	delay(100*distance2); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
 	Moti.stop();
 	delay(500);
 	MotorSpinRightAngle(90);
 
 }
 
-void Cercle (int radius, int Cspeed) {
+/**
+ * @class CROSS
+ * @brief The CROSS class is used to describe for the robot what is the sequence of moviments to draw one cross.
+ *
+ * The cross is formed by four branches
+ */
 
-Cspeed = constrain(Cspeed, Moti.getMotorMinSpeed(), Moti.getMotorMaxSpeed());
+void Cross (int distance) {     // Figure of one cross depending on the size of its branches. 
 
-int _coeff = 1 - (0.1*0.1*Cspeed/255)/radius ;   // On considere distance entre roues = 0.1 et vitesse lineaire a 255 comme 0.1 m/s. 
-
-Moti.checkGyroscope();
-theta = Moti.getYPR(0);
-delta = 360;
-
-Moti.spinLeftWheel(Cspeed, 0);
-Moti.spinRightWheel(Cspeed * _coeff, 0); 	   // Radius egale a: distance entre roues * vitesse lineaire maximun / (1 - coeff)
-Moti.setMovingState(true);
-delay (1000);
-
-while (abs(delta) > 5){
-
-Moti.checkGyroscope();
-delta = Moti.getYPR(0) - theta;
-
-
-}
-
-
-Moti.stop();
-
-}
-
-void Croix (int distance) {
-
-Moti.goForward();
-delay(100*distance);
-Moti.goBackward();
-delay(100*distance);
-MotorSpinRightAngle(90);      // On marche une distance en centimetre, on revient et apres on tourne 90 degrees.
-Moti.goForward();
-delay(100*distance);
-Moti.goBackward();
-delay(100*distance);
-MotorSpinRightAngle(90);
-Moti.goForward();
-delay(100*distance);
-Moti.goBackward();
-delay(100*distance);
-MotorSpinRightAngle(90);
-Moti.goForward();
-delay(100*distance);
-Moti.goBackward();
-delay(100*distance);
-MotorSpinRightAngle(90);
+	Moti.goForward();
+	delay(100*distance);
+	Moti.goBackward();
+	delay(100*distance);
+	MotorSpinRightAngle(90);      // The robot runs the size of the branches, go back and turn 90 degrees to start the next branches.
+	Moti.goForward();
+	delay(100*distance);
+	Moti.goBackward();
+	delay(100*distance);
+	MotorSpinRightAngle(90);
+	Moti.goForward();
+	delay(100*distance);
+	Moti.goBackward();
+	delay(100*distance);
+	MotorSpinRightAngle(90);
+	Moti.goForward();
+	delay(100*distance);
+	Moti.goBackward();
+	delay(100*distance);
+	MotorSpinRightAngle(90);
 
 }
 
-void Spirale (int coeff, int Sspeed) {
+/**
+ * @class CIRCLE
+ * @brief The CIRCLE class is used to describe for the robot what is the sequence of moviments to draw one circle.
+ *
+ * The circle is formed by the diferences between the wheels speed (doing one angulair speed) that provoke one full turn with one specific radius.
+ */
 
-Sspeed = constrain(Sspeed, Moti.getMotorMinSpeed(), Moti.getMotorMaxSpeed());
-coeff = constrain(coeff, 1, 10);
+void Circle (int circleRadius, int circleSpeed) {
 
-for (int i = 2; i <= coeff ; i++) {
-Moti.spinLeftWheel(Sspeed, 0);
-Moti.spinRightWheel(Sspeed * (i*0.1), 0); 	   // Radius egale a: distance entre roues * vitesse lineaire maximun / (1 - coeff)
+	circleSpeed = constrain(circleSpeed, Moti.getMotorMinSpeed(), Moti.getMotorMaxSpeed());
 
-Moti.setMovingState(true);
+	int circleCoefficient = 1 - (0.1*0.1*circleSpeed/255)/circleRadius ;   // Had been considered the distances between the wheels = 0.1 meter and motor linear speed at 255 n considere distance entre roues = 0.1 et vitesse lineaire a 255 such as 0.1 m/s. 
 
-delay(2000); }   // Temps egale a 2*pi*Radius/Vitesse, d'où vitesse est egale a 0.1*speed/255
+	Moti.checkGyroscope();
+	initialAngle = Moti.getYPR(0);
+	deviationAngle = 360;
 
-Moti.stop();
+	Moti.spinLeftWheel(circleSpeed, 0);
+	Moti.spinRightWheel(circleSpeed * circleCoefficient, 0); 	   // Radius equal distance between wheels * maximun linear speed / (1 - coeff)
+	Moti.setMovingState(true);
+	delay (1000);
+
+	while (abs(deviationAngle) > 5){
+
+	Moti.checkGyroscope();
+	deviationAngle = Moti.getYPR(0) - initialAngle;
+
+	}
+
+	Moti.stop();
 
 }
+
+/**
+ * @class SPIRAL
+ * @brief The SPIRAL class is used to describe for the robot what is the sequence of moviments to draw one spiral.
+ *
+ * The spiral is formed by the diferences between the wheels speed (doing one angulair speed) that provoke some full turns with the instantaneous radius rising.
+ */
+
+void Spirale (int coeff, int spiralSpeed) {
+
+	spiralSpeed = constrain(spiralSpeed, Moti.getMotorMinSpeed(), Moti.getMotorMaxSpeed());
+	coeff = constrain(coeff, 1, 10);
+
+	for (int i = 2; i <= coeff ; i++) {
+	Moti.spinLeftWheel(spiralSpeed, 0);
+	Moti.spinRightWheel(spiralSpeed * (i*0.1), 0); 	   // Radius equal the distance between wheels * maximun linear speed / (1 - coeff)
+
+	Moti.setMovingState(true);
+
+	delay(2000); }   // Time equal the 2*pi*Radius/Speed, where speed is equal to 0.1*speed/255
+
+	Moti.stop();
+
+}
+
+/**
+ * @class BEHAVIOUR
+ * @brief The BEHAVIOUR class is used to join the drawings in a desired behaviour.
+ */
 
 void Behaviour (){
 
-Moti.blinkLed(0,0,255,5,250);
-Moti.printRgbColor(0,0,255);
-Square(20);	
-Moti.blinkLed(0,0,255,5,250);
-Moti.printRgbColor(0,0,255);
-Square(60);	
+	Moti.blinkLed(0,0,255,5,250);
+	Moti.printRgbColor(0,0,255);
+	Square(20);	
+	Moti.blinkLed(0,0,255,5,250);
+	Moti.printRgbColor(0,0,255);
+	Square(60);	
 
-Moti.blinkLed(255,0,0,5,250);
-Moti.printRgbColor(255, 0, 0);		
-Spirale (7,255);
-Moti.blinkLed(255,0,0,5,250);
-Moti.printRgbColor(255, 0, 0);		
-Spirale (10,255);
+	Moti.blinkLed(255,0,0,5,250);
+	Moti.printRgbColor(255, 0, 0);		
+	Spirale (7,255);
+	Moti.blinkLed(255,0,0,5,250);
+	Moti.printRgbColor(255, 0, 0);		
+	Spirale (10,255);
 
-Moti.blinkLed(0,255,0,5,250);
-Moti.printRgbColor(0, 255, 0);
-Croix(30);
-Moti.blinkLed(0,255,0,5,250);
-Moti.printRgbColor(0, 255, 0);		
-Croix(50);
+	Moti.blinkLed(0,255,0,5,250);
+	Moti.printRgbColor(0, 255, 0);
+	Cross(30);
+	Moti.blinkLed(0,255,0,5,250);
+	Moti.printRgbColor(0, 255, 0);		
+	Cross(50);
 
-Moti.blinkLed(0,255,255,5,250);
-Moti.printRgbColor(0,255,255);			
-Rectangle(20,40);	
-Moti.blinkLed(0,0,255,5,250);
-Moti.printRgbColor(0,0,255);
-Rectangle(60,100);	
+	Moti.blinkLed(0,255,255,5,250);
+	Moti.printRgbColor(0,255,255);			
+	Rectangle(20,40);	
+	Moti.blinkLed(0,0,255,5,250);
+	Moti.printRgbColor(0,0,255);
+	Rectangle(60,100);	
 
-Moti.blinkLed(255,0,255,5,250);
-Moti.printRgbColor(255, 0, 255);		
-Cercle(40,255);
-Moti.blinkLed(255,0,255,5,250);
-Moti.printRgbColor(255, 0, 255);		
-Cercle(70,255);
+	Moti.blinkLed(255,0,255,5,250);
+	Moti.printRgbColor(255, 0, 255);		
+	Circle(40,255);
+	Moti.blinkLed(255,0,255,5,250);
+	Moti.printRgbColor(255, 0, 255);		
+	Circle(70,255);
 
 }
 
@@ -329,9 +386,13 @@ void setup() {
 
 void loop() {
 	
-
-delay(2000);
-Behaviour();
+	delay(2000);
+	MotorSpinLeftAngle(360);
+	delay(2000);
+	MotorSpinRightAngle(720);
+	delay(2000);
+	MotorSpinLeftAngle(1080);
+	//Behaviour();
 
 }
 

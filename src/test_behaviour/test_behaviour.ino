@@ -3,6 +3,12 @@
 //	COPYRIGHT WE ARE LEKA! - SOURCE CODE DISTRIBUTED UNDER MIT LICENCE	//
 //######################################################################//
 
+/**
+ * @file behaviour.ino
+ * @brief behaviour.ino is used for describe the interaction of the robot in diferents emotion states.
+ * @author Luan Ferrari
+ * @version 1.0
+ */
 
 //###########//
 // LIBRARIES //
@@ -28,37 +34,43 @@ String status;
 
 MOTI Moti = MOTI();
 
+Moti.ColorName BLUE;
+
+
+/**
+ * @class BEHAVIOUR
+ * @brief The BEHAVIOUR class represents the 
+ *
+ * This class defines the interaction between the robot and the users to show the emotions. 
+ */
 
 
 void behaviour() {
 
 
-switch (status) {
+switch (status) {      //@ Choose the interactions between the toy, sensors and actuators for simulate the human fillings.
 
 	
-	case happy: 
+	case "happy": 
 
-	Moti.
-
-
-
-
-	case sad: 
-
-
+	Moti.blinkLed(BLUE, 3, 500);
+	Moti.blinkLed(GREEN, 3, 500);
+	Moti.blinkLed(YELLOW, 3, 500);
+	Moti.blinkLed(BLUE, 3, 500);
+	Moti.blinkLed(GREEN, 3, 500);
+	Moti.blinkLed(YELLOW, 3, 500);
 
 
 
 
-	case stressed:
+	case "sad": 
 
 
 
 
 
 
-
-	case lazy:
+	case "stressed":
 
 
 
@@ -66,7 +78,7 @@ switch (status) {
 
 
 
-	case tired:
+	case "lazy":
 
 
 
@@ -74,7 +86,15 @@ switch (status) {
 
 
 
-	case excited:
+	case "tired":
+
+
+
+
+
+
+
+	case "excited":
 
 }
 
@@ -98,8 +118,8 @@ void setup() {
 
 void loop() {
 
-interaction();
-Serial.println(status);
+status = "happy";
+behaviour();
 
 }
 
