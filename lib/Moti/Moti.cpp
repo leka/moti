@@ -1,12 +1,5 @@
-#include "Moti.h"
-
-#include "Moti_Constants.cpp"
-#include "Moti_Data.cpp"
-#include "Moti_Led.cpp"
-#include "Moti_Motors.cpp"
-#include "Moti_State.cpp"
-
-#include "Arduino.h"
+#include <Arduino.h>
+#include <Moti.h>
 
 
 //##############//
@@ -14,9 +7,9 @@
 //##############//
 
 /**
- * @brief MOTI Class Constructor
+ * @brief Moti Class Constructor
  */
-MOTI::MOTI(){}
+Moti::Moti(){}
 
 /**
  * @brief Initialization method
@@ -24,24 +17,16 @@ MOTI::MOTI(){}
  * init() initialized everything at the beginning of the program. It must be called inside void setup().
  * The list of all the methods it calls is as follow: Serial.begin(), initializeConstants(), initializeLed(), initializeStates(), Wire.begin(), AccelGyro.init(), initiliazeMotors().
  */
-void MOTI::init(){
+void Moti::init(Sensors& sensors, Motors& motors, Led& led){
 	delay(500);
 	Serial.begin(115200);
 	delay(50);
-	blinkLed(RAND, 2, 200);
 	delay(50);
-	initializeConstants();
+	led.init();
 	delay(50);
-	Wire.begin();
+	motors.init();
 	delay(50);
-	AccelGyro.init();
-	delay(50);
-	initializeLed();
-	delay(50);
-	initializeStates();
-	delay(50);
-	initializeMotors();
-	blinkLed(RAND, 4, 200);
+	sensors.init();
 	delay(50);
 }
 
@@ -55,34 +40,20 @@ void MOTI::init(){
  *
  * For example, if the serial outputs "SC" --> "CST" --> "WIRE", it means that IMU is failing and needs a fix.
  */
-void MOTI::initVerbose(){
+void Moti::initDebug(Sensors& sensors, Motors& motors, Led& led){
 	delay(500);
 	Serial.begin(115200);
-	delay(100);
-	Serial.println();
-	Serial.println(F("SC"));
-	delay(100);
-	blinkLed(RAND, 2, 200);
-	delay(100);
-	initializeConstants();
-	Serial.println(F("CST"));
-	delay(100);
-	Wire.begin();
-	Serial.println(F("WIRE"));
-	delay(100);
-	AccelGyro.init();
-	Serial.println(F("IMU"));
-	delay(100);
-	initializeLed();
-	Serial.println(F("LED"));
-	delay(100);
-	initializeStates();
-	Serial.println(F("STATES"));
-	delay(100);
-	initializeMotors();
-	Serial.println(F("MOTORS"));
-	blinkLed(RAND, 4, 200);
-	delay(20);
+	Serial.println("SC");
+	delay(50);
+	led.init();
+	Serial.println("LED");
+	delay(50);
+	motors.init();
+	Serial.println("MOTORS");
+	delay(50);
+	sensors.init();
+	Serial.println("IMU");
+	delay(50);
 }
 
 
@@ -91,28 +62,13 @@ void MOTI::initVerbose(){
 //#########//
 
 /**
- * @brief Setting all outputs to LOW
- *
- * setAllToLow() is used at in init() to set all output pins to LOW. This makes sure the led are off and the motors are not running.
- */
-void MOTI::setAllToLow(){
-	digitalWrite(leftMotorSpeedPin, 0);
-	digitalWrite(rightMotorSpeedPin, 0);
-	digitalWrite(leftMotorDirectionPin, 0);
-	digitalWrite(rightMotorDirectionPin, 0);
-	digitalWrite(RED_PIN, 0);
-	digitalWrite(GREEN_PIN, 0);
-	digitalWrite(BLUE_PIN, 0);
-}
-
-/**
  * @brief Reseting software
  *
  * softwareReset() resets the program so that it can restart before the void setup().
  * It may be used if you don't know how much time has passed since the last awaken state.
  * The environment may have change, so going through the void setup() again is required to re- init() everything.
  */
-void MOTI::softwareReset() {
+void Moti::softwareReset() {
 	asm volatile ("  jmp 0");
 }
 

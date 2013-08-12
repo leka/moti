@@ -7,9 +7,11 @@ BOARD_TAG         = uno
 ### don't change this, our Serial communication are always using the 115200 baudrate
 MONITOR_BAUDRATE  = 115200
 
-### this is the path to the Arduino-Makefile directory.
-ARDMK_DIR         = /Users/Ladislas/dev/leka/moti/arduino-makefile
+### path to where you cloned the moti repository
+PROJECT_DIR       = /Users/Ladislas/dev/leka/moti
 
+### this is the path to the Arduino-Makefile directory.
+ARDMK_DIR         = $(PROJECT_DIR)/arduino-makefile
 
 ### path to the Arduino.app directory.
 ### or linux, use something like:
@@ -27,9 +29,6 @@ AVRDDUDE          = /usr/local/bin/avrdude
 
 ### connect your arduino, open the IDE and look for the port
 MONITOR_PORT      = /dev/tty.usbmodemfa131
-
-### path to where you clone the moti repository
-PROJECT_DIR       = /Users/Ladislas/dev/leka/moti
 
 ### don't touch this
 CURRENT_DIR       = $(shell basename $(CURDIR))

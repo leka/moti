@@ -23,12 +23,14 @@ From now on, the old moti versions (moti_1 & moti_2) are **deprecated** and will
 
 We are building a super class called `MOTI` to simplify the development of the robot behaviors. To put it in a nut shell, it will look like that:
 
-	Moti.goForward(); //Moti goes forward
-	Moti.stop();
-	Moti.spinRight();
-	Moti.blinkLed(5); //the led blink 5 times
-	Moti.checkSensors();
-	Moti.sendData();
+```C++
+motors.goForward(); //Moti goes forward
+motors.stop();
+motors.spinRight();
+led.blinkLed(5); //the led blink 5 times
+sensors.checkSensors();
+Moti.sendData();
+```
 
 It is a lot easier for everyone to write code and to understand what you do. It is also easier for the other people who will read your code to understand what you're trying to do.
 

@@ -1,5 +1,5 @@
 //ARDUINO 1.0 COMPATIBLE ONLY!
-The code is provided under the MIT license please use, edit, change, and share. 
+The code is provided under the MIT license please use, edit, change, and share.
 
 Big Thanks to varesano.net for the freeimu code this is based off of.
 
