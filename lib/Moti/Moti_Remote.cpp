@@ -1,26 +1,64 @@
-#include "Moti.h"
-#include "Arduino.h"
+#include <Arduino.h>
+#include <Moti.h>
 
 //##############################//
 // REMOTE CONTROL FROM COMPUTER //
 //##############################//
 
-/**
- * @brief Display the help options when using remote control from the Arduino Serial Monitor
- */
-void MOTI::remoteDisplayHelp(){
-	Serial.println(F("\n========== Moti's Help =========="));
-	Serial.println(F("h       ---> Show help"));
-	Serial.println(F("r       ---> Enable remote control of the robot"));
-	Serial.println(F("d       ---> Send sensors data"));
-	Serial.println(F("m       ---> Enter machine learning mode"));
-	Serial.println(F("M       ---> Exit machine learning mode"));
-	Serial.println(F("L/r/g/b ---> Output color with led (e.g. L/125/26/213)"));
-	Serial.println(F("f       ---> Go forward"));
-	Serial.println(F("F/speed ---> Go forward at chosen speed (e.g. F/200)"));
-	Serial.println(F("b       ---> Go backward"));
-	Serial.println(F("B/speed ---> Go backward at chosen speed (e.g. F/200)"));
-	Serial.println(F("q       ---> Quit remote control"));
+
+void Moti::readCommands(Motors& motors, Led& led, Sensors& sensors){
+	while(Serial.available() > 0){
+
+		uint8_t numberOfActions;
+
+		// Read first byte of stream.
+		uint8_t recievedByte = Serial.read();
+
+		// If first byte is equal to dataHeader, start recording
+		if(recievedByte == DATA_HEADER){
+			delay(10);
+
+			Serial.write(READY_TO_ANSWER);
+
+			delay(200);
+
+			// Get the number of actions to execute
+			numberOfActions = Serial.read();
+
+			// Execute each actions
+			for (uint8_t i = 0 ; i < numberOfActions ; i++){
+				uint8_t actionType;
+				uint8_t numberData;
+				uint8_t dataBuffer[10];
+
+				// Get action type
+				actionType = Serial.read();
+
+				// Get number of data
+				numberData = Serial.read();
+
+				// For each data, store them in dataBuffer
+				for(uint8_t j ; j < numberData ; j++){
+					dataBuffer[j] = Serial.read();
+					delay(10);
+				}
+
+				if(actionType == 0x01 && actionType != DATA_FOOTER){
+					motors.spinRightWheel(dataBuffer[0], dataBuffer[1]);
+				}
+				else if(actionType == 0x02 && actionType != DATA_FOOTER){
+					motors.spinLeftWheel(dataBuffer[0], dataBuffer[1]);
+				}
+				else if(actionType == 0x03 && actionType != DATA_FOOTER){
+					led.printRgb(dataBuffer[0], dataBuffer[1], dataBuffer[2]);
+				}
+				else if(actionType == 0x04 && actionType != DATA_FOOTER){
+					sensors.checkSensors();
+					sendBinaryData(sensors);
+				}
+			}
+		}
+	}
 }
 
 /**
@@ -28,7 +66,7 @@ void MOTI::remoteDisplayHelp(){
  *
  * Command are send as bytes and note as ASCII characters. Therefore, to activate the remote, you have to press "r" from the Arduino Serial Monitor or send a byte with the value "114" otherwise.
  */
-void MOTI::serialServer(){
+void Moti::serialServer(){
 	if(getRemoteState() == false){
 		while(Serial.available() > 0){
 			byte recievedByte = Serial.read();
@@ -54,14 +92,13 @@ void MOTI::serialServer(){
  * It treats and interprets the serial byte to execute certain commands.
  * Read the code to know exactly what should be send and the corresponding action.
  */
-void MOTI::serialRouter(){
+void Moti::serialRouter(){
 	while(getRemoteState() == true){
 
 		while(Serial.available() > 0){
 			byte recievedByte = Serial.read();
 
 			if(recievedByte == 104){ ///< corresponds to the letter h in Arduino Serial Monitor
-				remoteDisplayHelp();
 			}
 			else if(recievedByte == 114){ ///< corresponds to the letter r in Arduino Serial Monitor
 				Serial.println(F("Remote control is already activated"));
@@ -69,15 +106,15 @@ void MOTI::serialRouter(){
 			}
 			else if(recievedByte == 100){ ///< corresponds to the letter d in Arduino Serial Monitor
 				Serial.println(F("Sending data as JSON"));
-				checkSensors();
-				sendDataJson();
+				sensors.checkSensors();
+				sendJson();
 			}
 			else if(recievedByte == 109){ ///< corresponds to the letter m in Arduino Serial Monitor
 				Serial.println(F("Entering Machine Learning state"));
 				setLearningState(true);
 				while(getLearningState() == true){
-					checkSensors();
-					sendDataJson();
+					sensors.checkSensors();
+					sendJson();
 					delay(getLoopDelay());
 					while(Serial.available() > 0){
 						byte recievedByte = Serial.read();

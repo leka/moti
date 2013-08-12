@@ -1,0 +1,20 @@
+#include <Arduino.h>
+#include <Speakers.h>
+
+/**
+ * @file Speakers.cpp
+ * @author Ladislas de Toldi
+ * @version 1.0
+ */
+
+
+// CONSTRUCTORS //
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Speakers Class Constructor
+ */
+Speakers::Speakers(){
+
+}
