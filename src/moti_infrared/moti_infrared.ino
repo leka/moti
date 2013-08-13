@@ -3,6 +3,12 @@
 //	COPYRIGHT WE ARE LEKA! - SOURCE CODE DISTRIBUTED UNDER MIT LICENCE	//
 //######################################################################//
 
+/**
+ * @file moti_infrared.ino
+ * @brief moti_infrared.ino is used for define the robot behaviours need to draw one figure.
+ * @author Luan Ferrari
+ * @version 1.0
+ */
 
 //###########//
 // LIBRARIES //
@@ -41,7 +47,7 @@ int readAvance, readGauche, readDroite;
 
 void infraRedDetection (int n) {
 
-int some1 = 0, some2 = 0, some3 = 0;
+int some1 = 0, some2 = 0, some3 = 0;   //Auxiliaire Variables
 
 for (int i = 1; i<=n; i++){
 
@@ -66,7 +72,7 @@ readDroite = some3/n; 			 // @ Median mesure for filter the extremes values.
 
 void infraRedBehaviour() {
 
-Moti.stop();
+Motors.stop();
 int aux1, aux2, aux3;		// @ Auxiliaires Variables for save the informations of the past and allows to analyse and calculate the dynamics.
 infraRedDetection(10);
 aux1 = readAvance;
@@ -81,7 +87,7 @@ int mod = sqrt((readAvance - aux1)*(readAvance - aux1) + (readGauche - aux2)*(re
 
 if (readAvance > ((readDroite + readGauche)/2) + 100) {   // @ Comparation between goForward and goBackward in fonction of the three infrared sensors.
 
-	Moti.goForward();
+	Motors.goForward();
 	delay (100);
 
 }
@@ -89,7 +95,7 @@ if (readAvance > ((readDroite + readGauche)/2) + 100) {   // @ Comparation betwe
 
 else if (readAvance + 100 < ((readDroite + readGauche)/2)) {   // @ Comparation between goForward and goBackward in fonction of the three infrared sensors.
 
-	Moti.goBackward();
+	Motors.goBackward();
 	delay (100);
 
 }

@@ -3,6 +3,12 @@
 //	COPYRIGHT WE ARE LEKA! - SOURCE CODE DISTRIBUTED UNDER MIT LICENCE	//
 //######################################################################//
 
+/**
+ * @file moti_sound.ino
+ * @brief moti_sound.ino is used for define the robot behaviours need to draw one figure.
+ * @author Luan Ferrari
+ * @version 1.0
+ */
 
 //###########//
 // LIBRARIES //
@@ -46,7 +52,9 @@ MOTI Moti = MOTI();
 
 int port = 3;
 
-// Informations de Melodies !!!
+
+
+// Songs Informations #Constants !!!
 
 
 	// SUPER MARIO BROS (Array de Frequence)  
@@ -82,10 +90,16 @@ int port = 3;
 	// Musique 3 - 
 
 
+/**
+ * @class SOUND
+ * @brief The SOUND class is used to sing the sounds with 3 parameters.
+ *
+ * This class reads the 3 parameters of one array and sing a song according to the note array, the duration array and the pause array in each cycle. 
+ */
 
-void Sound(int melody[], int duration[], int pause[]){ // Fonction pour jouer les Melodies en Array de Frequence
+void Sound(int melody[], int duration[], int pause[]){ // Function to play the Melodies Array
 
-	for (int nota = 0; nota < 24; nota++) {   // Sound est en fonction de frequence, duration du son avec cette frequence et la pause apres la duration. 
+	for (int nota = 0; nota < 24; nota++) {   // Sound is based on frequency, duration of sound with the frequency and duration after the break.
  
         int dur = duration[nota];
         tone(port, 2*melody[nota],dur);
@@ -98,8 +112,14 @@ void Sound(int melody[], int duration[], int pause[]){ // Fonction pour jouer le
 
 }
 
+/**
+ * @class SOUND
+ * @brief The SOUND class is used to sing the sounds with 3 parameters.
+ *
+ * This class reads the 2 parameters of one array and sing a song according to the time (frequency) array and the number of cycles in this frequency. 
+ */
 
-void sound(int time, int repeat) {		// Fonction pour jouer les Melodies en Array de Frequence
+void sound(int time, int repeat) {		// Function to play the Melodies Array
 
 	for (int i = 1; i <= (repeat - 2) ; i++) {
 		analogWrite(port,255);
@@ -112,16 +132,12 @@ void sound(int time, int repeat) {		// Fonction pour jouer les Melodies en Array
 
 }
 
-
-void music(float sing[156][3]){
-
-	for (int i = 0; i<=155; i++){
-
-		sound(int(sing[i][0]/sing[i][1]), (1000000*sing[i][2])/(sing[i][0]));
-
-	}
-
-}
+/**
+ * @class MUSIC
+ * @brief The MUSIC class is used to sing the sounds with 2 parameters.
+ *
+ * This class automates the using of the class sound to read one array of sounds. 
+ */
 
 void music(int melody[], float temps[]){
 
@@ -132,6 +148,13 @@ void music(int melody[], float temps[]){
 	}
 
 }
+
+/**
+ * @class MUSIC
+ * @brief The MUSIC class is used to sing the sounds with 3 parameters.
+ *
+ * This class automates the using of the class sound to read one array of sounds. 
+ */
 
 void music(int melody[], int tone[], float temps[]){
 
@@ -144,6 +167,18 @@ void music(int melody[], int tone[], float temps[]){
 	}
 
 }
+
+
+void music (int power, int repeat) {
+
+}
+
+/**
+ * @class NOTE
+ * @brief The NOTE class is used to sing the sound according by the note declaration.
+ *
+ * This class uses the information of notes and the duration according by the number of divisions of one second that this note will be singed and nivel like one parameter of the harmonics that are used. 
+ */
 
 void Note (int note, int niveau, int division){
 	delayMicroseconds(10000);
@@ -162,8 +197,6 @@ void Note (int note){
 	sound(note,(490000/note));
 }
 
-
-void music (int power, int repeat) { }
 
 //#######//
 // SETUP //

@@ -4,8 +4,8 @@
 //######################################################################//
 
 /**
- * @file behaviour.ino
- * @brief behaviour.ino is used for describe the interaction of the robot in diferents emotion states.
+ * @file moti_behaviour.ino
+ * @brief moti_behaviour.ino is used for describe the interaction of the robot in diferents emotion states.
  * @author Luan Ferrari
  * @version 1.0
  */
@@ -53,12 +53,6 @@ switch (status) {      //@ Choose the interactions between the toy, sensors and 
 	
 	case "happy": 
 
-	Moti.blinkLed(BLUE, 3, 500);
-	Moti.blinkLed(GREEN, 3, 500);
-	Moti.blinkLed(YELLOW, 3, 500);
-	Moti.blinkLed(BLUE, 3, 500);
-	Moti.blinkLed(GREEN, 3, 500);
-	Moti.blinkLed(YELLOW, 3, 500);
 
 
 

@@ -4,8 +4,8 @@
 //######################################################################//
 
 /**
- * @file figures.ino
- * @brief figures.ino is used for define the robot behaviours need to draw one figure.
+ * @file moti_figures.ino
+ * @brief moti_figures.ino is used for define the robot behaviours need to draw one figure.
  * @author Luan Ferrari
  * @version 1.0
  */
@@ -44,7 +44,7 @@ MOTI Moti = MOTI();
 
 void MotorSpinRightAngle(int spin) { // Faire une fonction de spin avec un angle quelconque. 
 	
-	Moti.checkGyroscope();
+	Sensors.checkGyroscope();
 	
 	fullTurns = int(spin/360);   // Partie entier avec les quantités des tours complet. 
 	spin = spin%360;          // Reste avec l'angle mineur que un tour. 
@@ -52,18 +52,18 @@ void MotorSpinRightAngle(int spin) { // Faire une fonction de spin avec un angle
 	
 	for (int i = 0; i < fullTurns; i++) {    //Faire des tours complet
 
-		initialAngle = Moti.getYPR(0);
+		initialAngle = Sensors.getYPR(0);
 		deviationAngle = 0;
 		
 		while (abs(deviationAngle - 360) > 5) { 	
 
-		Moti.checkGyroscope();	
+		Sensors.checkGyroscope();	
 
-		if(deviationAngle < 360){ Moti.spinRight(); }
+		if(deviationAngle < 360){ Motors.spinRight(); }
 	
-		else { Moti.spinLeft(); }
+		else { Motors.spinLeft(); }
 
-		instantAngle = Moti.getYPR(0);
+		instantAngle = Sensors.getYPR(0);
 
 		if (instantAngle < initialAngle){instantAngle = instantAngle + 360;}     //Compensation for the signal change of the sensor at -180 and 180.
 		
@@ -75,27 +75,27 @@ void MotorSpinRightAngle(int spin) { // Faire une fonction de spin avec un angle
 	}
 
 
-	Moti.checkGyroscope();
-	initialAngle = Moti.getYPR(0);
+	Sensors.checkGyroscope();
+	initialAngle = Sensors.getYPR(0);
 	deviationAngle = 0;
 	
 
 	while (abs(deviationAngle - spin) > 5) { 	
 
-		Moti.checkGyroscope();	
+		Sensors.checkGyroscope();	
 
-		if(deviationAngle < spin){ Moti.spinRight(); }		// During this time it did not reach the value, it continues turning. 
+		if(deviationAngle < spin){ Motors.spinRight(); }		// During this time it did not reach the value, it continues turning. 
 	
-		else { Moti.spinLeft(); }			// If for inercie it passes the exact value, it will return.
+		else { Motors.spinLeft(); }			// If for inercie it passes the exact value, it will return.
 
-		instantAngle = Moti.getYPR(0);
+		instantAngle = Sensors.getYPR(0);
 
 		if (instantAngle < initialAngle){instantAngle = instantAngle + 360;}        //Compensation for the signal change of the sensor at -180 and 180.
 		deviationAngle = abs(instantAngle - initialAngle);
 
 	}
 
-	Moti.stop();
+	Motors.stop();
 
 	}
 
@@ -109,6 +109,7 @@ void MotorSpinRightAngle(int spin) { // Faire une fonction de spin avec un angle
  */
 
 void MotorSpinLeftAngle(int spin) {  // Any angle
+
 
 	Moti.checkGyroscope();
 	
@@ -137,24 +138,23 @@ void MotorSpinLeftAngle(int spin) {  // Any angle
 	
 		}
 
-	
 	}
 
 
-	Moti.checkGyroscope();
-	initialAngle = Moti.getYPR(0);
+	Sensors.checkGyroscope();
+	initialAngle = Sensors.getYPR(0);
 	deviationAngle = 0;
 
 	
 	while (abs(deviationAngle - spin) > 5) { 	
 
-		Moti.checkGyroscope();	
+		Sensors.checkGyroscope();	
 
-		if(deviationAngle < spin){ Moti.spinLeft(); }		// During this time it did not reach the value, it continues turning. 
+		if(deviationAngle < spin){ Motors.spinLeft(); }		// During this time it did not reach the value, it continues turning. 
 	
-		else { Moti.spinRight(); }		// If for inercie it passes the exact value, it will return.
+		else { Motors.spinRight(); }		// If for inercie it passes the exact value, it will return.
 
-		instantAngle = Moti.getYPR(0);
+		instantAngle = Sensors.getYPR(0);
 
 		if (instantAngle > initialAngle){instantAngle = instantAngle - 360;}		//Compensation for the signal change of the sensor at -180 and 180.
 		
@@ -162,7 +162,8 @@ void MotorSpinLeftAngle(int spin) {  // Any angle
 
 	}
 
-	Moti.stop();
+	Motors.stop();
+
 	}
 
 /**
@@ -174,30 +175,30 @@ void MotorSpinLeftAngle(int spin) {  // Any angle
 
 void Square(int distance) {			// Figure of one square according to the width.
 
-	Moti.goForward();
+	Motors.goForward();
 	delay(100*distance); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
-	Moti.stop();
+	Motors.stop();
 	delay(500);
 	
 	MotorSpinRightAngle(90);	
 	
-	Moti.goForward();
+	Motors.goForward();
 	delay(100*distance); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
-	Moti.stop();
+	Motors.stop();
 	delay(500);
 
 	MotorSpinRightAngle(90);
 	
-	Moti.goForward();
+	Motors.goForward();
 	delay(100*distance); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
-	Moti.stop();
+	Motors.stop();
 	delay(500);
 	
 	MotorSpinRightAngle(90);
 	
-	Moti.goForward();
+	Motors.goForward();
 	delay(100*distance); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
-	Moti.stop();
+	Motors.stop();
 	delay(500);
 	
 	MotorSpinRightAngle(90);
@@ -213,24 +214,24 @@ void Square(int distance) {			// Figure of one square according to the width.
 
 void Rectangle(int distance1, int distance2) {   // Figure of one rectangle according to the width and the length. 
 
-	Moti.goForward();
+	Motors.goForward();
 	delay(100*distance1); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
-	Moti.stop();
+	Motors.stop();
 	delay(500);
 	MotorSpinRightAngle(90);
-	Moti.goForward();
+	Motors.goForward();
 	delay(100*distance2); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
-	Moti.stop();
+	Motors.stop();
 	delay(500);
 	MotorSpinRightAngle(90);
-	Moti.goForward();
+	Motors.goForward();
 	delay(100*distance1); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
-	Moti.stop();
+	Motors.stop();
 	delay(500);
 	MotorSpinRightAngle(90);
-	Moti.goForward();
+	Motors.goForward();
 	delay(100*distance2); 			// The coefficient 100 depends of the linear speed of the motor according to the distance.
-	Moti.stop();
+	Motors.stop();
 	delay(500);
 	MotorSpinRightAngle(90);
 
@@ -245,24 +246,24 @@ void Rectangle(int distance1, int distance2) {   // Figure of one rectangle acco
 
 void Cross (int distance) {     // Figure of one cross depending on the size of its branches. 
 
-	Moti.goForward();
+	Motors.goForward();
 	delay(100*distance);
-	Moti.goBackward();
+	Motors.goBackward();
 	delay(100*distance);
 	MotorSpinRightAngle(90);      // The robot runs the size of the branches, go back and turn 90 degrees to start the next branches.
-	Moti.goForward();
+	Motors.goForward();
 	delay(100*distance);
-	Moti.goBackward();
-	delay(100*distance);
-	MotorSpinRightAngle(90);
-	Moti.goForward();
-	delay(100*distance);
-	Moti.goBackward();
+	Motors.goBackward();
 	delay(100*distance);
 	MotorSpinRightAngle(90);
-	Moti.goForward();
+	Motors.goForward();
 	delay(100*distance);
-	Moti.goBackward();
+	Motors.goBackward();
+	delay(100*distance);
+	MotorSpinRightAngle(90);
+	Motors.goForward();
+	delay(100*distance);
+	Motors.goBackward();
 	delay(100*distance);
 	MotorSpinRightAngle(90);
 
@@ -277,27 +278,27 @@ void Cross (int distance) {     // Figure of one cross depending on the size of 
 
 void Circle (int circleRadius, int circleSpeed) {
 
-	circleSpeed = constrain(circleSpeed, Moti.getMotorMinSpeed(), Moti.getMotorMaxSpeed());
+	circleSpeed = constrain(circleSpeed, Motors.getMotorMinSpeed(), Motors.getMotorMaxSpeed());
 
 	int circleCoefficient = 1 - (0.1*0.1*circleSpeed/255)/circleRadius ;   // Had been considered the distances between the wheels = 0.1 meter and motor linear speed at 255 n considere distance entre roues = 0.1 et vitesse lineaire a 255 such as 0.1 m/s. 
 
-	Moti.checkGyroscope();
-	initialAngle = Moti.getYPR(0);
+	Sensors.checkGyroscope();
+	initialAngle = Sensors.getYPR(0);
 	deviationAngle = 360;
 
-	Moti.spinLeftWheel(circleSpeed, 0);
-	Moti.spinRightWheel(circleSpeed * circleCoefficient, 0); 	   // Radius equal distance between wheels * maximun linear speed / (1 - coeff)
-	Moti.setMovingState(true);
+	Motors.spinLeftWheel(circleSpeed, 0);
+	Motors.spinRightWheel(circleSpeed * circleCoefficient, 0); 	   // Radius equal distance between wheels * maximun linear speed / (1 - coeff)
+	Motors.setMovingState(true);
 	delay (1000);
 
 	while (abs(deviationAngle) > 5){
 
-	Moti.checkGyroscope();
-	deviationAngle = Moti.getYPR(0) - initialAngle;
+	Sensors.checkGyroscope();
+	deviationAngle = Sensors.getYPR(0) - initialAngle;
 
 	}
 
-	Moti.stop();
+	Motors.stop();
 
 }
 
@@ -310,18 +311,18 @@ void Circle (int circleRadius, int circleSpeed) {
 
 void Spirale (int coeff, int spiralSpeed) {
 
-	spiralSpeed = constrain(spiralSpeed, Moti.getMotorMinSpeed(), Moti.getMotorMaxSpeed());
+	spiralSpeed = constrain(spiralSpeed, Motors.getMotorMinSpeed(), Motors.getMotorMaxSpeed());
 	coeff = constrain(coeff, 1, 10);
 
 	for (int i = 2; i <= coeff ; i++) {
-	Moti.spinLeftWheel(spiralSpeed, 0);
-	Moti.spinRightWheel(spiralSpeed * (i*0.1), 0); 	   // Radius equal the distance between wheels * maximun linear speed / (1 - coeff)
+	Motors.spinLeftWheel(spiralSpeed, 0);
+	Motors.spinRightWheel(spiralSpeed * (i*0.1), 0); 	   // Radius equal the distance between wheels * maximun linear speed / (1 - coeff)
 
-	Moti.setMovingState(true);
+	Motors.setMovingState(true);
 
 	delay(2000); }   // Time equal the 2*pi*Radius/Speed, where speed is equal to 0.1*speed/255
 
-	Moti.stop();
+	Motors.stop();
 
 }
 
@@ -332,39 +333,39 @@ void Spirale (int coeff, int spiralSpeed) {
 
 void Behaviour (){
 
-	Moti.blinkLed(0,0,255,5,250);
-	Moti.printRgbColor(0,0,255);
+	Leds.blinkLed(0,0,255,5,250);
+	Leds.printRgbColor(0,0,255);
 	Square(20);	
-	Moti.blinkLed(0,0,255,5,250);
-	Moti.printRgbColor(0,0,255);
+	Leds.blinkLed(0,0,255,5,250);
+	Leds.printRgbColor(0,0,255);
 	Square(60);	
 
-	Moti.blinkLed(255,0,0,5,250);
-	Moti.printRgbColor(255, 0, 0);		
+	Leds.blinkLed(255,0,0,5,250);
+	Leds.printRgbColor(255, 0, 0);		
 	Spirale (7,255);
-	Moti.blinkLed(255,0,0,5,250);
-	Moti.printRgbColor(255, 0, 0);		
+	Leds.blinkLed(255,0,0,5,250);
+	Leds.printRgbColor(255, 0, 0);		
 	Spirale (10,255);
 
-	Moti.blinkLed(0,255,0,5,250);
-	Moti.printRgbColor(0, 255, 0);
+	Leds.blinkLed(0,255,0,5,250);
+	Leds.printRgbColor(0, 255, 0);
 	Cross(30);
-	Moti.blinkLed(0,255,0,5,250);
-	Moti.printRgbColor(0, 255, 0);		
+	Leds.blinkLed(0,255,0,5,250);
+	Leds.printRgbColor(0, 255, 0);		
 	Cross(50);
 
-	Moti.blinkLed(0,255,255,5,250);
-	Moti.printRgbColor(0,255,255);			
+	Leds.blinkLed(0,255,255,5,250);
+	Leds.printRgbColor(0,255,255);			
 	Rectangle(20,40);	
-	Moti.blinkLed(0,0,255,5,250);
-	Moti.printRgbColor(0,0,255);
+	Leds.blinkLed(0,0,255,5,250);
+	Leds.printRgbColor(0,0,255);
 	Rectangle(60,100);	
 
-	Moti.blinkLed(255,0,255,5,250);
-	Moti.printRgbColor(255, 0, 255);		
+	Leds.blinkLed(255,0,255,5,250);
+	Leds.printRgbColor(255, 0, 255);		
 	Circle(40,255);
-	Moti.blinkLed(255,0,255,5,250);
-	Moti.printRgbColor(255, 0, 255);		
+	Leds.blinkLed(255,0,255,5,250);
+	Leds.printRgbColor(255, 0, 255);		
 	Circle(70,255);
 
 }
