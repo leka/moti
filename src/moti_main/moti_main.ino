@@ -35,7 +35,30 @@ void setup() {
 }
 
 void loop() {
+<<<<<<< HEAD
 	sensors.checkSensors();
 	moti.sendJson(sensors);
 	delay(moti.getLoopDelay());
 }
+=======
+	Moti.goForward();
+	Moti.printRgbColor(35, 167, 210);
+	delay(5000);
+	Moti.printRgbColor(65, 30, 110);
+	delay(1000);
+	Moti.printRgbColor(35, 167, 210);
+	delay(1000);
+	Moti.printRgbColor(65, 30, 110);
+	//Moti.spinRight();
+	delay(1000);
+	Moti.printRgbColor(35, 167, 210);
+	delay(1000);
+	Moti.printRgbColor(65, 30, 110);
+	delay(1000);
+	Moti.printRgbColor(35, 167, 210);
+	delay(1000);
+	Moti.printRgbColor(65, 30, 110);
+	delay(1000);
+
+}
+>>>>>>> dc39ef3074f029801cb09cf35d330a5854c05418
