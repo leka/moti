@@ -8,8 +8,8 @@
 // LIBRARIES //
 //###########//
 
+
 #include <Arduino.h>
-#include <Serial.h>
 #include <Wire.h>
 #include <CommunicationUtils.h>
 #include <DebugUtils.h>
@@ -26,26 +26,17 @@
 
 // Then create instances of every classes
 Sensors sensors;
+Led led;
 Motors motors;
 Moti moti;
 
-int time;
-unsigned long previousMillis = 0;
-bool out = false;
-
-
 void setup() {
-	moti.initDebug(sensors, motors);
-	moti.setLoopDelay(100);
+	moti.initDebug(sensors, motors, led);
+	moti.setLoopDelay(200);
 }
 
 void loop() {
 	sensors.checkSensors();
-	sensors.sendJson();
-		motors.goForward();
-		delay(5000);
-		motors.spinRight();
-		delay(1500);
-	
+	moti.sendJson(sensors);
 	delay(moti.getLoopDelay());
 }

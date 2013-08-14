@@ -99,7 +99,7 @@ void Sensors::sendJson(){
 	json = json + getYPR(2);
 	json = json + "}}";
 
-	Serial.println(json);
+	serial.println(json);
 }
 
 /**

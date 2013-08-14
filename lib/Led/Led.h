@@ -29,21 +29,21 @@ class Led {
 		void init();
 
 		//	SET CONSTANTS
-		void setLedMaxBrightness(int value);
+		void setMaxBrightness(int value);
 		void setRedMaxBrightness(int value);
 		void setGreenMaxBrightness(int value);
 		void setBlueMaxBrightness(int value);
 
 
 		//	GET CONSTANTS
-		int getLedMaxBrightness();
+		int getMaxBrightness();
 		int getRedMaxBrightness();
 		int getGreenMaxBrightness();
 		int getBlueMaxBrightness();
 
 
     	//	RESET CONSTANTS
-		void resetLedMaxBrightness();
+		void resetMaxBrightness();
 		void resetRedMaxBrightness();
 		void resetGreenMaxBrightness();
 		void resetBlueMaxBrightness();
@@ -67,18 +67,25 @@ class Led {
 		void printRgb(ColorName color);
 		void printRgb(int red, int green, int blue);
 
-		void blinkLed(ColorName color, int numberOfBlinks, int timeBtwBlink);
-		void blinkLed(int red, int green, int blue, int numberOfBlinks, int timeBtwBlink);
+		void blinkAsync(ColorName color, int numberOfBlinks, uint16_t timeBtwBlink);
+		void blinkAsync(int red, int green, int blue, int numberOfBlinks, uint16_t timeBtwBlink);
+
+		void blinkSync(ColorName color, int numberOfBlinks, uint16_t timeBtwBlink);
+		void blinkSync(int red, int green, int blue, int numberOfBlinks, uint16_t timeBtwBlink);
 
 		void fadeLedTo(ColorName color);
 
-		void turnLedOff();
-		void turnLedOn();
+		void turnOff();
+		void turnOn();
 
 
 	private:
 
 		//	VARIABLES
+		
+		uint64_t previousMillis = 0;
+		int i = 0, j = 0, k = 0;
+
 		int16_t rgb[3], rgbBuffer[3];
 
 		uint8_t redPin;
@@ -90,6 +97,8 @@ class Led {
 		uint8_t _greenMaxBrightness;
 		uint8_t _blueMaxBrightness;
 
+		bool state;
+
 		//	CONSTANTS
 		static const uint8_t DEFAULT_LED_MAX_BRIGHTNESS   = 255;
 		static const uint8_t DEFAULT_RED_MAX_BRIGHTNESS   = 255;
@@ -97,9 +106,9 @@ class Led {
 		static const uint8_t DEFAULT_BLUE_MAX_BRIGHTNESS  = 255;
 
 		//	DEFAULT LED PINS
-		static const uint8_t DEFAULT_RED_PIN   = 9;
-		static const uint8_t DEFAULT_GREEN_PIN = 10;
-		static const uint8_t DEFAULT_BLUE_PIN  = 11;
+		static const uint8_t DEFAULT_RED_PIN   = 8;
+		static const uint8_t DEFAULT_GREEN_PIN = 9;
+		static const uint8_t DEFAULT_BLUE_PIN  = 10;
 };
 
 #endif

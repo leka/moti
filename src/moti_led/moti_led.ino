@@ -8,8 +8,8 @@
 // LIBRARIES //
 //###########//
 
+
 #include <Arduino.h>
-#include <Serial.h>
 #include <Wire.h>
 #include <CommunicationUtils.h>
 #include <DebugUtils.h>
@@ -26,26 +26,38 @@
 
 // Then create instances of every classes
 Sensors sensors;
+Led rightLed;
+Led leftLed = Led(11, 12, 13);
 Motors motors;
 Moti moti;
 
-int time;
-unsigned long previousMillis = 0;
-bool out = false;
-
 
 void setup() {
-	moti.initDebug(sensors, motors);
-	moti.setLoopDelay(100);
+	Serial1.begin(115200);
+	Serial.println("SC");
+	moti.initDebug(sensors, motors, rightLed);
+	leftLed.init();
+	
 }
 
 void loop() {
-	sensors.checkSensors();
-	sensors.sendJson();
-		motors.goForward();
-		delay(5000);
-		motors.spinRight();
-		delay(1500);
-	
+	if (millis() < 10000){
+		Serial1.println("1");
+		leftLed.blinkSync(RED, 5, 500);
+		rightLed.blinkSync(BLUE, 10, 100);
+	}
+	if(millis() > 10000 && millis() < 15000 ){
+		Serial1.println("2");
+		leftLed.turnOff();
+		rightLed.turnOff();
+	}
+	if(millis() > 15000){
+		Serial1.println("3");
+		leftLed.blinkSync(GREEN, 3, 1000);
+		rightLed.blinkSync(YELLOW, 5, 100);
+	}
+
+
+
 	delay(moti.getLoopDelay());
 }

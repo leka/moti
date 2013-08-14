@@ -8,8 +8,8 @@
  */
 
 #include <Arduino.h>
+#include <Serial.h>
 #include <Wire.h>
-
 #include <CommunicationUtils.h>
 #include <DebugUtils.h>
 #include <FIMU_ADXL345.h>

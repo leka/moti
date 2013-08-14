@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include <Moti.h>
 
-
 //##############//
 // CONSTRUCTORS //
 //##############//
@@ -17,12 +16,9 @@ Moti::Moti(){}
  * init() initialized everything at the beginning of the program. It must be called inside void setup().
  * The list of all the methods it calls is as follow: Serial.begin(), initializeConstants(), initializeLed(), initializeStates(), Wire.begin(), AccelGyro.init(), initiliazeMotors().
  */
-void Moti::init(Sensors& sensors, Motors& motors, Led& led){
+void Moti::init(Sensors& sensors, Motors& motors){
 	delay(500);
-	Serial.begin(115200);
-	delay(50);
-	delay(50);
-	led.init();
+	serial.begin(115200);
 	delay(50);
 	motors.init();
 	delay(50);
@@ -40,19 +36,17 @@ void Moti::init(Sensors& sensors, Motors& motors, Led& led){
  *
  * For example, if the serial outputs "SC" --> "CST" --> "WIRE", it means that IMU is failing and needs a fix.
  */
-void Moti::initDebug(Sensors& sensors, Motors& motors, Led& led){
+void Moti::initDebug(Sensors& sensors, Motors& motors){
 	delay(500);
-	Serial.begin(115200);
-	Serial.println("SC");
+	serial.begin(115200);
 	delay(50);
-	led.init();
-	Serial.println("LED");
+	serial.println("SC");
 	delay(50);
 	motors.init();
-	Serial.println("MOTORS");
+	serial.println("MOTORS");
 	delay(50);
 	sensors.init();
-	Serial.println("IMU");
+	serial.println("IMU");
 	delay(50);
 }
 
@@ -70,5 +64,60 @@ void Moti::initDebug(Sensors& sensors, Motors& motors, Led& led){
  */
 void Moti::softwareReset() {
 	asm volatile ("  jmp 0");
+}
+
+/**
+ * @class stabilze
+ * @brief The stabilze class represents the stabilization of the robot in the start position.
+ *
+ * This class corrects the variation of the initial position of the robot inside the ball to be everytime in the same position relative.
+ */
+void Moti::stabilize(Sensors& sensors, Motors& motors){
+
+
+	sensors.checkGyroscope();  //@ Check the Gyroscope initial values.
+
+
+	while (abs(sensors.getYPR(0)) > 3) { 	//@ How these values are initializes at zero, they are compared with -3 and 3 and do the position upgrade with this tolerance.
+
+
+		sensors.checkGyroscope();	
+
+		if(sensors.getYPR(0) < 0){		motors.spinRight();	}   //@ If the value is negatif, the derivate is positive and go back to zero.
+
+		else {		motors.spinLeft();		}	 //@ If the value is positive, the derivate is negative and go back to zero.
+
+
+	} 
+
+
+	while (abs(sensors.getYPR(2)) > 10) { 	//@ How these values are initializes at zero, they are compared with -10 and 10 and do the position upgrade with this tolerance.
+
+
+		sensors.checkGyroscope();	
+
+		if(sensors.getYPR(2) > 0){ motors.spinRight(); } //@ If the value is negatif, the derivate is positive and go back to zero and the inclination...
+													//@ at YPR(2) is changed for one inclination at YPR(1) due to the ball geometry.
+		else { motors.spinLeft(); }
+
+
+	} 
+
+
+	while (abs(sensors.getYPR(1)) > 3) { 	//@ YPR(1) finally correct the error in YPR(2) after the rotation and work independent.
+ 
+
+		sensors.checkGyroscope();	
+
+		if(sensors.getYPR(1) < 0){ motors.goForward(); } //@ If the value is negatif, goForward allows to go back to zero.
+
+		else { motors.goBackward(); }	//@ If the value is positive, goBackward allows to go back to zero.
+
+
+	} 
+
+
+	motors.stop(); //
+
 }
 
