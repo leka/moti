@@ -1,96 +1,97 @@
-// #include <Arduino.h>
-// #include <Moti.h>
+#include <Arduino.h>
+#include <Moti.h>
 
-// //##############################//
-// // REMOTE CONTROL FROM COMPUTER //
-// //##############################//
+//##############################//
+// REMOTE CONTROL FROM COMPUTER //
+//##############################//
 
 
-// void Moti::readCommands(Motors& motors, Led& led, Sensors& sensors){
-// 	while(Serial.available() > 0){
+void Moti::readCommands(Motors& motors, Led& led, Sensors& sensors){
+	while(Serial.available() > 0){
 
-// 		uint8_t numberOfActions;
+		uint8_t numberOfActions;
 
-// 		// Read first byte of stream.
-// 		uint8_t recievedByte = Serial.read();
+		// Read first byte of stream.
+		uint8_t recievedByte = Serial.read();
 
-// 		// If first byte is equal to dataHeader, start recording
-// 		if(recievedByte == DATA_HEADER){
-// 			delay(10);
+		// If first byte is equal to dataHeader, start recording
+		if(recievedByte == DATA_HEADER){
+			delay(10);
 
-// 			Serial.write(READY_TO_ANSWER);
+			Serial.write(READY_TO_ANSWER);
 
-// 			delay(200);
+			delay(200);
 
-// 			// Get the number of actions to execute
-// 			numberOfActions = Serial.read();
+			// Get the number of actions to execute
+			numberOfActions = Serial.read();
 
-// 			// Execute each actions
-// 			for (uint8_t i = 0 ; i < numberOfActions ; i++){
-// 				uint8_t actionType;
-// 				uint8_t numberData;
-// 				uint8_t dataBuffer[10];
+			// Execute each actions
+			for (uint8_t i = 0 ; i < numberOfActions ; i++){
+				uint8_t actionType;
+				uint8_t numberData;
+				uint8_t dataBuffer[10];
 
-// 				// Get action type
-// 				actionType = Serial.read();
+				// Get action type
+				actionType = Serial.read();
 
-// 				// Get number of data
-// 				numberData = Serial.read();
+				// Get number of data
+				numberData = Serial.read();
 
-// 				// For each data, store them in dataBuffer
-// 				for(uint8_t j ; j < numberData ; j++){
-// 					dataBuffer[j] = Serial.read();
-// 					delay(10);
-// 				}
+				// For each data, store them in dataBuffer
+				for(uint8_t j ; j < numberData ; j++){
+					dataBuffer[j] = Serial.read();
+					delay(10);
+				}
 
-// 				if(actionType == 0x01 && actionType != DATA_FOOTER){
-// 					motors.spinRightWheel(dataBuffer[0], dataBuffer[1]);
-// 				}
-// 				else if(actionType == 0x02 && actionType != DATA_FOOTER){
-// 					motors.spinLeftWheel(dataBuffer[0], dataBuffer[1]);
-// 				}
-// 				else if(actionType == 0x03 && actionType != DATA_FOOTER){
-// 					led.printRgb(dataBuffer[0], dataBuffer[1], dataBuffer[2]);
-// 				}
-// 				else if(actionType == 0x04 && actionType != DATA_FOOTER){
-// 					sensors.checkSensors();
-// 					sendBinaryData(sensors);
-// 				}
-// 			}
-// 		}
-// 	}
-// }
+				if(actionType == 0x01 && actionType != DATA_FOOTER){
+					motors.spinRightWheel(dataBuffer[0], dataBuffer[1]);
+				}
+				else if(actionType == 0x02 && actionType != DATA_FOOTER){
+					motors.spinLeftWheel(dataBuffer[0], dataBuffer[1]);
+				}
+				else if(actionType == 0x03 && actionType != DATA_FOOTER){
+					led.printRgb(dataBuffer[0], dataBuffer[1], dataBuffer[2]);
+				}
+				else if(actionType == 0x04 && actionType != DATA_FOOTER){
+					sensors.checkSensors();
+					sendBinaryData(sensors);
+				}
+			}
+		}
+	}
+}
 
-// /**
-//  * @brief Check for serial commands from computer.
-//  *
-//  * Command are send as bytes and note as ASCII characters. Therefore, to activate the remote, you have to press "r" from the Arduino Serial Monitor or send a byte with the value "114" otherwise.
-//  */
-// void Moti::serialServer(){
-// 	if(getRemoteState() == false){
-// 		while(Serial.available() > 0){
-// 			byte recievedByte = Serial.read();
+/**
+ * @brief Check for serial commands from computer.
+ *
+ * Command are send as bytes and note as ASCII characters. Therefore, to activate the remote, you have to press "r" from the Arduino Serial Monitor or send a byte with the value "114" otherwise.
+ */
+void Moti::serialServer(){
+	if(getRemoteState() == false){
+		while(Serial.available() > 0){
+			byte recievedByte = Serial.read();
 
-// 			if(recievedByte == 114){
-// 				Serial.println(F("Remote control activated"));
-// 				setRemoteState(true);
-// 			}
-// 			else {
-// 				Serial.println(F("Press \"r\" to activate remote control."));
-// 			}
-// 		}
-// 	}
+			if(recievedByte == 114){
+				Serial.println(F("Remote control activated"));
+				setRemoteState(true);
+			}
+			else {
+				Serial.println(F("Press \"r\" to activate remote control."));
+			}
+		}
+	}
 
-// 	if(getRemoteState() == true){
-// 		serialRouter();
-// 	}
-// }
+	if(getRemoteState() == true){
+		serialRouter();
+	}
+}
 
-// *
-//  * @brief This method acts like a router for the serial commands.
-//  *
-//  * It treats and interprets the serial byte to execute certain commands.
-//  * Read the code to know exactly what should be send and the corresponding action.
+/**
+ * @brief This method acts like a router for the serial commands.
+ *
+ * It treats and interprets the serial byte to execute certain commands.
+ * Read the code to know exactly what should be send and the corresponding action.
+ */
 
 // void Moti::serialRouter(){
 // 	while(getRemoteState() == true){
