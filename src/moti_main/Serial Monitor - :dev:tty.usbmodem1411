@@ -1,0 +1,16 @@
+Serial communication has begun.
+Starting Moti.init();
+Initializing Constants ---> Constants OK
+Initializing States ---> States OK
+Initializing Wire communication ---> Wire OK
+Initializing Accelerometer and Gyroscope ---> AccelGyro OK
+Initializing Motors ---> Motors OK
+ Moti has been initialized correctly, void loop(); is starting......
+Serial communication has begun.
+Starting Moti.init();
+Initializing Constants ---> Constants OK
+Initializing States ---> States OK
+Initializing Wire communication ---> Wire OK
+Initializing Accelerometer and Gyroscope ---> AccelGyro OK
+Initializing Motors ---> Motors OK
+ Moti has been initialized correctly, void loop(); is starting......
