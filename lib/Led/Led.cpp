@@ -44,9 +44,31 @@ void Led::init(){
 	rgbBuffer[0] = 0;
 	rgbBuffer[1] = 0;
 	rgbBuffer[2] = 0;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	previousMillis = 0;
+	currentMillis = 0;
+	runTime = 0;
+	stateHighLow = LOW;
 }
 
+void Led::isRunning(bool state){
+	stateIsRunning = state;
+}
 
+bool Led::isRunning(){
+	return stateIsRunning;
+}
+
+void Led::isHigh(bool state){
+	stateHighLow = state;
+}
+
+bool Led::isHigh(){
+	return stateHighLow;
+}
 
 
 // GENERAL METHODS //
@@ -207,20 +229,28 @@ void Led::blinkAsync(int red, int green, int blue, int numberOfBlinks, uint16_t 
  * @param timeBtwBlink delay between each blinks - a good value is 50
  */
 void Led::blinkSync(ColorName color, int numberOfBlinks, uint16_t timeBtwBlink){
-	unsigned long currentMillis = millis();
-	i = numberOfBlinks;
-	if(currentMillis - previousMillis > timeBtwBlink && j <= i) {
+	currentMillis = millis();
+	if(previousMillis == 0){
 		previousMillis = currentMillis;
-		j++;
+		runTime = currentMillis;
+		i = numberOfBlinks;
+	}
+	if(currentMillis - runTime - previousMillis > timeBtwBlink && j < i + 1) {
+		previousMillis = currentMillis;
 
-		if (state == LOW){
-			state = HIGH;
+		if (stateHighLow == LOW){
+			stateHighLow = HIGH;
 			printRgb(color);
+			j++;
 		}
 		else{
-			state = LOW;
+			stateHighLow = LOW;
 			printRgb(0, 0, 0);
 		}
+	}
+	if(j == i + 1){
+		printRgb(0, 0, 0);
+		j = 0;
 	}
 }
 

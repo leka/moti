@@ -10,6 +10,7 @@
 
 
 #include <Arduino.h>
+#include <Serial.h>
 #include <Wire.h>
 #include <CommunicationUtils.h>
 #include <DebugUtils.h>
@@ -26,35 +27,45 @@
 
 // Then create instances of every classes
 Sensors sensors;
-Led rightLed;
+Led rightLed = Led(8, 9, 10);
 Led leftLed = Led(11, 12, 13);
 Motors motors;
 Moti moti;
 
-
+int currT;
+int milli = 0;
 void setup() {
-	Serial1.begin(115200);
-	Serial.println("SC");
-	moti.initDebug(sensors, motors, rightLed);
+	serial.begin(115200);
+	rightLed.init();
 	leftLed.init();
 	
 }
 
 void loop() {
-	if (millis() < 10000){
-		Serial1.println("1");
+	currT = millis() - milli;
+
+	if (currT < 10000){
+		serial.print("AAAA  ");
+		serial.println(currT);
+
 		leftLed.blinkSync(RED, 5, 500);
-		rightLed.blinkSync(BLUE, 10, 100);
+		rightLed.blinkSync(BLUE, 10, 300);
 	}
-	if(millis() > 10000 && millis() < 15000 ){
-		Serial1.println("2");
-		leftLed.turnOff();
-		rightLed.turnOff();
+	if(currT > 10000 && currT < 15000 ){
+		serial.print("BBBB  ");
+		serial.println(currT);
 	}
-	if(millis() > 15000){
-		Serial1.println("3");
+	if(currT > 15000){
+		serial.print("CCCC  ");
+		serial.println(currT);
 		leftLed.blinkSync(GREEN, 3, 1000);
-		rightLed.blinkSync(YELLOW, 5, 100);
+		rightLed.blinkSync(YELLOW, 5, 250);
+	}
+	if(currT > 20000){
+		currT = 0;
+		milli = millis();
+		serial.println(currT);
+		delay(1000);
 	}
 
 

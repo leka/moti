@@ -28,6 +28,12 @@ class Led {
 
 		void init();
 
+		void isRunning(bool);
+		bool isRunning();
+		
+		void isHigh(bool);
+		bool isHigh();
+
 		//	SET CONSTANTS
 		void setMaxBrightness(int value);
 		void setRedMaxBrightness(int value);
@@ -82,9 +88,13 @@ class Led {
 	private:
 
 		//	VARIABLES
-		
-		uint64_t previousMillis = 0;
-		int i = 0, j = 0, k = 0;
+		bool stateHighLow;
+		bool stateIsRunning;
+
+		uint64_t previousMillis;
+		uint64_t currentMillis;
+		uint64_t runTime;
+		int i, j, k;
 
 		int16_t rgb[3], rgbBuffer[3];
 
@@ -96,8 +106,6 @@ class Led {
 		uint8_t _redMaxBrightness;
 		uint8_t _greenMaxBrightness;
 		uint8_t _blueMaxBrightness;
-
-		bool state;
 
 		//	CONSTANTS
 		static const uint8_t DEFAULT_LED_MAX_BRIGHTNESS   = 255;
