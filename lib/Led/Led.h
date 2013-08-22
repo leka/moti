@@ -26,7 +26,7 @@ class Led {
 
 		Led();
 
-		void init();
+		void open();
 
 		void isRunning(bool);
 		bool isRunning();
@@ -69,14 +69,14 @@ class Led {
 		uint8_t getGreen();
 		uint8_t getBlue();
 
-		void printRgb();
-		void printRgb(ColorName color);
-		void printRgb(int red, int green, int blue);
+		void writeRgb();
+		void writeRgb(ColorName color);
+		void writeRgb(int red, int green, int blue);
 
 		void blinkAsync(ColorName color, int numberOfBlinks, uint16_t timeBtwBlink);
 		void blinkAsync(int red, int green, int blue, int numberOfBlinks, uint16_t timeBtwBlink);
 
-		void blinkSync(ColorName color, int numberOfBlinks, uint16_t timeBtwBlink);
+		void blinkSync(ColorName color, uint16_t timeBtwBlink);
 		void blinkSync(int red, int green, int blue, int numberOfBlinks, uint16_t timeBtwBlink);
 
 		void fadeLedTo(ColorName color);
@@ -98,9 +98,9 @@ class Led {
 
 		int16_t rgb[3], rgbBuffer[3];
 
-		uint8_t redPin;
-		uint8_t greenPin;
-		uint8_t bluePin;
+		uint8_t _redPin;
+		uint8_t _greenPin;
+		uint8_t _bluePin;
 
 		uint8_t _ledMaxBrightness;
 		uint8_t _redMaxBrightness;

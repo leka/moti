@@ -27,20 +27,20 @@ class Sensors {
 
 		Sensors();
 
-		void init();
+		void open();
 
 		//	SENSORS
-		void checkSensors();
-		void checkAccelerometer();
-		void checkGyroscope();
+		void read();
+		void readAccelerometer();
+		void readGyroscope();
 
-		int getXYZ(uint8_t index);
-		int getYPR(uint8_t index);
+		int readXYZ(uint8_t index);
+		int readYPR(uint8_t index);
 
-		void computeDelta();
-		void updateLastValues();
+		void ioctlComputeDelta();
+		void ioctlUpdateLastValues();
 
-		void sendJson();
+		void ioctlSendJson();
 
 
 	private:

@@ -18,16 +18,16 @@
 #include <FreeSixIMU.h>
 
 // Include all the classes needed to beautifully develop your robot.
-#include <Sensors.h>
-#include <Led.h>
+// #include <Sensors.h>
+// #include <Led.h>
 #include <Motors.h>
-#include <Memory.h>
-#include <Moti.h>
+// #include <Memory.h>
+// #include <Moti.h>
 
 // Then create instances of every classes
-Sensors sensors;
+// Sensors sensors;
 Motors motors;
-Moti moti;
+// Moti moti;
 
 int time;
 unsigned long previousMillis = 0;
@@ -35,12 +35,17 @@ bool out = false;
 
 
 void setup() {
-	moti.initDebug(sensors, motors);
-	moti.setLoopDelay(120);
+	// moti.initDebug(sensors, motors);
+	motors.init();
+	
 }
 
 void loop() {
-	sensors.checkSensors();
-	sensors.sendJson();	
-	delay(moti.getLoopDelay());
+	motors.goForward();
+	delay(2000);
+	motors.spinRight();
+	delay(1000);
+	motors.spinLeft();
+	delay(1000);
+
 }
