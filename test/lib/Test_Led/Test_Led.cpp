@@ -299,8 +299,70 @@ void TEST_LED::test_led_output(Led& led){
 	led.writeRgb();
 }
 
-void TEST_LED::test_led_blink(Led& led){
+void TEST_LED::test_led_blink_sync(Led& led, Led& led1){
 
-	led.blinkSync(RAND, random(200, 4000));
+	Serial.println(F("LED TESTS BLINK SYNC"));
+	delay(1000);
+
+	String test_name;
+
+	test_name = "setRgb(index, value) and writeRgb(r, g, b)";
+
+	Serial.print(test_name);
+	Serial.println(F(" Test"));
+	delay(500);
+	Serial.println("First Test");
+	delay(1000);
+	while(millis() < 10000){
+		led.blinkSync(RAND, random(200, 4000));
+		led1.blinkSync(RAND, random(200, 4000));
+
+		if(led.isBlinking() == true && led1.isBlinking() == true){
+			Serial.print(test_name);
+			Serial.println(F(" --> OK"));
+		}
+		else{
+			Serial.print(test_name);
+			Serial.println(F(" --> FAILED"));
+		}
+	}
+	delay(1000);
+	Serial.println("Second Test");
+	delay(1000);
+	while(millis() < 15000){
+		led.turnOff();
+		led1.turnOff();
+
+		if(led.isBlinking() == false && led1.isBlinking() == false){
+			Serial.print(test_name);
+			Serial.println(F(" --> OK"));
+		}
+		else{
+			Serial.print(test_name);
+			Serial.println(F(" --> FAILED"));
+		}
+	}
+
+	delay(1000);
+	Serial.println("Third Test");
+	delay(1000);
+	while(millis() < 25000){
+		led.blinkSync(RAND, random(200, 4000));
+		led1.blinkSync(RAND, random(200, 4000));
+	}
+	led.turnOff();
+	led1.turnOff();
+}
+
+void TEST_LED::test_led_on_off(Led& led){
+	led.writeRgb(100, 100, 100);
+	delay(500);
+	led.turnOn();
+	delay(500);
+	led.turnOff();
+	delay(500);
+	led.turnOn();
+
+
 
 }

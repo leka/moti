@@ -45,6 +45,12 @@ void setup() {
 	// // TEST OUTPUT
 	// delay(1000);
 	// test.test_led_output(led);
+	
+	// TEST BLINK SYNC
+	// test.test_led_blink_sync(led, led1);
+
+	// TEST ON OFF
+	test.test_led_on_off(led);
 }
 
 
@@ -55,19 +61,5 @@ void setup() {
 
 void loop() {
 
-	while(millis() < 10000){
-		test.test_led_blink(led);
-		test.test_led_blink(led1);
-	}
-	while(millis() < 15000){
-		led.turnOff();
-		led1.turnOff();
-	}
 
-	while(millis() < 25000){
-		test.test_led_blink(led);
-		test.test_led_blink(led1);
-	}
-	led.turnOff();
-	led1.turnOff();
 }

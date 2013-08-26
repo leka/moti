@@ -28,12 +28,12 @@ class Led {
 
 		void open();
 
-		void isRunning(bool);
-		bool isRunning();
-		
-		void isHigh(bool);
-		bool isHigh();
+		void isOn(bool state);
+		bool isOn();
 
+		void isBlinking(bool state);
+		bool isBlinking();
+		
 		//	SET CONSTANTS
 		void setMaxBrightness(int value);
 		void setRedMaxBrightness(int value);
@@ -88,9 +88,9 @@ class Led {
 	private:
 
 		//	VARIABLES
-		bool stateHighLow;
-		bool stateIsRunning;
-
+		bool _isOn;
+		bool _isBlinking;
+		
 		uint64_t previousMillis;
 		uint64_t currentMillis;
 		uint64_t runTime;

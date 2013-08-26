@@ -19,7 +19,8 @@ class TEST_LED {
 		void test_constant_set_get(Led& led);
 		void test_led_set_get(Led& led);
 		void test_led_output(Led& led);
-		void test_led_blink(Led& led);
+		void test_led_blink_sync(Led& led, Led& led1);
+		void test_led_on_off(Led& led);
 
 };
 

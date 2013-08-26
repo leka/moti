@@ -56,24 +56,24 @@ void Led::open(){
 	previousMillis = 0;
 	currentMillis = 0;
 	runTime = 0;
-	stateHighLow = LOW;
-	stateIsRunning = false;
+	isOn(false);
+	isBlinking(false);
 }
 
-void Led::isRunning(bool state){
-	stateIsRunning = state;
+void Led::isOn(bool state){
+	_isOn = state;
 }
 
-bool Led::isRunning(){
-	return stateIsRunning;
+bool Led::isOn(){
+	return _isOn;
 }
 
-void Led::isHigh(bool state){
-	stateHighLow = state;
+void Led::isBlinking(bool state){
+	_isBlinking = state;
 }
 
-bool Led::isHigh(){
-	return stateHighLow;
+bool Led::isBlinking(){
+	return _isBlinking;
 }
 
 
@@ -237,21 +237,20 @@ void Led::blinkAsync(int red, int green, int blue, int numberOfBlinks, uint16_t 
 void Led::blinkSync(ColorName color, uint16_t timeBtwBlink){
 	currentMillis = millis();
 	
-	if(!stateIsRunning){
-		stateIsRunning = true;
+	if(isBlinking() == false){
+		isBlinking(true);
 		previousMillis = currentMillis;
 		
 	}
 	if(currentMillis - previousMillis > timeBtwBlink) {
 		previousMillis = currentMillis;
 
-		if (stateHighLow == LOW){
-			stateHighLow = HIGH;
+		if (isOn() == false){
+			isOn(true);
 			writeRgb(color);
-			j++;
 		}
 		else{
-			stateHighLow = LOW;
+			isOn(false);
 			writeRgb(0, 0, 0);
 		}
 	}
@@ -309,9 +308,8 @@ void Led::fadeLedTo(ColorName color){
  * @brief Turns led ON - white color.
  */
 void Led::turnOn(){
-	writeRgb(255, 255, 255);
-	i=0;
-	j=0;
+	writeRgb();
+	isOn(true);
 }
 
 /**
@@ -319,6 +317,8 @@ void Led::turnOn(){
  */
 void Led::turnOff(){
 	writeRgb(0, 0, 0);
+	isOn(false);
+	isBlinking(false);
 }
 
 /**
