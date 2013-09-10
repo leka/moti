@@ -8,10 +8,9 @@
  * @version 1.0
  */
 
-
-// CONSTRUCTORS //
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------//
+// CONSTRUCTORS
+//-----------------------------------------------------//
 
 
 /**
@@ -77,9 +76,9 @@ bool Led::isBlinking(){
 }
 
 
-// GENERAL METHODS //
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------//
+// GENERAL METHODS
+//-----------------------------------------------------//
 
 /**
  * @brief Method used to set the value of red, green or blue
@@ -129,8 +128,8 @@ void Led::setBlue(int value){
 
 /**
  * @brief Getter method to get the value of red, green or blue
- * @param  index 0, 1 or 2 for red, green or blue.
- * @return       returns the corresponding value, an uint8_t between 0-255
+ * @param index 0, 1 or 2 for red, green or blue.
+ * @return returns the corresponding value, an uint8_t between 0-255
  */
 uint8_t Led::getRgb(uint8_t index){
 	return rgb[index];
@@ -430,10 +429,9 @@ void Led::colorSwitcher(ColorName color){
 
 
 
-
-// CONSTANTS //
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------//
+// CONSTANTS
+//-----------------------------------------------------//
 
 /**
  * @brief Setter method for _ledMaxBrightness
