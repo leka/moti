@@ -82,7 +82,7 @@ void Sensors::readGyroscope(){
  * sendJson() is used to interface the robot with other high level languages such as Processing or Javascript.
  * It can also be useful as a debug print out to check the consistency of the sensors.
  */
-void Sensors::ioctlSendJson(){
+void Sensors::sendJson(){
 	String json;
 
 	json = "{\"accel\":{\"x\":";
@@ -100,6 +100,33 @@ void Sensors::ioctlSendJson(){
 	json = json + "}}";
 
 	serial.println(json);
+}
+
+/**
+ * @brief Send data as binaries
+ */
+void Sensors::writeData(){
+	read();
+
+	SerialCom::writeByte(SerialCom::dataHeader);
+
+	SerialCom::writeByte(SerialCom::numberOfSensors);
+
+	SerialCom::writeByte(SerialCom::accelSensor);
+	SerialCom::writeInt(SerialCom::accelData);
+
+	SerialCom::writeInt(readXYZ(0));
+	SerialCom::writeInt(readXYZ(1));
+	SerialCom::writeInt(readXYZ(2));
+
+	SerialCom::writeByte(SerialCom::gyroSensor);
+	SerialCom::writeInt(SerialCom::gyroData);
+
+	SerialCom::writeInt(readYPR(0));
+	SerialCom::writeInt(readYPR(1));
+	SerialCom::writeInt(readYPR(2));
+
+	SerialCom::writeByte(SerialCom::dataFooter);
 }
 
 /**
@@ -130,7 +157,7 @@ int Sensors::readYPR(uint8_t index){
  * computeSensorValues() is used compute the delta between the present and the past values of the acceleration and yaw/pitch/roll.
  * Then, it can be accessed with readDeltaXYZ() or readDeltaYPR().
  */
-void Sensors::ioctlComputeDelta(){
+void Sensors::computeDelta(){
 	deltaXYZ[0] = XYZ[0] - lastXYZ[0];
 	deltaXYZ[1] = XYZ[1] - lastXYZ[1];
 	deltaXYZ[2] = XYZ[2] - lastXYZ[2];
@@ -146,7 +173,7 @@ void Sensors::ioctlComputeDelta(){
  * updateLastSensorValues() saves the last sensors values for computeSensorValues().
  * The values can be accessed using readLastXYZ() and readLastYPR().
  */
-void Sensors::ioctlUpdateLastValues(){
+void Sensors::updateLastValues(){
 	lastXYZ[0] = XYZ[0];
 	lastXYZ[1] = XYZ[1];
 	lastXYZ[2] = XYZ[2];

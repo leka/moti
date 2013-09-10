@@ -37,10 +37,11 @@ class Sensors {
 		int readXYZ(uint8_t index);
 		int readYPR(uint8_t index);
 
-		void ioctlComputeDelta();
-		void ioctlUpdateLastValues();
+		void computeDelta();
+		void updateLastValues();
 
-		void ioctlSendJson();
+		void sendJson();
+		void writeData();
 
 
 	private:
