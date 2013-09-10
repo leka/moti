@@ -17,10 +17,12 @@ namespace SerialCom {
 
 	static const uint8_t numberOfSensors = 0x02;
 
-	static const uint8_t ACC_SENSOR        = 0x01;
-	static const uint8_t ACC_DATA          = 0x06;
-	static const uint8_t GYR_SENSOR        = 0x02;
-	static const uint8_t GYR_DATA          = 0x06;
+	static const uint8_t initPhase = 0xAA;
+
+	static const uint8_t accelSensor = 0x01;
+	static const uint8_t accelData   = 0x06;
+	static const uint8_t gyroSensor  = 0x02;
+	static const uint8_t gyroData    = 0x06;
 
 	//	Methods
 	void writeByte(uint8_t value);
