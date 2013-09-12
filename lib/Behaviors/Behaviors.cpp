@@ -1,6 +1,4 @@
-#include <Arduino.h>
 #include <Behaviors.h>
-
 
 /**
  * @file Behaviors.cpp
@@ -16,7 +14,21 @@
  * @brief Behaviors Class Constructor
  */
 Behaviors::Behaviors(){
-	behavior = SHUT_DOWN;
+}
+
+void Behaviors::init(){
+	delay(500);
+	serial.begin(115200);
+	delay(50);
+	motors.init();
+	delay(50);
+	sensors.open();
+	delay(50);
+	sensors.open();
+	motors.init();
+	rightLed.open();
+	leftLed.open();
+	setBehavior(SHUT_DOWN);
 }
 
 /**
@@ -39,24 +51,26 @@ uint8_t Behaviors::getBehavior(){
 void Behaviors::router(){
 	sensors.read();
 
-	if (sensors.readXYZ(2) > getWakeUpThreshold()) {
-		setBehavior(CRUISE);
-	}
-	if (sensors.readXYZ(0) > getBumpThreshold();) {
-		setBehavior(ESCAPE);
-	}
-	if (timer() % 50 == 0) {
-		setBehavior(SPINBLINK);
-	}
-	if (sensors.readXYZ(2) > getPickUpThreshold()) {
-		setBehavior(STABILIZE);
-	}
-	if (timer() > getTimeToSleep()) {
-		setBehavior(SHUT_DOWN);	
-	}
-	else {
-		setBehavior(CRUISE);
-	}
+
+	// TO BE MODIFIED
+	// if (sensors.readXYZ(2) > 500) {
+	// 	setBehavior(CRUISE);
+	// }
+	// if (sensors.readXYZ(0) < -30) {
+	// 	setBehavior(ESCAPE);
+	// }
+	// if (millis() % 10000 == 0) {
+	// 	setBehavior(SPINBLINK);
+	// }
+	// if (sensors.readXYZ(2) > 320) {
+	// 	setBehavior(STABILIZE);
+	// }
+	// if (millis() > 50000) {
+	// 	setBehavior(SHUT_DOWN);	
+	// }
+	// if (serial.available() > 0) {
+	// 	setBehavior(REMOTE);	
+	// }
 }
 
 /*
@@ -93,9 +107,43 @@ void Behaviors::server(){
 // BEHAVIORS
 //-----------------------------------------------------//
 
+void Behaviors::cruise(){
+	serial.println("Cruising");
+	motors.goForward();
+}
+
+void Behaviors::stabilize(){
+	serial.println("Stabilizing");
+	motors.stop();
+	delay(500);
+}
+
+void Behaviors::escape(){
+	motors.stop();
+	delay(1000);
+	motors.goBackward();
+	delay(1000);
+	motors.stop();
+	delay(1000);
+	motors.spinLeft();
+	delay(500);
+	setBehavior(CRUISE);
+}
+
+void Behaviors::shutDown(){
+	motors.stop();
+}
+
+void Behaviors::stopAndBling(){
+	motors.stop();
+	leftLed.blinkSync(RAND, 300);
+	rightLed.blinkSync(RAND, 700);
+	setBehavior(CRUISE);
+}
 
 
 void Behaviors::remote(){
+	serial.println("Serial");
 	while(SerialCom::avalaible()){
 
 		uint8_t numberOfActions;

@@ -2,12 +2,14 @@
 #define LEKA_MOTI_ARDUINO_BEHAVIORS_H_
 
 #include <Arduino.h>
-#include <Motors.h>
+#include <Wire.h>
 #include <Sensors.h>
 #include <Led.h>
+#include <Motors.h>
+#include <Serial.h>
 
 enum BehaviorName {
-		CRUISE, ESCAPE, STABILIZE, SHUT_DOWN, SPINBLINK
+		REMOTE, CRUISE, ESCAPE, STABILIZE, SHUT_DOWN, SPINBLINK
 	};
 
 
@@ -20,6 +22,8 @@ class Behaviors {
 	public:		
 
 		Behaviors();
+
+		void init();
 		//	Server & Router
 		void router();
 		void server();
