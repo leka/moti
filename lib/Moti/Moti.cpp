@@ -22,7 +22,7 @@ void Moti::init(Sensors& sensors, Motors& motors){
 	delay(50);
 	motors.init();
 	delay(50);
-	sensors.init();
+	sensors.open();
 	delay(50);
 }
 
