@@ -1,8 +1,8 @@
 #include <Arduino.h>
-#include <Timer.h>
+#include <Loop.h>
 
 /**
- * @file Timer.cpp
+ * @file Loop.cpp
  * @author Ladislas de Toldi
  * @version 1.0
  */
@@ -14,7 +14,7 @@
 /**
  * @brief Initialize the loop delay
  */
-void Timer::init(){
+void Loop::init(){
 	resetLoopDelay();
 	resetSleepDelay();
 }
@@ -22,7 +22,7 @@ void Timer::init(){
 /**
  * @brief Check if a delay has passed with +/- delta
  */
-bool Timer::delay(uint64_t delay, uint64_t delta){
+bool Loop::delay(uint64_t delay, uint64_t delta){
 	if (millis() % delay <= delta || millis() % delay >= -delta){
 		return true;
 	}
@@ -33,7 +33,7 @@ bool Timer::delay(uint64_t delay, uint64_t delta){
 /**
  * @brief Check if a delay has passed
  */
-bool Timer::delay(uint64_t delay){
+bool Loop::delay(uint64_t delay){
 	if (millis() % delay){
 		return true;
 	}
@@ -51,7 +51,7 @@ bool Timer::delay(uint64_t delay){
  * Once set, the _loopDelay can be accessed by calling getLoopDelay()
  * @param value the value you want to assign to _loopDelay.
  */
-void Timer::setLoopDelay(int value){
+void Loop::setLoopDelay(int value){
 	_loopDelay = value;
 }
 
@@ -61,7 +61,7 @@ void Timer::setLoopDelay(int value){
  * Once set, the _sleepDelay can be accessed by calling getSleepDelay()
  * @param value the value you want to assign to _sleepDelay.
  */
-void Timer::setSleepDelay(int value){
+void Loop::setSleepDelay(int value){
 	_sleepDelay = value;
 }
 
@@ -75,7 +75,7 @@ void Timer::setSleepDelay(int value){
  * It is used to modify the speed of the loop: higher value means slower robot.
  * @return the value of _loopDelay
  */
-int Timer::getLoopDelay(){
+int Loop::getLoopDelay(){
 	return _loopDelay;
 }
 
@@ -85,7 +85,7 @@ int Timer::getLoopDelay(){
  * It is used to as a counter to determine the moment the robot should got to sleep. Higher value means longer awaken state.
  * @return the value of _sleepDelay
  */
-int Timer::getSleepDelay(){
+int Loop::getSleepDelay(){
 	return _sleepDelay;
 }
 
@@ -96,14 +96,14 @@ int Timer::getSleepDelay(){
 /**
  * @brief Reset method for _loopDelay to initial value
  */
-void Timer::resetLoopDelay(){
+void Loop::resetLoopDelay(){
 	_loopDelay = DEFAULT_LOOP_DELAY;
 }
 
 /**
  * @brief Reset method for _sleepDelay to initial value
  */
-void Timer::resetSleepDelay(){
+void Loop::resetSleepDelay(){
 	_sleepDelay = DEFAULT_SLEEP_DELAY;
 }
 
