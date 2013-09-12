@@ -30,8 +30,6 @@ void Sensors::open(){
 
 	delay(500);
 	Wire.begin();
-	AccelGyro.init();
-	Wire.begin();
 	delay(50);
 	AccelGyro.init();
 }
