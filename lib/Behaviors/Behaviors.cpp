@@ -51,7 +51,9 @@ uint8_t Behaviors::getBehavior(){
 void Behaviors::router(){
 	sensors.read();
 
-
+	if (sensors.readXYZ(2) > 510 && getBehavior() == SHUT_DOWN) {
+		setBehavior(CRUISE);
+	}
 	// TO BE MODIFIED
 	// if (sensors.readXYZ(2) > 500) {
 	// 	setBehavior(CRUISE);
@@ -95,7 +97,7 @@ void Behaviors::server(){
 			break;
 
 		case SPINBLINK:
-			stopAndBling();
+			stopAndBlink();
 			break;
 
 		default:
@@ -108,33 +110,132 @@ void Behaviors::server(){
 //-----------------------------------------------------//
 
 void Behaviors::cruise(){
-	serial.println("Cruising");
+	leftLed.turnOff();
+	rightLed.turnOff();
+	
+	leftLed.blinkAsync(RED, 2, 500);
+	rightLed.blinkAsync(GREEN, 5, 200);
+	
+	leftLed.turnOff();
+	rightLed.turnOff();
+
+	delay(1000);
+
+	leftLed.writeRgb(BLUE);
+	rightLed.writeRgb(GREEN);
+
+	for (int i = 0 ; i < 4 ; i++) {
+		motors.spinLeft();
+		delay(200);
+		motors.spinRight();
+		delay(200);
+	}
+
+	delay(1000);
+
 	motors.goForward();
+	delay(1500);
+
+	motors.stop();
+	delay(500);
+
+	motors.spinRight();
+	delay(500);
+
+	motors.stop();
+	delay(500);
+
+	motors.goForward();
+	delay(1000);
+
+	motors.stop();
+	delay(500);
+
+	motors.spinRight();
+	delay(500);
+
+	motors.stop();
+	delay(500);
+
+	motors.goForward();
+	delay(1500);
+
+	motors.stop();
+	delay(500);
+
+	for (int i = 0 ; i < 3 ; i++) {
+		motors.spinLeft();
+		delay(150);
+		motors.spinRight();
+		delay(150);
+	}
+
+	motors.stop();
+	delay(500);
+
+	setBehavior(SHUT_DOWN);
+	orderNumber = 1;
 }
 
 void Behaviors::stabilize(){
-	serial.println("Stabilizing");
 	motors.stop();
 	delay(500);
 }
 
 void Behaviors::escape(){
-	motors.stop();
-	delay(1000);
-	motors.goBackward();
-	delay(1000);
-	motors.stop();
-	delay(1000);
-	motors.spinLeft();
+	leftLed.blinkAsync(RED, 10, 75);
 	delay(500);
-	setBehavior(CRUISE);
+	leftLed.blinkAsync(RED, 4, 350);
+
+	delay(1000);
+	
+	motors.goLeft(180);
+	delay(1500);
+
+	motors.stop();
+
+	leftLed.blinkAsync(RAND, 5, 200);
+	rightLed.blinkAsync(RAND, 10, 100);
+
+	delay(200);
+
+	leftLed.turnOff();
+	rightLed.turnOff();
+
+	delay(500);
+
+	leftLed.writeRgb(RAND);
+	rightLed.writeRgb(RAND);
+
+	motors.spinRight();
+	delay(1000);
+
+	motors.stop();
+	delay(500);
+
+	motors.goRight();
+	delay(1500);
+
+	motors.stop();
+	delay(500);
+
+	motors.spinRight();
+	delay(750);
+
+	motors.stop();
+	delay(500);
+
+	setBehavior(SHUT_DOWN);
+	orderNumber = 0;
 }
 
 void Behaviors::shutDown(){
 	motors.stop();
+	leftLed.blinkSync(RAND, 150);
+	rightLed.blinkSync(RAND, 400);
 }
 
-void Behaviors::stopAndBling(){
+void Behaviors::stopAndBlink(){
 	motors.stop();
 	leftLed.blinkSync(RAND, 300);
 	rightLed.blinkSync(RAND, 700);

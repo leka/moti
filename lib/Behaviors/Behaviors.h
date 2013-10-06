@@ -35,12 +35,13 @@ class Behaviors {
 		void cruise();
 		void stabilize();
 		void escape();
-		void stopAndBling();
+		void stopAndBlink();
 		void shutDown();
 		void remote();
 
 	private:
 		//	Variables
+		uint8_t orderNumber;
 		uint8_t behavior;
 
 		//	Objects
