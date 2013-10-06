@@ -50,7 +50,14 @@ class Sensors {
 		int XYZ[3], lastXYZ[3], deltaXYZ[3];
 		int YPR[3], lastYPR[3], deltaYPR[3];
 
-		bool _stateMoving;
+		static const int numberOfReadings = 10;
+
+		int readings[numberOfReadings];     
+		int readingsIndex = 0;                 
+		int readingsSum = 0;                  
+		int readingsAverage = 0;                
+
+
 
 		//	RELATED CLASS
 		FreeSixIMU AccelGyro;
