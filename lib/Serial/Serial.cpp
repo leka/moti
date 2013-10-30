@@ -18,7 +18,7 @@
  *
  * @param value the value you need to write.
  */
-void SerialCom::writeByte(uint8_t value){
+void sio::writeByte(uint8_t value){
 	serial.write(value);
 }
 
@@ -32,7 +32,7 @@ void SerialCom::writeByte(uint8_t value){
  *
  * @param value the value you want to write
  */
-void SerialCom::writeInt(int value){
+void sio::writeInt(int value){
 	serial.write(lowByte(value));
 	serial.write(highByte(value));
 }
@@ -46,7 +46,7 @@ void SerialCom::writeInt(int value){
  *
  * @return the value
  */
-uint8_t SerialCom::readByte(){
+uint8_t sio::readByte(){
 	return serial.read();
 }
 
@@ -59,7 +59,7 @@ uint8_t SerialCom::readByte(){
  *
  * @return return true if so, false if not.
  */
-bool SerialCom::avalaible(){
+bool sio::avalaible(){
 	if (serial.available() > 0) {
 		return true;
 	}

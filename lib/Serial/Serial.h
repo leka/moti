@@ -7,7 +7,7 @@
 #define serial Serial
 #endif
 
-namespace SerialCom {
+namespace sio {
 
 	// Variables
 	static const uint8_t dataHeader = 0x0f;
