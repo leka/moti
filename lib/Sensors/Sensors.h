@@ -52,10 +52,10 @@ class Sensors {
 
 		static const int numberOfReadings = 10;
 
-		int readings[numberOfReadings];     
-		int readingsIndex = 0;                 
-		int readingsSum = 0;                  
-		int readingsAverage = 0;                
+		int readings[numberOfReadings];
+		int readingsIndex = 0;
+		int readingsSum = 0;
+		int readingsAverage = 0;
 
 
 

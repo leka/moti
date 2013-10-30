@@ -106,25 +106,25 @@ void Sensors::sendJson(){
 void Sensors::writeData(){
 	read();
 
-	SerialCom::writeByte(SerialCom::dataHeader);
+	sio::writeByte(sio::dataHeader);
 
-	SerialCom::writeByte(SerialCom::numberOfSensors);
+	sio::writeByte(sio::numberOfSensors);
 
-	SerialCom::writeByte(SerialCom::accelSensor);
-	SerialCom::writeInt(SerialCom::accelData);
+	sio::writeByte(sio::accelSensor);
+	sio::writeInt(sio::accelData);
 
-	SerialCom::writeInt(readXYZ(0));
-	SerialCom::writeInt(readXYZ(1));
-	SerialCom::writeInt(readXYZ(2));
+	sio::writeInt(readXYZ(0));
+	sio::writeInt(readXYZ(1));
+	sio::writeInt(readXYZ(2));
 
-	SerialCom::writeByte(SerialCom::gyroSensor);
-	SerialCom::writeInt(SerialCom::gyroData);
+	sio::writeByte(sio::gyroSensor);
+	sio::writeInt(sio::gyroData);
 
-	SerialCom::writeInt(readYPR(0));
-	SerialCom::writeInt(readYPR(1));
-	SerialCom::writeInt(readYPR(2));
+	sio::writeInt(readYPR(0));
+	sio::writeInt(readYPR(1));
+	sio::writeInt(readYPR(2));
 
-	SerialCom::writeByte(SerialCom::dataFooter);
+	sio::writeByte(sio::dataFooter);
 }
 
 /**
