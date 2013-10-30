@@ -33,7 +33,7 @@
 Sensors sensors;
 // Motors motors;
 // Moti moti;
-// 
+//
 Behaviors behave;
 
 int time;
@@ -44,7 +44,6 @@ bool out = false;
 void setup() {
 	behave.init();
 	sensors.open();
-	Debug::log("Debug true");
 }
 
 void loop() {
@@ -52,6 +51,6 @@ void loop() {
 	behave.server();
 	sensors.read();
 	sensors.sendJson();
-	
+
 
 }
