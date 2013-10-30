@@ -68,10 +68,10 @@ void Behaviors::router(){
 	// 	setBehavior(STABILIZE);
 	// }
 	// if (millis() > 50000) {
-	// 	setBehavior(SHUT_DOWN);	
+	// 	setBehavior(SHUT_DOWN);
 	// }
 	// if (serial.available() > 0) {
-	// 	setBehavior(REMOTE);	
+	// 	setBehavior(REMOTE);
 	// }
 }
 
@@ -112,10 +112,10 @@ void Behaviors::server(){
 void Behaviors::cruise(){
 	leftLed.turnOff();
 	rightLed.turnOff();
-	
+
 	leftLed.blinkAsync(RED, 2, 500);
 	rightLed.blinkAsync(GREEN, 5, 200);
-	
+
 	leftLed.turnOff();
 	rightLed.turnOff();
 
@@ -188,7 +188,7 @@ void Behaviors::escape(){
 	leftLed.blinkAsync(RED, 4, 350);
 
 	delay(1000);
-	
+
 	motors.goLeft(180);
 	delay(1500);
 
@@ -245,23 +245,23 @@ void Behaviors::stopAndBlink(){
 
 void Behaviors::remote(){
 	serial.println("Serial");
-	while(SerialCom::avalaible()){
+	while(sio::avalaible()){
 
 		uint8_t numberOfActions;
 
 		// Read first byte of stream.
-		uint8_t recievedByte = SerialCom::readByte();
+		uint8_t recievedByte = sio::readByte();
 
 		// If first byte is equal to dataHeader, start recording
-		if(recievedByte == SerialCom::dataHeader){
+		if(recievedByte == sio::dataHeader){
 			delay(10);
 
-			SerialCom::writeByte(SerialCom::readyCheck);
+			sio::writeByte(sio::readyCheck);
 
 			delay(10);
 
 			// Get the number of actions to execute
-			numberOfActions = SerialCom::readByte();
+			numberOfActions = sio::readByte();
 
 			// Execute each actions
 			for (uint8_t i = 0 ; i < numberOfActions ; i++){
@@ -270,27 +270,27 @@ void Behaviors::remote(){
 				uint8_t dataBuffer[10];
 
 				// Get action type
-				actionType = SerialCom::readByte();
+				actionType = sio::readByte();
 
 				// Get number of data
-				numberData = SerialCom::readByte();
+				numberData = sio::readByte();
 
 				// For each data, store them in dataBuffer
 				for(uint8_t j ; j < numberData ; j++){
-					dataBuffer[j] = SerialCom::readByte();
+					dataBuffer[j] = sio::readByte();
 					delay(10);
 				}
 
-				if(actionType == 0x01 && actionType != SerialCom::dataFooter){
+				if(actionType == 0x01 && actionType != sio::dataFooter){
 					motors.spinRightWheel(dataBuffer[0], dataBuffer[1]);
 				}
-				else if(actionType == 0x02 && actionType != SerialCom::dataFooter){
+				else if(actionType == 0x02 && actionType != sio::dataFooter){
 					motors.spinLeftWheel(dataBuffer[0], dataBuffer[1]);
 				}
-				else if(actionType == 0x03 && actionType != SerialCom::dataFooter){
+				else if(actionType == 0x03 && actionType != sio::dataFooter){
 					rightLed.writeRgb(dataBuffer[0], dataBuffer[1], dataBuffer[2]);
 				}
-				else if(actionType == 0x04 && actionType != SerialCom::dataFooter){
+				else if(actionType == 0x04 && actionType != sio::dataFooter){
 					sensors.read();
 					// sendBinaryData(sensors);
 				}

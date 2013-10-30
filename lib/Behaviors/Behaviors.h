@@ -19,7 +19,7 @@ enum BehaviorName {
  */
 class Behaviors {
 
-	public:		
+	public:
 
 		Behaviors();
 
@@ -31,7 +31,7 @@ class Behaviors {
 		//Behaviors
 		void setBehavior(uint8_t behavior);
 		uint8_t getBehavior();
-		
+
 		void cruise();
 		void stabilize();
 		void escape();
