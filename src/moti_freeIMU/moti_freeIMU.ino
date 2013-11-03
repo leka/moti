@@ -22,7 +22,7 @@ bool out = false;
 void setup() {
 	// moti.initDebug(sensors, motors);
 	Serial.begin(115200);
-	sensors.open();
+	sensors.init();
 
 }
 
