@@ -4,7 +4,7 @@
  * Do not edit manually unless you know what you are doing.
 */
 
-/* // following example of calibration.h 
+ // following example of calibration.h
 #define CALIBRATION_H
 
 const int acc_off_x = 205;
@@ -20,4 +20,4 @@ const int magn_off_z = 26;
 const float magn_scale_x = 527.652115;
 const float magn_scale_y = 569.016790;
 const float magn_scale_z = 514.710857;
-*/
+

@@ -102,12 +102,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Arduino.h"
 #include "calibration.h"
 
-#ifndef CALIBRATION_H
-#include <EEPROM.h>
-#endif
+// #ifndef CALIBRATION_H
+// #include <EEPROM.h>
+// #endif
 
-#define FREEIMU_EEPROM_BASE 0x0A
-#define FREEIMU_EEPROM_SIGNATURE 0x19
+// #define FREEIMU_EEPROM_BASE 0x0A
+// #define FREEIMU_EEPROM_SIGNATURE 0x19
 
 //#if FREEIMU_VER <= 3
 // #if HAS_ADXL345()
@@ -171,9 +171,9 @@ class FreeIMU
     // #else
     // void init(int accgyro_addr, bool fastmode);
     // #endif
-    #ifndef CALIBRATION_H
-    void calLoad();
-    #endif
+    // #ifndef CALIBRATION_H
+    // void calLoad();
+    // #endif
     void zeroGyro();
     void getRawValues(int * raw_values);
     void getValues(float * values);

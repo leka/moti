@@ -8,14 +8,14 @@
  */
 
 #include <Arduino.h>
-#include <Serial.h>
 #include <Wire.h>
-#include <CommunicationUtils.h>
-#include <DebugUtils.h>
-#include <FIMU_ADXL345.h>
-#include <FIMU_ITG3200.h>
-#include <FreeSixIMU.h>
 
+#include "CommunicationUtils.h"
+#include "DebugUtils.h"
+#include "ADXL345.h"
+#include "ITG3200.h"
+#include "FreeIMU.h"
+#include "Serial.h"
 
 /**
  * @class Sensors
@@ -60,7 +60,7 @@ class Sensors {
 
 
 		//	RELATED CLASS
-		FreeSixIMU AccelGyro;
+		FreeIMU AccelGyro;
 };
 
 #endif

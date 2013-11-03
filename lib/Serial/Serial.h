@@ -3,9 +3,9 @@
 
 #include <Arduino.h>
 
-#ifndef serial
+
 #define serial Serial
-#endif
+
 
 namespace sio {
 

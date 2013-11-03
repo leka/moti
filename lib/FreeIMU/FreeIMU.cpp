@@ -196,60 +196,60 @@ void FreeIMU::init(int acc_addr, int gyro_addr, bool fastmode) {
   // zero gyro
   zeroGyro();
 
-  #ifndef CALIBRATION_H
-  // load calibration from eeprom
-  calLoad();
-  #endif
+  // #ifndef CALIBRATION_H
+  // // load calibration from eeprom
+  // calLoad();
+  // #endif
 }
 
-#ifndef CALIBRATION_H
+// #ifndef CALIBRATION_H
 
-static uint8_t location; // assuming ordered reads
+// static uint8_t location; // assuming ordered reads
 
-void eeprom_read_var(uint8_t size, byte * var) {
-  for(uint8_t i = 0; i<size; i++) {
-    var[i] = EEPROM.read(location + i);
-  }
-  location += size;
-}
+// void eeprom_read_var(uint8_t size, byte * var) {
+//   for(uint8_t i = 0; i<size; i++) {
+//     var[i] = EEPROM.read(location + i);
+//   }
+//   location += size;
+// }
 
-void FreeIMU::calLoad() {
-  if(EEPROM.read(FREEIMU_EEPROM_BASE) == FREEIMU_EEPROM_SIGNATURE) { // check if signature is ok so we have good data
-    location = FREEIMU_EEPROM_BASE + 1; // reset location
+// void FreeIMU::calLoad() {
+//   if(EEPROM.read(FREEIMU_EEPROM_BASE) == FREEIMU_EEPROM_SIGNATURE) { // check if signature is ok so we have good data
+//     location = FREEIMU_EEPROM_BASE + 1; // reset location
 
-    eeprom_read_var(sizeof(acc_off_x), (byte *) &acc_off_x);
-    eeprom_read_var(sizeof(acc_off_y), (byte *) &acc_off_y);
-    eeprom_read_var(sizeof(acc_off_z), (byte *) &acc_off_z);
+//     eeprom_read_var(sizeof(acc_off_x), (byte *) &acc_off_x);
+//     eeprom_read_var(sizeof(acc_off_y), (byte *) &acc_off_y);
+//     eeprom_read_var(sizeof(acc_off_z), (byte *) &acc_off_z);
 
-    eeprom_read_var(sizeof(magn_off_x), (byte *) &magn_off_x);
-    eeprom_read_var(sizeof(magn_off_y), (byte *) &magn_off_y);
-    eeprom_read_var(sizeof(magn_off_z), (byte *) &magn_off_z);
+//     eeprom_read_var(sizeof(magn_off_x), (byte *) &magn_off_x);
+//     eeprom_read_var(sizeof(magn_off_y), (byte *) &magn_off_y);
+//     eeprom_read_var(sizeof(magn_off_z), (byte *) &magn_off_z);
 
-    eeprom_read_var(sizeof(acc_scale_x), (byte *) &acc_scale_x);
-    eeprom_read_var(sizeof(acc_scale_y), (byte *) &acc_scale_y);
-    eeprom_read_var(sizeof(acc_scale_z), (byte *) &acc_scale_z);
+//     eeprom_read_var(sizeof(acc_scale_x), (byte *) &acc_scale_x);
+//     eeprom_read_var(sizeof(acc_scale_y), (byte *) &acc_scale_y);
+//     eeprom_read_var(sizeof(acc_scale_z), (byte *) &acc_scale_z);
 
-    eeprom_read_var(sizeof(magn_scale_x), (byte *) &magn_scale_x);
-    eeprom_read_var(sizeof(magn_scale_y), (byte *) &magn_scale_y);
-    eeprom_read_var(sizeof(magn_scale_z), (byte *) &magn_scale_z);
-  }
-  else {
-    acc_off_x = 0;
-    acc_off_y = 0;
-    acc_off_z = 0;
-    acc_scale_x = 1;
-    acc_scale_y = 1;
-    acc_scale_z = 1;
+//     eeprom_read_var(sizeof(magn_scale_x), (byte *) &magn_scale_x);
+//     eeprom_read_var(sizeof(magn_scale_y), (byte *) &magn_scale_y);
+//     eeprom_read_var(sizeof(magn_scale_z), (byte *) &magn_scale_z);
+//   }
+//   else {
+//     acc_off_x = 0;
+//     acc_off_y = 0;
+//     acc_off_z = 0;
+//     acc_scale_x = 1;
+//     acc_scale_y = 1;
+//     acc_scale_z = 1;
 
-    magn_off_x = 0;
-    magn_off_y = 0;
-    magn_off_z = 0;
-    magn_scale_x = 1;
-    magn_scale_y = 1;
-    magn_scale_z = 1;
-  }
-}
-#endif
+//     magn_off_x = 0;
+//     magn_off_y = 0;
+//     magn_off_z = 0;
+//     magn_scale_x = 1;
+//     magn_scale_y = 1;
+//     magn_scale_z = 1;
+//   }
+// }
+// #endif
 
 /**
  * Populates raw_values with the raw_values from the sensors
@@ -308,7 +308,7 @@ void FreeIMU::getValues(float * values) {
   // #endif
 
 
-  #warning Accelerometer calibration active: have you calibrated your device?
+  // #warning Accelerometer calibration active: have you calibrated your device?
   // remove offsets and scale accelerometer (calibration)
   values[0] = (values[0] - acc_off_x) / acc_scale_x;
   values[1] = (values[1] - acc_off_y) / acc_scale_y;
