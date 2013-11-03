@@ -8,6 +8,9 @@
 // LIBRARIES //
 //###########//
 
+#define serial Serial
+#define debug true
+
 #include <Arduino.h>
 #include <Serial.h>
 #include <Wire.h>
@@ -18,16 +21,20 @@
 #include <FreeSixIMU.h>
 
 // Include all the classes needed to beautifully develop your robot.
-// #include <Sensors.h>
-// #include <Led.h>
+#include <Behaviors.h>
+#include <Sensors.h>
+#include <Led.h>
 #include <Motors.h>
-// #include <Memory.h>
+#include <Memory.h>
+#include <Debug.h>
 // #include <Moti.h>
 
 // Then create instances of every classes
-// Sensors sensors;
-Motors motors;
+Sensors sensors;
+// Motors motors;
 // Moti moti;
+//
+Behaviors behave;
 
 int time;
 unsigned long previousMillis = 0;
@@ -35,17 +42,15 @@ bool out = false;
 
 
 void setup() {
-	// moti.initDebug(sensors, motors);
-	motors.init();
-	
+	behave.init();
+	sensors.open();
 }
 
 void loop() {
-	motors.goForward();
-	delay(2000);
-	motors.spinRight();
-	delay(1000);
-	motors.spinLeft();
-	delay(1000);
+	behave.router();
+	behave.server();
+	sensors.read();
+	sensors.sendJson();
+
 
 }

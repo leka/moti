@@ -14,6 +14,7 @@
 #include <Led.h>
 #include <Motors.h>
 #include <Memory.h>
+#include <Serial.h>
 
 
 /**
@@ -30,8 +31,8 @@ class Moti {
 		Moti();
 
 
-		void init(Sensors& sensors, Motors& motors, Led& led);
-		void initDebug(Sensors& sensors, Motors& motors, Led& led);
+		void init(Sensors& sensors, Motors& motors);
+		void initDebug(Sensors& sensors, Motors& motors);
 
 
 		//	SET CONSTANTS
@@ -73,6 +74,9 @@ class Moti {
 		void readCommands(Motors& motors, Led& led, Sensors& sensors);
 		void serialRouter();
 		void serialServer();
+
+		//	ACTIONS
+		void stabilize(Sensors& sensors, Motors& motors);
 
 
 		//	STATE

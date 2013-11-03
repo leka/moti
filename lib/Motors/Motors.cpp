@@ -7,10 +7,9 @@
  * @version 1.0
  */
 
-
-// CONSTRUCTORS //
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------//
+// CONSTRUCTORS
+//-----------------------------------------------------//
 
 /**
  * @brief Motors Class Constructor
@@ -28,33 +27,9 @@ void Motors::init(){
 	stop();
 }
 
-
-// MOVING STATE //
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-/**
- * @brief Is Moti moving method
- *
- * @return true if motors are ON, false if motors are OFF.
- */
-bool Motors::getMovingState(){
-	return _stateMoving;
-}
-
-/**
- * @brief Setter method for the moving state
- *
- * @param state can be true or false
- */
-void Motors::setMovingState(bool state){
-	_stateMoving = state;
-}
-
-
-// GENERAL METHODS //
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------//
+// GENERAL
+//-----------------------------------------------------//
 
 /**
  * @ brief Method used to spin the right wheel of the robot.
@@ -84,8 +59,6 @@ void Motors::spinLeftWheel(uint8_t speed, bool direction){
 void Motors::goForward(){
 	spinLeftWheel(255, 1);
 	spinRightWheel(255, 1);
-
-	setMovingState(true);
 }
 
 /**
@@ -97,8 +70,6 @@ void Motors::goForward(int speed){
 	int _speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(_speed, 1);
 	spinRightWheel(_speed, 1);
-
-	setMovingState(true);
 }
 
 /**
@@ -107,8 +78,6 @@ void Motors::goForward(int speed){
 void Motors::goBackward(){
 	spinLeftWheel(255, 0);
 	spinRightWheel(255, 0);
-
-	setMovingState(true);
 }
 
 /**
@@ -120,8 +89,6 @@ void Motors::goBackward(int speed){
 	int _speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(_speed, 0);
 	spinRightWheel(_speed, 0);
-
-	setMovingState(true);
 }
 
 /**
@@ -130,8 +97,6 @@ void Motors::goBackward(int speed){
 void Motors::goLeft(){
 	spinLeftWheel(175, 0);
 	spinRightWheel(255, 0);
-
-	setMovingState(true);
 }
 
 /**
@@ -143,8 +108,6 @@ void Motors::goLeft(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel((uint8_t) speed * turnCoefficientTime / turnCoefficientDiv, 0);
 	spinRightWheel(speed, 0);
-
-	setMovingState(true);
 }
 
 /**
@@ -153,8 +116,6 @@ void Motors::goLeft(int speed){
 void Motors::goRight(){
 	spinLeftWheel(255, 0);
 	spinRightWheel(175, 0);
-
-	setMovingState(true);
 }
 
 /**
@@ -166,8 +127,6 @@ void Motors::goRight(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(speed, 0);
 	spinRightWheel((uint8_t) speed * turnCoefficientTime / turnCoefficientDiv, 0);
-
-	setMovingState(true);
 }
 
 /**
@@ -176,8 +135,6 @@ void Motors::goRight(int speed){
 void Motors::spinLeft(){
 	spinLeftWheel(255, 0);
 	spinRightWheel(255, 1);
-
-	setMovingState(true);
 }
 
 /**
@@ -189,8 +146,6 @@ void Motors::spinLeft(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(speed, 0);
 	spinRightWheel(speed, 1);
-
-	setMovingState(true);
 }
 
 /**
@@ -199,8 +154,6 @@ void Motors::spinLeft(int speed){
 void Motors::spinRight(){
 	spinLeftWheel(255, 1);
 	spinRightWheel(255, 0);
-
-	setMovingState(true);
 }
 
 /**
@@ -212,8 +165,6 @@ void Motors::spinRight(int speed){
 	speed = constrain(speed, getMotorMinSpeed(), getMotorMaxSpeed());
 	spinLeftWheel(speed, 1);
 	spinRightWheel(speed, 0);
-
-	setMovingState(true);
 }
 
 /**
@@ -224,14 +175,12 @@ void Motors::stop(){
 	digitalWrite(DEFAULT_LEFT_MOTOR_SPEED_PIN, 0);
 	digitalWrite(DEFAULT_RIGHT_MOTOR_DIRECTION_PIN, 0);
 	digitalWrite(DEFAULT_RIGHT_MOTOR_SPEED_PIN, 0);
-
-	setMovingState(false);
 }
 
 
-// CONSTANTS //
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------//
+// CONSTANTS
+//-----------------------------------------------------//
 
 /**
  * @brief Setter method for _motorMinSpeed

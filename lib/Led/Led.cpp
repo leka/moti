@@ -8,10 +8,9 @@
  * @version 1.0
  */
 
-
-// CONSTRUCTORS //
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------//
+// CONSTRUCTORS
+//-----------------------------------------------------//
 
 
 /**
@@ -22,21 +21,21 @@
  * @param bluePin Blue pin
  */
 Led::Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin){
-	this -> redPin   = redPin;
-	this -> greenPin = greenPin;
-	this -> bluePin  = bluePin;
+	this -> _redPin   = redPin;
+	this -> _greenPin = greenPin;
+	this -> _bluePin  = bluePin;
 }
 
 /**
  * @brief Led Class Constructor
  */
 Led::Led(){
-	this -> redPin   = DEFAULT_RED_PIN;
-	this -> greenPin = DEFAULT_GREEN_PIN;
-	this -> bluePin  = DEFAULT_BLUE_PIN;
+	this -> _redPin   = DEFAULT_RED_PIN;
+	this -> _greenPin = DEFAULT_GREEN_PIN;
+	this -> _bluePin  = DEFAULT_BLUE_PIN;
 }
 
-void Led::init(){
+void Led::open(){
 	rgb[0] = 0;
 	rgb[1] = 0;
 	rgb[2] = 0;
@@ -44,14 +43,42 @@ void Led::init(){
 	rgbBuffer[0] = 0;
 	rgbBuffer[1] = 0;
 	rgbBuffer[2] = 0;
+
+	resetMaxBrightness();
+	resetBlueMaxBrightness();
+	resetGreenMaxBrightness();
+	resetRedMaxBrightness();
+
+	i = 0;
+	j = 0;
+	k = 0;
+	previousMillis = 0;
+	currentMillis = 0;
+	runTime = 0;
+	isOn(false);
+	isBlinking(false);
+}
+
+void Led::isOn(bool state){
+	_isOn = state;
+}
+
+bool Led::isOn(){
+	return _isOn;
+}
+
+void Led::isBlinking(bool state){
+	_isBlinking = state;
+}
+
+bool Led::isBlinking(){
+	return _isBlinking;
 }
 
 
-
-
-// GENERAL METHODS //
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------//
+// GENERAL METHODS
+//-----------------------------------------------------//
 
 /**
  * @brief Method used to set the value of red, green or blue
@@ -60,7 +87,7 @@ void Led::init(){
  */
 void Led::setRgb(int8_t index, int value){
 	index = constrain(index, 0, 2);
-	rgb[index] = constrain(value, 0, getLedMaxBrightness());
+	rgb[index] = constrain(value, 0, getMaxBrightness());
 }
 
 /**
@@ -70,9 +97,9 @@ void Led::setRgb(int8_t index, int value){
  * @param blueValue  the blue led value, must be between 0-255
  */
 void Led::setRgb(int redValue, int greenValue, int blueValue){
-	rgb[0] = constrain(redValue, 0, getLedMaxBrightness());
-	rgb[1] = constrain(greenValue, 0, getLedMaxBrightness());
-	rgb[2] = constrain(blueValue, 0, getLedMaxBrightness());
+	rgb[0] = constrain(redValue, 0, getMaxBrightness());
+	rgb[1] = constrain(greenValue, 0, getMaxBrightness());
+	rgb[2] = constrain(blueValue, 0, getMaxBrightness());
 }
 
 /**
@@ -80,7 +107,7 @@ void Led::setRgb(int redValue, int greenValue, int blueValue){
  * @param value value for the red led. It must be between 0-255
  */
 void Led::setRed(int value){
-	rgb[0] = constrain(value, 0, getLedMaxBrightness());
+	rgb[0] = constrain(value, 0, getMaxBrightness());
 }
 
 /**
@@ -88,7 +115,7 @@ void Led::setRed(int value){
  * @param value value for the green led. It must be between 0-255
  */
 void Led::setGreen(int value){
-	rgb[1] = constrain(value, 0, getLedMaxBrightness());
+	rgb[1] = constrain(value, 0, getMaxBrightness());
 }
 
 /**
@@ -96,13 +123,13 @@ void Led::setGreen(int value){
  * @param value value for the blue led. It must be between 0-255
  */
 void Led::setBlue(int value){
-	rgb[2] = constrain(value, 0, getLedMaxBrightness());
+	rgb[2] = constrain(value, 0, getMaxBrightness());
 }
 
 /**
  * @brief Getter method to get the value of red, green or blue
- * @param  index 0, 1 or 2 for red, green or blue.
- * @return       returns the corresponding value, an uint8_t between 0-255
+ * @param index 0, 1 or 2 for red, green or blue.
+ * @return returns the corresponding value, an uint8_t between 0-255
  */
 uint8_t Led::getRgb(uint8_t index){
 	return rgb[index];
@@ -135,15 +162,15 @@ uint8_t Led::getBlue(){
 /**
  * @brief Outputs the rgb[] values with the RGB Led
  */
-void Led::printRgb(){
-	analogWrite(redPin, rgb[0]);
-	analogWrite(greenPin, rgb[1]);
-	analogWrite(bluePin, rgb[2]);
+void Led::writeRgb(){
+	analogWrite(_redPin, rgb[0]);
+	analogWrite(_greenPin, rgb[1]);
+	analogWrite(_bluePin, rgb[2]);
 }
 
-void Led::printRgb(ColorName color){
+void Led::writeRgb(ColorName color){
 	colorSwitcher(color);
-	printRgb();
+	writeRgb();
 }
 
 /**
@@ -153,12 +180,12 @@ void Led::printRgb(ColorName color){
  * @param greenValue green value to output
  * @param blueValue blue value to output
  */
-void Led::printRgb(int redValue, int greenValue, int blueValue){
-	rgb[0] = constrain(redValue, 0, getLedMaxBrightness());
-	rgb[1] = constrain(greenValue, 0, getLedMaxBrightness());
-	rgb[2] = constrain(blueValue, 0, getLedMaxBrightness());
+void Led::writeRgb(int red, int green, int blue){
+	rgb[0] = constrain(red, 0, getMaxBrightness());
+	rgb[1] = constrain(green, 0, getMaxBrightness());
+	rgb[2] = constrain(blue, 0, getMaxBrightness());
 
-	printRgb();
+	writeRgb();
 }
 
 /**
@@ -169,12 +196,12 @@ void Led::printRgb(int redValue, int greenValue, int blueValue){
  * @param numberOfBlinks number of blinks
  * @param timeBtwBlink delay between each blinks - a good value is 50
  */
-void Led::blinkLed(ColorName color, int numberOfBlinks, int timeBtwBlink){
+void Led::blinkAsync(ColorName color, int numberOfBlinks, uint16_t timeBtwBlink){
 	for(int i = 0 ; i < numberOfBlinks ; i++) {
 		colorSwitcher(color);
-		printRgb();
+		writeRgb();
 		delay(timeBtwBlink);
-		printRgb(0, 0, 0);
+		turnOff();
 		delay(timeBtwBlink);
 	}
 }
@@ -189,11 +216,60 @@ void Led::blinkLed(ColorName color, int numberOfBlinks, int timeBtwBlink){
  * @param numberOfBlinks number of blinks
  * @param timeBtwBlink delay between each blinks - a good value is 50
  */
-void Led::blinkLed(int red, int green, int blue, int numberOfBlinks, int timeBtwBlink){
+void Led::blinkAsync(int red, int green, int blue, int numberOfBlinks, uint16_t timeBtwBlink){
 	for(int i = 0 ; i < numberOfBlinks ; i++) {
-		printRgb(red, green, blue);
+		writeRgb(red, green, blue);
 		delay(timeBtwBlink);
-		printRgb(0, 0, 0);
+		turnOff();
+		delay(timeBtwBlink);
+	}
+}
+
+/**
+ * @brief Blinks the led with a certain color, a certain number of time without
+ * using delay.
+ *
+ * @param color the name of the color from enum ColorName{}
+ * @param numberOfBlinks number of blinks
+ * @param timeBtwBlink delay between each blinks - a good value is 50
+ */
+void Led::blinkSync(ColorName color, uint16_t timeBtwBlink){
+	currentMillis = millis();
+	
+	if(isBlinking() == false){
+		isBlinking(true);
+		previousMillis = currentMillis;
+		
+	}
+	if(currentMillis - previousMillis > timeBtwBlink) {
+		previousMillis = currentMillis;
+
+		if (isOn() == false){
+			isOn(true);
+			writeRgb(color);
+		}
+		else{
+			isOn(false);
+			writeRgb(0, 0, 0);
+		}
+	}
+}
+
+/**
+ * @brief Blinks the led with a certain color, a certain number of time without
+ * using delay.
+ *
+ * @param red red value to output
+ * @param green green value to output
+ * @param blue blue value to output
+ * @param numberOfBlinks number of blinks
+ * @param timeBtwBlink delay between each blinks - a good value is 50
+ */
+void Led::blinkSync(int red, int green, int blue, int numberOfBlinks, uint16_t timeBtwBlink){
+	for(int i = 0 ; i < numberOfBlinks ; i++) {
+		writeRgb(red, green, blue);
+		delay(timeBtwBlink);
+		writeRgb(0, 0, 0);
 		delay(timeBtwBlink);
 	}
 }
@@ -223,22 +299,25 @@ void Led::fadeLedTo(ColorName color){
 		if (fadeBlue < rgb[2]){
 			fadeBlue+=3;
 		}
-		printRgb(fadeRed, fadeGreen, fadeBlue);
+		writeRgb(fadeRed, fadeGreen, fadeBlue);
 	}
 }
 
 /**
  * @brief Turns led ON - white color.
  */
-void Led::turnLedOn(){
-	printRgb(255, 255, 255);
+void Led::turnOn(){
+	writeRgb();
+	isOn(true);
 }
 
 /**
  * @brief Turns led OFF.
  */
-void Led::turnLedOff(){
-	printRgb(0, 0, 0);
+void Led::turnOff(){
+	writeRgb(0, 0, 0);
+	isOn(false);
+	isBlinking(false);
 }
 
 /**
@@ -256,9 +335,9 @@ void Led::colorSwitcher(ColorName color){
 			break;
 
 		case RED:
-			rgb[0] = 221;
-			rgb[1] = 60;
-			rgb[2] = 48;
+			rgb[0] = 255;
+			rgb[1] = 0;
+			rgb[2] = 0;
 			break;
 
 		case LIGHT_RED:
@@ -328,9 +407,9 @@ void Led::colorSwitcher(ColorName color){
 			break;
 
 		case GREEN:
-			rgb[0] = 98;
-			rgb[1] = 163;
-			rgb[2] = 75;
+			rgb[0] = 0;
+			rgb[1] = 255;
+			rgb[2] = 0;
 			break;
 
 		case RAND:
@@ -350,19 +429,18 @@ void Led::colorSwitcher(ColorName color){
 
 
 
-
-// CONSTANTS //
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------//
+// CONSTANTS
+//-----------------------------------------------------//
 
 /**
  * @brief Setter method for _ledMaxBrightness
  *
- * Once set, the _sleepDelay can be accessed by calling getLedMaxBrightness()
+ * Once set, the _sleepDelay can be accessed by calling getMaxBrightness()
  * @param value the value you want to assign to _ledMaxBrightness.
  */
-void Led::setLedMaxBrightness(int value){
-	_ledMaxBrightness = value;
+void Led::setMaxBrightness(int value){
+	_ledMaxBrightness = constrain(value, 0, 255);
 }
 
 /**
@@ -372,7 +450,7 @@ void Led::setLedMaxBrightness(int value){
  * @param value the value you want to assign to _redMaxBrightness.
  */
 void Led::setRedMaxBrightness(int value){
-	_redMaxBrightness = value;
+	_redMaxBrightness = constrain(value, 0, 255);
 }
 
 /**
@@ -382,7 +460,7 @@ void Led::setRedMaxBrightness(int value){
  * @param value the value you want to assign to _greenMaxBrightness.
  */
 void Led::setGreenMaxBrightness(int value){
-	_greenMaxBrightness = value;
+	_greenMaxBrightness = constrain(value, 0, 255);
 }
 
 /**
@@ -392,7 +470,7 @@ void Led::setGreenMaxBrightness(int value){
  * @param value the value you want to assign to _blueMaxBrightness.
  */
 void Led::setBlueMaxBrightness(int value){
-	_blueMaxBrightness = value;
+	_blueMaxBrightness = constrain(value, 0, 255);
 }
 
 /**
@@ -401,7 +479,7 @@ void Led::setBlueMaxBrightness(int value){
  * It is used to get the maximum brightness of the led.
  * @return the value of _ledMaxBrightness
  */
-int Led::getLedMaxBrightness(){
+int Led::getMaxBrightness(){
 	return _ledMaxBrightness;
 }
 
@@ -438,7 +516,7 @@ int Led::getBlueMaxBrightness(){
 /**
  * @brief Reset method for _ledMaxBrightness to initial value
  */
-void Led::resetLedMaxBrightness(){
+void Led::resetMaxBrightness(){
 	_ledMaxBrightness = DEFAULT_LED_MAX_BRIGHTNESS;
 }
 

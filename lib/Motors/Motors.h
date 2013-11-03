@@ -37,11 +37,6 @@ class Motors {
 		void resetMotorMaxSpeed();
 
 
-		//	MOVING STATE
-		bool getMovingState();
-		void setMovingState(bool state);
-
-
 		//	MOTORS
 		void spinRightWheel(uint8_t speed, bool direction);
 		void spinLeftWheel(uint8_t speed, bool direction);
@@ -79,7 +74,6 @@ class Motors {
 		uint8_t _motorMinSpeed;
 		uint8_t _motorMaxSpeed;
 
-		bool _stateMoving;
 
 		//	CONSTANTS
 		static const uint8_t DEFAULT_MIN_MOTOR_SPEED = 0;

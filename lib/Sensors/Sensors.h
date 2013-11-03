@@ -8,8 +8,8 @@
  */
 
 #include <Arduino.h>
+#include <Serial.h>
 #include <Wire.h>
-
 #include <CommunicationUtils.h>
 #include <DebugUtils.h>
 #include <FIMU_ADXL345.h>
@@ -27,20 +27,21 @@ class Sensors {
 
 		Sensors();
 
-		void init();
+		void open();
 
 		//	SENSORS
-		void checkSensors();
-		void checkAccelerometer();
-		void checkGyroscope();
+		void read();
+		void readAccelerometer();
+		void readGyroscope();
 
-		int getXYZ(uint8_t index);
-		int getYPR(uint8_t index);
+		int readXYZ(uint8_t index);
+		int readYPR(uint8_t index);
 
 		void computeDelta();
 		void updateLastValues();
 
 		void sendJson();
+		void writeData();
 
 
 	private:
@@ -49,7 +50,14 @@ class Sensors {
 		int XYZ[3], lastXYZ[3], deltaXYZ[3];
 		int YPR[3], lastYPR[3], deltaYPR[3];
 
-		bool _stateMoving;
+		static const int numberOfReadings = 10;
+
+		int readings[numberOfReadings];
+		int readingsIndex = 0;
+		int readingsSum = 0;
+		int readingsAverage = 0;
+
+
 
 		//	RELATED CLASS
 		FreeSixIMU AccelGyro;

@@ -13,7 +13,7 @@
  * @param value the value you need to send.
  */
 void Moti::writeBinaryByte(uint8_t value){
-	Serial.write(value);
+	serial.write(value);
 }
 
 /**
@@ -27,8 +27,8 @@ void Moti::writeBinaryByte(uint8_t value){
  * @param value [description]
  */
 void Moti::writeBinaryInt(int value){
-	Serial.write(lowByte(value));
-	Serial.write(highByte(value));
+	serial.write(lowByte(value));
+	serial.write(highByte(value));
 }
 
 /**
@@ -86,5 +86,5 @@ void Moti::sendJson(Sensors& sensors){
 	json = json + sensors.getYPR(2);
 	json = json + "}}";
 
-	Serial.println(json);
+	serial.println(json);
 }

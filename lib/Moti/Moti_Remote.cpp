@@ -92,65 +92,66 @@ void Moti::serialServer(){
  * It treats and interprets the serial byte to execute certain commands.
  * Read the code to know exactly what should be send and the corresponding action.
  */
-void Moti::serialRouter(){
-	while(getRemoteState() == true){
 
-		while(Serial.available() > 0){
-			byte recievedByte = Serial.read();
+// void Moti::serialRouter(){
+// 	while(getRemoteState() == true){
 
-			if(recievedByte == 104){ ///< corresponds to the letter h in Arduino Serial Monitor
-			}
-			else if(recievedByte == 114){ ///< corresponds to the letter r in Arduino Serial Monitor
-				Serial.println(F("Remote control is already activated"));
-				setRemoteState(true);
-			}
-			else if(recievedByte == 100){ ///< corresponds to the letter d in Arduino Serial Monitor
-				Serial.println(F("Sending data as JSON"));
-				sensors.checkSensors();
-				sendJson();
-			}
-			else if(recievedByte == 109){ ///< corresponds to the letter m in Arduino Serial Monitor
-				Serial.println(F("Entering Machine Learning state"));
-				setLearningState(true);
-				while(getLearningState() == true){
-					sensors.checkSensors();
-					sendJson();
-					delay(getLoopDelay());
-					while(Serial.available() > 0){
-						byte recievedByte = Serial.read();
-						if(recievedByte == 77){ ///< corresponds to the letter h in Arduino Serial Monitor
-							setLearningState(false);
-						}
-					}
-				}
-			}
-			else if(recievedByte == 76){ ///< corresponds to the letter L in Arduino Serial Monitor
-				Serial.println(F("Turn led on with rgb: "));
-				setRemoteState(true);
-			}
-			else if(recievedByte == 102){ ///< corresponds to the letter f in Arduino Serial Monitor
-				Serial.println(F("Go forward"));
-				setRemoteState(true);
-			}
-			else if(recievedByte == 70){ ///< corresponds to the letter F in Arduino Serial Monitor
-				Serial.println(F("Go forward at speed: "));
-				setRemoteState(true);
-			}
-			else if(recievedByte == 98){ ///< corresponds to the letter b in Arduino Serial Monitor
-				Serial.println(F("Go backward"));
-				setRemoteState(true);
-			}
-			else if(recievedByte == 66){ ///< corresponds to the letter B in Arduino Serial Monitor
-				Serial.println(F("Go backward at speed: "));
-				setRemoteState(true);
-			}
-			else if(recievedByte == 113){ ///< corresponds to the letter q in Arduino Serial Monitor
-				Serial.println(F("Leaving the remote control mode."));
-				setRemoteState(false);
-			}
-			else {
-				Serial.println(F("Don't know how to do that, sorry..."));
-			}
-		}
-	}
-}
+// 		while(Serial.available() > 0){
+// 			byte recievedByte = Serial.read();
+
+// 			if(recievedByte == 104){ ///< corresponds to the letter h in Arduino Serial Monitor
+// 			}
+// 			else if(recievedByte == 114){ ///< corresponds to the letter r in Arduino Serial Monitor
+// 				Serial.println(F("Remote control is already activated"));
+// 				setRemoteState(true);
+// 			}
+// 			else if(recievedByte == 100){ ///< corresponds to the letter d in Arduino Serial Monitor
+// 				Serial.println(F("Sending data as JSON"));
+// 				sensors.checkSensors();
+// 				sendJson();
+// 			}
+// 			else if(recievedByte == 109){ ///< corresponds to the letter m in Arduino Serial Monitor
+// 				Serial.println(F("Entering Machine Learning state"));
+// 				setLearningState(true);
+// 				while(getLearningState() == true){
+// 					sensors.checkSensors();
+// 					sendJson();
+// 					delay(getLoopDelay());
+// 					while(Serial.available() > 0){
+// 						byte recievedByte = Serial.read();
+// 						if(recievedByte == 77){ ///< corresponds to the letter h in Arduino Serial Monitor
+// 							setLearningState(false);
+// 						}
+// 					}
+// 				}
+// 			}
+// 			else if(recievedByte == 76){ ///< corresponds to the letter L in Arduino Serial Monitor
+// 				Serial.println(F("Turn led on with rgb: "));
+// 				setRemoteState(true);
+// 			}
+// 			else if(recievedByte == 102){ ///< corresponds to the letter f in Arduino Serial Monitor
+// 				Serial.println(F("Go forward"));
+// 				setRemoteState(true);
+// 			}
+// 			else if(recievedByte == 70){ ///< corresponds to the letter F in Arduino Serial Monitor
+// 				Serial.println(F("Go forward at speed: "));
+// 				setRemoteState(true);
+// 			}
+// 			else if(recievedByte == 98){ ///< corresponds to the letter b in Arduino Serial Monitor
+// 				Serial.println(F("Go backward"));
+// 				setRemoteState(true);
+// 			}
+// 			else if(recievedByte == 66){ ///< corresponds to the letter B in Arduino Serial Monitor
+// 				Serial.println(F("Go backward at speed: "));
+// 				setRemoteState(true);
+// 			}
+// 			else if(recievedByte == 113){ ///< corresponds to the letter q in Arduino Serial Monitor
+// 				Serial.println(F("Leaving the remote control mode."));
+// 				setRemoteState(false);
+// 			}
+// 			else {
+// 				Serial.println(F("Don't know how to do that, sorry..."));
+// 			}
+// 		}
+// 	}
+// }

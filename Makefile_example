@@ -2,7 +2,7 @@
 ### This is an example Makefile and it MUST be configured to suit your needs.
 
 ### the boardtag represents the board you're currently using. select the right one (uno, mega2560, etc.)
-BOARD_TAG         = uno
+BOARD_TAG         = mega2560
 
 ### don't change this, our Serial communication are always using the 115200 baudrate
 MONITOR_BAUDRATE  = 115200
@@ -27,8 +27,15 @@ AVR_TOOLS_DIR     = /usr/local
 ### your path to avrdude. if you used homebrew, it should be something like that
 AVRDDUDE          = /usr/local/bin/avrdude
 
+### optimization level, should stay "s" because -Os is meant to turn on all -O2
+### optimizations that are not expected to increase code size
+OPTIMIZATION_LEVEL = s
+
+### for debugging, comment to stop
+CPPFLAGS         = -pedantic -Wall -Wextra
+
 ### connect your arduino, open the IDE and look for the port
-MONITOR_PORT      = /dev/tty.usbmodemfa131
+MONITOR_PORT      = /dev/tty.usbmodem*
 
 ### don't touch this
 CURRENT_DIR       = $(shell basename $(CURDIR))
