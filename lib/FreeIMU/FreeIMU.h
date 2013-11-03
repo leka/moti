@@ -56,45 +56,45 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 // board IDs
-#if defined(FREEIMU_v01)
-  #define FREEIMU_ID "FreeIMU v0.1"
-#elif defined(FREEIMU_v02)
-  #define FREEIMU_ID "FreeIMU v0.2"
-#elif defined(FREEIMU_v03)
-  #define FREEIMU_ID "FreeIMU v0.3"
-#elif defined(FREEIMU_v035)
-  #define FREEIMU_ID "FreeIMU v0.3.5"
-#elif defined(FREEIMU_v035_BMP)
-  #define FREEIMU_ID "FreeIMU v0.3.5_BMP"
-#elif defined(FREEIMU_v035_MS)
-  #define FREEIMU_ID "FreeIMU v0.3.5_MS"
-#elif defined(FREEIMU_v04)
-  #define FREEIMU_ID "FreeIMU v0.4"
-#elif defined(SEN_10121)
+// #if defined(FREEIMU_v01)
+//   #define FREEIMU_ID "FreeIMU v0.1"
+// #elif defined(FREEIMU_v02)
+//   #define FREEIMU_ID "FreeIMU v0.2"
+// #elif defined(FREEIMU_v03)
+//   #define FREEIMU_ID "FreeIMU v0.3"
+// #elif defined(FREEIMU_v035)
+//   #define FREEIMU_ID "FreeIMU v0.3.5"
+// #elif defined(FREEIMU_v035_BMP)
+//   #define FREEIMU_ID "FreeIMU v0.3.5_BMP"
+// #elif defined(FREEIMU_v035_MS)
+//   #define FREEIMU_ID "FreeIMU v0.3.5_MS"
+// #elif defined(FREEIMU_v04)
+//   #define FREEIMU_ID "FreeIMU v0.4"
+// #elif defined(SEN_10121)
   #define FREEIMU_ID "SparkFun 10121"
-#elif defined(SEN_10736)
-  #define FREEIMU_ID "SparkFun 10736"
-#elif defined(SEN_10724)
-  #define FREEIMU_ID "SparkFun 10724"
-#elif defined(SEN_10183)
-  #define FREEIMU_ID "SparkFun 10183"
-#elif defined(ARDUIMU_v3)
-  #define FREEIMU_ID "DIY Drones ArduIMU+ V3"
-#endif
+// #elif defined(SEN_10736)
+//   #define FREEIMU_ID "SparkFun 10736"
+// #elif defined(SEN_10724)
+//   #define FREEIMU_ID "SparkFun 10724"
+// #elif defined(SEN_10183)
+//   #define FREEIMU_ID "SparkFun 10183"
+// #elif defined(ARDUIMU_v3)
+//   #define FREEIMU_ID "DIY Drones ArduIMU+ V3"
+// #endif
 
 
 
 #define HAS_ITG3200() (defined(FREEIMU_v01) || defined(FREEIMU_v02) || defined(FREEIMU_v03) || defined(FREEIMU_v035) || defined(FREEIMU_v035_MS) || defined(FREEIMU_v035_BMP) || defined(SEN_10121) || defined(SEN_10736) || defined(SEN_10724) || defined(SEN_10183))
 #define HAS_ADXL345() (defined(FREEIMU_v01) || defined(FREEIMU_v02) || defined(FREEIMU_v03) || defined(SEN_10121) || defined(SEN_10736) || defined(SEN_10724) || defined(SEN_10183))
-#define HAS_BMA180() (defined(FREEIMU_v035) || defined(FREEIMU_v035_MS) || defined(FREEIMU_v035_BMP))
-#define HAS_MPU6050() (defined(FREEIMU_v04) || defined(GEN_MPU6050))
-#define HAS_MS5611() (defined(FREEIMU_v035_MS) || defined(FREEIMU_v04))
-#define HAS_HMC5883L() (defined(FREEIMU_v01) || defined(FREEIMU_v02) || defined(FREEIMU_v03) || defined(FREEIMU_v035) || defined(FREEIMU_v035_MS) || defined(FREEIMU_v035_BMP) || defined(FREEIMU_v04) || defined(SEN_10736) || defined(SEN_10724) || defined(SEN_10183)  || defined(ARDUIMU_v3))
-#define HAS_MPU6000() (defined(ARDUIMU_v3))
+// #define HAS_BMA180() (defined(FREEIMU_v035) || defined(FREEIMU_v035_MS) || defined(FREEIMU_v035_BMP))
+// #define HAS_MPU6050() (defined(FREEIMU_v04) || defined(GEN_MPU6050))
+// #define HAS_MS5611() (defined(FREEIMU_v035_MS) || defined(FREEIMU_v04))
+// #define HAS_HMC5883L() (defined(FREEIMU_v01) || defined(FREEIMU_v02) || defined(FREEIMU_v03) || defined(FREEIMU_v035) || defined(FREEIMU_v035_MS) || defined(FREEIMU_v035_BMP) || defined(FREEIMU_v04) || defined(SEN_10736) || defined(SEN_10724) || defined(SEN_10183)  || defined(ARDUIMU_v3))
+// #define HAS_MPU6000() (defined(ARDUIMU_v3))
 
-#define IS_6DOM() (defined(SEN_10121) || defined(GEN_MPU6050))
-#define IS_9DOM() (defined(FREEIMU_v01) || defined(FREEIMU_v02) || defined(FREEIMU_v03) || defined(FREEIMU_v035) || defined(FREEIMU_v035_MS) || defined(FREEIMU_v035_BMP) || defined(FREEIMU_v04) || defined(SEN_10736) || defined(SEN_10724) || defined(SEN_10183) || defined(ARDUIMU_v3))
-#define HAS_AXIS_ALIGNED() (defined(FREEIMU_v01) || defined(FREEIMU_v02) || defined(FREEIMU_v03) || defined(FREEIMU_v035) || defined(FREEIMU_v035_MS) || defined(FREEIMU_v035_BMP) || defined(FREEIMU_v04) || defined(SEN_10121) || defined(SEN_10736))
+#define IS_6DOM() (defined(SEN_10121) /*|| defined(GEN_MPU6050*/))
+// #define IS_9DOM() (defined(FREEIMU_v01) || defined(FREEIMU_v02) || defined(FREEIMU_v03) || defined(FREEIMU_v035) || defined(FREEIMU_v035_MS) || defined(FREEIMU_v035_BMP) || defined(FREEIMU_v04) || defined(SEN_10736) || defined(SEN_10724) || defined(SEN_10183) || defined(ARDUIMU_v3))
+// #define HAS_AXIS_ALIGNED() (defined(FREEIMU_v01) || defined(FREEIMU_v02) || defined(FREEIMU_v03) || defined(FREEIMU_v035) || defined(FREEIMU_v035_MS) || defined(FREEIMU_v035_BMP) || defined(FREEIMU_v04) || defined(SEN_10121) || defined(SEN_10736))
 
 
 
@@ -110,45 +110,45 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define FREEIMU_EEPROM_SIGNATURE 0x19
 
 //#if FREEIMU_VER <= 3
-#if HAS_ADXL345()
+// #if HAS_ADXL345()
   #include <ADXL345.h>
   // default I2C 7-bit addresses of the sensors
   #define FIMU_ACC_ADDR ADXL345_ADDR_ALT_LOW // SDO connected to GND
   //#define FIMU_ADXL345_DEF_ADDR ADXL345_ADDR_ALT_HIGH // SDO connected to GND
-#elif HAS_BMA180()
-  #include <bma180.h>
-  #define FIMU_ACC_ADDR BMA180_ADDRESS_SDO_LOW
-  //#define FIMU_ACC_ADDR BMA180_ADDRESS_SDO_HIGH
-//#elif FREEIMU_VER == 7
-#elif HAS_MPU6050()
-  #include <Wire.h>
-  #include "I2Cdev.h"
-  #include "MPU60X0.h"
-  #define FIMU_ACCGYRO_ADDR MPU60X0_DEFAULT_ADDRESS
-#elif HAS_MPU6000()
-  #include <SPI.h>
-  #include "I2Cdev.h"
-  #include "MPU60X0.h"
-  #define FIMU_ACCGYRO_ADDR MPU60X0_DEFAULT_SS_PIN
-#endif
+// #elif HAS_BMA180()
+//   #include <bma180.h>
+//   #define FIMU_ACC_ADDR BMA180_ADDRESS_SDO_LOW
+//   //#define FIMU_ACC_ADDR BMA180_ADDRESS_SDO_HIGH
+// //#elif FREEIMU_VER == 7
+// #elif HAS_MPU6050()
+//   #include <Wire.h>
+//   #include "I2Cdev.h"
+//   #include "MPU60X0.h"
+//   #define FIMU_ACCGYRO_ADDR MPU60X0_DEFAULT_ADDRESS
+// #elif HAS_MPU6000()
+//   #include <SPI.h>
+//   #include "I2Cdev.h"
+//   #include "MPU60X0.h"
+//   #define FIMU_ACCGYRO_ADDR MPU60X0_DEFAULT_SS_PIN
+// #endif
 
 
-#if HAS_MS5611()
-  #include <MS561101BA.h>
-  #define FIMU_BARO_ADDR MS561101BA_ADDR_CSB_LOW
-  //#define FIMU_BARO_ADDR MS561101BA_ADDR_CSB_HIGH
-#endif
+// #if HAS_MS5611()
+//   #include <MS561101BA.h>
+//   #define FIMU_BARO_ADDR MS561101BA_ADDR_CSB_LOW
+//   //#define FIMU_BARO_ADDR MS561101BA_ADDR_CSB_HIGH
+// #endif
 
-#if HAS_ITG3200()
+// #if HAS_ITG3200()
   #include <ITG3200.h>
-#endif
+// #endif
 
-#if HAS_HMC5883L()
-  #include <HMC58X3.h>
-#endif
+// #if HAS_HMC5883L()
+//   #include <HMC58X3.h>
+// #endif
 
 
-#define FIMU_BMA180_DEF_ADDR BMA180_ADDRESS_SDO_LOW
+// #define FIMU_BMA180_DEF_ADDR BMA180_ADDRESS_SDO_LOW
 #define FIMU_ITG3200_DEF_ADDR ITG3200_ADDR_AD0_LOW // AD0 connected to GND
 // HMC5843 address is fixed so don't bother to define it
 
@@ -166,11 +166,11 @@ class FreeIMU
     FreeIMU();
     void init();
     void init(bool fastmode);
-    #if HAS_ITG3200()
+    // #if HAS_ITG3200()
     void init(int acc_addr, int gyro_addr, bool fastmode);
-    #else
-    void init(int accgyro_addr, bool fastmode);
-    #endif
+    // #else
+    // void init(int accgyro_addr, bool fastmode);
+    // #endif
     #ifndef CALIBRATION_H
     void calLoad();
     #endif
@@ -182,38 +182,38 @@ class FreeIMU
     void getYawPitchRoll(float * ypr);
     void getEulerRad(float * angles);
     void getYawPitchRollRad(float * ypr);
-    #if HAS_MS5611()
-      float getBaroAlt();
-      float getBaroAlt(float sea_press);
-      //float getEstimatedAlt();
-      //float getEstimatedAlt(float sea_press);
-    #endif
+    // #if HAS_MS5611()
+    //   float getBaroAlt();
+    //   float getBaroAlt(float sea_press);
+    //   //float getEstimatedAlt();
+    //   //float getEstimatedAlt(float sea_press);
+    // #endif
     void gravityCompensateAcc(float * acc, float * q);
 
     // we make them public so that users can interact directly with device classes
-    #if HAS_ADXL345()
+    // #if HAS_ADXL345()
       ADXL345 acc;
-    #elif HAS_BMA180()
-      BMA180 acc;
-    #endif
+    // #elif HAS_BMA180()
+    //   BMA180 acc;
+    // #endif
 
-    #if HAS_HMC5883L()
-      HMC58X3 magn;
-    #endif
+    // #if HAS_HMC5883L()
+    //   HMC58X3 magn;
+    // #endif
 
 
-    #if HAS_ITG3200()
+    // #if HAS_ITG3200()
       ITG3200 gyro;
-    #elif HAS_MPU6050()
-      MPU60X0 accgyro;
-    #elif HAS_MPU6000()
-      MPU60X0 accgyro;
-    #endif
+    // #elif HAS_MPU6050()
+    //   MPU60X0 accgyro;
+    // #elif HAS_MPU6000()
+    //   MPU60X0 accgyro;
+    // #endif
 
 
-    #if HAS_MS5611()
-      MS561101BA baro;
-    #endif
+    // #if HAS_MS5611()
+    //   MS561101BA baro;
+    // #endif
 
 
     int* raw_acc, raw_gyro, raw_magn;
@@ -223,11 +223,11 @@ class FreeIMU
     float acc_scale_x, acc_scale_y, acc_scale_z, magn_scale_x, magn_scale_y, magn_scale_z;
 
   private:
-    #if IS_9DOM()
-    void AHRSupdate(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz);
-    #elif IS_6DOM()
+    // #if IS_9DOM()
+    // void AHRSupdate(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz);
+    // #elif IS_6DOM()
     void AHRSupdate(float gx, float gy, float gz, float ax, float ay, float az);
-    #endif
+    // #endif
     //float q0, q1, q2, q3; // quaternion elements representing the estimated orientation
     float iq0, iq1, iq2, iq3;
     float exInt, eyInt, ezInt;  // scaled integral error
