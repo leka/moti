@@ -15,6 +15,40 @@ At first, we wanted to keep the code for ourselves. But then we thought "hey! ou
 For us, the answer is an absolute YES! We want people to be able to look at our code, use it for their projects, use it to build their own Moti and then get back to us to improve the awesomeness for a better world today!
 
 
+## TO DO
+
+### Global
+
+*	make this project more collaborative :)
+*	implement a real list of all the tasks we need to do to make the robot work!
+
+### Sensors
+
+*	integrate the new version of FreeIMU
+*	make the appropriate changes to get rid of all the useless libs
+*	implement the sensor analyser to find pattern in the sensors' data
+*	compute moving average
+*	compute square value
+
+### Behaviors
+
+*	develop stabilize behavior
+*	develop affraid behavior
+*	develop happy behavior
+*	develop seeking interaction behavior
+*	develop stuck behavior
+*	develop hit a wall behavior
+
+### Moti
+
+*	try and implement a RTOS using ChibiOS or NilRTOS
+
+### Hardware
+
+*	design the PCB
+*	3D print the robot
+
+
 ##Actual Version
 
 We are now working with `MOTI v1.0`.
@@ -28,7 +62,7 @@ motors.goForward(); //Moti goes forward
 motors.stop();
 motors.spinRight();
 led.blinkLed(5); //the led blink 5 times
-sensors.checkSensors();
+sensors.read();
 Moti.sendData();
 ```
 
