@@ -1,12 +1,3 @@
-//######################################################################//
-//	MOTI SOFTWARE v2.0													//
-//	COPYRIGHT WE ARE LEKA! - SOURCE CODE DISTRIBUTED UNDER MIT LICENCE	//
-//######################################################################//
-
-
-//###########//
-// LIBRARIES //
-//###########//
 
 #define serial Serial
 #define debug true
@@ -31,10 +22,9 @@
 // #include <Moti.h>
 
 // Then create instances of every classes
-Sensors sensors;
-Motors motors;
+// Sensors sensors;
+// Motors motors;
 // Moti moti;
-
 Behaviors behave;
 
 int time;
@@ -44,14 +34,9 @@ bool out = false;
 
 void setup() {
 	behave.init();
-	sensors.init();
 }
 
 void loop() {
 	behave.router();
 	behave.server();
-	sensors.read();
-	sensors.sendJson();
-
-
 }
