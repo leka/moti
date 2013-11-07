@@ -22,9 +22,8 @@ void Behaviors::init(){
 	delay(50);
 	motors.init();
 	delay(50);
-	sensors.open();
+	sensors.init();
 	delay(50);
-	sensors.open();
 	motors.init();
 	rightLed.open();
 	leftLed.open();
