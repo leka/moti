@@ -83,6 +83,10 @@ void Behaviors::server(){
 			cruise();
 			break;
 
+		case WAIT:
+			wait();
+			break;
+
 		case ESCAPE:
 			escape();
 			break;
@@ -176,6 +180,13 @@ void Behaviors::cruise(){
 	orderNumber = 1;
 }
 
+void Behaviors::wait(){
+	motors.stop();
+	leftLed.blinkSync(RAND, 150);
+	rightLed.blinkSync(RAND, 400);
+}
+
+
 void Behaviors::stabilize(){
 	motors.stop();
 	delay(500);
@@ -230,8 +241,6 @@ void Behaviors::escape(){
 
 void Behaviors::shutDown(){
 	motors.stop();
-	leftLed.blinkSync(RAND, 150);
-	rightLed.blinkSync(RAND, 400);
 }
 
 void Behaviors::stopAndBlink(){

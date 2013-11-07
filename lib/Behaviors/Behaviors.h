@@ -9,7 +9,7 @@
 #include <Serial.h>
 
 enum BehaviorName {
-		REMOTE, CRUISE, ESCAPE, STABILIZE, SHUT_DOWN, SPINBLINK
+		WAIT, REMOTE, CRUISE, ESCAPE, STABILIZE, SHUT_DOWN, SPINBLINK
 	};
 
 
@@ -24,7 +24,7 @@ class Behaviors {
 		Behaviors();
 
 		void init();
-		//	Server & Router
+
 		void router();
 		void server();
 
@@ -33,6 +33,7 @@ class Behaviors {
 		uint8_t getBehavior();
 
 		void cruise();
+		void wait();
 		void stabilize();
 		void escape();
 		void stopAndBlink();
