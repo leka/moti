@@ -3,13 +3,14 @@
 
 #include <Arduino.h>
 #include <Wire.h>
-#include <Sensors.h>
-#include <Led.h>
-#include <Motors.h>
-#include <Serial.h>
+
+#include "Sensors.h"
+#include "Led.h"
+#include "Motors.h"
+#include "Serial.h"
 
 enum BehaviorName {
-		WAIT, REMOTE, CRUISE, ESCAPE, STABILIZE, SHUT_DOWN, SPINBLINK
+		WAKE_UP, WAIT, REACT, REMOTE, CRUISE, ESCAPE, STABILIZE, SHUT_DOWN, SPINBLINK
 	};
 
 
@@ -34,6 +35,8 @@ class Behaviors {
 
 		void cruise();
 		void wait();
+		void wakeup();
+		void react();
 		void stabilize();
 		void escape();
 		void stopAndBlink();
@@ -43,6 +46,7 @@ class Behaviors {
 	private:
 		//	Variables
 		uint8_t orderNumber;
+		uint8_t reactNumber;
 		uint8_t behavior;
 
 		//	Objects

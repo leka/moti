@@ -25,9 +25,13 @@ void Behaviors::init(){
 	sensors.init();
 	delay(50);
 	motors.init();
+	delay(50);
 	rightLed.open();
+	delay(50);
 	leftLed.open();
-	setBehavior(SHUT_DOWN);
+	delay(50);
+	setBehavior(WAKE_UP);
+	reactNumber = 0;
 }
 
 /**
@@ -50,13 +54,17 @@ uint8_t Behaviors::getBehavior(){
 void Behaviors::router(){
 	sensors.read();
 
-	if (sensors.readXYZ(2) > 510 && getBehavior() == SHUT_DOWN) {
+	if (sensors.readXYZ(2) > 510 && getBehavior() == WAIT) {
 		setBehavior(CRUISE);
 	}
-	// TO BE MODIFIED
-	// if (sensors.readXYZ(2) > 500) {
-	// 	setBehavior(CRUISE);
-	// }
+
+	if (sensors.readXYZ(0) > 250 && getBehavior() == WAIT) {
+		setBehavior(REACT);
+	}
+
+	if (sensors.readXYZ(2) > 510 && getBehavior() == SHUT_DOWN) {
+		setBehavior(WAKE_UP);
+	}
 	// if (sensors.readXYZ(0) < -30) {
 	// 	setBehavior(ESCAPE);
 	// }
@@ -80,14 +88,27 @@ void Behaviors::router(){
 void Behaviors::server(){
 	switch (getBehavior()) {
 		case CRUISE:
+			Serial.println("Cruise");
 			cruise();
 			break;
 
 		case WAIT:
+			Serial.println("Wait");
 			wait();
 			break;
 
+		case WAKE_UP:
+			Serial.println("Wake Up");
+			wakeup();
+			break;
+
+		case REACT:
+			Serial.println("React");
+			react();
+			break;
+
 		case ESCAPE:
+			Serial.println("Escape");
 			escape();
 			break;
 
@@ -96,6 +117,7 @@ void Behaviors::server(){
 			break;
 
 		case SHUT_DOWN:
+			Serial.println("Shut Down");
 			shutDown();
 			break;
 
@@ -113,77 +135,159 @@ void Behaviors::server(){
 //-----------------------------------------------------//
 
 void Behaviors::cruise(){
-	leftLed.turnOff();
-	rightLed.turnOff();
-
-	leftLed.blinkAsync(RED, 2, 500);
-	rightLed.blinkAsync(GREEN, 5, 200);
-
-	leftLed.turnOff();
-	rightLed.turnOff();
+	uint8_t speed = 90;
+	uint8_t i = 0;
 
 	delay(1000);
 
-	leftLed.writeRgb(BLUE);
-	rightLed.writeRgb(GREEN);
-
-	for (int i = 0 ; i < 4 ; i++) {
-		motors.spinLeft();
-		delay(200);
-		motors.spinRight();
-		delay(200);
+	while (i < 255) {
+		leftLed.blinkSync(RAND, 76);
+		rightLed.blinkSync(RAND, 148);
+		i++;
+		delay(20);
 	}
 
-	delay(1000);
-
-	motors.goForward();
+	motors.goForward(speed);
+	delay(2500);
+	motors.goRight(speed);
 	delay(1500);
+	motors.goForward(speed);
+	delay(2000);
+	motors.goRight(speed);
+	delay(3000);
 
 	motors.stop();
-	delay(500);
-
-	motors.spinRight();
-	delay(500);
-
-	motors.stop();
-	delay(500);
-
-	motors.goForward();
-	delay(1000);
-
-	motors.stop();
-	delay(500);
-
-	motors.spinRight();
-	delay(500);
-
-	motors.stop();
-	delay(500);
-
-	motors.goForward();
-	delay(1500);
-
-	motors.stop();
-	delay(500);
-
-	for (int i = 0 ; i < 3 ; i++) {
-		motors.spinLeft();
-		delay(150);
-		motors.spinRight();
-		delay(150);
-	}
-
-	motors.stop();
-	delay(500);
-
-	setBehavior(SHUT_DOWN);
-	orderNumber = 1;
+	setBehavior(WAIT);
 }
 
 void Behaviors::wait(){
+	//motors.spinLeft(150);
 	motors.stop();
-	leftLed.blinkSync(RAND, 150);
-	rightLed.blinkSync(RAND, 400);
+	leftLed.blinkSync(RAND, 400);
+	rightLed.blinkSync(RAND, 600);
+}
+
+void Behaviors::react(){
+	uint16_t stopDelay;
+	uint16_t spinDelay;
+	uint8_t speed = 90;
+
+	if (reactNumber == 0) {
+		spinDelay = 250;
+		stopDelay = 100;
+
+		motors.spinLeft(speed);
+		delay(spinDelay);
+
+		motors.stop();
+		delay(stopDelay);
+
+		motors.spinRight(speed);
+		delay(spinDelay * 2);
+
+		motors.stop();
+		delay(stopDelay);
+
+		motors.spinLeft(speed);
+		delay(spinDelay * 2);
+
+		motors.stop();
+		delay(stopDelay);
+
+		motors.spinRight(speed);
+		delay(spinDelay);
+
+		motors.stop();
+
+		reactNumber++;
+		setBehavior(WAIT);
+		delay(3000);
+	}
+
+	else if (reactNumber == 1) {
+		spinDelay = 250;
+		stopDelay = 250;
+
+		motors.goForward(speed);
+		delay(150);
+		motors.stop();
+		delay(200);
+
+		motors.goForward(speed);
+		delay(300);
+		motors.stop();
+		motors.goBackward(speed);
+		delay(100);
+		motors.stop();
+		delay(200);
+
+		motors.spinLeft(speed);
+		delay(spinDelay);
+
+		motors.stop();
+		delay(stopDelay);
+
+		motors.spinRight(speed);
+		delay(spinDelay * 2);
+
+		motors.stop();
+		delay(stopDelay);
+
+		motors.spinLeft(speed);
+		delay(spinDelay * 2);
+
+		motors.stop();
+		delay(stopDelay);
+
+		motors.spinRight(speed);
+		delay(spinDelay);
+
+		motors.stop();
+
+		reactNumber = 0;
+		setBehavior(ESCAPE);
+		delay(3000);
+	}
+
+
+}
+
+
+void Behaviors::wakeup(){
+	uint8_t speed = 90;
+
+	for (uint8_t i = 0 ; i < 255 ; i++){
+		leftLed.writeRgb(i, i*i, i*i*i);
+		rightLed.writeRgb(i, i*i, i*i*i);
+		delay(20);
+	}
+
+	delay(2000);
+
+	uint8_t i = 0;
+
+	// for (int i = 0 ; i < 2 ; i++) {
+	// 	motors.spinLeft(speed);
+	// 	delay(1000);
+	// 	motors.spinRight(speed);
+	// 	delay(1000);
+	// }
+
+	motors.goForward(speed);
+	delay(1500);
+	motors.stop();
+
+	i = 0;
+
+	while (i < 255) {
+		leftLed.blinkSync(RAND, 76);
+		rightLed.blinkSync(RAND, 148);
+		i++;
+		delay(10);
+	}
+
+	delay(1000);
+	setBehavior(WAIT);
 }
 
 
@@ -193,54 +297,47 @@ void Behaviors::stabilize(){
 }
 
 void Behaviors::escape(){
-	leftLed.blinkAsync(RED, 10, 75);
-	delay(500);
-	leftLed.blinkAsync(RED, 4, 350);
+	uint8_t speed = 90;
+
+	leftLed.writeRgb(BLUE);
+	rightLed.writeRgb(BLUE);
 
 	delay(1000);
 
-	motors.goLeft(180);
-	delay(1500);
+	motors.goBackward(speed);
+	delay(2000);
 
 	motors.stop();
+	delay(1000);
 
-	leftLed.blinkAsync(RAND, 5, 200);
-	rightLed.blinkAsync(RAND, 10, 100);
-
-	delay(200);
-
-	leftLed.turnOff();
-	rightLed.turnOff();
-
+	motors.spinLeft(speed);
 	delay(500);
+
+	motors.stop();
+	delay(1000);
 
 	leftLed.writeRgb(RAND);
 	rightLed.writeRgb(RAND);
 
-	motors.spinRight();
+	motors.goForward(speed);
+	delay(2000);
+
+	motors.goRight(speed);
 	delay(1000);
 
-	motors.stop();
-	delay(500);
-
-	motors.goRight();
-	delay(1500);
-
-	motors.stop();
-	delay(500);
-
-	motors.spinRight();
-	delay(750);
+	motors.goForward(speed);
+	delay(2000);
 
 	motors.stop();
 	delay(500);
 
 	setBehavior(SHUT_DOWN);
-	orderNumber = 0;
 }
 
 void Behaviors::shutDown(){
 	motors.stop();
+	leftLed.turnOff();
+	rightLed.turnOff();
 }
 
 void Behaviors::stopAndBlink(){
