@@ -34,8 +34,8 @@ class Sensors {
 		void readAccelerometer();
 		void readGyroscope();
 
-		uint16_t readXYZ(uint8_t index);
-		int16_t readYPR(uint8_t index);
+		int readXYZ(uint8_t index);
+		int readYPR(uint8_t index);
 
 		void computeDelta();
 		void updateLastValues();
@@ -47,7 +47,7 @@ class Sensors {
 
 		//	VARIABLES
 		int XYZ[3], lastXYZ[3], deltaXYZ[3];
-		int16_t YPR[3], lastYPR[3], deltaYPR[3];
+		int YPR[3], lastYPR[3], deltaYPR[3];
 
 		//	RELATED CLASS
 		FreeIMU AccelGyro;

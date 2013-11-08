@@ -134,7 +134,7 @@ void Sensors::writeData(){
  * @param index index of the value you want to access: 0 -> X || 1 -> Y || 2 -> Z
  * @return acceleration for X, Y or Z
  */
-uint16_t Sensors::readXYZ(uint8_t index){
+int Sensors::readXYZ(uint8_t index){
 	return XYZ[index];
 }
 
@@ -145,7 +145,7 @@ uint16_t Sensors::readXYZ(uint8_t index){
  * @param index index of the value you want to access: 0 -> Y || 1 -> P || 2 -> R
  * @return angle of Y, P, R
  */
-int16_t Sensors::readYPR(uint8_t index){
+int Sensors::readYPR(uint8_t index){
 	return YPR[index];
 }
 
