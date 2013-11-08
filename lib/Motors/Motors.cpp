@@ -25,6 +25,9 @@ void Motors::init(){
 	pinMode(DEFAULT_RIGHT_MOTOR_DIRECTION_PIN, OUTPUT);
 
 	stop();
+
+	setMotorMaxSpeed(DEFAULT_MAX_MOTOR_SPEED);
+	setMotorMinSpeed(DEFAULT_MIN_MOTOR_SPEED);
 }
 
 //-----------------------------------------------------//
@@ -188,7 +191,7 @@ void Motors::stop(){
  * Once set, the _sleepDelay can be accessed by calling getMotorMinSpeed()
  * @param value the value you want to assign to _motorMinSpeed.
  */
-void Motors::setMotorMinSpeed(int value){
+void Motors::setMotorMinSpeed(uint8_t value){
 	_motorMinSpeed = value;
 }
 
@@ -198,7 +201,7 @@ void Motors::setMotorMinSpeed(int value){
  * Once set, the _sleepDelay can be accessed by calling getMotorMaxSpeed()
  * @param value the value you want to assign to _motorMaxSpeed.
  */
-void Motors::setMotorMaxSpeed(int value){
+void Motors::setMotorMaxSpeed(uint8_t value){
 	_motorMaxSpeed = value;
 }
 

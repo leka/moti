@@ -23,8 +23,8 @@ class Motors {
 		void init();
 
 		//	SET CONSTANTS
-		void setMotorMinSpeed(int value);
-		void setMotorMaxSpeed(int value);
+		void setMotorMinSpeed(uint8_t value);
+		void setMotorMaxSpeed(uint8_t value);
 
 
 		//	GET CONSTANTS
@@ -76,7 +76,7 @@ class Motors {
 
 
 		//	CONSTANTS
-		static const uint8_t DEFAULT_MIN_MOTOR_SPEED = 0;
+		static const uint8_t DEFAULT_MIN_MOTOR_SPEED = 90;
 		static const uint8_t DEFAULT_MAX_MOTOR_SPEED = 255;
 
 		static const uint8_t turnCoefficientTime = 80;
