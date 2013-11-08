@@ -24,11 +24,16 @@ For us, the answer is an absolute YES! We want people to be able to look at our 
 
 ### Sensors
 
-*	integrate the new version of FreeIMU
+*	integrate the new version of FreeIMU - DONE
 *	make the appropriate changes to get rid of all the useless libs
 *	implement the sensor analyser to find pattern in the sensors' data
 *	compute moving average
 *	compute square value
+
+### Motors
+
+*	test for minimum motor speed
+*	use sensors data for `spinRight` and `spinLeft`
 
 ### Behaviors
 
