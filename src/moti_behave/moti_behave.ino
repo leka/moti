@@ -21,22 +21,22 @@
 #include "Debug.h"
 // #include <Moti.h>
 
-// Then create instances of every classes
-// Sensors sensors;
+// Then create instances of every class needed
+Sensors sensors;
 // Motors motors;
 // Moti moti;
 Behaviors behave;
 
-int time;
-unsigned long previousMillis = 0;
-bool out = false;
-
-
 void setup() {
 	behave.init();
+	sensors.init();
 }
 
 void loop() {
 	behave.router();
 	behave.server();
+	sensors.read();
+	sensors.sendJson();
+
+
 }
