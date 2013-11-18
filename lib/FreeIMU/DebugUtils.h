@@ -19,26 +19,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
+#include "Serial.h"
+
 #ifndef DEBUGUTILS_H
 #define DEBUGUTILS_H
 
 #ifdef DEBUG_V
   #include <WProgram.h>
   #define DEBUG_PRINT(str)    \
-    Serial.print(millis());     \
-    Serial.print(": ");    \
-    Serial.print(__PRETTY_FUNCTION__); \
-    Serial.print(' ');      \
-    Serial.print(__FILE__);     \
-    Serial.print(':');      \
-    Serial.print(__LINE__);     \
-    Serial.print(' ');      \
-    Serial.println(str);
+    serial.print(millis());     \
+    serial.print(": ");    \
+    serial.print(__PRETTY_FUNCTION__); \
+    serial.print(' ');      \
+    serial.print(__FILE__);     \
+    serial.print(':');      \
+    serial.print(__LINE__);     \
+    serial.print(' ');      \
+    serial.println(str);
 #endif
- 
+
 #ifdef DEBUG
   #define DEBUG_PRINT(str) \
-    Serial.println(str);
+    serial.println(str);
 #endif
 
 #ifndef DEBUG_PRINT
@@ -60,4 +62,4 @@ int availableMemory() {
 */
 
 
-#endif //DEBUGUTILS_H
+#endif
