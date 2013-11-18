@@ -33,23 +33,23 @@
 
 #define ITG3200_ADDR_AD0_HIGH  0x69   //AD0=1 0x69 I2C address when AD0 is connected to HIGH (VCC) - default for sparkfun breakout
 #define ITG3200_ADDR_AD0_LOW   0x68   //AD0=0 0x68 I2C address when AD0 is connected to LOW (GND)
-// "The LSB bit of the 7 bit address is determined by the logic level on pin 9. 
+// "The LSB bit of the 7 bit address is determined by the logic level on pin 9.
 // This allows two ITG-3200 devices to be connected to the same I2C bus.
 // One device should have pin9 (or bit0) LOW and the other should be HIGH." source: ITG3200 datasheet
-// Note that pin9 (AD0 - I2C Slave Address LSB) may not be available on some breakout boards so check 
+// Note that pin9 (AD0 - I2C Slave Address LSB) may not be available on some breakout boards so check
 // the schematics of your breakout board for the correct address to use.
 
 
 #define GYROSTART_UP_DELAY  70    // 50ms from gyro startup + 20ms register r/w startup
 
 /* ---- Registers ---- */
-#define WHO_AM_I           0x00  // RW   SETUP: I2C address   
-#define SMPLRT_DIV         0x15  // RW   SETUP: Sample Rate Divider       
+#define WHO_AM_I           0x00  // RW   SETUP: I2C address
+#define SMPLRT_DIV         0x15  // RW   SETUP: Sample Rate Divider
 #define DLPF_FS            0x16  // RW   SETUP: Digital Low Pass Filter/ Full Scale range
 #define INT_CFG            0x17  // RW   Interrupt: Configuration
 #define INT_STATUS         0x1A  // R	Interrupt: Status
 #define TEMP_OUT           0x1B  // R	SENSOR: Temperature 2bytes
-#define GYRO_XOUT          0x1D  // R	SENSOR: Gyro X 2bytes  
+#define GYRO_XOUT          0x1D  // R	SENSOR: Gyro X 2bytes
 #define GYRO_YOUT          0x1F  // R	SENSOR: Gyro Y 2bytes
 #define GYRO_ZOUT          0x21  // R	SENSOR: Gyro Z 2bytes
 #define PWR_MGM            0x3E  // RW	Power Management
@@ -113,26 +113,26 @@
 class ITG3200 {
 
 public:
-  float gains[3]; 
+  float gains[3];
   int offsets[3];
   float polarities[3];
 
   ITG3200();
-  
+
   // Gyro initialization
   void init(unsigned int address);
-  void init(unsigned int address, byte _SRateDiv, byte _Range, byte _filterBW, byte _ClockSrc, bool _ITGReady, bool _INTRawDataReady);      
-    
+  void init(unsigned int address, byte _SRateDiv, byte _Range, byte _filterBW, byte _ClockSrc, bool _ITGReady, bool _INTRawDataReady);
+
   // Who Am I
   byte getDevAddr();
   void setDevAddr(unsigned int _addr);
   // Sample Rate Divider
-  byte getSampleRateDiv();          
+  byte getSampleRateDiv();
   void setSampleRateDiv(byte _SampleRate);
-  // Digital Low Pass Filter BandWidth and SampleRate 
+  // Digital Low Pass Filter BandWidth and SampleRate
   byte getFSRange();
   void setFSRange(byte _Range); // RANGE2000
-  byte getFilterBW(); 
+  byte getFilterBW();
   void setFilterBW(byte _BW); // see register parameters above
   // Interrupt Configuration
   bool isINTActiveOnLow();
@@ -147,10 +147,10 @@ public:
   bool isAnyRegClrMode();
   void setLatchClearMode(bool _State); //READ_ANYREG, READ_STATUSREG
   // INT pin triggers
-  bool isITGReadyOn();          
+  bool isITGReadyOn();
   void setITGReady(bool _State);
   bool isRawDataReadyOn();
-  void setRawDataReady(bool _State);      
+  void setRawDataReady(bool _State);
   // Trigger Status
   bool isITGReady();
   bool isRawDataReady();
@@ -165,12 +165,12 @@ public:
   void readGyroRawCal(int *_GyroX, int *_GyroY, int *_GyroZ);
   void readGyroRawCal(int *_GyroXYZ);
   void readGyro(float *_GyroXYZ); // includes gain and offset
-  void readGyro(float *_GyroX, float *_GyroY, float *_GyroZ); // includes gain and offset    
+  void readGyro(float *_GyroX, float *_GyroY, float *_GyroZ); // includes gain and offset
   // Power management
   void reset(); // after reset all registers have default values
   bool isLowPower();
   void setPowerMode(bool _State); // NORMAL, STANDBY
-  bool isXgyroStandby();            
+  bool isXgyroStandby();
   bool isYgyroStandby();
   bool isZgyroStandby();
   void setXgyroStandby(bool _Status); // NORMAL, STANDBY
@@ -178,13 +178,13 @@ public:
   void setZgyroStandby(bool _Status);
   byte getClockSource();
   void setClockSource(byte _CLKsource); // see register parameters above
-  
+
   void writemem(uint8_t _addr, uint8_t _val);
   void readmem(uint8_t _addr, uint8_t _nbytes, uint8_t __buff[]);
-  
+
 private:
 
   uint8_t _dev_address;
-  uint8_t _buff[6];      
+  uint8_t _buff[6];
 };
 #endif

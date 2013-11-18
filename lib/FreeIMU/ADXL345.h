@@ -3,7 +3,7 @@
  * ADXL345 Driver for Arduino                                              *
  *                                                                         *
  ***************************************************************************
- *                                                                         * 
+ *                                                                         *
  * This program is free software; you can redistribute it and/or modify    *
  * it under the terms of the GNU License.                                  *
  * This program is distributed in the hope that it will be useful,         *
@@ -56,17 +56,17 @@
 
 #define ADXL345_BW_1600 0xF // 1111
 #define ADXL345_BW_800  0xE // 1110
-#define ADXL345_BW_400  0xD // 1101  
+#define ADXL345_BW_400  0xD // 1101
 #define ADXL345_BW_200  0xC // 1100
-#define ADXL345_BW_100  0xB // 1011  
-#define ADXL345_BW_50   0xA // 1010 
-#define ADXL345_BW_25   0x9 // 1001 
-#define ADXL345_BW_12   0x8 // 1000 
+#define ADXL345_BW_100  0xB // 1011
+#define ADXL345_BW_50   0xA // 1010
+#define ADXL345_BW_25   0x9 // 1001
+#define ADXL345_BW_12   0x8 // 1000
 #define ADXL345_BW_6    0x7 // 0111
 #define ADXL345_BW_3    0x6 // 0110
 
 
-/* 
+/*
  Interrupt PINs
  INT1: 0
  INT2: 1
@@ -74,7 +74,7 @@
 #define ADXL345_INT1_PIN 0x00
 #define ADXL345_INT2_PIN 0x01
 
-/* 
+/*
  Interrupt bit position
  */
 #define ADXL345_INT_DATA_READY_BIT 0x07
@@ -96,7 +96,7 @@
 class ADXL345
 {
 public:
-  bool status;           // set when error occurs 
+  bool status;           // set when error occurs
                          // see error code for details
   byte error_code;       // Initial state
   float gains[3];        // counts to Gs
@@ -171,7 +171,7 @@ public:
   float getRate();
   void setRate(float rate);
   void set_bw(byte bw_code);
-  byte get_bw_code();  
+  byte get_bw_code();
 
   byte getInterruptSource();
   bool getInterruptSource(byte interruptBit);
@@ -198,7 +198,7 @@ public:
 private:
   void readFrom(byte address, int num, byte buff[]);
   void setRegisterBit(byte regAdress, int bitPos, bool state);
-  bool getRegisterBit(byte regAdress, int bitPos);  
+  bool getRegisterBit(byte regAdress, int bitPos);
   byte _buff[6] ;    //6 bytes buffer for saving data read from the device
   int _dev_address;
 };
