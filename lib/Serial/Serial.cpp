@@ -7,10 +7,6 @@
  * @version 1.0
  */
 
-//-----------------------------------------------------//
-// WRITE
-//-----------------------------------------------------//
-
 /**
  * @brief Send the value of a uint8_t as a 8 bits (1 byte) binary
  *
@@ -37,10 +33,6 @@ void sio::writeInt(int value){
 	serial.write(highByte(value));
 }
 
-//-----------------------------------------------------//
-// READ
-//-----------------------------------------------------//
-
 /**
  * @brief read byte in serial buffer
  *
@@ -50,19 +42,15 @@ uint8_t sio::readByte(){
 	return serial.read();
 }
 
-//-----------------------------------------------------//
-// GENERAL
-//-----------------------------------------------------//
-//
 /**
  * @brief check if there is serial data avalaible
  *
- * @return return true if so, false if not.
+ * @return return true if serial communication is avalaible, false if it's not.
  */
 bool sio::avalaible(){
 	if (serial.available() > 0) {
 		return true;
 	}
-	else 
+	else
 		return false;
 }
