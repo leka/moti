@@ -32,6 +32,7 @@ For us, the answer is an absolute YES! We want people to be able to look at our 
 
 ### Motors
 
+*	separate de Motors Class in 2 clases: Motor et DriveSystem to better separate concerns
 *	test for minimum motor speed
 *	use sensors data for `spinRight` and `spinLeft`
 
