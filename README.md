@@ -24,7 +24,7 @@ For us, the answer is an absolute YES! We want people to be able to look at our 
 
 ### Sensors
 
-*	integrate the new version of FreeIMU - DONE
+*	~~integrate the new version of FreeIMU~~ - DONE
 *	make the appropriate changes to get rid of all the useless libs
 *	implement the sensor analyser to find pattern in the sensors' data
 *	compute moving average
@@ -33,6 +33,7 @@ For us, the answer is an absolute YES! We want people to be able to look at our 
 ### Motors
 
 *	separate de Motors Class in 2 clases: Motor et DriveSystem to better separate concerns
+*	~~unit test motor class~~ - DONE
 *	test for minimum motor speed
 *	use sensors data for `spinRight` and `spinLeft`
 
