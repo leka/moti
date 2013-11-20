@@ -2,30 +2,18 @@
 #include "Motor.h"
 
 /**
- * @file Motors.cpp
+ * @file Motor.cpp
  * @author Ladislas de Toldi
  * @version 1.0
  */
 
 /**
- * @brief Motors Class Constructor
+ * @brief Motor Class Constructor
  *
  * @param directionPin for Moti in its most up-to-date configuration, the pins are as follow: Left Dir = 4 / Left Speed = 5 // Right Dir = 7 / Right Speed = 6
  * @param speedPin
  */
-Motor::Motor(uint8_t directionPin, uint8_t speedPin) : _directionPin(directionPin), _speedPin(speedPin), _minSpeed(DEFAULT_MIN_SPEED), _maxSpeed(DEFAULT_MAX_SPEED) {
-	// nothing to do here
-}
-
-/**
- * @brief Motors Class Constructor
- *
- * @param directionPin
- * @param speedPin
- * @param minSpeed
- * @param maxSpeed
- */
-Motor::Motor(uint8_t directionPin, uint8_t speedPin, uint8_t minSpeed, uint8_t maxSpeed) : _directionPin(directionPin), _speedPin(speedPin), _minSpeed(minSpeed), _maxSpeed(maxSpeed){
+Motor::Motor(uint8_t directionPin, uint8_t speedPin) : _directionPin(directionPin), _speedPin(speedPin) {
 	// nothing to do here
 }
 
