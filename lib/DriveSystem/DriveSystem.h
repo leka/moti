@@ -8,7 +8,7 @@
  */
 
 #include <Arduino.h>
-
+#include "Motor.h"
 
 /**
  * @class DriveSystem
@@ -16,77 +16,46 @@
  */
 class DriveSystem {
 
+	enum Direction{
+		BACK,
+		FORTH
+	};
+
 	public:
 
 		DriveSystem();
 
-		void init();
+		void go(bool direction = FORTH, uint8_t speed = DEFAULT_MAX_SPEED) const;
 
-		//	SET CONSTANTS
-		void setMotorMinSpeed(uint8_t value);
-		void setMotorMaxSpeed(uint8_t value);
+		void spin(bool direction = FORTH, uint8_t speed = DEFAULT_MAX_SPEED) const;
 
+		void turn(int16_t angle = 45, bool direction = FORTH, uint8_t speed = DEFAULT_MAX_SPEED) const;
 
-		//	GET CONSTANTS
-		int getMotorMinSpeed();
-		int getMotorMaxSpeed();
-
-
-    	//	RESET CONSTANTS
-		void resetMotorMinSpeed();
-		void resetMotorMaxSpeed();
-
-
-		//	MOTORS
-		void spinRightWheel(uint8_t speed, bool direction);
-		void spinLeftWheel(uint8_t speed, bool direction);
-
-		void goForward();
-		void goForward(int speed);
-
-		void goBackward();
-		void goBackward(int speed);
-
-		void goLeft();
-		void goLeft(int speed);
-		void goRight();
-		void goRight(int speed);
-
-		void spinLeft();
-		void spinLeft(int speed);
-		void spinRight();
-		void spinRight(int speed);
-
-		void stop();
+		void stop() const;
 
 	private:
 
 		//	VARIABLES
-
-		uint8_t rightMotorSpeedPin;
-		uint8_t rightMotorDirectionPin;
-		uint8_t leftMotorSpeedPin;
-		uint8_t leftMotorDirectionPin;
-
-		uint16_t rightMotorSpeed, rightMotorSpeedBuffer;
-		uint16_t leftMotorSpeed, leftMotorSpeedBuffer;
+		uint8_t _rightMotorSpeed;
+		uint8_t _leftMotorSpeed;
 
 		uint8_t _motorMinSpeed;
 		uint8_t _motorMaxSpeed;
 
-
 		//	CONSTANTS
-		static const uint8_t DEFAULT_MIN_MOTOR_SPEED = 90;
-		static const uint8_t DEFAULT_MAX_MOTOR_SPEED = 255;
-
-		static const uint8_t turnCoefficientTime = 80;
-		static const uint8_t turnCoefficientDiv = 100;
+		static const uint8_t DEFAULT_MIN_SPEED = 0;
+		static const uint8_t DEFAULT_MAX_SPEED = 255;
 
 		//	MOTOR PINS
 		static const uint8_t DEFAULT_LEFT_MOTOR_SPEED_PIN      = 5;
 		static const uint8_t DEFAULT_LEFT_MOTOR_DIRECTION_PIN  = 4;
 		static const uint8_t DEFAULT_RIGHT_MOTOR_SPEED_PIN     = 6;
 		static const uint8_t DEFAULT_RIGHT_MOTOR_DIRECTION_PIN = 7;
+
+		//	RIGHT & LEFT MOTOR INSTANCES
+		Motor rightMotor = Motor(DEFAULT_RIGHT_MOTOR_DIRECTION_PIN, DEFAULT_RIGHT_MOTOR_SPEED_PIN);
+		Motor leftMotor = Motor(DEFAULT_LEFT_MOTOR_DIRECTION_PIN, DEFAULT_LEFT_MOTOR_SPEED_PIN);
+
 };
 
 #endif
