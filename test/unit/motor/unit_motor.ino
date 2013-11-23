@@ -1,10 +1,9 @@
 #include <Arduino.h>
-#include <Serial.h>
 
 #define serial Serial
 
-#include "Motor.h"
-#include "Serial.h"
+#include "Motor.hpp"
+#include "Serial.hpp"
 
 Motor right_motor = Motor(7,6);
 Motor left_motor = Motor(4,5);

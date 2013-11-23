@@ -5,36 +5,35 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#include "CommunicationUtils.h"
-#include "DebugUtils.h"
-#include "ADXL345.h"
-#include "ITG3200.h"
-#include "FreeIMU.h"
-#include "Serial.h"
+#include "CommunicationUtils.hpp"
+#include "DebugUtils.hpp"
+#include "ADXL345.hpp"
+#include "ITG3200.hpp"
+#include "FreeIMU.hpp"
+#include "Serial.hpp"
 
 // Include all the classes needed to beautifully develop your robot.
-#include "Behaviors.h"
-#include "Sensors.h"
-#include "Led.h"
-#include "Motors.h"
-#include "Memory.h"
-#include "Debug.h"
+#include "Behaviors.hpp"
+#include "Sensors.hpp"
+#include "Led.hpp"
+#include "Motor.hpp"
+#include "Memory.hpp"
 // #include <Moti.h>
 
 // Then create instances of every class needed
 Sensors sensors;
 // Motors motors;
 // Moti moti;
-Behaviors behave;
+// Behaviors behave;
 
 void setup() {
-	behave.init();
+	// behave.init();
 	sensors.init();
 }
 
 void loop() {
-	behave.router();
-	behave.server();
+	// behave.router();
+	// behave.server();
 	sensors.read();
 	sensors.sendJson();
 

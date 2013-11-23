@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "Sensors.h"
+#include "Sensors.hpp"
 
 /**
  * @file Sensors.cpp

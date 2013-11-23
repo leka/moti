@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "Motor.h"
+#include "Motor.hpp"
 
 /**
  * @file Motor.cpp
@@ -30,9 +30,6 @@ void Motor::spin(bool direction, uint8_t speed) const {
 
 /*
  * @brief Motor stop Method
- *
- * @param direction should take 0 for backward, 1 for frontward
- * @param speed the speed the motor should have
  */
 void Motor::stop() const{
 	digitalWrite(_directionPin, 0);

@@ -24,9 +24,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <inttypes.h>
 #include <stdint.h>
 //#define DEBUG
-#include "FreeIMU.h"
+#include "FreeIMU.hpp"
 // #include "WireUtils.h"
-#include "DebugUtils.h"
+#include "DebugUtils.hpp"
 
 //#include "vector_math.h"
 

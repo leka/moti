@@ -9,7 +9,6 @@
 
 #include <Arduino.h>
 
-
 /**
  * @class Motor
  * @brief Motor class gathers all the motor functions for Moti.
@@ -29,8 +28,6 @@ class Motor {
 		//	VARIABLES
 		uint8_t _directionPin;
 		uint8_t _speedPin;
-
-		uint8_t _speed;
 
 		//	CONSTANTS
 		static const uint8_t DEFAULT_MAX_SPEED = 255;

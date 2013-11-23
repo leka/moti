@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <Led.h>
+#include <Led.hpp>
 
 
 /**
@@ -235,11 +235,11 @@ void Led::blinkAsync(int red, int green, int blue, int numberOfBlinks, uint16_t 
  */
 void Led::blinkSync(ColorName color, uint16_t timeBtwBlink){
 	currentMillis = millis();
-	
+
 	if(isBlinking() == false){
 		isBlinking(true);
 		previousMillis = currentMillis;
-		
+
 	}
 	if(currentMillis - previousMillis > timeBtwBlink) {
 		previousMillis = currentMillis;

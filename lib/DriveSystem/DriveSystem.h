@@ -8,7 +8,7 @@
  */
 
 #include <Arduino.h>
-#include "Motor.h"
+#include "Motor.hpp"
 
 /**
  * @class DriveSystem

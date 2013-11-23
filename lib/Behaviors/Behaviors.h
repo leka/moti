@@ -4,10 +4,10 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#include "Sensors.h"
-#include "Led.h"
-#include "Motors.h"
-#include "Serial.h"
+#include "Sensors.hpp"
+#include "Led.hpp"
+#include "Motor.hpp"
+#include "Serial.hpp"
 
 enum BehaviorName {
 		WAKE_UP, WAIT, REACT, REMOTE, CRUISE, ESCAPE, STABILIZE, SHUT_DOWN, SPINBLINK
@@ -53,7 +53,6 @@ class Behaviors {
 		Led rightLed = Led(11, 12, 13);
 		Led leftLed = Led(8, 9, 10);
 		Sensors sensors;
-		Motors motors;
 };
 
 #endif

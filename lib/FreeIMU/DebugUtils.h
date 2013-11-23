@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include "Serial.h"
+#include "Serial.hpp"
 
 #ifndef DEBUGUTILS_H
 #define DEBUGUTILS_H

@@ -3,18 +3,18 @@ Copyright (c) 2007, Markus Trenkwalder
 
 All rights reserved.
 
-Redistribution and use in source and binary forms, with or without 
+Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 
-* Redistributions of source code must retain the above copyright notice, 
+* Redistributions of source code must retain the above copyright notice,
   this list of conditions and the following disclaimer.
 
 * Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation 
+  this list of conditions and the following disclaimer in the documentation
   and/or other materials provided with the distribution.
 
-* Neither the name of the library's copyright owner nor the names of its 
-  contributors may be used to endorse or promote products derived from this 
+* Neither the name of the library's copyright owner nor the names of its
+  contributors may be used to endorse or promote products derived from this
   software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -62,7 +62,7 @@ inline T inv(T x)
 }
 
 namespace detail {
-	// This function is used heavily in this library. Here is a generic 
+	// This function is used heavily in this library. Here is a generic
 	// implementation for it. If you can provide a faster one for your specific
 	// types this can speed up things considerably.
 	template <typename T>
@@ -197,7 +197,7 @@ FREE_OPERATORS(quat)
 template <typename T>
 struct vec2 {
 	T x, y;
-	
+
 	vec2() {};
 	explicit vec2(const T i) : x(i), y(i) {}
 	explicit vec2(const T ix, const T iy) : x(ix), y(iy) {}
@@ -207,10 +207,10 @@ struct vec2 {
 	VECTOR_COMMON(vec2, 2)
 };
 
-template <typename T> 
+template <typename T>
 struct vec3 {
 	T x, y, z;
-	
+
 	vec3() {};
 	explicit vec3(const T i) : x(i), y(i), z(i) {}
 	explicit vec3(const T ix, const T iy, const T iz) : x(ix), y(iy), z(iz) {}
@@ -221,10 +221,10 @@ struct vec3 {
 	VECTOR_COMMON(vec3, 3)
 };
 
-template <typename T> 
+template <typename T>
 struct vec4 {
 	T x, y, z, w;
-	
+
 	vec4() {};
 	explicit vec4(const T i) : x(i), y(i), z(i), w(i) {}
 	explicit vec4(const T ix, const T iy, const T iz, const T iw) : x(ix), y(iy), z(iz), w(iw) {}
@@ -281,14 +281,14 @@ VEC_QUAT_FUNC_TEMPLATE(quat<T>, 4)
 			return CLASS(T(0)); \
 		else \
 			return eta * I - (eta * d + static_cast<T>(sqrt(k))) * N; \
-	} 
+	}
 
 VEC_FUNC_TEMPLATE(vec2<T>)
 VEC_FUNC_TEMPLATE(vec3<T>)
 VEC_FUNC_TEMPLATE(vec4<T>)
 
-template <typename T> inline T lerp(const T & u, const T & v, const T x) 
-{ 
+template <typename T> inline T lerp(const T & u, const T & v, const T x)
+{
 	return dot(vec2<T>(u, v), vec2<T>((T(1) - x), x));
 }
 
@@ -360,12 +360,12 @@ template <typename T> struct mat2;
 template <typename T> struct mat3;
 template <typename T> struct mat4;
 
-template <typename T> 
+template <typename T>
 struct mat2  {
 	T elem[2][2];
-	
+
 	mat2() {}
-	
+
 	explicit mat2(
 		const T m00, const T m01,
 		const T m10, const T m11)
@@ -387,12 +387,12 @@ struct mat2  {
 	MATRIX_COMMON(mat2, 2)
 };
 
-template <typename T> 
+template <typename T>
 struct mat3 {
 	T elem[3][3];
-	
+
 	mat3() {}
-	
+
 	explicit mat3(
 		const T m00, const T m01, const T m02,
 		const T m10, const T m11, const T m12,
@@ -402,7 +402,7 @@ struct mat3 {
 		elem[1][0] = m10; elem[1][1] = m11; elem[1][2] = m12;
 		elem[2][0] = m20; elem[2][1] = m21; elem[2][2] = m22;
 	}
-	
+
 	explicit mat3(const vec3<T>& v0, const vec3<T>& v1, const vec3<T>& v2)
 	{
 		elem[0][0] = v0[0];
@@ -422,10 +422,10 @@ struct mat3 {
 	MATRIX_COMMON(mat3, 3)
 };
 
-template <typename T> 
+template <typename T>
 struct mat4 {
 	T elem[4][4];
-	
+
 	mat4() {}
 
 	explicit mat4(
@@ -528,7 +528,7 @@ template <typename T>
 inline T det(const mat2<T>& m)
 {
 	return dot(
-		vec2<T>(m.elem[0][0], -m.elem[0][1]), 
+		vec2<T>(m.elem[0][0], -m.elem[0][1]),
 		vec2<T>(m.elem[1][1], m.elem[1][0]));
 }
 
@@ -606,7 +606,7 @@ MAT_VEC_FUNCS_TEMPLATE(mat4<T>, vec4<T>, 4)
 
 // Returns the inverse of a 4x4 matrix. It is assumed that the matrix passed
 // as argument describes a rigid-body transformation.
-template <typename T> 
+template <typename T>
 inline mat4<T> fast_inverse(const mat4<T>& m)
 {
 	const vec3<T> t = MATRIX_COL3(m, 3);
@@ -622,7 +622,7 @@ inline mat4<T> fast_inverse(const mat4<T>& m)
 	);
 }
 
-// Transformations for points and vectors. Potentially faster than a full 
+// Transformations for points and vectors. Potentially faster than a full
 // matrix * vector multiplication
 
 #define MAT_TRANFORMS_TEMPLATE(MATCLASS, VECCLASS, VECSIZE) \
@@ -693,13 +693,13 @@ inline mat4<T> translation_matrix(const T x, const T y, const T z)
 	return r;
 }
 
-template <typename T> 
+template <typename T>
 inline mat4<T> translation_matrix(const vec3<T>& v)
 {
 	return translation_matrix(v.x, v.y, v.z);
 }
 
-template <typename T> 
+template <typename T>
 inline mat4<T> scaling_matrix(const T x, const T y, const T z)
 {
 	mat4<T> r(T(0));
@@ -721,21 +721,21 @@ inline mat4<T> rotation_matrix(const T angle, const vec3<T>& v)
 {
 	const T a = angle * T(M_PI/180) ;
 	const vec3<T> u = normalize(v);
-	
+
 	const mat3<T> S(
 		 T(0), -u[2],  u[1],
 		 u[2],  T(0), -u[0],
-		-u[1],  u[0],  T(0) 
+		-u[1],  u[0],  T(0)
 	);
-	
+
 	const mat3<T> uut = outer_product(u, u);
 	const mat3<T> R = uut + T(cos(a)) * (identity3<T>() - uut) + T(sin(a)) * S;
-	
+
 	return mat4<T>(R);
 }
 
 
-template <typename T> 
+template <typename T>
 inline mat4<T> rotation_matrix(const T angle, const T x, const T y, const T z)
 {
 	return rotation_matrix(angle, vec3<T>(x, y, z));
@@ -743,7 +743,7 @@ inline mat4<T> rotation_matrix(const T angle, const T x, const T y, const T z)
 
 // Constructs a shear-matrix that shears component i by factor with
 // Respect to component j.
-template <typename T> 
+template <typename T>
 inline mat4<T> shear_matrix(const int i, const int j, const T factor)
 {
 	mat4<T> m = identity4<T>();
@@ -751,15 +751,15 @@ inline mat4<T> shear_matrix(const int i, const int j, const T factor)
 	return m;
 }
 
-template <typename T> 
+template <typename T>
 inline mat4<T> euler(const T head, const T pitch, const T roll)
 {
-	return rotation_matrix(roll, T(0), T(0), T(1)) * 
-		rotation_matrix(pitch, T(1), T(0), T(0)) * 
+	return rotation_matrix(roll, T(0), T(0), T(1)) *
+		rotation_matrix(pitch, T(1), T(0), T(0)) *
 		rotation_matrix(head, T(0), T(1), T(0));
 }
 
-template <typename T> 
+template <typename T>
 inline mat4<T> frustum_matrix(const T l, const T r, const T b, const T t, const T n, const T f)
 {
 	return mat4<T>(
@@ -776,13 +776,13 @@ inline mat4<T> perspective_matrix(const T fovy, const T aspect, const T zNear, c
 	const T dz = zFar - zNear;
 	const T rad = fovy / T(2) * T(M_PI/180);
 	const T s = sin(rad);
-	
+
 	if ( ( dz == T(0) ) || ( s == T(0) ) || ( aspect == T(0) ) ) {
 		return identity4<T>();
 	}
-	
+
 	const T cot = cos(rad) / s;
-	
+
 	mat4<T> m = identity4<T>();
 	m[0]  = cot / aspect;
 	m[5]  = cot;
@@ -790,7 +790,7 @@ inline mat4<T> perspective_matrix(const T fovy, const T aspect, const T zNear, c
 	m[14] = T(-1);
 	m[11] = -2 * zNear * zFar / dz;
 	m[15] = T(0);
-	
+
 	return m;
 }
 
@@ -809,29 +809,29 @@ template <typename T>
 inline mat4<T> lookat_matrix(const vec3<T>& eye, const vec3<T>& center, const vec3<T>& up) {
 	const vec3<T> forward = normalize(center - eye);
 	const vec3<T> side = normalize(cross(forward, up));
-	
+
 	const vec3<T> up2 = cross(side, forward);
-	
+
 	mat4<T> m = identity4<T>();
-	
+
 	m.elem[0][0] = side[0];
 	m.elem[0][1] = side[1];
 	m.elem[0][2] = side[2];
-	
+
 	m.elem[1][0] = up2[0];
 	m.elem[1][1] = up2[1];
 	m.elem[1][2] = up2[2];
-	
+
 	m.elem[2][0] = -forward[0];
 	m.elem[2][1] = -forward[1];
 	m.elem[2][2] = -forward[2];
-	
+
 	return m * translation_matrix(-eye);
 }
 
-template <typename T> 
+template <typename T>
 inline mat4<T> picking_matrix(const T x, const T y, const T dx, const T dy, int viewport[4]) {
-	if (dx <= 0 || dy <= 0) { 
+	if (dx <= 0 || dy <= 0) {
 		return identity4<T>();
 	}
 
@@ -844,17 +844,17 @@ inline mat4<T> picking_matrix(const T x, const T y, const T dx, const T dy, int 
 // Constructs a shadow matrix. q is the light source and p is the plane.
 template <typename T> inline mat4<T> shadow_matrix(const vec4<T>& q, const vec4<T>& p) {
 	mat4<T> m;
-	
+
 	m.elem[0][0] =  p.y * q[1] + p.z * q[2] + p.w * q[3];
 	m.elem[0][1] = -p.y * q[0];
 	m.elem[0][2] = -p.z * q[0];
 	m.elem[0][3] = -p.w * q[0];
-	
+
 	m.elem[1][0] = -p.x * q[1];
 	m.elem[1][1] =  p.x * q[0] + p.z * q[2] + p.w * q[3];
 	m.elem[1][2] = -p.z * q[1];
 	m.elem[1][3] = -p.w * q[1];
-	
+
 
 	m.elem[2][0] = -p.x * q[2];
 	m.elem[2][1] = -p.y * q[2];
@@ -870,7 +870,7 @@ template <typename T> inline mat4<T> shadow_matrix(const vec4<T>& q, const vec4<
 }
 
 // Quaternion class
-template <typename T> 
+template <typename T>
 struct quat {
 	vec3<T>	v;
 	T w;
@@ -881,7 +881,7 @@ struct quat {
 	quat(const vec4<T>& i) : v(i.x, i.y, i.z), w(i.w) {}
 
 	operator const T* () const { return &(v[0]); }
-	operator T* () { return &(v[0]); }	
+	operator T* () { return &(v[0]); }
 
 	quat& operator += (const quat& q) { v += q.v; w += q.w; return *this; }
 	quat& operator -= (const quat& q) { v -= q.v; w -= q.w; return *this; }
@@ -903,19 +903,19 @@ struct quat {
 
 // Quaternion functions
 
-template <typename T> 
+template <typename T>
 inline quat<T> identityq()
 {
 	return quat<T>(T(0), T(0), T(0), T(1));
 }
 
-template <typename T> 
+template <typename T>
 inline quat<T> conjugate(const quat<T>& q)
 {
 	return quat<T>(-q.v, q.w);
 }
 
-template <typename T> 
+template <typename T>
 inline quat<T> inverse(const quat<T>& q)
 {
 	const T l = dot(q, q);
@@ -926,7 +926,7 @@ inline quat<T> inverse(const quat<T>& q)
 // quaternion utility functions
 
 // the input quaternion is assumed to be normalized
-template <typename T> 
+template <typename T>
 inline mat3<T> quat_to_mat3(const quat<T>& q)
 {
 	// const quat<T> q = normalize(qq);
@@ -935,14 +935,14 @@ inline mat3<T> quat_to_mat3(const quat<T>& q)
 	const T xy = q[0] * q[1];
 	const T xz = q[0] * q[2];
 	const T xw = q[0] * q[3];
-	
+
 	const T yy = q[1] * q[1];
 	const T yz = q[1] * q[2];
 	const T yw = q[1] * q[3];
-	
+
 	const T zz = q[2] * q[2];
 	const T zw = q[2] * q[3];
-	
+
 	return mat3<T>(
 		1 - 2*(yy + zz), 2*(xy - zw), 2*(xz + yw),
 		2*(xy + zw), 1 - 2*(xx + zz), 2*(yz - xw),
@@ -951,7 +951,7 @@ inline mat3<T> quat_to_mat3(const quat<T>& q)
 }
 
 // the input quat<T>ernion is assumed to be normalized
-template <typename T> 
+template <typename T>
 inline mat4<T> quat_to_mat4(const quat<T>& q)
 {
 	// const quat<T> q = normalize(qq);
@@ -959,7 +959,7 @@ inline mat4<T> quat_to_mat4(const quat<T>& q)
 	return mat4<T>(quat_to_mat3(q));
 }
 
-template <typename T> 
+template <typename T>
 inline quat<T> mat_to_quat(const mat4<T>& m)
 {
 	const T t = m.elem[0][0] + m.elem[1][1] + m.elem[2][2] + T(1);
@@ -995,61 +995,61 @@ inline quat<T> mat_to_quat(const mat4<T>& m)
 			q[3] = (m.elem[0][1] - m.elem[1][0] ) * invs;
 		}
 	}
-	
+
 	return q;
 }
 
-template <typename T> 
+template <typename T>
 inline quat<T> mat_to_quat(const mat3<T>& m)
 {
 	return mat_to_quat(mat4<T>(m));
 }
 
 // the angle is in radians
-template <typename T> 
+template <typename T>
 inline quat<T> quat_from_axis_angle(const vec3<T>& axis, const T a)
 {
 	quat<T> r;
 	const T inv2 = inv(T(2));
 	r.v = sin(a * inv2) * normalize(axis);
 	r.w = cos(a * inv2);
-	
+
 	return r;
 }
 
 // the angle is in radians
-template <typename T> 
+template <typename T>
 inline quat<T> quat_from_axis_angle(const T x, const T y, const T z, const T angle)
 {
 	return quat_from_axis_angle<T>(vec3<T>(x, y, z), angle);
 }
 
 // the angle is stored in radians
-template <typename T> 
+template <typename T>
 inline void quat_to_axis_angle(const quat<T>& qq, vec3<T>* axis, T *angle)
 {
 	quat<T> q = normalize(qq);
-	
+
 	*angle = 2 * acos(q.w);
-	
+
 	const T s = sin((*angle) * inv(T(2)));
 	if ( s != T(0) )
 		*axis = q.v * inv(s);
-	else 
+	else
 		* axis = vec3<T>(T(0), T(0), T(0));
 }
 
 // Spherical linear interpolation
-template <typename T> 
-inline quat<T> slerp(const quat<T>& qq1, const quat<T>& qq2, const T t) 
+template <typename T>
+inline quat<T> slerp(const quat<T>& qq1, const quat<T>& qq2, const T t)
 {
 	// slerp(q1,q2) = sin((1-t)*a)/sin(a) * q1  +  sin(t*a)/sin(a) * q2
 	const quat<T> q1 = normalize(qq1);
 	const quat<T> q2 = normalize(qq2);
-	
+
 	const T a = acos(dot(q1, q2));
 	const T s = sin(a);
-	
+
 	#define EPS T(1e-5)
 
 	if ( !(-EPS <= s && s <= EPS) ) {
@@ -1064,13 +1064,13 @@ inline quat<T> slerp(const quat<T>& qq1, const quat<T>& qq2, const T t)
 
 // Sperical quadtratic interpolation using a smooth cubic spline
 // The parameters a and b are the control points.
-template <typename T> 
+template <typename T>
 inline quat<T> squad(
-	const quat<T>& q0, 
-	const quat<T>& a, 
-	const quat<T>& b, 
-	const quat<T>& q1, 
-	const T t) 
+	const quat<T>& q0,
+	const quat<T>& a,
+	const quat<T>& b,
+	const quat<T>& q1,
+	const T t)
 {
 	return slerp(slerp(q0, q1, t),slerp(a, b, t), 2 * t * (1 - t));
 }
@@ -1097,7 +1097,7 @@ inline quat<T> squad(
 #undef MATRIX_CONSTRUCTOR_FROM_LOWER
 #undef MATRIX_COMMON
 #undef MATRIX_CONSTRUCTOR_FROM_HIGHER
-#undef MAT_FUNC_TEMPLATE 
+#undef MAT_FUNC_TEMPLATE
 #undef MAT_FUNC_MINOR_TEMPLATE
 #undef MAT_ADJOINT_TEMPLATE
 #undef MAT_INVERSE_TEMPLATE
