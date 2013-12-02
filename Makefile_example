@@ -10,6 +10,9 @@ MONITOR_BAUDRATE  = 115200
 ### path to where you cloned the moti repository
 PROJECT_DIR       = /Users/Ladislas/dev/leka/moti
 
+### path to where the project libs should be
+USER_LIB_PATH     :=  $(PROJECT_DIR)/lib
+
 ### this is the path to the Arduino-Makefile directory.
 ARDMK_DIR         = $(PROJECT_DIR)/arduino-makefile
 
