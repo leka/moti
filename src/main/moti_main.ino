@@ -1,3 +1,6 @@
+
+#define serial Serial
+
 #include <Arduino.h>
 #include <Wire.h>
 
@@ -9,28 +12,29 @@
 #include "Serial.h"
 
 // Include all the classes needed to beautifully develop your robot.
-#include <Sensors.h>
+// #include "Behaviors.h"
+#include "Sensors.h"
+// #include "Led.h"
+// #include "Motor.h"
+// #include "Memory.h"
+// #include <Moti.h>
 
-// Then create instances of every classes
+// Then create instances of every class needed
 Sensors sensors;
-
-int time;
-unsigned long previousMillis = 0;
-bool out = false;
-
+// Motors motors;
+// Moti moti;
+// Behaviors behave;
 
 void setup() {
-	// moti.initDebug(sensors, motors);
-	Serial.begin(115200);
+	// behave.init();
 	sensors.init();
-
 }
 
 void loop() {
-
+	// behave.router();
+	// behave.server();
 	sensors.read();
 	sensors.sendJson();
 
-delay(200);
 
 }
