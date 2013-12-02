@@ -48,7 +48,7 @@ void chBegin(void (*mainThread)()) {
   // start of stack
   uint8_t* p = stkBrk();
   while (p < (uint8_t*)(&p - 10)) *p++ = CH_STACK_FILL_VALUE;
-  
+
   interrupts();
   if (mainFcn) mainFcn();
   while(1) {loop();}
