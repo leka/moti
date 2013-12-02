@@ -5,19 +5,19 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#include "CommunicationUtils.hpp"
-#include "DebugUtils.hpp"
-#include "ADXL345.hpp"
-#include "ITG3200.hpp"
-#include "FreeIMU.hpp"
-#include "Serial.hpp"
+#include "CommunicationUtils.h"
+#include "DebugUtils.h"
+#include "ADXL345.h"
+#include "ITG3200.h"
+#include "FreeIMU.h"
+#include "Serial.h"
 
 // Include all the classes needed to beautifully develop your robot.
-#include "Behaviors.hpp"
-#include "Sensors.hpp"
-#include "Led.hpp"
-#include "Motor.hpp"
-#include "Memory.hpp"
+// #include "Behaviors.h"
+#include "Sensors.h"
+// #include "Led.h"
+// #include "Motor.h"
+// #include "Memory.h"
 // #include <Moti.h>
 
 // Then create instances of every class needed

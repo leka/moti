@@ -4,10 +4,10 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#include "Sensors.hpp"
-#include "Led.hpp"
-#include "Motor.hpp"
-#include "Serial.hpp"
+#include "Sensors.h"
+#include "Led.h"
+#include "Motor.h"
+#include "Serial.h"
 
 enum BehaviorName {
 		WAKE_UP, WAIT, REACT, REMOTE, CRUISE, ESCAPE, STABILIZE, SHUT_DOWN, SPINBLINK

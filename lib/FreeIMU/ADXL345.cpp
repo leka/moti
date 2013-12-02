@@ -13,7 +13,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "ADXL345.hpp"
+#include "ADXL345.h"
 #include <Wire.h>
 
 #define TO_READ (6)      // num of bytes we are going to read each time (two bytes for each axis)

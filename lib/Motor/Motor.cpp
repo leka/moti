@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "Motor.hpp"
+#include "Motor.h"
 
 /**
  * @file Motor.cpp

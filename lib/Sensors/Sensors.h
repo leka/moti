@@ -10,12 +10,12 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#include "CommunicationUtils.hpp"
-#include "DebugUtils.hpp"
-#include "ADXL345.hpp"
-#include "ITG3200.hpp"
-#include "FreeIMU.hpp"
-#include "Serial.hpp"
+#include "CommunicationUtils.h"
+#include "DebugUtils.h"
+#include "ADXL345.h"
+#include "ITG3200.h"
+#include "FreeIMU.h"
+#include "Serial.h"
 
 /**
  * @class Sensors

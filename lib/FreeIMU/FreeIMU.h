@@ -111,7 +111,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //#if FREEIMU_VER <= 3
 // #if HAS_ADXL345()
-  #include <ADXL345.hpp>
+  #include <ADXL345.h>
   // default I2C 7-bit addresses of the sensors
   #define FIMU_ACC_ADDR ADXL345_ADDR_ALT_LOW // SDO connected to GND
   //#define FIMU_ADXL345_DEF_ADDR ADXL345_ADDR_ALT_HIGH // SDO connected to GND
@@ -140,7 +140,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #endif
 
 // #if HAS_ITG3200()
-  #include <ITG3200.hpp>
+  #include <ITG3200.h>
 // #endif
 
 // #if HAS_HMC5883L()
