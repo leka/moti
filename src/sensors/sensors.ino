@@ -46,11 +46,6 @@ void chSetup() {
 
 void setup() {
 
-	 char stkVar;
-  extern char* __malloc_heap_end;
-  // allow 256 locations for loop() stack
-  __malloc_heap_end = &stkVar - 256;
-
 	serial.begin(115200);
 
 	delay(1000);

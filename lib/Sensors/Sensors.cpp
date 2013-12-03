@@ -81,23 +81,42 @@ void Sensors::readGyroscope(){
  * It can also be useful as a debug print out to check the consistency of the sensors.
  */
 void Sensors::sendJson(){
-	String json;
+	Serial.print(F("{"));
+		Serial.print(F("\"accel\":"));
 
-	json = "{\"accel\":{\"x\":";
-	json = json + readXYZ(0);
-	json = json + ",\"y\":";
-	json = json + readXYZ(1);
-	json = json + ",\"z\":";
-	json = json + readXYZ(2);
-	json = json + "},\"gyro\":{\"yaw\":";
-	json = json + readYPR(0);
-	json = json + ",\"pitch\":";
-	json = json + readYPR(1);
-	json = json + ",\"roll\":";
-	json = json + readYPR(2);
-	json = json + "}}";
+			Serial.print(F("{"));
 
-	serial.println(json);
+				Serial.print(F("\"x\":"));
+				Serial.print(XYZ[0]);
+				Serial.print(F(","));
+
+				Serial.print(F("\"y\":"));
+				Serial.print(XYZ[1]);
+				Serial.print(F(","));
+
+				Serial.print(F("\"z\":"));
+				Serial.print(XYZ[2]);
+
+			Serial.print(F("},"));
+
+		Serial.print(F("\"gyro\":"));
+
+			Serial.print(F("{"));
+
+				Serial.print(F("\"yaw\":"));
+				Serial.print(YPR[0]);
+				Serial.print(F(","));
+
+				Serial.print(F("\"pitch\":"));
+				Serial.print(YPR[1]);
+				Serial.print(F(","));
+
+				Serial.print(F("\"roll\":"));
+				Serial.print(YPR[2]);
+
+			Serial.print(F("},"));
+
+	Serial.println(F("}"));
 }
 
 /**

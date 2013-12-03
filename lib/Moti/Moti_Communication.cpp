@@ -68,23 +68,54 @@ void Moti::sendBinaryData(Sensors& sensors){
  * It can also be useful as a debug print out to check the consistency of the sensors.
  */
 void Moti::sendJson(Sensors& sensors){
-	String json;
 
-	sensors.checkSensors();
+	Serial.print(F("{"));
+		Serial.print(F("\"accel\":"));
+			Serial.print(F("{"));
 
-	json = "{\"accel\":{\"x\":";
-	json = json + sensors.getXYZ(0);
-	json = json + ",\"y\":";
-	json = json + sensors.getXYZ(1);
-	json = json + ",\"z\":";
-	json = json + sensors.getXYZ(2);
-	json = json + "},\"gyro\":{\"yaw\":";
-	json = json + sensors.getYPR(0);
-	json = json + ",\"pitch\":";
-	json = json + sensors.getYPR(1);
-	json = json + ",\"roll\":";
-	json = json + sensors.getYPR(2);
-	json = json + "}}";
+				Serial.print(F("\"x\":"));
+				Serial.print(XYZ[0]);
+				Serial.print(F(","));
 
-	serial.println(json);
+				Serial.print(F("\"y\":"));
+				Serial.print(XYZ[1]);
+				Serial.print(F(","));
+
+				Serial.print(F("\"z\":"));
+				Serial.print(XYZ[2]);
+
+			Serial.print(F("},"));
+
+		Serial.print(F("\"gyro\":"));
+			Serial.print(F("{"));
+
+				Serial.print(F("\"yaw\":"));
+				Serial.print(YPR[0]);
+				Serial.print(F(","));
+
+				Serial.print(F("\"pitch\":"));
+				Serial.print(YPR[1]);
+				Serial.print(F(","));
+
+				Serial.print(F("\"roll\":"));
+				Serial.print(YPR[2]);
+
+			Serial.print(F("},"));
+
+		Serial.print(F("\"rgb\":"));
+			Serial.print(F("{"));
+
+				Serial.print(F("\"red\":"));
+				Serial.print(rgb[0]);
+				Serial.print(F(","));
+
+				Serial.print(F("\"green\":"));
+				Serial.print(rgb[1]);
+				Serial.print(F(","));
+
+				Serial.print(F("\"blue\":"));
+				Serial.print(rgb[2]);
+
+			Serial.print(F("}"));
+	Serial.println(F("}"));
 }
