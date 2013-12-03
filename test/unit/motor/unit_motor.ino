@@ -2,8 +2,8 @@
 
 #define serial Serial
 
-#include "Motor.hpp"
-#include "Serial.hpp"
+#include "Motor.h"
+#include "Serial.h"
 
 Motor right_motor = Motor(7,6);
 Motor left_motor = Motor(4,5);
