@@ -22,9 +22,19 @@ static msg_t Thread1(void *arg) {
 
 	while (TRUE) {
 		sensors.read();
-		sensors.sendJson();
+		chThdSleepMilliseconds(1000);
 
-		chThdSleepMilliseconds(100);
+	}
+	return 0;
+}
+
+static WORKING_AREA(waThread2, 260);
+
+static msg_t Thread2(void *arg) {
+
+	while (TRUE) {
+		sensors.sendJson();
+		chThdSleepMilliseconds(200);
 	}
 	return 0;
 }
@@ -40,6 +50,9 @@ void chSetup() {
 
 	chThdCreateStatic(waThread1, sizeof(waThread1),
 		NORMALPRIO, Thread1, NULL);
+
+	chThdCreateStatic(waThread2, sizeof(waThread2),
+		NORMALPRIO, Thread2, NULL);
 
 }
 
