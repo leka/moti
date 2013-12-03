@@ -22,7 +22,7 @@ static msg_t Thread1(void *arg) {
 
 	while (TRUE) {
 		sensors.read();
-		chThdSleepMilliseconds(1000);
+		chThdSleepMilliseconds(33);
 
 	}
 	return 0;
@@ -42,7 +42,6 @@ static msg_t Thread2(void *arg) {
 
 void chSetup() {
 
-	sensors.init();
 
 	serial.println("Starting");
 
@@ -60,6 +59,9 @@ void chSetup() {
 void setup() {
 
 	serial.begin(115200);
+
+	sensors.init();
+
 
 	delay(1000);
 
