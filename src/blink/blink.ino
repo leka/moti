@@ -36,13 +36,33 @@ static msg_t Thread2(void *arg) {
     digitalWrite(LED_PIN, HIGH);
 
     // Sleep for 200 milliseconds.
-    chThdSleepMilliseconds(200);
+    chThdSleepMilliseconds(100);
+
+    // Signal thread 1 to turn LED off.
+    chSemSignal(&sem);
+
+    chThdSleepMilliseconds(100);
+
+    digitalWrite(LED_PIN, HIGH);
+
+    // Sleep for 200 milliseconds.
+    chThdSleepMilliseconds(100);
+
+    // Signal thread 1 to turn LED off.
+    chSemSignal(&sem);
+
+    chThdSleepMilliseconds(100);
+
+    digitalWrite(LED_PIN, HIGH);
+
+    // Sleep for 200 milliseconds.
+    chThdSleepMilliseconds(100);
 
     // Signal thread 1 to turn LED off.
     chSemSignal(&sem);
 
     // Sleep for 200 milliseconds.
-    chThdSleepMilliseconds(200);
+    chThdSleepMilliseconds(800);
   }
   return 0;
 }
