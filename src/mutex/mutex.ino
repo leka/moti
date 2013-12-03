@@ -1,4 +1,5 @@
 // Simple demo using a mutex for data sharing.
+#include <Arduino.h>
 #include <ChibiOS_AVR.h>
 
 const uint8_t X_PIN = 0;
@@ -51,7 +52,7 @@ static msg_t Thread1(void *arg) {
     dataT = tmpT;
     dataX = tmpX;
     dataY = tmpY;
-    dataZ = tmpX;
+    dataZ = tmpZ;
 
     // Unlock data access.
     chMtxUnlock();

@@ -1,4 +1,5 @@
 // Example to demonstrate thread definition, semaphores, and thread sleep.
+#include <Arduino.h>
 #include <ChibiOS_AVR.h>
 
 // The LED is attached to pin 13 on Arduino.
