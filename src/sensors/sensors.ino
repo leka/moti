@@ -16,27 +16,27 @@
 
 Sensors sensors;
 
-static WORKING_AREA(waThread1, 1024);
+static WORKING_AREA(waThread1, 260);
 
 static msg_t Thread1(void *arg) {
 
 	while (TRUE) {
-
-		serial.print(F("Unused Stack: "));
-		serial.println(chUnusedStack(waThread1, sizeof(waThread1)));
-		serial.println("OK");
-
 		sensors.read();
 		sensors.sendJson();
 
-		chThdSleepMilliseconds(500);
-
+		chThdSleepMilliseconds(100);
 	}
 	return 0;
 }
 
 
 void chSetup() {
+
+	sensors.init();
+
+	serial.println("Starting");
+
+	delay(500);
 
 	chThdCreateStatic(waThread1, sizeof(waThread1),
 		NORMALPRIO, Thread1, NULL);
@@ -46,23 +46,23 @@ void chSetup() {
 
 void setup() {
 
+	 char stkVar;
+  extern char* __malloc_heap_end;
+  // allow 256 locations for loop() stack
+  __malloc_heap_end = &stkVar - 256;
+
 	serial.begin(115200);
 
 	delay(1000);
 
-	sensors.init();
 
-	serial.println("Starting");
+	// sensors.read();
+	// sensors.sendJson();
 
-	delay(500);
+	// delay(500);
 
-	sensors.read();
-	sensors.sendJson();
-
-	delay(500);
-
-	sensors.read();
-	sensors.sendJson();
+	// sensors.read();
+	// sensors.sendJson();
 
 	chBegin(chSetup);
 
