@@ -15,14 +15,16 @@ static WORKING_AREA(waThread1, 64);
 
 static msg_t Thread1(void *arg) {
 
-  while (!chThdShouldTerminate()) {
-    // Wait for signal from thread 2.
-    chSemWait(&sem);
+	while (!chThdShouldTerminate()) {
 
-    // Turn LED off.
-    digitalWrite(LED_PIN, LOW);
-  }
-  return 0;
+		Serial.println("Thread1");
+		// Wait for signal from thread 2.
+		chSemWait(&sem);
+
+		// Turn LED off.
+		digitalWrite(LED_PIN, LOW);
+	}
+	return 0;
 }
 //------------------------------------------------------------------------------
 // Thread 2, turn the LED on and signal thread 1 to turn the LED off.
@@ -31,65 +33,83 @@ static msg_t Thread1(void *arg) {
 static WORKING_AREA(waThread2, 64);
 
 static msg_t Thread2(void *arg) {
-  pinMode(LED_PIN, OUTPUT);
-  while (1) {
-    digitalWrite(LED_PIN, HIGH);
+	pinMode(LED_PIN, OUTPUT);
+	while (1) {
+		Serial.println("Thread2");
 
-    // Sleep for 200 milliseconds.
-    chThdSleepMilliseconds(100);
+		digitalWrite(LED_PIN, HIGH);
 
-    // Signal thread 1 to turn LED off.
-    chSemSignal(&sem);
+		// Sleep for 200 milliseconds.
+		chThdSleepMilliseconds(100);
 
-    chThdSleepMilliseconds(100);
+		// Signal thread 1 to turn LED off.
+		chSemSignal(&sem);
 
-    digitalWrite(LED_PIN, HIGH);
+		chThdSleepMilliseconds(100);
 
-    // Sleep for 200 milliseconds.
-    chThdSleepMilliseconds(100);
+		digitalWrite(LED_PIN, HIGH);
 
-    // Signal thread 1 to turn LED off.
-    chSemSignal(&sem);
+		// Sleep for 200 milliseconds.
+		chThdSleepMilliseconds(100);
 
-    chThdSleepMilliseconds(100);
+		// Signal thread 1 to turn LED off.
+		chSemSignal(&sem);
 
-    digitalWrite(LED_PIN, HIGH);
+		chThdSleepMilliseconds(100);
 
-    // Sleep for 200 milliseconds.
-    chThdSleepMilliseconds(100);
+		digitalWrite(LED_PIN, HIGH);
 
-    // Signal thread 1 to turn LED off.
-    chSemSignal(&sem);
+		// Sleep for 200 milliseconds.
+		chThdSleepMilliseconds(100);
 
-    // Sleep for 200 milliseconds.
-    chThdSleepMilliseconds(800);
-  }
-  return 0;
+		// Signal thread 1 to turn LED off.
+		chSemSignal(&sem);
+
+		// Sleep for 200 milliseconds.
+		chThdSleepMilliseconds(800);
+	}
+	return 0;
+}
+
+static WORKING_AREA(waThread3, 64);
+
+static msg_t Thread3(void *arg) {
+
+	while (TRUE) {
+		Serial.println("Hello World!");
+		chThdSleepMilliseconds(500);
+	}
+	return 0;
 }
 
 void chSetup() {
 
-  // start blink thread
-  chThdCreateStatic(waThread1, sizeof(waThread1),
-    NORMALPRIO + 2, Thread1, NULL);
+	// start blink thread
+	chThdCreateStatic(waThread1, sizeof(waThread1),
+		NORMALPRIO + 2, Thread1, NULL);
 
-  chThdCreateStatic(waThread2, sizeof(waThread2),
-    NORMALPRIO + 1, Thread2, NULL);
+	chThdCreateStatic(waThread2, sizeof(waThread2),
+		NORMALPRIO + 1, Thread2, NULL);
+
+	chThdCreateStatic(waThread3, sizeof(waThread3),
+		NORMALPRIO + 1, Thread3, NULL);
 
 }
 //------------------------------------------------------------------------------
 void setup() {
 
-  chBegin(chSetup);
-  // chBegin never returns, main thread continues with mainThread()
-  while(1) {
-  }
+	Serial.begin(115200);
+
+	chBegin(chSetup);
+	// chBegin never returns, main thread continues with mainThread()
+	while(1) {
+	}
 }
 //------------------------------------------------------------------------------
 // main thread runs at NORMALPRIO
 
 //------------------------------------------------------------------------------
 void loop() {
-  // not used
+	// not used
 }
 
