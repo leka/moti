@@ -114,7 +114,7 @@ void Sensors::sendJson(){
 				Serial.print(F("\"roll\":"));
 				Serial.print(YPR[2]);
 
-			Serial.print(F("},"));
+			Serial.print(F("}"));
 
 	Serial.println(F("}"));
 }
