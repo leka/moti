@@ -13,9 +13,10 @@
 //-----------------------------------------------------//
 
 /**
- * @brief Sensors Class Constructor
+ * @brief Sensors Class CONSTRUCTORS
  */
 Sensors::Sensors(){
+	// nothing to do here
 }
 
 void Sensors::init(){
@@ -56,6 +57,12 @@ void Sensors::read(){
  */
 void Sensors::readAccelerometer(){
 	AccelGyro.getRawValues(_tmpXYZ);
+
+	chMtxLock(&dataStorageMutex);
+		_XYZ[0] = _tmpXYZ[0];
+		_XYZ[1] = _tmpXYZ[1];
+		_XYZ[2] = _tmpXYZ[2];
+	chMtxUnlock();
 }
 
 /**
@@ -65,11 +72,13 @@ void Sensors::readAccelerometer(){
  * Values can be accessed with getYPR(uint8_t index).
  */
 void Sensors::readGyroscope(){
-	float tmpYPR[3];
-	AccelGyro.getYawPitchRoll(tmpYPR);
-	_tmpYPR[0] = (int) tmpYPR[0];
-	_tmpYPR[1] = (int) tmpYPR[1];
-	_tmpYPR[2] = (int) tmpYPR[2];
+	AccelGyro.getYawPitchRoll(_tmpYPR);
+
+	chMtxLock(&dataStorageMutex);
+		_YPR[0] = (int) _tmpYPR[0];
+		_YPR[1] = (int) _tmpYPR[1];
+		_YPR[2] = (int) _tmpYPR[2];
+	chMtxUnlock();
 }
 
 /**

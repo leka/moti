@@ -46,7 +46,11 @@ class Sensors {
 
 		//	VARIABLES
 		int _XYZ[3], _tmpXYZ[3];
-		int _YPR[3], _tmpYPR[3];
+		int _YPR[3];
+		float _tmpYPR[3];
+
+		// MUTEX
+		MUTEX_DECL(dataStorageMutex);
 
 		//	RELATED CLASS
 		FreeIMU AccelGyro;
