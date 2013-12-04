@@ -26,34 +26,7 @@ class Led {
 
 		Led();
 
-		void open();
-
-		void isOn(bool state);
-		bool isOn();
-
-		void isBlinking(bool state);
-		bool isBlinking();
-
-		//	SET CONSTANTS
-		void setMaxBrightness(int value);
-		void setRedMaxBrightness(int value);
-		void setGreenMaxBrightness(int value);
-		void setBlueMaxBrightness(int value);
-
-
-		//	GET CONSTANTS
-		int getMaxBrightness();
-		int getRedMaxBrightness();
-		int getGreenMaxBrightness();
-		int getBlueMaxBrightness();
-
-
-    	//	RESET CONSTANTS
-		void resetMaxBrightness();
-		void resetRedMaxBrightness();
-		void resetGreenMaxBrightness();
-		void resetBlueMaxBrightness();
-
+		void init();
 
 		//	LED
 		void colorSwitcher(ColorName color);
@@ -64,59 +37,28 @@ class Led {
 		void setGreen(int value);
 		void setBlue(int value);
 
-		uint8_t getRgb(uint8_t index);
-		uint8_t getRed();
-		uint8_t getGreen();
-		uint8_t getBlue();
+		uint8_t getRgb(uint8_t index) const;
 
-		void writeRgb();
-		void writeRgb(ColorName color);
-		void writeRgb(int red, int green, int blue);
-
-		void blinkAsync(ColorName color, int numberOfBlinks, uint16_t timeBtwBlink);
-		void blinkAsync(int red, int green, int blue, int numberOfBlinks, uint16_t timeBtwBlink);
-
-		void blinkSync(ColorName color, uint16_t timeBtwBlink);
-		void blinkSync(int red, int green, int blue, int numberOfBlinks, uint16_t timeBtwBlink);
-
-		void fadeLedTo(ColorName color);
+		void shine() const;
+		void shine(ColorName color);
+		void shine(int red, int green, int blue);
 
 		void turnOff();
-		void turnOn();
-
 
 	private:
 
 		//	VARIABLES
-		bool _isOn;
-		bool _isBlinking;
-
-		uint64_t previousMillis;
-		uint64_t currentMillis;
-		uint64_t runTime;
-		int i, j, k;
-
-		int16_t rgb[3], rgbBuffer[3];
+		int16_t _rgb[3], _tmpRgb[3];
 
 		uint8_t _redPin;
 		uint8_t _greenPin;
 		uint8_t _bluePin;
-
-		uint8_t _ledMaxBrightness;
-		uint8_t _redMaxBrightness;
-		uint8_t _greenMaxBrightness;
-		uint8_t _blueMaxBrightness;
 
 		//	CONSTANTS
 		static const uint8_t DEFAULT_LED_MAX_BRIGHTNESS   = 255;
 		static const uint8_t DEFAULT_RED_MAX_BRIGHTNESS   = 255;
 		static const uint8_t DEFAULT_GREEN_MAX_BRIGHTNESS = 255;
 		static const uint8_t DEFAULT_BLUE_MAX_BRIGHTNESS  = 255;
-
-		//	DEFAULT LED PINS
-		static const uint8_t DEFAULT_RED_PIN   = 8;
-		static const uint8_t DEFAULT_GREEN_PIN = 9;
-		static const uint8_t DEFAULT_BLUE_PIN  = 10;
 };
 
 #endif
