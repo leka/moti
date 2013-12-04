@@ -48,7 +48,7 @@ class Led {
 	private:
 
 		//	VARIABLES
-		int16_t _rgb[3], _tmpRgb[3];
+		int16_t _RGB[3], _tmpRGB[3];
 
 		uint8_t _redPin;
 		uint8_t _greenPin;
