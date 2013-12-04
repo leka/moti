@@ -26,16 +26,11 @@ class Led {
 
 		Led();
 
-		void init();
-
 		//	LED
 		void colorSwitcher(ColorName color);
 
 		void setRgb(int8_t index, int value);
 		void setRgb(int redValue, int greenValue, int blueValue);
-		void setRed(int value);
-		void setGreen(int value);
-		void setBlue(int value);
 
 		uint8_t getRgb(uint8_t index) const;
 
