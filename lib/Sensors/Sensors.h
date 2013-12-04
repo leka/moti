@@ -10,6 +10,8 @@
 #include <Arduino.h>
 #include <Wire.h>
 
+#include "ChibiOS_AVR.h"
+
 #include "CommunicationUtils.h"
 #include "DebugUtils.h"
 #include "ADXL345.h"
@@ -34,20 +36,17 @@ class Sensors {
 		void readAccelerometer();
 		void readGyroscope();
 
-		int readXYZ(uint8_t index);
-		int readYPR(uint8_t index);
+		int readXYZ(uint8_t index) const;
+		int readYPR(uint8_t index) const;
 
-		void computeDelta();
-		void updateLastValues();
-
-		void sendJson();
-		void writeData();
+		void sendJson() const;
+		void sendData() const;
 
 	private:
 
 		//	VARIABLES
-		int XYZ[3], lastXYZ[3], deltaXYZ[3];
-		int YPR[3], lastYPR[3], deltaYPR[3];
+		int _XYZ[3], _tmpXYZ[3];
+		int _YPR[3], _tmpYPR[3];
 
 		//	RELATED CLASS
 		FreeIMU AccelGyro;
