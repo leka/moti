@@ -29,10 +29,16 @@ Led::Led(){
  * @param bluePin Blue pin
  */
 Led::Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin) : _redPin(redPin), _greenPin(greenPin), _bluePin(bluePin) {
+	_RGB[0] = 0;
+	_RGB[1] = 0;
+	_RGB[2] = 0;
 
+	_tmpRGB[0] = 0;
+	_tmpRGB[1] = 0;
+	_tmpRGB[2] = 0;
 }
 
-void Led::open(){
+void Led::init(){
 	rgb[0] = 0;
 	rgb[1] = 0;
 	rgb[2] = 0;
