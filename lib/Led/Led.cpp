@@ -13,6 +13,14 @@
 //-----------------------------------------------------//
 
 
+
+/**
+ * @brief Led Class Constructor
+ */
+Led::Led(){
+	//nothing to do here
+}
+
 /**
  * @brief Led Class Constructor
  *
@@ -20,19 +28,8 @@
  * @param greenPin Green pin
  * @param bluePin Blue pin
  */
-Led::Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin){
-	this -> _redPin   = redPin;
-	this -> _greenPin = greenPin;
-	this -> _bluePin  = bluePin;
-}
+Led::Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin) : _redPin(redPin), _greenPin(greenPin), _bluePin(bluePin) {
 
-/**
- * @brief Led Class Constructor
- */
-Led::Led(){
-	this -> _redPin   = DEFAULT_RED_PIN;
-	this -> _greenPin = DEFAULT_GREEN_PIN;
-	this -> _bluePin  = DEFAULT_BLUE_PIN;
 }
 
 void Led::open(){
