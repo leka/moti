@@ -103,68 +103,10 @@ void Led::shine(int red, int green, int blue){
 }
 
 /**
- * @brief Blinks the led with a certain color, a certain number of time without
- * using delay.
- *
- * @param red red value to output
- * @param green green value to output
- * @param blue blue value to output
- * @param numberOfBlinks number of blinks
- * @param timeBtwBlink delay between each blinks - a good value is 50
- */
-void Led::blinkSync(int red, int green, int blue, int numberOfBlinks, uint16_t timeBtwBlink){
-	for(int i = 0 ; i < numberOfBlinks ; i++) {
-		writeRgb(red, green, blue);
-		delay(timeBtwBlink);
-		writeRgb(0, 0, 0);
-		delay(timeBtwBlink);
-	}
-}
-
-/**
- * @brief Fades the led to a certain color
- *
- * @param color the name of the color from enum ColorName{}
- */
-void Led::fadeLedTo(ColorName color){
-	int fadeRed = 0;
-	int fadeGreen = 0;
-	int fadeBlue = 0;
-
-	setRgb(0, 0, 0);
-
-	colorSwitcher(color);
-
-	while(fadeRed <= rgb[0] || fadeGreen <= rgb[1] || fadeBlue <= rgb[2]){
-		colorSwitcher(color);
-		if (fadeRed < rgb[0]){
-			fadeRed+=3;
-		}
-		if (fadeGreen < rgb[1]){
-			fadeGreen+=3;
-		}
-		if (fadeBlue < rgb[2]){
-			fadeBlue+=3;
-		}
-		writeRgb(fadeRed, fadeGreen, fadeBlue);
-	}
-}
-
-/**
- * @brief Turns led ON - white color.
- */
-void Led::turnOn(){
-	writeRgb();
-	isOn(true);
-}
-
-/**
  * @brief Turns led OFF.
  */
 void Led::turnOff(){
-	writeRgb(0, 0, 0);
-	isOn(false);
-	isBlinking(false);
+	shine(0, 0, 0);
 }
 
 /**
@@ -176,99 +118,99 @@ void Led::turnOff(){
 void Led::colorSwitcher(ColorName color){
 	switch(color){
 		case DARK_RED:
-			rgb[0] = 186;
-			rgb[1] = 48;
-			rgb[2] = 42;
+			_RGB[0] = 186;
+			_RGB[1] = 48;
+			_RGB[2] = 42;
 			break;
 
 		case RED:
-			rgb[0] = 255;
-			rgb[1] = 0;
-			rgb[2] = 0;
+			_RGB[0] = 255;
+			_RGB[1] = 0;
+			_RGB[2] = 0;
 			break;
 
 		case LIGHT_RED:
-			rgb[0] = 222;
-			rgb[1] = 63;
-			rgb[2] = 89;
+			_RGB[0] = 222;
+			_RGB[1] = 63;
+			_RGB[2] = 89;
 			break;
 
 		case PURPLE:
-			rgb[0] = 165;
-			rgb[1] = 67;
-			rgb[2] = 188;
+			_RGB[0] = 165;
+			_RGB[1] = 67;
+			_RGB[2] = 188;
 			break;
 
 		case BLUE:
-			rgb[0] = 41;
-			rgb[1] = 133;
-			rgb[2] = 220;
+			_RGB[0] = 41;
+			_RGB[1] = 133;
+			_RGB[2] = 220;
 			break;
 
 		case LIGHT_BLUE:
-			rgb[0] = 95;
-			rgb[1] = 184;
-			rgb[2] = 224;
+			_RGB[0] = 95;
+			_RGB[1] = 184;
+			_RGB[2] = 224;
 			break;
 
 		case WHITE:
-			rgb[0] = 248;
-			rgb[1] = 253;
-			rgb[2] = 253;
+			_RGB[0] = 248;
+			_RGB[1] = 253;
+			_RGB[2] = 253;
 			break;
 
 		case LIGHT_PINK:
-			rgb[0] = 255;
-			rgb[1] = 232;
-			rgb[2] = 225;
+			_RGB[0] = 255;
+			_RGB[1] = 232;
+			_RGB[2] = 225;
 			break;
 
 		case YELLOW:
-			rgb[0] = 250;
-			rgb[1] = 211;
-			rgb[2] = 51;
+			_RGB[0] = 250;
+			_RGB[1] = 211;
+			_RGB[2] = 51;
 			break;
 
 		case DARK_YELLOW:
-			rgb[0] = 244;
-			rgb[1] = 174;
-			rgb[2] = 51;
+			_RGB[0] = 244;
+			_RGB[1] = 174;
+			_RGB[2] = 51;
 			break;
 
 		case ORANGE:
-			rgb[0] = 240;
-			rgb[1] = 143;
-			rgb[2] = 51;
+			_RGB[0] = 240;
+			_RGB[1] = 143;
+			_RGB[2] = 51;
 			break;
 
 		case DARK_ORANGE:
-			rgb[0] = 239;
-			rgb[1] = 134;
-			rgb[2] = 59;
+			_RGB[0] = 239;
+			_RGB[1] = 134;
+			_RGB[2] = 59;
 			break;
 
 		case LIGHT_GREEN:
-			rgb[0] = 216;
-			rgb[1] = 255;
-			rgb[2] = 56;
+			_RGB[0] = 216;
+			_RGB[1] = 255;
+			_RGB[2] = 56;
 			break;
 
 		case GREEN:
-			rgb[0] = 0;
-			rgb[1] = 255;
-			rgb[2] = 0;
+			_RGB[0] = 0;
+			_RGB[1] = 255;
+			_RGB[2] = 0;
 			break;
 
 		case RAND:
-			rgb[0] = random(0, 255);
-			rgb[1] = random(0, 255);
-			rgb[2] = random(0, 255);
+			_RGB[0] = random(0, 255);
+			_RGB[1] = random(0, 255);
+			_RGB[2] = random(0, 255);
 			break;
 
 		default:
-			rgb[0] = random(0, 255);
-			rgb[1] = random(0, 255);
-			rgb[2] = random(0, 255);
+			_RGB[0] = random(0, 255);
+			_RGB[1] = random(0, 255);
+			_RGB[2] = random(0, 255);
 			break;
 	}
 
