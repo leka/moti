@@ -50,7 +50,7 @@ class Sensors {
 		float _tmpYPR[3];
 
 		// MUTEX
-		MUTEX_DECL(dataStorageMutex);
+		MUTEX_DECL(sensorsDataMutex);
 
 		//	RELATED CLASS
 		FreeIMU AccelGyro;

@@ -58,7 +58,7 @@ void Sensors::read(){
 void Sensors::readAccelerometer(){
 	AccelGyro.getRawValues(_tmpXYZ);
 
-	chMtxLock(&dataStorageMutex);
+	chMtxLock(&sensorsDataMutex);
 		_XYZ[0] = _tmpXYZ[0];
 		_XYZ[1] = _tmpXYZ[1];
 		_XYZ[2] = _tmpXYZ[2];
@@ -74,7 +74,7 @@ void Sensors::readAccelerometer(){
 void Sensors::readGyroscope(){
 	AccelGyro.getYawPitchRoll(_tmpYPR);
 
-	chMtxLock(&dataStorageMutex);
+	chMtxLock(&sensorsDataMutex);
 		_YPR[0] = (int) _tmpYPR[0];
 		_YPR[1] = (int) _tmpYPR[1];
 		_YPR[2] = (int) _tmpYPR[2];
