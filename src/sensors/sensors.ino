@@ -20,13 +20,13 @@ static WORKING_AREA(waThread1, 260);
 
 static msg_t Thread1(void *arg) {
 	(void)arg;
+
 	systime_t time = chTimeNow();
 
 	while (TRUE) {
 		time += MS2ST(10);
 		sensors.read();
 		chThdSleepUntil(time);
-
 	}
 	return 0;
 }
