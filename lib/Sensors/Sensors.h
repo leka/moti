@@ -36,11 +36,11 @@ class Sensors {
 		void readAccelerometer();
 		void readGyroscope();
 
-		int readXYZ(uint8_t index) const;
-		int readYPR(uint8_t index) const;
+		int readXYZ(uint8_t index);
+		int readYPR(uint8_t index);
 
-		void sendJson() const;
-		void sendData() const;
+		void sendJson();
+		void sendData();
 
 	private:
 

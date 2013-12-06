@@ -88,8 +88,12 @@ void Sensors::readGyroscope(){
  * @param index index of the value you want to access: 0 -> X || 1 -> Y || 2 -> Z
  * @return acceleration for X, Y or Z
  */
-int Sensors::readXYZ(uint8_t index) const {
-	return _XYZ[index];
+int Sensors::readXYZ(uint8_t index){
+	chMtxLock(&sensorsDataMutex);
+		uint8_t value = _XYZ[index];
+	chMtxUnlock();
+
+	return value;
 }
 
 /**
@@ -99,8 +103,12 @@ int Sensors::readXYZ(uint8_t index) const {
  * @param index index of the value you want to access: 0 -> Y || 1 -> P || 2 -> R
  * @return angle of Y, P, R
  */
-int Sensors::readYPR(uint8_t index) const {
-	return _YPR[index];
+int Sensors::readYPR(uint8_t index){
+	chMtxLock(&sensorsDataMutex);
+		uint8_t value = _YPR[index];
+	chMtxUnlock();
+
+	return value;
 }
 
 /**
@@ -109,22 +117,22 @@ int Sensors::readYPR(uint8_t index) const {
  * sendJson() is used to interface the robot with other high level languages such as Processing or Javascript.
  * It can also be useful as a debug print out to check the consistency of the sensors.
  */
-void Sensors::sendJson() const {
+void Sensors::sendJson()  {
 	Serial.print(F("{"));
 		Serial.print(F("\"accel\":"));
 
 			Serial.print(F("{"));
 
 				Serial.print(F("\"x\":"));
-				Serial.print(_XYZ[0]);
+				Serial.print(readXYZ(0));
 				Serial.print(F(","));
 
 				Serial.print(F("\"y\":"));
-				Serial.print(_XYZ[1]);
+				Serial.print(readXYZ(1));
 				Serial.print(F(","));
 
 				Serial.print(F("\"z\":"));
-				Serial.print(_XYZ[2]);
+				Serial.print(readXYZ(2));
 
 			Serial.print(F("},"));
 
@@ -133,15 +141,15 @@ void Sensors::sendJson() const {
 			Serial.print(F("{"));
 
 				Serial.print(F("\"yaw\":"));
-				Serial.print(_YPR[0]);
+				Serial.print(readYPR(0));
 				Serial.print(F(","));
 
 				Serial.print(F("\"pitch\":"));
-				Serial.print(_YPR[1]);
+				Serial.print(readYPR(1));
 				Serial.print(F(","));
 
 				Serial.print(F("\"roll\":"));
-				Serial.print(_YPR[2]);
+				Serial.print(readYPR(2));
 
 			Serial.print(F("}"));
 
@@ -151,7 +159,7 @@ void Sensors::sendJson() const {
 /**
  * @brief Send data as binaries
  */
-void Sensors::sendData() const {
+void Sensors::sendData(){
 
 	sio::writeByte(sio::dataHeader);
 
