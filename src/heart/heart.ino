@@ -14,76 +14,61 @@ static msg_t LedThread(void *arg) {
 
 	(void)arg;
 
-	volatile uint16_t basePwm = 0;
-	volatile uint8_t bpm = 60;
-	volatile uint16_t currentPwm = 0;
-	volatile uint16_t P = 70;
-	volatile uint16_t Q = 0;
-	volatile uint16_t R = 255;
+	volatile uint8_t basePwm = 10;
+	volatile uint8_t bpm = 30;
+	volatile uint8_t P = 80;
+	volatile uint8_t Q = 0;
+	volatile uint8_t R = 255;
 	volatile uint32_t waitDelay = 0;
-	volatile int32_t slice = 0;
-	volatile uint16_t i = 0;
+	volatile uint8_t i = 0;
 
 	while (TRUE) {
 		for (i = basePwm; i < P; i++) {
-			currentPwm = i;
-			heart.shine(currentPwm, 0, 0);
-			slice = P - basePwm;
-			waitDelay = 40000 / abs(slice);
+			heart.shine(i, 0, 0);
+			waitDelay = 4000 / (P - basePwm);
 			// serial.println(slice);
-			delayMicroseconds(waitDelay);
+			chThdSleepMicroseconds(4000 / (P - basePwm));
 		}
 
 		for (i = P; i > basePwm; i--) {
-			currentPwm = i;
-			heart.shine(currentPwm, 0, 0);
-			slice = P-basePwm;
-			waitDelay = 40000 / abs(slice);
+			heart.shine(i, 0, 0);
+			waitDelay = 4000 / (P - basePwm);
 			// serial.println(waitDelay);
-			delayMicroseconds(waitDelay);
+			chThdSleepMicroseconds(4000 / (P - basePwm));
 		}
 
 		chThdSleepMilliseconds(60);
 
 		for (i = basePwm; i > Q; i--) {
-			currentPwm = i;
-			heart.shine(currentPwm, 0, 0);
-			slice = P-basePwm;
-			waitDelay = 20000 / abs(slice);
+			heart.shine(i, 0, 0);
+			waitDelay = 2000 / (basePwm - Q);
 			// serial.println(waitDelay);
-			delayMicroseconds(waitDelay);
+			chThdSleepMicroseconds(waitDelay);
 		}
 
 		for (i = Q; i < R; i++) {
-			currentPwm = i;
-			heart.shine(currentPwm, 0, 0);
-			slice = P-basePwm;
-			waitDelay = 10000 / abs(slice);
+			heart.shine(i, 0, 0);
+			waitDelay = 3000 / (R - Q);
 			// serial.println(waitDelay);
-			delayMicroseconds(waitDelay);
+			chThdSleepMicroseconds(waitDelay);
 		}
 
 		for (i = R; i > Q; i--) {
-			currentPwm = i;
-			heart.shine(currentPwm, 0, 0);
-			slice = P-basePwm;
-			waitDelay = 25000 / abs(slice);
+			heart.shine(i, 0, 0);
+			waitDelay = 8000 / (R - Q);
 			// serial.println(waitDelay);
-			delayMicroseconds(waitDelay);
+			chThdSleepMicroseconds(waitDelay);
 		}
 
 		for (i = Q; i < basePwm; i++) {
-			currentPwm = i;
-			heart.shine(currentPwm, 0, 0);
-			slice = P-basePwm;
-			waitDelay = 20000 / abs(slice);
+			heart.shine(i, 0, 0);
+			waitDelay = 2000 / (basePwm - Q);
 			// serial.println(waitDelay);
-			delayMicroseconds(waitDelay);
+			chThdSleepMicroseconds(waitDelay);
 		}
 
-		heart.shine(basePwm, 0, 0);
-		serial.println(30000 / bpm);
-		delay(30000 / bpm);
+		// heart.shine(basePwm, 0, 0);
+		chThdSleepMilliseconds(30000 / bpm);
 	}
 	return 0;
 }
