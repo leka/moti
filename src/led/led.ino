@@ -15,12 +15,24 @@ static WORKING_AREA(waSerialThread, 260);
 static msg_t LedThread(void *arg) {
 
 	while (TRUE) {
-		serial.println("led start");
-		heart.shine(RAND);
-		chThdSleepMilliseconds(500);
-		chSemSignal(&output);
-		chThdSleepMilliseconds(500);
-		serial.println("led end");
+		// serial.println("led start");
+		// heart.shine(RAND);
+		// chThdSleepMilliseconds(500);
+		// chSemSignal(&output);
+		// chThdSleepMilliseconds(500);
+		// serial.println("led end");
+		//
+
+		for (int i = 0; i < 255; i++) {
+			heart.shine(i, 0, 0);
+			serial.println(i);
+			// chThdSleepMicroseconds(1);
+			chThdSleepMilliseconds(1);
+		}
+
+		heart.turnOff();
+		chThdSleepMilliseconds(2000);
+
 	}
 	return 0;
 }
