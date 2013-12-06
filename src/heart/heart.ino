@@ -8,9 +8,9 @@
 
 Led heart = Led(11, 12, 13);
 
-static WORKING_AREA(waLedThread, 1000);
+static WORKING_AREA(waHeartThread, 1000);
 
-static msg_t LedThread(void *arg) {
+static msg_t HeartThread(void *arg) {
 
 	(void)arg;
 
@@ -68,8 +68,8 @@ static msg_t LedThread(void *arg) {
 }
 
 void chSetup() {
-	chThdCreateStatic(waLedThread, sizeof(waLedThread),
-		NORMALPRIO, LedThread, NULL);
+	chThdCreateStatic(waHeartThread, sizeof(waHeartThread),
+		NORMALPRIO, HeartThread, NULL);
 }
 
 
