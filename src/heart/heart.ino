@@ -21,44 +21,51 @@ static msg_t HeartThread(void *arg) {
 	volatile uint8_t R = 255;
 	volatile uint32_t waitDelay = 0;
 	volatile uint8_t i = 0;
+	volatile uint8_t j = 0;
 
 	while (TRUE) {
 		for (i = basePwm; i < P; i++) {
 			heart.shine(i, 0, 0);
-			waitDelay = 40000 / (P - basePwm);
-			delayMicroseconds(waitDelay);
+			waitDelay = 4000 / (P - basePwm);
+			// delayMicroseconds(waitDelay);
+			for (j = 0; j < waitDelay ; j++){}
 		}
 
 		for (i = P; i > basePwm; i--) {
 			heart.shine(i, 0, 0);
-			waitDelay = 40000 / (P - basePwm);
-			delayMicroseconds(waitDelay);
+			waitDelay = 4000 / (P - basePwm);
+			// delayMicroseconds(waitDelay);
+			for (j = 0; j < waitDelay ; j++){}
 		}
 
 		chThdSleepMilliseconds(60);
 
 		for (i = basePwm; i > Q; i--) {
 			heart.shine(i, 0, 0);
-			waitDelay = 20000 / (basePwm - Q);
-			delayMicroseconds(waitDelay);
+			waitDelay = 2000 / (basePwm - Q);
+			// delayMicroseconds(waitDelay);
+			for (j = 0; j < waitDelay ; j++){}
 		}
 
 		for (i = Q; i < R; i++) {
 			heart.shine(i, 0, 0);
-			waitDelay = 30000 / (R - Q);
-			delayMicroseconds(waitDelay);
+			waitDelay = 3000 / (R - Q);
+			// delayMicroseconds(waitDelay);
+			for (j = 0; j < waitDelay ; j++){}
 		}
 
 		for (i = R; i > Q; i--) {
 			heart.shine(i, 0, 0);
-			waitDelay = 80000 / (R - Q);
-			delayMicroseconds(waitDelay);
+			waitDelay = 8000 / (R - Q);
+			// delayMicroseconds(waitDelay);
+			for (j = 0; j < waitDelay ; j++){}
 		}
 
 		for (i = Q; i < basePwm; i++) {
 			heart.shine(i, 0, 0);
-			waitDelay = 20000 / (basePwm - Q);
-			delayMicroseconds(waitDelay);
+			waitDelay = 2000 / (basePwm - Q);
+			// delayMicroseconds(waitDelay);
+			for (j = 0; j < waitDelay ; j++){}
 		}
 
 		// heart.shine(basePwm, 0, 0);
