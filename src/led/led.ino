@@ -25,9 +25,9 @@ static msg_t LedThread(void *arg) {
 
 		for (int i = 0; i < 255; i++) {
 			heart.shine(i, 0, 0);
-			serial.println(i);
+
 			// chThdSleepMicroseconds(1);
-			chThdSleepMilliseconds(1);
+			delay(1);
 		}
 
 		heart.turnOff();
