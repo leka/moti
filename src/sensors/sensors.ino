@@ -16,6 +16,8 @@
 
 Sensors sensors;
 
+SEMAPHORE_DECL(sens, 0);
+
 static WORKING_AREA(waThread1, 260);
 
 static msg_t Thread1(void *arg) {
@@ -24,9 +26,12 @@ static msg_t Thread1(void *arg) {
 	systime_t time = chTimeNow();
 
 	while (TRUE) {
-		time += MS2ST(10);
+		time += MS2ST(50);
 		sensors.read();
+		chSemSignal(&sens);
 		chThdSleepUntil(time);
+		serial.print("BTime : ");
+		serial.println(chTimeNow() - time);
 	}
 	return 0;
 }
@@ -37,19 +42,14 @@ static msg_t Thread2(void *arg) {
 	(void)arg;
 
 	while (TRUE) {
+		chSemWait(&sens);
 		sensors.sendJson();
-		chThdSleepMilliseconds(200);
 	}
 	return 0;
 }
 
 
 void chSetup() {
-
-
-	serial.println("Starting");
-
-	delay(500);
 
 	chThdCreateStatic(waThread1, sizeof(waThread1),
 		NORMALPRIO, Thread1, NULL);
@@ -65,18 +65,6 @@ void setup() {
 	serial.begin(115200);
 
 	sensors.init();
-
-
-	delay(1000);
-
-
-	// sensors.read();
-	// sensors.sendJson();
-
-	// delay(500);
-
-	// sensors.read();
-	// sensors.sendJson();
 
 	chBegin(chSetup);
 
