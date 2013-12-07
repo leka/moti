@@ -90,7 +90,7 @@ void Sensors::readGyroscope(){
  */
 int Sensors::getXYZ(uint8_t index){
 	chMtxLock(&sensorsDataMutex);
-		uint8_t value = _XYZ[index];
+		int value = _XYZ[index];
 	chMtxUnlock();
 
 	return value;
@@ -105,7 +105,7 @@ int Sensors::getXYZ(uint8_t index){
  */
 int Sensors::getYPR(uint8_t index){
 	chMtxLock(&sensorsDataMutex);
-		uint8_t value = _YPR[index];
+		int value = _YPR[index];
 	chMtxUnlock();
 
 	return value;
