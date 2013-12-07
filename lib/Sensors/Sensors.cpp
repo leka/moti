@@ -42,7 +42,7 @@ void Sensors::init(){
  * @brief Checking accelerometer and gyroscope
  *
  * checkSensors() is used to check the accelerometer and the gyroscope. It calls two other functions: checkAccelerometer() and checkGyroscope().
- * Values can be accessed with readXYZ(uint8_t i) and readYPR(uint8_t i)
+ * Values can be accessed with getXYZ(uint8_t i) and getYPR(uint8_t i)
  */
 void Sensors::read(){
 	readAccelerometer();
@@ -88,7 +88,7 @@ void Sensors::readGyroscope(){
  * @param index index of the value you want to access: 0 -> X || 1 -> Y || 2 -> Z
  * @return acceleration for X, Y or Z
  */
-int Sensors::readXYZ(uint8_t index){
+int Sensors::getXYZ(uint8_t index){
 	chMtxLock(&sensorsDataMutex);
 		uint8_t value = _XYZ[index];
 	chMtxUnlock();
@@ -99,16 +99,35 @@ int Sensors::readXYZ(uint8_t index){
 /**
  * @brief Accessing Yaw, Pitch, Roll angles
  *
- * readXYZ() is used to access the angle values of Yaw, Pitch and Roll
+ * getXYZ() is used to access the angle values of Yaw, Pitch and Roll
  * @param index index of the value you want to access: 0 -> Y || 1 -> P || 2 -> R
  * @return angle of Y, P, R
  */
-int Sensors::readYPR(uint8_t index){
+int Sensors::getYPR(uint8_t index){
 	chMtxLock(&sensorsDataMutex);
 		uint8_t value = _YPR[index];
 	chMtxUnlock();
 
 	return value;
+}
+
+void Sensors::debug(){
+	serial.print(F(" X : "));
+	serial.print(getXYZ(0));
+	serial.print(F(" Y : "));
+	serial.print(getXYZ(1));
+	serial.print(F(" Z : "));
+	serial.print(getXYZ(2));
+
+	serial.print(F(" | "));
+
+	serial.print(F(" Y : "));
+	serial.print(getYPR(0));
+	serial.print(F(" P : "));
+	serial.print(getYPR(1));
+	serial.print(F(" R : "));
+	serial.print(getYPR(2));
+
 }
 
 /**
@@ -117,43 +136,43 @@ int Sensors::readYPR(uint8_t index){
  * sendJson() is used to interface the robot with other high level languages such as Processing or Javascript.
  * It can also be useful as a debug print out to check the consistency of the sensors.
  */
-void Sensors::sendJson()  {
-	Serial.print(F("{"));
-		Serial.print(F("\"accel\":"));
+void Sensors::sendJson(){
+	serial.print(F("{"));
+		serial.print(F("\"accel\":"));
 
-			Serial.print(F("{"));
+			serial.print(F("{"));
 
-				Serial.print(F("\"x\":"));
-				Serial.print(readXYZ(0));
-				Serial.print(F(","));
+				serial.print(F("\"x\":"));
+				serial.print(getXYZ(0));
+				serial.print(F(","));
 
-				Serial.print(F("\"y\":"));
-				Serial.print(readXYZ(1));
-				Serial.print(F(","));
+				serial.print(F("\"y\":"));
+				serial.print(getXYZ(1));
+				serial.print(F(","));
 
-				Serial.print(F("\"z\":"));
-				Serial.print(readXYZ(2));
+				serial.print(F("\"z\":"));
+				serial.print(getXYZ(2));
 
-			Serial.print(F("},"));
+			serial.print(F("},"));
 
-		Serial.print(F("\"gyro\":"));
+		serial.print(F("\"gyro\":"));
 
-			Serial.print(F("{"));
+			serial.print(F("{"));
 
-				Serial.print(F("\"yaw\":"));
-				Serial.print(readYPR(0));
-				Serial.print(F(","));
+				serial.print(F("\"yaw\":"));
+				serial.print(getYPR(0));
+				serial.print(F(","));
 
-				Serial.print(F("\"pitch\":"));
-				Serial.print(readYPR(1));
-				Serial.print(F(","));
+				serial.print(F("\"pitch\":"));
+				serial.print(getYPR(1));
+				serial.print(F(","));
 
-				Serial.print(F("\"roll\":"));
-				Serial.print(readYPR(2));
+				serial.print(F("\"roll\":"));
+				serial.print(getYPR(2));
 
-			Serial.print(F("}"));
+			serial.print(F("}"));
 
-	Serial.println(F("}"));
+	serial.println(F("}"));
 }
 
 /**
@@ -168,16 +187,16 @@ void Sensors::sendData(){
 	sio::writeByte(sio::accelSensor);
 	sio::writeInt(sio::accelData);
 
-	sio::writeInt(readXYZ(0));
-	sio::writeInt(readXYZ(1));
-	sio::writeInt(readXYZ(2));
+	sio::writeInt(getXYZ(0));
+	sio::writeInt(getXYZ(1));
+	sio::writeInt(getXYZ(2));
 
 	sio::writeByte(sio::gyroSensor);
 	sio::writeInt(sio::gyroData);
 
-	sio::writeInt(readYPR(0));
-	sio::writeInt(readYPR(1));
-	sio::writeInt(readYPR(2));
+	sio::writeInt(getYPR(0));
+	sio::writeInt(getYPR(1));
+	sio::writeInt(getYPR(2));
 
 	sio::writeByte(sio::dataFooter);
 }

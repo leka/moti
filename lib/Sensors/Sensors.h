@@ -17,6 +17,7 @@
 #include "ADXL345.h"
 #include "ITG3200.h"
 #include "FreeIMU.h"
+
 #include "Serial.h"
 
 /**
@@ -36,11 +37,12 @@ class Sensors {
 		void readAccelerometer();
 		void readGyroscope();
 
-		int readXYZ(uint8_t index);
-		int readYPR(uint8_t index);
+		int getXYZ(uint8_t index);
+		int getYPR(uint8_t index);
 
 		void sendJson();
 		void sendData();
+		void debug();
 
 	private:
 
