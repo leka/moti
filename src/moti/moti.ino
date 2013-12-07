@@ -33,45 +33,35 @@ static msg_t HeartThread(void *arg) {
 	volatile uint8_t i = 0;
 
 	while (TRUE) {
-		for (i = basePwm; i < P; i++) {
-			heart.shine(i, 0, 0);
-			waitDelay = 40000 / (P - basePwm);
-			delayMicroseconds(waitDelay);
-		}
+				heart.shine(basePwm, 0, 0);
+		chThdSleepMilliseconds(40/2);
+		heart.shine(P/2, 0, 0);
+		chThdSleepMilliseconds(40/2);
+		heart.shine(P, 0, 0);
+		chThdSleepMilliseconds(40/2);
+		heart.shine(P/2, 0, 0);
+		chThdSleepMilliseconds(40/2);
 
-		for (i = P; i > basePwm; i--) {
-			heart.shine(i, 0, 0);
-			waitDelay = 40000 / (P - basePwm);
-			delayMicroseconds(waitDelay);
-		}
-
+		heart.shine(basePwm, 0, 0);
 		chThdSleepMilliseconds(60);
 
-		for (i = basePwm; i > Q; i--) {
-			heart.shine(i, 0, 0);
-			waitDelay = 20000 / (basePwm - Q);
-			delayMicroseconds(waitDelay);
-		}
+		heart.shine(basePwm, 0, 0);
+		chThdSleepMilliseconds(30/2);
+		heart.shine(Q/2, 0, 0);
+		chThdSleepMilliseconds(30/2);
+		heart.shine(Q, 0, 0);
+		chThdSleepMilliseconds(30/2);
+		heart.shine(R/2, 0, 0);
+		chThdSleepMilliseconds(30/2);
+		heart.shine(R, 0, 0);
+		chThdSleepMilliseconds(30/2);
+		heart.shine(Q/2, 0, 0);
+		chThdSleepMilliseconds(30/2);
+		heart.shine(Q, 0, 0);
+		chThdSleepMilliseconds(20);
 
-		for (i = Q; i < R; i++) {
-			heart.shine(i, 0, 0);
-			waitDelay = 30000 / (R - Q);
-			delayMicroseconds(waitDelay);
-		}
+		heart.shine(basePwm, 0, 0);
 
-		for (i = R; i > Q; i--) {
-			heart.shine(i, 0, 0);
-			waitDelay = 80000 / (R - Q);
-			delayMicroseconds(waitDelay);
-		}
-
-		for (i = Q; i < basePwm; i++) {
-			heart.shine(i, 0, 0);
-			waitDelay = 20000 / (basePwm - Q);
-			delayMicroseconds(waitDelay);
-		}
-
-		// heart.shine(basePwm, 0, 0);
 		chThdSleepMilliseconds(30000/ bpm);
 	}
 	return 0;
@@ -87,7 +77,7 @@ static msg_t SensorsThread(void *arg) {
 	systime_t time = chTimeNow();
 
 	while (TRUE) {
-		time += MS2ST(50);
+		time += MS2ST(10000);
 		sensors.read();
 		chSemSignal(&sens);
 		chThdSleepUntil(time);
