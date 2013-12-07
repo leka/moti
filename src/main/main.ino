@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <Wire.h>
+#include "ChibiOS_AVR.h"
 
 #include "CommunicationUtils.h"
 #include "DebugUtils.h"
@@ -34,7 +35,7 @@ void loop() {
 	// behave.router();
 	// behave.server();
 	sensors.read();
-	sensors.sendJson();
+	sensors.debug();
 
 
 }
