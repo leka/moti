@@ -126,7 +126,7 @@ void Sensors::debug(){
 	serial.print(F("  P: "));
 	serial.print(getYPR(1));
 	serial.print(F("  R: "));
-	serial.print(getYPR(2));
+	serial.println(getYPR(2));
 
 }
 
