@@ -112,20 +112,20 @@ int Sensors::getYPR(uint8_t index){
 }
 
 void Sensors::debug(){
-	serial.print(F(" X : "));
+	serial.print(F(" X: "));
 	serial.print(getXYZ(0));
-	serial.print(F(" Y : "));
+	serial.print(F("  Y: "));
 	serial.print(getXYZ(1));
-	serial.print(F(" Z : "));
+	serial.print(F("  Z: "));
 	serial.print(getXYZ(2));
 
-	serial.print(F(" | "));
+	serial.print(F("  ||  "));
 
-	serial.print(F(" Y : "));
+	serial.print(F("  Y: "));
 	serial.print(getYPR(0));
-	serial.print(F(" P : "));
+	serial.print(F("  P: "));
 	serial.print(getYPR(1));
-	serial.print(F(" R : "));
+	serial.print(F("  R: "));
 	serial.print(getYPR(2));
 
 }
