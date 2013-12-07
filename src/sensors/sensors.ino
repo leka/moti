@@ -43,7 +43,7 @@ static msg_t Thread2(void *arg) {
 
 	while (TRUE) {
 		chSemWait(&sens);
-		sensors.sendJson();
+		sensors.debug();
 	}
 	return 0;
 }
