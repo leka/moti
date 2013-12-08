@@ -83,6 +83,10 @@ void Led::shine() const {
 	analogWrite(_bluePin, _RGB[2]);
 }
 
+/**
+ * @brief Shine the Led with color you want
+ * @param color name of your color
+ */
 void Led::shine(ColorName color){
 	colorSwitcher(color);
 	shine();
