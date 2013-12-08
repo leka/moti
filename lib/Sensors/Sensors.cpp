@@ -110,7 +110,9 @@ int Sensors::getYPR(uint8_t index){
 
 	return value;
 }
-
+/**
+ * @brief Send sensors data for debug
+ */
 void Sensors::debug(){
 	serial.print(F(" X: "));
 	serial.print(getXYZ(0));
