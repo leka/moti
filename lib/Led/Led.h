@@ -11,7 +11,9 @@
 #include "ChibiOS_AVR.h"
 
 enum ColorName {
-	DARK_RED, RED, LIGHT_RED, PURPLE, BLUE, LIGHT_BLUE, WHITE, LIGHT_PINK, YELLOW, DARK_YELLOW, ORANGE, DARK_ORANGE, LIGHT_GREEN, GREEN, RAND
+	BLACK, WHITE, RED_PURE, GREEN_PURE, BLUE_PURE, DARK_RED, RED, LIGHT_RED,
+	PURPLE, BLUE, LIGHT_BLUE, LIGHT_PINK, YELLOW, DARK_YELLOW, ORANGE,
+	DARK_ORANGE, LIGHT_GREEN, GREEN, RAND
 };
 
 enum RGB {
@@ -43,7 +45,10 @@ class Led {
 		void shine() const;
 		void shine(ColorName color);
 		void shine(uint8_t red, uint8_t green, uint8_t blue);
-
+		void fade(uint8_t duration = 40, uint8_t startRedValue = 0, uint8_t endRedValue = 255,
+										 uint8_t startGreenValue = 0, uint8_t endGreenValue = 255,
+										 uint8_t startBlueValue = 0, uint8_t endBlueValue = 255);
+		void fade(uint8_t duration, ColorName startColor, ColorName endColor);
 		void turnOff();
 
 	private:

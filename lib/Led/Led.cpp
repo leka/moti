@@ -104,6 +104,19 @@ void Led::shine(uint8_t red, uint8_t green, uint8_t blue){
 	shine();
 }
 
+void Led::fade(uint8_t duration, uint8_t startRedValue, uint8_t endRedValue,
+								 uint8_t startGreenValue, uint8_t endGreenValue,
+								 uint8_t startBlueValue, uint8_t endBlueValue){
+
+	shine(startRedValue, startGreenValue, startBlueValue);
+	for (uint8_t i = 0 ; i < duration ; i++) {
+		chThdSleepMilliseconds(1);
+		shine(abs(endRedValue - startRedValue) * i / duration,
+			  abs(endGreenValue - startGreenValue) * i / duration,
+			  abs(endBlueValue - startBlueValue) * i / duration);
+	}
+}
+
 /**
  * @brief Turns led OFF.
  */
@@ -120,6 +133,36 @@ void Led::turnOff(){
 void Led::colorSwitcher(ColorName color){
 	chMtxLock(&rgbValuesMutex);
 		switch(color){
+			case BLACK:
+				_RGB[0] = 0;
+				_RGB[1] = 0;
+				_RGB[2] = 0;
+				break;
+
+			case WHITE:
+				_RGB[0] = 255;
+				_RGB[1] = 255;
+				_RGB[2] = 255;
+				break;
+
+			case RED_PURE:
+				_RGB[0] = 255;
+				_RGB[1] = 0;
+				_RGB[2] = 0;
+				break;
+
+			case GREEN_PURE:
+				_RGB[0] = 255;
+				_RGB[1] = 0;
+				_RGB[2] = 0;
+				break;
+
+			case BLUE_PURE:
+				_RGB[0] = 255;
+				_RGB[1] = 0;
+				_RGB[2] = 0;
+				break;
+
 			case DARK_RED:
 				_RGB[0] = 186;
 				_RGB[1] = 48;
@@ -154,12 +197,6 @@ void Led::colorSwitcher(ColorName color){
 				_RGB[0] = 95;
 				_RGB[1] = 184;
 				_RGB[2] = 224;
-				break;
-
-			case WHITE:
-				_RGB[0] = 248;
-				_RGB[1] = 253;
-				_RGB[2] = 253;
 				break;
 
 			case LIGHT_PINK:
