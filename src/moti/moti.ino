@@ -24,16 +24,17 @@ static msg_t HeartThread(void *arg) {
 
 	(void)arg;
 
-	volatile uint8_t basePwm = 10;
-	volatile uint8_t bpm = 30;
+	volatile uint8_t basePwm = 10; // divided by ten to have a wait delay higher than 1ms
+	volatile uint8_t bpm = 30;     // must multiply by ten in heart.shine();
 	volatile uint8_t P = 80;
 	volatile uint8_t Q = 0;
 	volatile uint8_t R = 255;
-	volatile uint32_t waitDelay = 0;
-	volatile uint8_t i = 0;
+	// volatile uint16_t waitDelay = 0;
+	// volatile uint8_t i = 0;
 
 	while (TRUE) {
-				heart.shine(basePwm, 0, 0);
+
+		heart.shine(basePwm, 0, 0);
 		chThdSleepMilliseconds(40/2);
 		heart.shine(P/2, 0, 0);
 		chThdSleepMilliseconds(40/2);
@@ -77,7 +78,7 @@ static msg_t SensorsThread(void *arg) {
 	systime_t time = chTimeNow();
 
 	while (TRUE) {
-		time += MS2ST(10000);
+		time += MS2ST(100);
 		sensors.read();
 		chSemSignal(&sens);
 		chThdSleepUntil(time);
@@ -94,7 +95,7 @@ static msg_t OutputThread(void *arg) {
 
 	while (TRUE) {
 		chSemWait(&sens);
-		sensors.sendJson();
+		sensors.debug();
 	}
 	return 0;
 }
@@ -103,10 +104,10 @@ static msg_t OutputThread(void *arg) {
 void chSetup() {
 
 	chThdCreateStatic(waSensorsThread, sizeof(waSensorsThread),
-		NORMALPRIO, SensorsThread, NULL);
+		NORMALPRIO+2, SensorsThread, NULL);
 
 	chThdCreateStatic(waOutputThread, sizeof(waOutputThread),
-		NORMALPRIO, OutputThread, NULL);
+		NORMALPRIO+1, OutputThread, NULL);
 
 	chThdCreateStatic(waHeartThread, sizeof(waHeartThread),
 		NORMALPRIO, HeartThread, NULL);
