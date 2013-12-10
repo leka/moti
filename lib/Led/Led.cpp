@@ -109,46 +109,50 @@ void Led::shine(uint8_t red, uint8_t green, uint8_t blue){
  * @brief Fade led between two colors
  *
  * @param duration        duration of the fading, should be a multiple of 10
- * @param startRedValue
- * @param endRedValue
- * @param startGreenValue
- * @param endGreenValue
- * @param startBlueValue
- * @param endBlueValue
+ * @param redStartValue
+ * @param redEndValue
+ * @param greenStartValue
+ * @param greenEndValue
+ * @param blueStartValue
+ * @param blueEndValue
  */
-void Led::fade(uint16_t duration, uint8_t startRedValue, uint8_t endRedValue,
-								 uint8_t startGreenValue, uint8_t endGreenValue,
-								 uint8_t startBlueValue, uint8_t endBlueValue){
+void Led::fade(uint16_t duration, uint8_t redStartValue, uint8_t redEndValue,
+								 uint8_t greenStartValue, uint8_t greenEndValue,
+								 uint8_t blueStartValue, uint8_t blueEndValue){
 
-	int16_t redSteps = sabs16(endRedValue - startRedValue);
-	int16_t greenSteps = sabs16(endGreenValue - startGreenValue);
-	int16_t blueSteps = sabs16(endBlueValue - startBlueValue);
+	uint8_t redDiff = sabs16(redEndValue - redStartValue);
+	uint8_t greenDiff = sabs16(greenEndValue - greenStartValue);
+	uint8_t blueDiff = sabs16(blueEndValue - blueStartValue);
 
 	uint8_t redValue, greenValue, blueValue;
 
-	shine(startRedValue, startGreenValue, startBlueValue);
+	shine(redStartValue, greenStartValue, blueStartValue);
 
 	for (uint8_t i = 0 ; i <= duration / 10 ; i++) {
 		chThdSleepMilliseconds(10);
 
-		if (startRedValue < endRedValue) {
-			redValue = startRedValue + redSteps * i / (duration / 10);
-		}
-		else {
-			redValue = startRedValue - redSteps * i / (duration / 10);
-		}
-		if (startGreenValue < endGreenValue) {
-			greenValue = startGreenValue + greenSteps * i / (duration / 10);
-		}
-		else {
-			greenValue = startGreenValue + greenSteps * ((duration / 10) - i) / (duration / 10);
-		}
-		if (startBlueValue < endBlueValue) {
-			blueValue = startBlueValue + blueSteps * i / (duration / 10);
-		}
-		else {
-			blueValue = endBlueValue - blueSteps * i / (duration / 10);
-		}
+		redValue = sabs16(redStartValue - (redDiff * i / (duration / 10)));
+		greenValue = sabs16(greenStartValue - (greenDiff * i / (duration / 10)));
+		blueValue = sabs16(blueStartValue - (blueDiff * i / (duration / 10)));
+
+		// if (redStartValue < redEndValue) {
+		// 	redValue = redStartValue + redDiff * i / (duration / 10);
+		// }
+		// else {
+		// 	redValue = redStartValue - redDiff * i / (duration / 10);
+		// }
+		// if (greenStartValue < greenEndValue) {
+		// 	greenValue = greenStartValue + greenDiff * i / (duration / 10);
+		// }
+		// else {
+		// 	greenValue = greenStartValue + greenDiff * ((duration / 10) - i) / (duration / 10);
+		// }
+		// if (blueStartValue < blueEndValue) {
+		// 	blueValue = blueStartValue + blueDiff * i / (duration / 10);
+		// }
+		// else {
+		// 	blueValue = blueEndValue - blueDiff * i / (duration / 10);
+		// }
 		serial.print("red: ");
 		serial.print(redValue);
 		serial.print(" green: ");
@@ -158,7 +162,7 @@ void Led::fade(uint16_t duration, uint8_t startRedValue, uint8_t endRedValue,
 		shine(redValue, greenValue, blueValue);
 	}
 
-	shine(endRedValue, endGreenValue, endBlueValue);
+	shine(redEndValue, greenEndValue, blueEndValue);
 }
 
 /**
@@ -169,18 +173,18 @@ void Led::fade(uint16_t duration, uint8_t startRedValue, uint8_t endRedValue,
  */
 void Led::fade(uint16_t duration, ColorName startColor, ColorName endColor){
 	colorSwitcher(startColor);
-	uint8_t startRedValue = getRgb(red);
-	uint8_t startGreenValue = getRgb(green);
-	uint8_t startBlueValue = getRgb(blue);
+	uint8_t redStartValue = getRgb(red);
+	uint8_t greenStartValue = getRgb(green);
+	uint8_t blueStartValue = getRgb(blue);
 
 	colorSwitcher(endColor);
-	uint8_t endRedValue = getRgb(red);
-	uint8_t endGreenValue = getRgb(green);
-	uint8_t endBlueValue = getRgb(blue);
+	uint8_t redEndValue = getRgb(red);
+	uint8_t greenEndValue = getRgb(green);
+	uint8_t blueEndValue = getRgb(blue);
 
-	fade(duration, startRedValue, endRedValue,
-				   startGreenValue,  endGreenValue,
-				   startBlueValue,  endBlueValue);
+	fade(duration, redStartValue, redEndValue,
+				   greenStartValue,  greenEndValue,
+				   blueStartValue,  blueEndValue);
 }
 
 /**
