@@ -3,6 +3,8 @@
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
 
+#include "Serial.h"
+
 #include "Led.h"
 
 Led heart = Led(11, 12, 13);
@@ -14,23 +16,12 @@ static WORKING_AREA(waSerialThread, 260);
 
 static msg_t LedThread(void *arg) {
 
+	(void) arg;
+
 	while (TRUE) {
-		// serial.println("led start");
-		// heart.shine(RAND);
-		// chThdSleepMilliseconds(500);
-		// chSemSignal(&output);
-		// chThdSleepMilliseconds(500);
-		// serial.println("led end");
-		//
 
-		for (int i = 0; i < 255; i++) {
-			heart.shine(i, 0, 0);
+		heart.fade(1200, 50, 0, 100, 0, 150, 0);
 
-			// chThdSleepMicroseconds(1);
-			delay(1);
-		}
-
-		heart.turnOff();
 		chThdSleepMilliseconds(2000);
 
 	}
@@ -40,14 +31,14 @@ static msg_t LedThread(void *arg) {
 static msg_t SerialThread(void *arg) {
 
 	while (TRUE) {
-		chSemWait(&output);
-		serial.print("red : ");
-		serial.println(heart.getRgb(0));
-		serial.print("green : ");
-		serial.println(heart.getRgb(1));
-		serial.print("blue : ");
-		serial.println(heart.getRgb(2));
-		heart.turnOff();
+		// chSemWait(&output);
+		// serial.print("red : ");
+		// serial.println(heart.getRgb(0));
+		// serial.print("green : ");
+		// serial.println(heart.getRgb(1));
+		// serial.print("blue : ");
+		// serial.println(heart.getRgb(2));
+		// heart.turnOff();
 	}
 	return 0;
 }
