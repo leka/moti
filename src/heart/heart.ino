@@ -16,41 +16,25 @@ static msg_t HeartThread(void *arg) {
 
 	volatile uint8_t basePwm = 10; // divided by ten to have a wait delay higher than 1ms
 	volatile uint8_t bpm = 30;     // must multiply by ten in heart.shine();
-	volatile uint8_t P = 80;
+	volatile uint8_t P = 70;
 	volatile uint8_t Q = 0;
 	volatile uint8_t R = 255;
 	// volatile uint16_t waitDelay = 0;
 	// volatile uint8_t i = 0;
 
 	while (TRUE) {
+		heart.fade(50, basePwm, P, 0, 0, 0, 0);
+		heart.fade(50, P, basePwm, 0, 0, 0, 0);
 
 		heart.shine(basePwm, 0, 0);
-		chThdSleepMilliseconds(40/2);
-		heart.shine(P/2, 0, 0);
-		chThdSleepMilliseconds(40/2);
-		heart.shine(P, 0, 0);
-		chThdSleepMilliseconds(40/2);
-		heart.shine(P/2, 0, 0);
-		chThdSleepMilliseconds(40/2);
+		chThdSleepMilliseconds(80);
 
-		heart.shine(basePwm, 0, 0);
-		chThdSleepMilliseconds(60);
+		// heart.fade(20, basePwm, Q, 0, 0, 0, 0);
+		heart.fade(60, Q, R, 0, 0, 0, 0);
+		heart.fade(100, R, Q, 0, 0, 0, 0);
+		// heart.fade(20, Q, basePwm, 0, 0, 0, 0);
 
-		heart.shine(basePwm, 0, 0);
-		chThdSleepMilliseconds(30/2);
-		heart.shine(Q/2, 0, 0);
-		chThdSleepMilliseconds(30/2);
-		heart.shine(Q, 0, 0);
-		chThdSleepMilliseconds(30/2);
-		heart.shine(R/2, 0, 0);
-		chThdSleepMilliseconds(30/2);
-		heart.shine(R, 0, 0);
-		chThdSleepMilliseconds(30/2);
-		heart.shine(Q/2, 0, 0);
-		chThdSleepMilliseconds(30/2);
-		heart.shine(Q, 0, 0);
-		chThdSleepMilliseconds(20);
-
+		// heart.fade(40, RAND, RAND);
 		heart.shine(basePwm, 0, 0);
 
 		chThdSleepMilliseconds(30000/ bpm);
