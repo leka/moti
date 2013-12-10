@@ -19,20 +19,20 @@ For us, the answer is an absolute YES! We want people to be able to look at our 
 
 ### Global
 
-*	make this project more collaborative :)
+*	~~make this project more collaborative~~ - DONE :)
 *	implement a real list of all the tasks we need to do to make the robot work!
 
 ### Sensors
 
 *	~~integrate the new version of FreeIMU~~ - DONE
-*	make the appropriate changes to get rid of all the useless libs
+*	~~make the appropriate changes to get rid of all the useless libs~~ - DONE
 *	implement the sensor analyser to find pattern in the sensors' data
 *	compute moving average
 *	compute square value
 
 ### Motors
 
-*	separate de Motors Class in 2 clases: Motor et DriveSystem to better separate concerns
+*	~~separate de Motors Class in 2 clases: Motor et DriveSystem to better separate concerns~~ - DONE
 *	~~unit test motor class~~ - DONE
 *	test for minimum motor speed
 *	use sensors data for `spinRight` and `spinLeft`
@@ -48,7 +48,7 @@ For us, the answer is an absolute YES! We want people to be able to look at our 
 
 ### Moti
 
-*	try and implement a RTOS using ChibiOS or NilRTOS
+*	~~try and implement a RTOS using ChibiOS or NilRTOS~~ - DONE - ChibiOS has been chosen and is up and running
 
 ### Hardware
 
@@ -105,33 +105,20 @@ Thanks to Github, the best way to help us is by `forking` the project, coding an
 We will only accept direct merging of pull request, so make sure your code is OK for that.
 
 
-##Known Issues
-
-None yet.
-
-
-##TODO
-
-*	Document the code
-*	Generate documentation with Doxygen
-
-
 ##Copyright and License
 
-    Moti, a free, as in speech, robotic spherical mobile robot for children with autism.
-    Copyright (C) {2013}  Ladislas de toldi (ladislas at weareleka dot com)
+Moti, a free, as in speech, robotic spherical mobile robot for children with autism.
+Copyright (C) {2013}  Ladislas de toldi (ladislas at weareleka dot com)
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see [http://www.gnu.org/licenses/].
-
-
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see [http://www.gnu.org/licenses/].
