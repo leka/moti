@@ -65,6 +65,7 @@ void Led::setRgb(uint8_t redValue, uint8_t greenValue, uint8_t blueValue){
 	chMtxUnlock();
 }
 
+
 /**
  * @brief Getter method to get the value of red, green or blue
  * @param index 0, 1 or 2 for red, green or blue.
@@ -104,6 +105,17 @@ void Led::shine(uint8_t red, uint8_t green, uint8_t blue){
 	shine();
 }
 
+/**
+ * @brief Fade led between two colors
+ *
+ * @param duration        duration of the fading
+ * @param startRedValue
+ * @param endRedValue
+ * @param startGreenValue
+ * @param endGreenValue
+ * @param startBlueValue
+ * @param endBlueValue
+ */
 void Led::fade(uint8_t duration, uint8_t startRedValue, uint8_t endRedValue,
 								 uint8_t startGreenValue, uint8_t endGreenValue,
 								 uint8_t startBlueValue, uint8_t endBlueValue){
@@ -115,6 +127,28 @@ void Led::fade(uint8_t duration, uint8_t startRedValue, uint8_t endRedValue,
 			  abs(endGreenValue - startGreenValue) * i / duration,
 			  abs(endBlueValue - startBlueValue) * i / duration);
 	}
+}
+
+/**
+ * @brief Fade led between two colors
+ * @param duration   duration of the transition
+ * @param startColor
+ * @param endColor
+ */
+void Led::fade(uint8_t duration, ColorName startColor, ColorName endColor){
+	colorSwitcher(startColor);
+	uint8_t startRedValue = getRgb(red);
+	uint8_t startGreenValue = getRgb(green);
+	uint8_t startBlueValue = getRgb(blue);
+
+	colorSwitcher(endColor);
+	uint8_t endRedValue = getRgb(red);
+	uint8_t endGreenValue = getRgb(green);
+	uint8_t endBlueValue = getRgb(blue);
+
+	fade(duration, startRedValue, endRedValue,
+				   startGreenValue,  endGreenValue,
+				   startBlueValue,  endBlueValue);
 }
 
 /**
