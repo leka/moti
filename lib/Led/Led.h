@@ -9,6 +9,8 @@
 
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
+#include "Tools.h"
+#include "Serial.h"
 
 enum ColorName {
 	BLACK, WHITE, RED_PURE, GREEN_PURE, BLUE_PURE, DARK_RED, RED, LIGHT_RED,
@@ -45,10 +47,10 @@ class Led {
 		void shine() const;
 		void shine(ColorName color);
 		void shine(uint8_t red, uint8_t green, uint8_t blue);
-		void fade(uint8_t duration = 40, uint8_t startRedValue = 0, uint8_t endRedValue = 255,
-										 uint8_t startGreenValue = 0, uint8_t endGreenValue = 255,
-										 uint8_t startBlueValue = 0, uint8_t endBlueValue = 255);
-		void fade(uint8_t duration, ColorName startColor, ColorName endColor);
+		void fade(uint16_t duration = 40, uint8_t startRedValue = 0, uint8_t endRedValue = 0,
+										 uint8_t startGreenValue = 0, uint8_t endGreenValue = 0,
+										 uint8_t startBlueValue = 0, uint8_t endBlueValue = 0);
+		void fade(uint16_t duration, ColorName startColor, ColorName endColor);
 		void turnOff();
 
 	private:

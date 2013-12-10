@@ -108,7 +108,7 @@ void Led::shine(uint8_t red, uint8_t green, uint8_t blue){
 /**
  * @brief Fade led between two colors
  *
- * @param duration        duration of the fading
+ * @param duration        duration of the fading, should be a multiple of 10
  * @param startRedValue
  * @param endRedValue
  * @param startGreenValue
@@ -116,17 +116,49 @@ void Led::shine(uint8_t red, uint8_t green, uint8_t blue){
  * @param startBlueValue
  * @param endBlueValue
  */
-void Led::fade(uint8_t duration, uint8_t startRedValue, uint8_t endRedValue,
+void Led::fade(uint16_t duration, uint8_t startRedValue, uint8_t endRedValue,
 								 uint8_t startGreenValue, uint8_t endGreenValue,
 								 uint8_t startBlueValue, uint8_t endBlueValue){
 
+	int16_t redSteps = sabs16(endRedValue - startRedValue);
+	int16_t greenSteps = sabs16(endGreenValue - startGreenValue);
+	int16_t blueSteps = sabs16(endBlueValue - startBlueValue);
+
+	uint8_t redValue, greenValue, blueValue;
+
 	shine(startRedValue, startGreenValue, startBlueValue);
-	for (uint8_t i = 0 ; i < duration ; i++) {
-		chThdSleepMilliseconds(1);
-		shine(abs(endRedValue - startRedValue) * i / duration,
-			  abs(endGreenValue - startGreenValue) * i / duration,
-			  abs(endBlueValue - startBlueValue) * i / duration);
+
+	for (uint8_t i = 0 ; i <= duration / 10 ; i++) {
+		chThdSleepMilliseconds(10);
+
+		if (startRedValue < endRedValue) {
+			redValue = startRedValue + redSteps * i / (duration / 10);
+		}
+		else {
+			redValue = startRedValue - redSteps * i / (duration / 10);
+		}
+		if (startGreenValue < endGreenValue) {
+			greenValue = startGreenValue + greenSteps * i / (duration / 10);
+		}
+		else {
+			greenValue = startGreenValue + greenSteps * ((duration / 10) - i) / (duration / 10);
+		}
+		if (startBlueValue < endBlueValue) {
+			blueValue = startBlueValue + blueSteps * i / (duration / 10);
+		}
+		else {
+			blueValue = endBlueValue - blueSteps * i / (duration / 10);
+		}
+		serial.print("red: ");
+		serial.print(redValue);
+		serial.print(" green: ");
+		serial.print(greenValue);
+		serial.print(" blue: ");
+		serial.println(blueValue);
+		shine(redValue, greenValue, blueValue);
 	}
+
+	shine(endRedValue, endGreenValue, endBlueValue);
 }
 
 /**
@@ -135,7 +167,7 @@ void Led::fade(uint8_t duration, uint8_t startRedValue, uint8_t endRedValue,
  * @param startColor
  * @param endColor
  */
-void Led::fade(uint8_t duration, ColorName startColor, ColorName endColor){
+void Led::fade(uint16_t duration, ColorName startColor, ColorName endColor){
 	colorSwitcher(startColor);
 	uint8_t startRedValue = getRgb(red);
 	uint8_t startGreenValue = getRgb(green);
