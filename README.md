@@ -109,7 +109,7 @@ We will only accept direct merging of pull request, so make sure your code is OK
 
 Moti, a free, as in speech, robotic spherical mobile robot for children with autism.
 
-Copyright (C) 2013 Ladislas de toldi (ladislas at weareleka dot com)
+Copyright (C) 2013 Ladislas de Toldi (ladislas at weareleka dot com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
