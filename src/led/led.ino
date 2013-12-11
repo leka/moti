@@ -4,6 +4,7 @@
 #include "ChibiOS_AVR.h"
 
 #include "Serial.h"
+#include "Tools.h"
 
 #include "Led.h"
 
@@ -30,6 +31,7 @@ static msg_t LedThread(void *arg) {
 
 static msg_t SerialThread(void *arg) {
 
+	(void) arg;
 	while (TRUE) {
 		// chSemWait(&output);
 		// serial.print("red : ");
