@@ -24,7 +24,6 @@ static msg_t LedThread(void *arg) {
 		heart.fade(1200, 50, 0, 100, 0, 150, 0);
 
 		chThdSleepMilliseconds(2000);
-
 	}
 	return 0;
 }
