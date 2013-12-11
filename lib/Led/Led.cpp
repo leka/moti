@@ -116,50 +116,26 @@ void Led::shine(uint8_t red, uint8_t green, uint8_t blue){
  * @param blueStartValue
  * @param blueEndValue
  */
-void Led::fade(uint16_t duration, uint8_t redStartValue, uint8_t redEndValue,
+void Led::fade(int16_t duration, uint8_t redStartValue, uint8_t redEndValue,
 								 uint8_t greenStartValue, uint8_t greenEndValue,
 								 uint8_t blueStartValue, uint8_t blueEndValue){
 
-	uint8_t redDiff = sabs16(redEndValue - redStartValue);
-	uint8_t greenDiff = sabs16(greenEndValue - greenStartValue);
-	uint8_t blueDiff = sabs16(blueEndValue - blueStartValue);
+	int16_t redDiff = redEndValue - redStartValue;
+	int16_t greenDiff = greenEndValue - greenStartValue;
+	int16_t blueDiff = blueEndValue - blueStartValue;
 
-	uint8_t redValue, greenValue, blueValue;
+	int16_t delayValue = 10;
 
-	shine(redStartValue, greenStartValue, blueStartValue);
+	int16_t redValue, greenValue, blueValue;
 
-	for (uint8_t i = 0 ; i <= duration / 10 ; i++) {
-		chThdSleepMilliseconds(10);
+	for (int16_t i = 0 ; i <= duration / delayValue ; i++) {
 
-		redValue = sabs16(redStartValue - (redDiff * i / (duration / 10)));
-		greenValue = sabs16(greenStartValue - (greenDiff * i / (duration / 10)));
-		blueValue = sabs16(blueStartValue - (blueDiff * i / (duration / 10)));
+		redValue = redStartValue + (redDiff * i / (duration / delayValue));
+		greenValue = greenStartValue + (greenDiff * i / (duration / delayValue));
+		blueValue = blueStartValue + (blueDiff * i / (duration / delayValue));
 
-		// if (redStartValue < redEndValue) {
-		// 	redValue = redStartValue + redDiff * i / (duration / 10);
-		// }
-		// else {
-		// 	redValue = redStartValue - redDiff * i / (duration / 10);
-		// }
-		// if (greenStartValue < greenEndValue) {
-		// 	greenValue = greenStartValue + greenDiff * i / (duration / 10);
-		// }
-		// else {
-		// 	greenValue = greenStartValue + greenDiff * ((duration / 10) - i) / (duration / 10);
-		// }
-		// if (blueStartValue < blueEndValue) {
-		// 	blueValue = blueStartValue + blueDiff * i / (duration / 10);
-		// }
-		// else {
-		// 	blueValue = blueEndValue - blueDiff * i / (duration / 10);
-		// }
-		serial.print("red: ");
-		serial.print(redValue);
-		serial.print(" green: ");
-		serial.print(greenValue);
-		serial.print(" blue: ");
-		serial.println(blueValue);
-		shine(redValue, greenValue, blueValue);
+		shine((uint8_t)redValue, (uint8_t)greenValue, (uint8_t)blueValue);
+		chThdSleepMilliseconds(delayValue);
 	}
 
 	shine(redEndValue, greenEndValue, blueEndValue);
