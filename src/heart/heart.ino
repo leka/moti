@@ -20,8 +20,6 @@ static msg_t HeartThread(void *arg) {
 	volatile uint8_t P = 70;
 	volatile uint8_t Q = 0;
 	volatile uint8_t R = 255;
-	// volatile uint16_t waitDelay = 0;
-	// volatile uint8_t i = 0;
 
 	while (TRUE) {
 		heart.fade(40, basePwm, P, 0, 0, 0, 0);
@@ -30,13 +28,8 @@ static msg_t HeartThread(void *arg) {
 		heart.shine(basePwm, 0, 0);
 		chThdSleepMilliseconds(80);
 
-		// heart.fade(20, basePwm, Q, 0, 0, 0, 0);
 		heart.fade(60, Q, R, 0, 0, 0, 0);
-		heart.fade(70, R, Q, 0, 0, 0, 0);
-		// heart.fade(20, Q, basePwm, 0, 0, 0, 0);
-
-		// heart.fade(40, RAND, RAND);
-		heart.shine(basePwm, 0, 0);
+		heart.fade(70, R, basePwm, 0, 0, 0, 0);
 
 		chThdSleepMilliseconds(30000/ bpm);
 	}
