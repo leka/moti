@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
 #include "Serial.h"
+#include "Tools.h"
 
 #include "Led.h"
 
@@ -23,15 +24,15 @@ static msg_t HeartThread(void *arg) {
 	// volatile uint8_t i = 0;
 
 	while (TRUE) {
-		heart.fade(50, basePwm, P, 0, 0, 0, 0);
-		heart.fade(50, P, basePwm, 0, 0, 0, 0);
+		heart.fade(40, basePwm, P, 0, 0, 0, 0);
+		heart.fade(40, P, basePwm, 0, 0, 0, 0);
 
 		heart.shine(basePwm, 0, 0);
 		chThdSleepMilliseconds(80);
 
 		// heart.fade(20, basePwm, Q, 0, 0, 0, 0);
 		heart.fade(60, Q, R, 0, 0, 0, 0);
-		heart.fade(100, R, Q, 0, 0, 0, 0);
+		heart.fade(70, R, Q, 0, 0, 0, 0);
 		// heart.fade(20, Q, basePwm, 0, 0, 0, 0);
 
 		// heart.fade(40, RAND, RAND);
