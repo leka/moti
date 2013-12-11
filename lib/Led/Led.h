@@ -50,7 +50,7 @@ class Led {
 		void fade(int16_t duration = 40, uint8_t startRedValue = 0, uint8_t endRedValue = 0,
 										 uint8_t startGreenValue = 0, uint8_t endGreenValue = 0,
 										 uint8_t startBlueValue = 0, uint8_t endBlueValue = 0);
-		void fade(uint16_t duration, ColorName startColor, ColorName endColor);
+		void fade(int16_t duration, ColorName startColor, ColorName endColor);
 		void turnOff();
 
 	private:

@@ -134,7 +134,7 @@ void Led::fade(int16_t duration, uint8_t redStartValue, uint8_t redEndValue,
 		greenValue = greenStartValue + (greenDiff * i / (duration / delayValue));
 		blueValue = blueStartValue + (blueDiff * i / (duration / delayValue));
 
-		shine((uint8_t)redValue, (uint8_t)greenValue, (uint8_t)blueValue);
+		shine(redValue, greenValue, blueValue);
 		chThdSleepMilliseconds(delayValue);
 	}
 
@@ -147,7 +147,7 @@ void Led::fade(int16_t duration, uint8_t redStartValue, uint8_t redEndValue,
  * @param startColor
  * @param endColor
  */
-void Led::fade(uint16_t duration, ColorName startColor, ColorName endColor){
+void Led::fade(int16_t duration, ColorName startColor, ColorName endColor){
 	colorSwitcher(startColor);
 	uint8_t redStartValue = getRgb(red);
 	uint8_t greenStartValue = getRgb(green);
