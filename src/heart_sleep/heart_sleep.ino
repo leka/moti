@@ -20,7 +20,7 @@ static msg_t HeartThread(void *arg) {
 	volatile uint8_t bpm = 15;     // must multiply by ten in heart.shine();
 	volatile uint8_t P = 70;
 	volatile uint8_t Q = 0;
-	volatile uint8_t R = 255;
+	volatile uint8_t R = 150;
 
 	while (TRUE) {
 		heart.fade(40, basePwm, P, 0, 0, 0, 0);
@@ -45,7 +45,7 @@ static msg_t SleepThread(void *arg) {
 
 	volatile uint8_t basePwm = 0; // divided by ten to have a wait delay higher than 1ms
 	volatile uint8_t bpm = 35;     // must multiply by ten in heart.shine();
-	volatile uint8_t R = 240;
+	volatile uint8_t R = 250;
 
 	while (TRUE) {
 
