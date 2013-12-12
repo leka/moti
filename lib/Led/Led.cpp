@@ -116,23 +116,23 @@ void Led::shine(uint8_t red, uint8_t green, uint8_t blue){
  * @param blueStartValue
  * @param blueEndValue
  */
-void Led::fade(int16_t duration, uint8_t redStartValue, uint8_t redEndValue,
-								 uint8_t greenStartValue, uint8_t greenEndValue,
-								 uint8_t blueStartValue, uint8_t blueEndValue){
+void Led::fade(uint16_t duration, uint8_t redStartValue, uint8_t redEndValue,
+								  uint8_t greenStartValue, uint8_t greenEndValue,
+								  uint8_t blueStartValue, uint8_t blueEndValue){
 
 	int16_t redDiff = redEndValue - redStartValue;
 	int16_t greenDiff = greenEndValue - greenStartValue;
 	int16_t blueDiff = blueEndValue - blueStartValue;
 
-	int16_t delayValue = 10;
+	uint8_t delayValue = 10;
 
 	int16_t redValue, greenValue, blueValue;
 
-	for (int16_t i = 0 ; i <= duration / delayValue ; i++) {
+	for (int16_t i = 0 ; i < duration / delayValue - 1; i++) {
 
-		redValue = redStartValue + (redDiff * i / (duration / delayValue));
-		greenValue = greenStartValue + (greenDiff * i / (duration / delayValue));
-		blueValue = blueStartValue + (blueDiff * i / (duration / delayValue));
+		redValue = (int16_t)redStartValue + (redDiff * i / ((int16_t)duration / (int16_t)delayValue));
+		greenValue = (int16_t)greenStartValue + (greenDiff * i / ((int16_t)duration / (int16_t)delayValue));
+		blueValue = (int16_t)blueStartValue + (blueDiff * i / ((int16_t)duration / (int16_t)delayValue));
 
 		shine(redValue, greenValue, blueValue);
 		chThdSleepMilliseconds(delayValue);
@@ -147,7 +147,7 @@ void Led::fade(int16_t duration, uint8_t redStartValue, uint8_t redEndValue,
  * @param startColor
  * @param endColor
  */
-void Led::fade(int16_t duration, ColorName startColor, ColorName endColor){
+void Led::fade(uint16_t duration, ColorName startColor, ColorName endColor){
 	colorSwitcher(startColor);
 	uint8_t redStartValue = getRgb(red);
 	uint8_t greenStartValue = getRgb(green);

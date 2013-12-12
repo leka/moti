@@ -20,12 +20,7 @@ static msg_t LedThread(void *arg) {
 	(void) arg;
 
 	while (TRUE) {
-		heart.fade(2000, BLACK, RED_PURE);
-		heart.fade(2000, RED_PURE, GREEN_PURE);
-		heart.fade(2000, GREEN_PURE, BLUE);
-		heart.fade(2000, BLUE, BLACK);
-
-		chThdSleepMilliseconds(100);
+		heart.fade(50, RAND, RAND);
 	}
 	return 0;
 }

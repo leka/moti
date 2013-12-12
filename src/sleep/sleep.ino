@@ -15,9 +15,9 @@ static msg_t SleepThread(void *arg) {
 
 	(void)arg;
 
-	volatile uint8_t basePwm = 0; // divided by ten to have a wait delay higher than 1ms
+	volatile uint8_t basePwm = 5; // divided by ten to have a wait delay higher than 1ms
 	volatile uint8_t bpm = 35;     // must multiply by ten in heart.shine();
-	volatile uint8_t R = 240;
+	volatile uint8_t R = 255;
 
 	while (TRUE) {
 
