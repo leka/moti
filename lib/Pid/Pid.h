@@ -20,41 +20,41 @@ class Pid {
 
 		void setOutputLimits(double minLimit, double maxLimit);
 
-		void SetTunings(double Kp, double Ki, double Kd);
-		void SetControllerDirection(int);
-		void SetSampleTime(int);
+		void setTunings(double Kp, double Ki, double Kd);
+		void setControllerDirection(int);
+		void setSampleTime(int);
 
 
-		double GetKp();
-		double GetKi();
-		double GetKd();
-		int GetMode();
-		int GetDirection();
+		double getKp();
+		double getKi();
+		double getKd();
+		int getMode();
+		int getDirection();
 
 	private:
 
 		void Initialize();
 
-		double dispKp;				// * we'll hold on to the tuning parameters in user-entered
-		double dispKi;				//   format for display purposes
-		double dispKd;				//
+		double _dispKp;				// * we'll hold on to the tuning parameters in user-entered
+		double _dispKi;				//   format for display purposes
+		double _dispKd;				//
 
-		double kp;                  // * (P)roportional Tuning Parameter
-		double ki;                  // * (I)ntegral Tuning Parameter
-		double kd;                  // * (D)erivative Tuning Parameter
+		double _Kp;                  // * (P)roportional Tuning Parameter
+		double _Ki;                  // * (I)ntegral Tuning Parameter
+		double _Kd;                  // * (D)erivative Tuning Parameter
 
-		int controllerDirection;
+		int _controllerDirection;
 
-		double *myInput;              // * Pointers to the Input, Output, and Setpoint variables
-		double *myOutput;             //   This creates a hard link between the variables and the
-		double *mySetpoint;           //   PID, freeing the user from having to constantly tell us
+		double * _myInput;              // * Pointers to the Input, Output, and Setpoint variables
+		double * _myOutput;             //   This creates a hard link between the variables and the
+		double * _mySetpoint;           //   PID, freeing the user from having to constantly tell us
 									  //   what these values are.  with pointers we'll just know.
-		unsigned long lastTime;
-		double ITerm, lastInput;
+		unsigned long _lastTime;
+		double _ITerm, _lastInput;
 
-		unsigned long SampleTime;
-		double outMin, outMax;
-		bool inAuto;
+		unsigned long _sampleTime;
+		double _outMin, _outMax;
+		bool _inAuto;
 };
 
 #endif
