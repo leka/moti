@@ -3,12 +3,11 @@
 
 #include "Thread.h"
 
-static msg_t HeartThread(void *arg) {
+static msg_t HeartThreadFunction(void *arg) {
 
 	(void)arg;
 
-	volatile uint8_t basePwm = 10; // divided by ten to have a wait delay higher than 1ms
-	volatile uint8_t bpm = 15;     // must multiply by ten in heart.shine();
+	volatile uint8_t basePwm = 10; // divide by ten to have a wait delay higher than 1ms
 	volatile uint8_t P = 70;
 	volatile uint8_t Q = 0;
 	volatile uint8_t R = 150;

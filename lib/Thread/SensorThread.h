@@ -1,20 +1,20 @@
-// #define serial Serial
+#define serial Serial
 
-// #include <Arduino.h>
-// #include "ChibiOS_AVR.h"
+#include <Arduino.h>
+#include "ChibiOS_AVR.h"
 
-// #include "Thread.h"
+#include "Thread.h"
 
-// static msg_t SensorThread(void *arg) {
-// 	(void)arg;
+static msg_t SensorThreadFunction(void *arg) {
+	(void)arg;
 
-// 	systime_t time = chTimeNow();
+	systime_t nextTime = chTimeNow();
 
-// 	while (TRUE) {
-// 		time += MS2ST(100);
-// 		sensors.read();
-// 		chSemSignal(&SensorSem);
-// 		chThdSleepUntil(time);
-// 	}
-// 	return 0;
-// }
+	while (TRUE) {
+		nextTime += MS2ST(100);
+		sensors.read();
+		chSemSignal(&AnalyzerSem);
+		chThdSleepUntil(nextTime);
+	}
+	return 0;
+}

@@ -5,7 +5,7 @@
 
 // static WORKING_AREA(waSleepThread, 260);
 
-static msg_t SleepThread(void *arg) {
+static msg_t SleepThreadFunction(void *arg) {
 
 	(void)arg;
 
@@ -14,13 +14,12 @@ static msg_t SleepThread(void *arg) {
 	volatile uint8_t R = 250;
 
 	while (TRUE) {
-
+		chSemWait(&SleepSem);
 		sleep.fade(1300, 0, 0, 0, 0, basePwm, R);
-
 		sleep.fade(650, 0, 0, 0, 0, R, basePwm);
-
 		chThdSleepMilliseconds(30000/ bpm);
 	}
+
 	return 0;
 }
 

@@ -1,17 +1,26 @@
-// #define serial Serial
+#define serial Serial
 
-// #include <Arduino.h>
-// #include "ChibiOS_AVR.h"
+#include <Arduino.h>
+#include "ChibiOS_AVR.h"
 
-// #include "Thread.h"
+#include "Thread.h"
 
-// static msg_t AnalyzerThread(void *arg) {
-// 	(void)arg;
+static msg_t AnalyzerThreadFunction(void *arg) {
+	(void)arg;
 
-// 	while (TRUE) {
-// 		chSemWait(&SensorSem);
-// 		if (sensors.getXYZ(0) > 300) {
-// 			serial.println("ça marche!");
-// 		}
-// 	}
-// }
+	while (TRUE) {
+		chSemWait(&AnalyzerSem);
+
+		// are we at startup?
+		if (isStarting) {
+			isStarting = FALSE;
+			chSemSignal(&WakeUpSem);
+		}
+
+		// is x to high ?
+		if (sensors.getXYZ(0) > 300) {
+			chSemSignal(&ExploreSem);
+		}
+
+	}
+}
