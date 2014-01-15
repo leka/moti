@@ -10,16 +10,21 @@
 #include <Arduino.h>
 #include "Motor.h"
 
+	enum Direction {
+		BACK,
+		FORTH
+	};
+
+	enum SpinDirection {
+		RIGHT,
+		LEFT
+	};
+
 /**
  * @class DriveSystem
  * @brief DriveSystem gathers all the driving related functions such as going forward, backward, turning and spinning.
  */
 class DriveSystem {
-
-	enum Direction{
-		BACK,
-		FORTH
-	};
 
 	public:
 
@@ -27,7 +32,7 @@ class DriveSystem {
 
 		void go(bool direction = FORTH, uint8_t speed = DEFAULT_MAX_SPEED) const;
 
-		void spin(bool direction = FORTH, uint8_t speed = DEFAULT_MAX_SPEED) const;
+		void spin(bool spinDirection = RIGHT, uint8_t speed = DEFAULT_MAX_SPEED) const;
 
 		void turn(int16_t angle = 45, bool direction = FORTH, uint8_t speed = DEFAULT_MAX_SPEED) const;
 
@@ -44,7 +49,7 @@ class DriveSystem {
 
 		//	CONSTANTS
 		static const uint8_t DEFAULT_MIN_SPEED = 0;
-		static const uint8_t DEFAULT_MAX_SPEED = 255;
+		static const uint8_t DEFAULT_MAX_SPEED = 120;
 
 		//	MOTOR PINS
 		static const uint8_t DEFAULT_LEFT_MOTOR_SPEED_PIN      = 5;
