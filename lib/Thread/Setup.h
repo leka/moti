@@ -6,13 +6,14 @@
 
 // 	#include "Thread.h"
 #include "SleepThread.h"
+#include "HeartThread.h"
 
 void chSetup() {
 	chThdCreateStatic(waSleepThread, sizeof(waSleepThread),
 		NORMALPRIO, SleepThread, NULL);
 
-	// chThdCreateStatic(waHeartThread, sizeof(waHeartThread),
-	// 	NORMALPRIO, HeartThread, NULL);
+	chThdCreateStatic(waHeartThread, sizeof(waHeartThread),
+		NORMALPRIO, HeartThread, NULL);
 
 	// chThdCreateStatic(waSensorThread, sizeof(waSensorThread),
 	// 	NORMALPRIO, SensorThread, NULL);

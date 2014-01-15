@@ -3,7 +3,7 @@
 
 #include "Thread.h"
 
-static WORKING_AREA(waSleepThread, 260);
+// static WORKING_AREA(waSleepThread, 260);
 
 static msg_t SleepThread(void *arg) {
 
