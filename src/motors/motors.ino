@@ -14,6 +14,8 @@ static WORKING_AREA(waThread1, 1024);
 
 static msg_t Thread1(void *arg) {
 
+	(void)arg;
+
 	while (TRUE) {
 
 		serial.print(F("Unused Stack: "));
@@ -28,12 +30,12 @@ static msg_t Thread1(void *arg) {
 		right_motor.stop();
 		chThdSleepMilliseconds(2000);
 
-		right_motor.spin(1);
+		left_motor.spin(1);
 		chThdSleepMilliseconds(2000);
-		right_motor.spin(1, 100);
+		left_motor.spin(1, 100);
 		chThdSleepMilliseconds(2000);
 
-		right_motor.stop();
+		left_motor.stop();
 		chThdSleepMilliseconds(2000);
 
 	}
