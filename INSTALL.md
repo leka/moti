@@ -18,7 +18,6 @@ Have fun! :)
 
 ##Toolbox
 
-
 ###Basic
 
 To help us develop our product, you'll first need to install different softwares:
@@ -30,7 +29,6 @@ To help us develop our product, you'll first need to install different softwares
 
 With these softwares, you should be up and running and ready to hack autism with Moti!
 
-
 ###Advanced
 
 Okay, so you started with the Arduino IDE, you're now familiarized with the languages, you've already read and write something like a thousand lines of code and you would really love some new tools to speed up your coding and improve your coding experience. Here are some solutions for you that we, at Leka, are using on a daily basis with great pleasure!
@@ -39,7 +37,6 @@ Okay, so you started with the Arduino IDE, you're now familiarized with the lang
 *	[ST2 Package Controler](http://wbond.net/sublime_packages/package_control) - First start with this one! It will allow you to manage and install great packages. Follow the instruction provided by the link and you'll be good to go!
 *	[Arduino-like IDE](https://github.com/Robot-Will/Stino) - This package allow you to develop the Arduino code and upload it to your robot directly from within ST2. Everything is very well explained on their Github. If you are having some troubles, give us a call or contact them directly.
 *	[Sublime - Arduino](https://github.com/theadamlt/Sublime-Arduino) - This package is really usefull because it provides syntax highlighting for Arduino code!
-
 
 ##Installing, Updating & Removing
 
