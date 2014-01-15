@@ -17,19 +17,19 @@
 #include "Led.h"
 
 #include "Thread.h"
+#include "Setup.h"
 
 void setup() {
 	serial.begin(115200);
 	sensors.init();
 
-	for (int i = 5; i >= 0; --i)
-	{
-		serial.println(i);
-		delay(1000);
-	}
+	serial.println("System starting....\n\n");
+	delay(3000);
 
 	chBegin(chSetup);
+
 	while(1) {
+		// nothing to do here
 	}
 }
 
