@@ -11,36 +11,60 @@ static msg_t DriveThreadFunction(void *arg) {
 
 		chSemWait(&DriveSem);
 
-		// serial.println("Drive");
-
-		// driveSystem.stop();
-		// light.turnOff();
-
 		if (getBehavior() == WAKE_UP) {
-			// serial.println("Wake up movements start");
-			chThdSleepMilliseconds(2000);
-			// serial.println("Wake up movements end");
+			driveSystem.spin(RIGHT);
+			chThdSleepMilliseconds(1000);
+			driveSystem.spin(LEFT);
+			chThdSleepMilliseconds(1000);
+
+			driveSystem.stop();
+
 			setBehavior(EXPLORE);
 		}
-		else if (getBehavior() == EXPLORE) {
-			// serial.println("Explore movements start");
-			chThdSleepMilliseconds(5000);
-			// serial.println("Explore movements end");
-			setBehavior(WAITING);
-			_startWaitingTime = chTimeNow();
-		}
-		else if (getBehavior() == WAITING) {
+
+		if (getBehavior() == EXPLORE) {
+			driveSystem.go();
+			chThdSleepMilliseconds(1000);
+			driveSystem.turn(RIGHT);
+			chThdSleepMilliseconds(1000);
+			driveSystem.go();
+			chThdSleepMilliseconds(1000);
+			driveSystem.turn(LEFT);
+			chThdSleepMilliseconds(1000);
+			driveSystem.spin();
+			chThdSleepMilliseconds(200);
+			driveSystem.go();
+			chThdSleepMilliseconds(800);
+
 			driveSystem.stop();
+
+			chMtxLock(&WaitingTimeMutex);
+				_startWaitingTime = chTimeNow();
+			chMtxUnlock();
+
+			setBehavior(WAITING);
 		}
-		else if (getBehavior() == WANT_INTERACTION) {
-			// driveSystem.go();
-			// chThdSleepMilliseconds(300);
-			// driveSystem.go();
-			// chThdSleepMilliseconds(300);
-			// driveSystem.go();
-			// chThdSleepMilliseconds(300);
+
+		if (getBehavior() == WAITING) {
+			driveSystem.stop();
+			chThdSleepMilliseconds(1500);
 		}
-		else if (getBehavior() == SLEEP) {
+
+		if (getBehavior() == WANT_INTERACTION) {
+			driveSystem.go();
+			chThdSleepMilliseconds(300);
+			driveSystem.stop();
+			driveSystem.go();
+			chThdSleepMilliseconds(300);
+			driveSystem.stop();
+			driveSystem.go();
+			chThdSleepMilliseconds(300);
+			driveSystem.stop();
+
+			setBehavior(WAITING);
+		}
+
+		if (getBehavior() == SLEEP) {
 			driveSystem.stop();
 		}
 	}

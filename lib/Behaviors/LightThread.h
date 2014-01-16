@@ -16,42 +16,43 @@ static msg_t LightThreadFunction(void *arg) {
 		// light.turnOff();
 
 		if (getBehavior() == WAKE_UP) {
-			light.fade(400, BLUE, ORANGE);
-			light.fade(200, ORANGE, PURPLE);
-			light.fade(400, PURPLE, GREEN);
-			light.fade(200, GREEN, LIGHT_PINK);
-
-			chThdSleepMilliseconds(1000);
-
 			light.shine(RAND);
-			chThdSleepMilliseconds(150);
-			light.shine(RAND);
-			chThdSleepMilliseconds(150);
-			light.shine(RAND);
-			chThdSleepMilliseconds(150);
-			light.shine(RAND);
-
 			chThdSleepMilliseconds(400);
-
 			light.turnOff();
-
 			chThdSleepMilliseconds(400);
-
-			setBehavior(EXPLORE);
+			light.shine(RAND);
+			chThdSleepMilliseconds(400);
+			light.turnOff();
+			chThdSleepMilliseconds(400);
+			light.shine(RAND);
+			chThdSleepMilliseconds(400);
+			light.turnOff();
 		}
 
-		else if (getBehavior() == EXPLORE) {
+		if (getBehavior() == EXPLORE) {
+			light.fade(500, PURPLE, BLACK);
+			light.fade(500, BLACK, PURPLE);
+
+			light.fade(500, PURPLE, BLACK);
+			light.fade(500, BLACK, PURPLE);
+
+			light.fade(500, PURPLE, BLACK);
+			light.fade(500, BLACK, PURPLE);
+
+			light.fade(500, PURPLE, BLACK);
+			light.fade(500, BLACK, PURPLE);
+
 			light.fade(500, PURPLE, BLACK);
 			light.fade(500, BLACK, PURPLE);
 		}
 
-		else if (getBehavior() == WAITING) {
+		if (getBehavior() == WAITING) {
 			light.fade(500, RED_PURE, GREEN_PURE);
 			light.fade(500, GREEN_PURE, BLUE_PURE);
 			light.fade(500, BLUE_PURE, RED_PURE);
 		}
 
-		else if (getBehavior() == WANT_INTERACTION) {
+		if (getBehavior() == WANT_INTERACTION) {
 
 			light.fade(300, BLACK, ORANGE);
 			light.turnOff();
@@ -62,11 +63,12 @@ static msg_t LightThreadFunction(void *arg) {
 			light.fade(300, BLACK, ORANGE);
 			light.turnOff();
 
-			_numberOfCallsForInteraction++;
-			setBehavior(WAITING);
+			chMtxLock(&WaitingTimeMutex);
+				_numberOfCallsForInteraction++;
+			chMtxUnlock();
 		}
 
-		else if (getBehavior() == SLEEP) {
+		if (getBehavior() == SLEEP) {
 			// serial.println("Sleep light start");
 
 			volatile uint8_t basePwm = 0; // divided by ten to have a wait delay higher than 1ms

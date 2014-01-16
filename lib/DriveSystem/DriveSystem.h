@@ -37,7 +37,7 @@ class DriveSystem {
 		// TODO : is it really useful? shouldn't it be part of a dynamic behavior?
 		void turn(bool turnDirection = RIGHT, uint8_t speed = DEFAULT_MAX_SPEED) const;
 
-		void turn(int16_t angle = 45, bool direction = FORTH, uint8_t speed = DEFAULT_MAX_SPEED) const;
+		// void turn(int16_t angle = 45, bool direction = FORTH, uint8_t speed = DEFAULT_MAX_SPEED) const;
 
 		void stop() const;
 

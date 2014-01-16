@@ -10,27 +10,38 @@ static msg_t ArbitrerThreadFunction(void *arg) {
 
 	while (TRUE) {
 		chSemWait(&ArbitrerSem);
-		// serial.println("Arbitrer");
-		// serial.println(getBehavior());
+
+		serial.println(getBehavior());
+		serial.println(_elapsedWaintingTime);
 
 		if (sensors.getXYZ(2) > 450) {
 			setBehavior(EXPLORE);
 		}
 
-		else if (getBehavior() == WAITING) {
-			_elapsedWaintingTime = chTimeNow() - _startWaitingTime;
-			// serial.println(_elapsedWaintingTime);
-			// serial.println(_numberOfCallsForInteraction);
+		if (getBehavior() == WAITING) {
+			chMtxLock(&WaitingTimeMutex);
+				_elapsedWaintingTime = chTimeNow() - _startWaitingTime;
+			chMtxUnlock();
 		}
 
-		else if (getBehavior() == WAITING || _elapsedWaintingTime > 10000) {
+		if (_elapsedWaintingTime > 10000) {
 			setBehavior(WANT_INTERACTION);
-			_elapsedWaintingTime = 0;
+
+			chMtxLock(&WaitingTimeMutex);
+				_elapsedWaintingTime = 0;
+			chMtxUnlock();
 		}
 
-		else if (_numberOfCallsForInteraction > 2) {
+		if (getBehavior() == WANT_INTERACTION) {
+			setBehavior(WAITING);
+		}
+
+		if (_numberOfCallsForInteraction > 2) {
 			setBehavior(SLEEP);
-			_numberOfCallsForInteraction = 0;
+
+			chMtxLock(&WaitingTimeMutex);
+				_numberOfCallsForInteraction = 0;
+			chMtxUnlock();
 		}
 
 		chSemSignal(&DriveSem);

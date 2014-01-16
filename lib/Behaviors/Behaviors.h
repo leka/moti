@@ -34,6 +34,10 @@ SEMAPHORE_DECL(LightSem, 0);
 // SEMAPHORE_DECL(CallSem, 0);
 // SEMAPHORE_DECL(SleepSem, 0);
 
+//	MUTEXES
+MUTEX_DECL(BehaviorMutex);
+MUTEX_DECL(WaitingTimeMutex);
+
 //	THREADS
 // Thread * SensorThread;
 // Thread * ArbitrerThread;
@@ -56,18 +60,26 @@ volatile bool isWaiting = FALSE;
 volatile bool noInteractionForTooLong = FALSE;
 
 //	WORKING AREA
-static WORKING_AREA(waArbitrerThread, 1000);
-static WORKING_AREA(waHeartThread, 1000);
-static WORKING_AREA(waLightThread, 1000);
-static WORKING_AREA(waDriveThread, 1000);
-static WORKING_AREA(waSensorThread, 1000);
+static WORKING_AREA(waArbitrerThread, 50);
+static WORKING_AREA(waHeartThread, 50);
+static WORKING_AREA(waLightThread, 40);
+static WORKING_AREA(waDriveThread, 250);
+static WORKING_AREA(waSensorThread, 256);
 
 //	METHODS
 void setBehavior(Behaviors behavior) {
-	_behavior = behavior;
+	chMtxLock(&BehaviorMutex);
+		_behavior = behavior;
+	chMtxUnlock();
 }
 
 uint8_t getBehavior() {
 	return _behavior;
+}
+
+int freeRam () {
+  extern int __heap_start, *__brkval;
+  int v;
+  return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
 }
 #endif

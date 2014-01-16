@@ -70,6 +70,6 @@ void DriveSystem::turn(bool turnDirection, uint8_t speed) const {
 /*
  * @brief DriveSystem turn function
  */
-void DriveSystem::turn(int16_t angle, bool direction, uint8_t speed) const {
-	// nothing to do here until we check is usefulness of this method...
-}
+// void DriveSystem::turn(int16_t angle, bool direction, uint8_t speed) const {
+// 	// nothing to do here until we check is usefulness of this method...
+// }
