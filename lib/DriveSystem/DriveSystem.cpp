@@ -53,3 +53,9 @@ void DriveSystem::stop() const{
 	leftMotor.stop();
 }
 
+/*
+ * @brief DriveSystem turn function
+ */
+void DriveSystem::turn(int16_t angle, bool direction, uint8_t speed) const {
+	// nothing to do here until we check is usefulness of this method...
+}
