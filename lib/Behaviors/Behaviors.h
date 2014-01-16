@@ -49,9 +49,9 @@ MUTEX_DECL(WaitingTimeMutex);
 volatile uint8_t _bpm = 15;
 volatile systime_t _waitingTime = 0;
 volatile systime_t _startWaitingTime = 0;
-volatile systime_t _elapsedWaintingTime = 0;
+volatile uint32_t _elapsedWaintingTime = 0;
 volatile uint8_t _behavior = SLEEP;
-volatile uint8_t _numberOfCallsForInteraction = 0;
+// volatile uint8_t _numberOfCallsForInteraction = 0;
 
 //	STATES
 volatile bool isStarting = TRUE;
@@ -77,9 +77,4 @@ uint8_t getBehavior() {
 	return _behavior;
 }
 
-int freeRam () {
-  extern int __heap_start, *__brkval;
-  int v;
-  return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
-}
 #endif

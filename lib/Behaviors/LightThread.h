@@ -29,7 +29,8 @@ static msg_t LightThreadFunction(void *arg) {
 			light.turnOff();
 		}
 
-		if (getBehavior() == EXPLORE) {
+		else if (getBehavior() == EXPLORE) {
+			chThdSleepMilliseconds(2000);
 			light.fade(500, PURPLE, BLACK);
 			light.fade(500, BLACK, PURPLE);
 
@@ -46,13 +47,13 @@ static msg_t LightThreadFunction(void *arg) {
 			light.fade(500, BLACK, PURPLE);
 		}
 
-		if (getBehavior() == WAITING) {
+		else if (getBehavior() == WAITING) {
 			light.fade(500, RED_PURE, GREEN_PURE);
 			light.fade(500, GREEN_PURE, BLUE_PURE);
 			light.fade(500, BLUE_PURE, RED_PURE);
 		}
 
-		if (getBehavior() == WANT_INTERACTION) {
+		else if (getBehavior() == WANT_INTERACTION) {
 
 			light.fade(300, BLACK, ORANGE);
 			light.turnOff();
@@ -63,12 +64,12 @@ static msg_t LightThreadFunction(void *arg) {
 			light.fade(300, BLACK, ORANGE);
 			light.turnOff();
 
-			chMtxLock(&WaitingTimeMutex);
-				_numberOfCallsForInteraction++;
-			chMtxUnlock();
+			// chMtxLock(&WaitingTimeMutex);
+			// 	_numberOfCallsForInteraction++;
+			// chMtxUnlock();
 		}
 
-		if (getBehavior() == SLEEP) {
+		else if (getBehavior() == SLEEP) {
 			// serial.println("Sleep light start");
 
 			volatile uint8_t basePwm = 0; // divided by ten to have a wait delay higher than 1ms

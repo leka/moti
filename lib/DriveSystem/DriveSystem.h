@@ -52,7 +52,7 @@ class DriveSystem {
 
 		//	CONSTANTS
 		static const uint8_t DEFAULT_MIN_SPEED = 0;
-		static const uint8_t DEFAULT_MAX_SPEED = 120;
+		static const uint8_t DEFAULT_MAX_SPEED = 110;
 
 		//	MOTOR PINS
 		static const uint8_t DEFAULT_LEFT_MOTOR_SPEED_PIN      = 5;

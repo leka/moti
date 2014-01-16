@@ -22,7 +22,8 @@ static msg_t DriveThreadFunction(void *arg) {
 			setBehavior(EXPLORE);
 		}
 
-		if (getBehavior() == EXPLORE) {
+		else if (getBehavior() == EXPLORE) {
+			chThdSleepMilliseconds(2000);
 			driveSystem.go();
 			chThdSleepMilliseconds(1000);
 			driveSystem.turn(RIGHT);
@@ -45,12 +46,12 @@ static msg_t DriveThreadFunction(void *arg) {
 			setBehavior(WAITING);
 		}
 
-		if (getBehavior() == WAITING) {
+		else if (getBehavior() == WAITING) {
 			driveSystem.stop();
 			chThdSleepMilliseconds(1500);
 		}
 
-		if (getBehavior() == WANT_INTERACTION) {
+		else if (getBehavior() == WANT_INTERACTION) {
 			driveSystem.go();
 			chThdSleepMilliseconds(300);
 			driveSystem.stop();
@@ -64,7 +65,7 @@ static msg_t DriveThreadFunction(void *arg) {
 			setBehavior(WAITING);
 		}
 
-		if (getBehavior() == SLEEP) {
+		else if (getBehavior() == SLEEP) {
 			driveSystem.stop();
 		}
 	}

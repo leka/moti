@@ -16,9 +16,6 @@ static msg_t SensorThreadFunction(void *arg) {
 		chSemSignal(&ArbitrerSem);
 		chThdSleepUntil(nextTime);
 
-		serial.print(F("Free Ram: "));
-		serial.println(freeRam());
-
 		serial.print(F("Unused Stack Arbitrer: "));
 		serial.println(chUnusedStack(waArbitrerThread, sizeof(waArbitrerThread)));
 
