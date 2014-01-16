@@ -35,17 +35,19 @@ SEMAPHORE_DECL(LightSem, 0);
 // SEMAPHORE_DECL(SleepSem, 0);
 
 //	THREADS
-Thread * SensorThread;
-Thread * ArbitrerThread;
-Thread * HeartThread;
-Thread * LightThread;
-Thread * DriveThread;
+// Thread * SensorThread;
+// Thread * ArbitrerThread;
+// Thread * HeartThread;
+// Thread * LightThread;
+// Thread * DriveThread;
 
 //	VARIABLES
 volatile uint8_t _bpm = 15;
-volatile systime_t _elapsedTime = 0;
-volatile systime_t _startTime = 0;
+volatile systime_t _waitingTime = 0;
+volatile systime_t _startWaitingTime = 0;
+volatile systime_t _elapsedWaintingTime = 0;
 volatile uint8_t _behavior = SLEEP;
+volatile uint8_t _numberOfCallsForInteraction = 0;
 
 //	STATES
 volatile bool isStarting = TRUE;
@@ -54,11 +56,11 @@ volatile bool isWaiting = FALSE;
 volatile bool noInteractionForTooLong = FALSE;
 
 //	WORKING AREA
-static WORKING_AREA(waArbitrerThread, 260);
-static WORKING_AREA(waHeartThread, 260);
-static WORKING_AREA(waLightThread, 260);
-static WORKING_AREA(waDriveThread, 260);
-static WORKING_AREA(waSensorThread, 260);
+static WORKING_AREA(waArbitrerThread, 1000);
+static WORKING_AREA(waHeartThread, 1000);
+static WORKING_AREA(waLightThread, 1000);
+static WORKING_AREA(waDriveThread, 1000);
+static WORKING_AREA(waSensorThread, 1000);
 
 //	METHODS
 void setBehavior(Behaviors behavior) {

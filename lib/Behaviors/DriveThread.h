@@ -9,30 +9,39 @@ static msg_t DriveThreadFunction(void *arg) {
 
 	while (TRUE) {
 
+		chSemWait(&DriveSem);
+
+		// serial.println("Drive");
+
+		// driveSystem.stop();
+		// light.turnOff();
+
 		if (getBehavior() == WAKE_UP) {
-			serial.println("Wake up movements start");
+			// serial.println("Wake up movements start");
 			chThdSleepMilliseconds(2000);
-			serial.println("Wake up movements end");
+			// serial.println("Wake up movements end");
+			setBehavior(EXPLORE);
 		}
-		if (getBehavior() == EXPLORE) {
-			serial.println("Explore movements start");
-			chThdSleepMilliseconds(2000);
-			serial.println("Explore movements end");
+		else if (getBehavior() == EXPLORE) {
+			// serial.println("Explore movements start");
+			chThdSleepMilliseconds(5000);
+			// serial.println("Explore movements end");
+			setBehavior(WAITING);
+			_startWaitingTime = chTimeNow();
 		}
-		if (getBehavior() == WAITING) {
-			serial.println("Waiting movements start");
-			chThdSleepMilliseconds(2000);
-			serial.println("Waiting movements end");
+		else if (getBehavior() == WAITING) {
+			driveSystem.stop();
 		}
-		if (getBehavior() == WANT_INTERACTION) {
-			serial.println("Want interaction movements start");
-			chThdSleepMilliseconds(2000);
-			serial.println("Want interaction movements end");
+		else if (getBehavior() == WANT_INTERACTION) {
+			// driveSystem.go();
+			// chThdSleepMilliseconds(300);
+			// driveSystem.go();
+			// chThdSleepMilliseconds(300);
+			// driveSystem.go();
+			// chThdSleepMilliseconds(300);
 		}
-		if (getBehavior() == SLEEP) {
-			serial.println("Sleep movements start");
-			chThdSleepMilliseconds(2000);
-			serial.println("Sleep movements end");
+		else if (getBehavior() == SLEEP) {
+			driveSystem.stop();
 		}
 	}
 	return 0;

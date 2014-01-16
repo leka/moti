@@ -12,15 +12,26 @@
 
 void chSetup() {
 
-	SensorThread = chThdCreateStatic(waSensorThread, sizeof(waSensorThread),
+	// SensorThread = chThdCreateStatic(waSensorThread, sizeof(waSensorThread),
+	// 			NORMALPRIO + 13, SensorThreadFunction, NULL);
+	// ArbitrerThread = chThdCreateStatic(waArbitrerThread, sizeof(waArbitrerThread),
+	// 			NORMALPRIO + 12, ArbitrerThreadFunction, NULL);
+	// DriveThread = chThdCreateStatic(waDriveThread, sizeof(waDriveThread),
+	// 			NORMALPRIO + 9, DriveThreadFunction, NULL);
+	// HeartThread = chThdCreateStatic(waHeartThread, sizeof(waHeartThread),
+	// 			NORMALPRIO + 11, HeartThreadFunction, NULL);
+	// LightThread = chThdCreateStatic(waLightThread, sizeof(waLightThread),
+	// 			NORMALPRIO + 10, LightThreadFunction, NULL);
+
+	chThdCreateStatic(waSensorThread, sizeof(waSensorThread),
 				NORMALPRIO + 13, SensorThreadFunction, NULL);
-	ArbitrerThread = chThdCreateStatic(waArbitrerThread, sizeof(waArbitrerThread),
+	chThdCreateStatic(waArbitrerThread, sizeof(waArbitrerThread),
 				NORMALPRIO + 12, ArbitrerThreadFunction, NULL);
-	DriveThread = chThdCreateStatic(waDriveThread, sizeof(waDriveThread),
+	chThdCreateStatic(waDriveThread, sizeof(waDriveThread),
 				NORMALPRIO + 9, DriveThreadFunction, NULL);
-	HeartThread = chThdCreateStatic(waHeartThread, sizeof(waHeartThread),
+	chThdCreateStatic(waHeartThread, sizeof(waHeartThread),
 				NORMALPRIO + 11, HeartThreadFunction, NULL);
-	LightThread = chThdCreateStatic(waLightThread, sizeof(waLightThread),
+	chThdCreateStatic(waLightThread, sizeof(waLightThread),
 				NORMALPRIO + 10, LightThreadFunction, NULL);
 }
 

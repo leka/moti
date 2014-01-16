@@ -10,22 +10,30 @@ static msg_t ArbitrerThreadFunction(void *arg) {
 
 	while (TRUE) {
 		chSemWait(&ArbitrerSem);
+		// serial.println("Arbitrer");
+		// serial.println(getBehavior());
 
-		// is x to high ?
-		if (sensors.getXYZ(0) > 300) {
-			setBehavior(WANT_INTERACTION);
-		}
-
-		// are we at startup?
-		if (sensors.getXYZ(1) > 300) {
+		if (sensors.getXYZ(2) > 450) {
 			setBehavior(EXPLORE);
 		}
 
-		if (sensors.getXYZ(2) < -300) {
-			setBehavior(SLEEP);
+		else if (getBehavior() == WAITING) {
+			_elapsedWaintingTime = chTimeNow() - _startWaitingTime;
+			// serial.println(_elapsedWaintingTime);
+			// serial.println(_numberOfCallsForInteraction);
 		}
 
-		// chSemSignal(&DriveSem);
-		// chSemSignal(&LightSem);
+		else if (getBehavior() == WAITING || _elapsedWaintingTime > 10000) {
+			setBehavior(WANT_INTERACTION);
+			_elapsedWaintingTime = 0;
+		}
+
+		else if (_numberOfCallsForInteraction > 2) {
+			setBehavior(SLEEP);
+			_numberOfCallsForInteraction = 0;
+		}
+
+		chSemSignal(&DriveSem);
+		chSemSignal(&LightSem);
 	}
 }

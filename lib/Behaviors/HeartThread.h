@@ -13,6 +13,8 @@ static msg_t HeartThreadFunction(void *arg) {
 	volatile uint8_t R = 150;
 
 	while (TRUE) {
+		// serial.println("Heart");
+
 		heart.fade(40, basePwm, P, 0, 0, 0, 0);
 		heart.fade(40, P, basePwm, 0, 0, 0, 0);
 

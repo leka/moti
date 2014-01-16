@@ -26,7 +26,7 @@ void setup() {
 	sensors.init();
 
 	serial.println("System starting....\n");
-	delay(3000);
+	delay(1000);
 
 	chBegin(chSetup);
 
