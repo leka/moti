@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
 
-#include "Thread.h"
+#include "Behaviors.h"
 
 static msg_t HeartThreadFunction(void *arg) {
 

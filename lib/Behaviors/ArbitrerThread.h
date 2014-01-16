@@ -3,24 +3,29 @@
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
 
-#include "Thread.h"
+#include "Behaviors.h"
 
 static msg_t ArbitrerThreadFunction(void *arg) {
 	(void)arg;
 
 	while (TRUE) {
-		// chSemWait(&AnalyzerSem);
-
-		// are we at startup?
-		if (isStarting) {
-			isStarting = FALSE;
-			// chSemSignal(&WakeUpSem);
-		}
+		chSemWait(&ArbitrerSem);
 
 		// is x to high ?
 		if (sensors.getXYZ(0) > 300) {
-			// chSemSignal(&ExploreSem);
+			setBehavior(WANT_INTERACTION);
 		}
 
+		// are we at startup?
+		if (sensors.getXYZ(1) > 300) {
+			setBehavior(EXPLORE);
+		}
+
+		if (sensors.getXYZ(2) < -300) {
+			setBehavior(SLEEP);
+		}
+
+		// chSemSignal(&DriveSem);
+		// chSemSignal(&LightSem);
 	}
 }

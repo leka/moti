@@ -3,7 +3,7 @@
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
 
-#include "Thread.h"
+#include "Behaviors.h"
 
 static msg_t SensorThreadFunction(void *arg) {
 	(void)arg;

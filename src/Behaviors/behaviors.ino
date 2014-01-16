@@ -18,7 +18,7 @@
 #include "Motor.h"
 #include "DriveSystem.h"
 
-#include "Thread.h"
+#include "Behaviors.h"
 #include "InitThread.h"
 
 void setup() {

@@ -29,8 +29,8 @@ enum Behaviors {
 
 //	SEMAPHORES
 SEMAPHORE_DECL(ArbitrerSem, 0);
-// SEMAPHORE_DECL(WakeUpSem, 0);
-// SEMAPHORE_DECL(ExploreSem, 0);
+SEMAPHORE_DECL(DriveSem, 0);
+SEMAPHORE_DECL(LightSem, 0);
 // SEMAPHORE_DECL(CallSem, 0);
 // SEMAPHORE_DECL(SleepSem, 0);
 

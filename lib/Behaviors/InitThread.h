@@ -13,15 +13,15 @@
 void chSetup() {
 
 	SensorThread = chThdCreateStatic(waSensorThread, sizeof(waSensorThread),
-				NORMALPRIO + 11, SensorThreadFunction, NULL);
+				NORMALPRIO + 13, SensorThreadFunction, NULL);
 	ArbitrerThread = chThdCreateStatic(waArbitrerThread, sizeof(waArbitrerThread),
-				NORMALPRIO + 11, ArbitrerThreadFunction, NULL);
+				NORMALPRIO + 12, ArbitrerThreadFunction, NULL);
 	DriveThread = chThdCreateStatic(waDriveThread, sizeof(waDriveThread),
-				NORMALPRIO, DriveThreadFunction, NULL);
+				NORMALPRIO + 9, DriveThreadFunction, NULL);
 	HeartThread = chThdCreateStatic(waHeartThread, sizeof(waHeartThread),
-				NORMALPRIO + 12, HeartThreadFunction, NULL);
+				NORMALPRIO + 11, HeartThreadFunction, NULL);
 	LightThread = chThdCreateStatic(waLightThread, sizeof(waLightThread),
-				NORMALPRIO, LightThreadFunction, NULL);
+				NORMALPRIO + 10, LightThreadFunction, NULL);
 }
 
 #endif
