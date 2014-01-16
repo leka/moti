@@ -16,30 +16,36 @@ DriveSystem driveSystem;
 
 //	LED
 Led heart = Led(11, 12, 13);
-Led sleep = Led(8, 9, 10);
+Led light = Led(8, 9, 10);
 
-//	GLOBAL VARIABLES
-volatile uint8_t bpm = 15;
+//	BEHAVIORS
+enum Behaviors {
+	WAKE_UP,
+	EXPLORE,
+	WAITING,
+	WANT_INTERACTION,
+	SLEEP
+};
 
 //	SEMAPHORES
-SEMAPHORE_DECL(AnalyzerSem, 0);
-SEMAPHORE_DECL(WakeUpSem, 0);
-SEMAPHORE_DECL(ExploreSem, 0);
-SEMAPHORE_DECL(CallSem, 0);
-SEMAPHORE_DECL(SleepSem, 0);
+SEMAPHORE_DECL(ArbitrerSem, 0);
+// SEMAPHORE_DECL(WakeUpSem, 0);
+// SEMAPHORE_DECL(ExploreSem, 0);
+// SEMAPHORE_DECL(CallSem, 0);
+// SEMAPHORE_DECL(SleepSem, 0);
 
 //	THREADS
 Thread * SensorThread;
-Thread * AnalyzerThread;
-Thread * SleepThread;
+Thread * ArbitrerThread;
 Thread * HeartThread;
-Thread * WakeUpThread;
-Thread * ExploreThread;
-Thread * CallThread;
+Thread * LightThread;
+Thread * DriveThread;
 
 //	VARIABLES
-volatile systime_t elapsedTime = 0;
-volatile systime_t startTime = 0;
+volatile uint8_t _bpm = 15;
+volatile systime_t _elapsedTime = 0;
+volatile systime_t _startTime = 0;
+volatile uint8_t _behavior = SLEEP;
 
 //	STATES
 volatile bool isStarting = TRUE;
@@ -48,12 +54,18 @@ volatile bool isWaiting = FALSE;
 volatile bool noInteractionForTooLong = FALSE;
 
 //	WORKING AREA
+static WORKING_AREA(waArbitrerThread, 260);
 static WORKING_AREA(waHeartThread, 260);
-static WORKING_AREA(waSleepThread, 260);
-static WORKING_AREA(waWakeUpThread, 260);
+static WORKING_AREA(waLightThread, 260);
+static WORKING_AREA(waDriveThread, 260);
 static WORKING_AREA(waSensorThread, 260);
-static WORKING_AREA(waAnalyzerThread, 260);
-static WORKING_AREA(waExploreThread, 260);
-static WORKING_AREA(waCallThread, 260);
 
+//	METHODS
+void setBehavior(Behaviors behavior) {
+	_behavior = behavior;
+}
+
+uint8_t getBehavior() {
+	return _behavior;
+}
 #endif

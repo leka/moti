@@ -3,7 +3,7 @@
 
 #include "Thread.h"
 
-static msg_t HeartThreadFunction(void *arg) {
+static msg_t DriveThreadFunction(void *arg) {
 
 	(void)arg;
 
@@ -22,7 +22,7 @@ static msg_t HeartThreadFunction(void *arg) {
 		heart.fade(60, Q, R, 0, 0, 0, 0);
 		heart.fade(70, R, basePwm, 0, 0, 0, 0);
 
-		chThdSleepMilliseconds(30000/ _bpm);
+		chThdSleepMilliseconds(30000/ bpm);
 	}
 	return 0;
 }
