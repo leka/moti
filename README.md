@@ -1,10 +1,8 @@
 #Moti Readme
 
-
 ##About
 
 Moti is a new kind of interactive smart toy: it's a spherical robot specially designed for children with autism.
-
 
 ##Why Github?
 
@@ -13,7 +11,6 @@ Because our team is not located in one single place, we needed a way to distribu
 At first, we wanted to keep the code for ourselves. But then we thought "hey! our project is great, but wouldn't it be better if a lot of people could fork it, add their modifications, features, improvements, and then share it back to the community?"
 
 For us, the answer is an absolute YES! We want people to be able to look at our code, use it for their projects, use it to build their own Moti and then get back to us to improve the awesomeness for a better world today!
-
 
 ## TO DO
 
@@ -55,7 +52,6 @@ For us, the answer is an absolute YES! We want people to be able to look at our 
 *	design the PCB
 *	3D print the robot
 
-
 ##Actual Version
 
 We are now working with `MOTI v1.0`.
@@ -77,7 +73,6 @@ It is a lot easier for everyone to write code and to understand what you do. It 
 
 It's not a real `API` but it will eventually become one.
 
-
 ##Branches
 
 **IMPORTANT:** Our model is based on [A successful Git branching Model](http://nvie.com/posts/a-successful-git-branching-model/). PLEASE, take the time to read it carefully before starting. We don't want you to mess things up! :)
@@ -87,23 +82,19 @@ It's not a real `API` but it will eventually become one.
 *	`feature branches` are transitory branches used to develop new features to incorporate to the dev branch. when the feature is bugless, a pull request may be made to merge the concluding results inside the dev branch.
 *	`oldies` branch keeps all the old code and libraries we used for the first prototype. It is deprecated now but could be help full for beginners.
 
-
 ##How to install
 
 The full procedure is detailed in [INSTALL.md](./INSTALL.md). It has been written for beginners as well as for advanced hackers.
 
-
 ##How to use
 
 The full procedure on how to use everything you've just installed is described in [USE.md](./USE.md).
-
 
 ##How to contribute
 
 Thanks to Github, the best way to help us is by `forking` the project, coding and then making pull requests.
 
 We will only accept direct merging of pull request, so make sure your code is OK for that.
-
 
 ##Copyright and License
 
