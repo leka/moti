@@ -14,7 +14,7 @@ static msg_t ArbitrerThreadFunction(void *arg) {
 		serial.println(getBehavior());
 		serial.println(_elapsedWaintingTime);
 
-		if (sensors.getXYZ(2) > 350) {
+		if (sensors.getXYZ(0) > 150 || sensors.getXYZ(1) > 150 || sensors.getXYZ(2) > 350) {
 			driveSystem.stop();
 			light.turnOff();
 			setBehavior(EXPLORE);

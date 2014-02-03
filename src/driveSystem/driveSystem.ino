@@ -4,54 +4,77 @@
 #include "ChibiOS_AVR.h"
 
 #include "Motor.h"
+#include "Led.h"
+#include "Tools.h"
 #include "DriveSystem.h"
 #include "Serial.h"
 
 DriveSystem drive;
+Led light = Led(8, 9, 10);
 
 static WORKING_AREA(waThread1, 1024);
 
-static msg_t Thread1(void *arg) {
+static msg_t Thread1 (void *arg) {
 
 	(void)arg;
 
 	while (TRUE) {
 
-		serial.println("Forward");
-		drive.go(FORTH);
-		chThdSleepMilliseconds(2000);
-		drive.stop();
-		chThdSleepMilliseconds(500);
-		serial.println("Backward");
-		drive.go(BACK);
-		chThdSleepMilliseconds(2000);
+		// drive.go(FORTH, 95);
+		// chThdSleepMilliseconds(1100);
+		// drive.stop();
+		// chThdSleepMilliseconds(750);
+		// drive.spin(RIGHT, 100);
+		// chThdSleepMilliseconds(500);
+		// drive.stop();
+		// chThdSleepMilliseconds(750);
 
-		serial.println("Stop");
-		drive.stop();
-		chThdSleepMilliseconds(2000);
+		// drive.go(FORTH, 95);
+		// chThdSleepMilliseconds(1100);
+		// drive.stop();
+		// chThdSleepMilliseconds(750);
+		// drive.spin(RIGHT, 100);
+		// chThdSleepMilliseconds(500);
+		// drive.stop();
+		// chThdSleepMilliseconds(750);
 
-		serial.println("Spin right");
-		drive.spin(RIGHT);
-		chThdSleepMilliseconds(2000);
-		drive.stop();
-		chThdSleepMilliseconds(500);
-		serial.println("Spin left");
-		drive.spin(LEFT);
-		chThdSleepMilliseconds(2000);
+		// drive.go(FORTH, 95);
+		// chThdSleepMilliseconds(1100);
+		// drive.stop();
+		// chThdSleepMilliseconds(750);
+		// drive.spin(RIGHT, 100);
+		// chThdSleepMilliseconds(500);
+		// drive.stop();
+		// chThdSleepMilliseconds(750);
 
-		serial.println("Stop");
-		drive.stop();
-		chThdSleepMilliseconds(2000);
+		chThdSleepMilliseconds(5000);
 
 	}
 	return 0;
 }
 
+static WORKING_AREA(waThread2, 1024);
+
+static msg_t Thread2 (void *arg) {
+
+	(void)arg;
+
+	while (TRUE) {
+		light.fade(300, RED_PURE, GREEN_PURE);
+		light.fade(300, GREEN_PURE, BLUE_PURE);
+		light.fade(300, BLUE_PURE, RED_PURE);
+	}
+
+	return 0;
+}
 
 void chSetup() {
 
 	chThdCreateStatic(waThread1, sizeof(waThread1),
 		NORMALPRIO, Thread1, NULL);
+
+	chThdCreateStatic(waThread2, sizeof(waThread2),
+		NORMALPRIO, Thread2, NULL);
 
 }
 
