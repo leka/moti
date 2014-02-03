@@ -4,11 +4,10 @@
 #include "ChibiOS_AVR.h"
 
 #include "Motor.h"
+#include "DriveSystem.h"
 #include "Serial.h"
 
-Motor right_motor = Motor(7,6);
-Motor left_motor = Motor(4,5);
-
+DriveSystem drive;
 
 static WORKING_AREA(waThread1, 1024);
 
@@ -18,24 +17,30 @@ static msg_t Thread1(void *arg) {
 
 	while (TRUE) {
 
-		serial.print(F("Unused Stack: "));
-		serial.println(chUnusedStack(waThread1, sizeof(waThread1)));
-
-		serial.println("Right Motor");
-		right_motor.spin(0);
+		serial.println("Forward");
+		drive.go(FORTH);
 		chThdSleepMilliseconds(2000);
-		right_motor.spin(0, 100);
-		chThdSleepMilliseconds(2000);
-
-		right_motor.stop();
+		drive.stop();
+		chThdSleepMilliseconds(500);
+		serial.println("Backward");
+		drive.go(BACK);
 		chThdSleepMilliseconds(2000);
 
-		left_motor.spin(1);
-		chThdSleepMilliseconds(2000);
-		left_motor.spin(1, 100);
+		serial.println("Stop");
+		drive.stop();
 		chThdSleepMilliseconds(2000);
 
-		left_motor.stop();
+		serial.println("Spin right");
+		drive.spin(RIGHT);
+		chThdSleepMilliseconds(2000);
+		drive.stop();
+		chThdSleepMilliseconds(500);
+		serial.println("Spin left");
+		drive.spin(LEFT);
+		chThdSleepMilliseconds(2000);
+
+		serial.println("Stop");
+		drive.stop();
 		chThdSleepMilliseconds(2000);
 
 	}
@@ -54,6 +59,8 @@ void chSetup() {
 void setup() {
 
 	serial.begin(115200);
+
+	delay(3000);
 
 	serial.println("Starting...");
 

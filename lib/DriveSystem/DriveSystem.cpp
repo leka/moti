@@ -18,19 +18,58 @@ DriveSystem::DriveSystem(){
 }
 
 /*
- * @brief DriveSystem Spin Method
+ * @brief DriveSystem go Method
  *
- * @param direction should take 0 for backward, 1 for frontward
+ * @param direction should take 0 for backward, 1 for forward
  * @param speed the speed the motors should have
  */
-void DriveSystem::spin(bool direction, uint8_t speed) const {
+void DriveSystem::go(bool direction, uint8_t speed) const {
+	rightMotor.spin(direction, speed);
+	leftMotor.spin(direction, speed);
+}
 
+/*
+ * @brief DriveSystem spin Method
+ *
+ * @param direction should take 0 for backward, 1 for forward
+ * @param speed the speed the motors should have
+ */
+void DriveSystem::spin(bool spinDirection, uint8_t speed) const {
+	if(spinDirection == RIGHT) {
+		rightMotor.spin(0, speed);
+		leftMotor.spin(1, speed);
+	}
+	else if(spinDirection == LEFT) {
+		rightMotor.spin(1, speed);
+		leftMotor.spin(0, speed);
+	}
 }
 
 /*
  * @brief DriveSystem stop Method
  */
-void Motor::stop() const{
-
+void DriveSystem::stop() const{
+	rightMotor.stop();
+	leftMotor.stop();
 }
 
+/*
+ * @brief DriveSystem turn function
+ */
+void DriveSystem::turn(bool turnDirection, uint8_t speed) const {
+	if(turnDirection == RIGHT) {
+		rightMotor.spin(FORTH, speed);
+		leftMotor.spin(FORTH, speed - 30);
+	}
+	else if(turnDirection == LEFT) {
+		rightMotor.spin(FORTH, speed - 30);
+		leftMotor.spin(FORTH, speed);
+	}
+}
+
+/*
+ * @brief DriveSystem turn function
+ */
+// void DriveSystem::turn(int16_t angle, bool direction, uint8_t speed) const {
+// 	// nothing to do here until we check is usefulness of this method...
+// }

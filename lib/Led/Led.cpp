@@ -198,15 +198,15 @@ void Led::colorSwitcher(ColorName color){
 				break;
 
 			case GREEN_PURE:
-				_RGB[0] = 255;
-				_RGB[1] = 0;
+				_RGB[0] = 0;
+				_RGB[1] = 255;
 				_RGB[2] = 0;
 				break;
 
 			case BLUE_PURE:
-				_RGB[0] = 255;
+				_RGB[0] = 0;
 				_RGB[1] = 0;
-				_RGB[2] = 0;
+				_RGB[2] = 255;
 				break;
 
 			case DARK_RED:
