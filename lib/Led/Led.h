@@ -36,7 +36,7 @@ class Led {
 
 		Led();
 
-		//	LED
+		// LED
 		void colorSwitcher(ColorName color);
 
 		void setRgb(uint8_t index, uint8_t value);
@@ -62,10 +62,10 @@ class Led {
 		uint8_t _greenPin;
 		uint8_t _bluePin;
 
-		//	MUTEXES
+		// MUTEXES
 		MUTEX_DECL(rgbValuesMutex);
 
-		//	CONSTANTS
+		// CONSTANTS
 		static const uint8_t DEFAULT_LED_MAX_BRIGHTNESS   = 255;
 		static const uint8_t DEFAULT_RED_MAX_BRIGHTNESS   = 255;
 		static const uint8_t DEFAULT_GREEN_MAX_BRIGHTNESS = 255;
