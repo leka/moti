@@ -1,10 +1,11 @@
-#Moti Readme
+[![Stories in Ready](https://badge.waffle.io/WeAreLeka/moti.png?label=ready)](http://waffle.io/WeAreLeka/moti)
 
+=======
+#Moti Readme
 
 ##About
 
 Moti is a new kind of interactive smart toy: it's a spherical robot specially designed for children with autism.
-
 
 ##Why Github?
 
@@ -14,21 +15,27 @@ At first, we wanted to keep the code for ourselves. But then we thought "hey! ou
 
 For us, the answer is an absolute YES! We want people to be able to look at our code, use it for their projects, use it to build their own Moti and then get back to us to improve the awesomeness for a better world today!
 
-
 ## TO DO
 
 ### Global
 
-*	make this project more collaborative :)
+*	~~make this project more collaborative~~ - DONE :)
 *	implement a real list of all the tasks we need to do to make the robot work!
 
 ### Sensors
 
-*	integrate the new version of FreeIMU
-*	make the appropriate changes to get rid of all the useless libs
+*	~~integrate the new version of FreeIMU~~ - DONE
+*	~~make the appropriate changes to get rid of all the useless libs~~ - DONE
 *	implement the sensor analyser to find pattern in the sensors' data
 *	compute moving average
 *	compute square value
+
+### Motors
+
+*	~~separate de Motors Class in 2 clases: Motor et DriveSystem to better separate concerns~~ - DONE
+*	~~unit test motor class~~ - DONE
+*	test for minimum motor speed
+*	use sensors data for `spinRight` and `spinLeft`
 
 ### Behaviors
 
@@ -41,13 +48,12 @@ For us, the answer is an absolute YES! We want people to be able to look at our 
 
 ### Moti
 
-*	try and implement a RTOS using ChibiOS or NilRTOS
+*	~~try and implement a RTOS using ChibiOS or NilRTOS~~ - DONE - ChibiOS has been chosen and is up and running
 
 ### Hardware
 
 *	design the PCB
 *	3D print the robot
-
 
 ##Actual Version
 
@@ -70,7 +76,6 @@ It is a lot easier for everyone to write code and to understand what you do. It 
 
 It's not a real `API` but it will eventually become one.
 
-
 ##Branches
 
 **IMPORTANT:** Our model is based on [A successful Git branching Model](http://nvie.com/posts/a-successful-git-branching-model/). PLEASE, take the time to read it carefully before starting. We don't want you to mess things up! :)
@@ -80,16 +85,13 @@ It's not a real `API` but it will eventually become one.
 *	`feature branches` are transitory branches used to develop new features to incorporate to the dev branch. when the feature is bugless, a pull request may be made to merge the concluding results inside the dev branch.
 *	`oldies` branch keeps all the old code and libraries we used for the first prototype. It is deprecated now but could be help full for beginners.
 
-
 ##How to install
 
 The full procedure is detailed in [INSTALL.md](./INSTALL.md). It has been written for beginners as well as for advanced hackers.
 
-
 ##How to use
 
 The full procedure on how to use everything you've just installed is described in [USE.md](./USE.md).
-
 
 ##How to contribute
 
@@ -97,35 +99,21 @@ Thanks to Github, the best way to help us is by `forking` the project, coding an
 
 We will only accept direct merging of pull request, so make sure your code is OK for that.
 
-
-##Known Issues
-
-None yet.
-
-
-##TODO
-
-*	Document the code
-*	Generate documentation with Doxygen
-
-
 ##Copyright and License
 
-The library is Copyright (c) 2013 Leka Inc., and distributed under the MIT License as follows:
+Moti, a free, as in speech, robotic spherical mobile robot for children with autism.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Copyright (C) 2013 Ladislas de Toldi (ladislas at weareleka dot com)
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
 
-###Additional License
-
-"THE BEER-WARE LICENSE" (Revision 42):
-<hello@weareleka.com> wrote this file. As long as you retain this notice you can do whatever you want with this stuff. If we meet some day, and you think this stuff is worth it, you can buy me a beer in return.
-
-
-##Leka would like to thank
-
-Our team would like to thank with all our hearts [Vincent Thiberville](http://www.vincent-thiberville.com/) for his kind work on our first prototype.
-Without him nothing would have been possible!
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see [http://www.gnu.org/licenses/].

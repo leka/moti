@@ -8,14 +8,17 @@
  */
 
 #include <Arduino.h>
-#include <Serial.h>
 #include <Wire.h>
-#include <CommunicationUtils.h>
-#include <DebugUtils.h>
-#include <FIMU_ADXL345.h>
-#include <FIMU_ITG3200.h>
-#include <FreeSixIMU.h>
 
+#include "ChibiOS_AVR.h"
+
+#include "CommunicationUtils.h"
+#include "DebugUtils.h"
+#include "ADXL345.h"
+#include "ITG3200.h"
+#include "FreeIMU.h"
+
+#include "Serial.h"
 
 /**
  * @class Sensors
@@ -27,40 +30,32 @@ class Sensors {
 
 		Sensors();
 
-		void open();
+		void init();
 
 		//	SENSORS
 		void read();
 		void readAccelerometer();
 		void readGyroscope();
 
-		int readXYZ(uint8_t index);
-		int readYPR(uint8_t index);
-
-		void computeDelta();
-		void updateLastValues();
+		int getXYZ(uint8_t index);
+		int getYPR(uint8_t index);
 
 		void sendJson();
-		void writeData();
-
+		void sendData();
+		void debug();
 
 	private:
 
 		//	VARIABLES
-		int XYZ[3], lastXYZ[3], deltaXYZ[3];
-		int YPR[3], lastYPR[3], deltaYPR[3];
+		int _XYZ[3], _tmpXYZ[3];
+		int _YPR[3];
+		float _tmpYPR[3];
 
-		static const int numberOfReadings = 10;
-
-		int readings[numberOfReadings];
-		int readingsIndex = 0;
-		int readingsSum = 0;
-		int readingsAverage = 0;
-
-
+		// MUTEX
+		MUTEX_DECL(sensorsDataMutex);
 
 		//	RELATED CLASS
-		FreeSixIMU AccelGyro;
+		FreeIMU AccelGyro;
 };
 
 #endif

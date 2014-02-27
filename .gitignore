@@ -1,8 +1,9 @@
 .DS_Store
-bin/*
+bin/*/
 *~
 build-tmp/
 moti.sublime-*
 Makefile
 doc/
 debug.txt
+.*

@@ -7,6 +7,7 @@
 #define serial Serial
 #endif
 
+
 namespace sio {
 
 	// Variables
