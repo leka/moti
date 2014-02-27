@@ -2,27 +2,25 @@ import os
 import ycm_core
 
 flags = [
-# '-x c++',
-'-std=c++11'
-,'-Wall'
+'-Wall'
 ,'-Wextra'
 ,'-Werror'
-,'-Wno-unknown-warning-option'
 ,'-Wno-attributes'
-,'-mmcu=atmega2560'
-,'-DF_CPU=16000000L'
-,'-MMD -DUSB_VID=null'
-,'-DUSB_PID=null'
-,'-DARDUINO=105'
-,'-D__AVR__'
-,'-D__AVR_ATmega2560__'
-,'-I/usr/include/c++/4.2.1'
-,'-I/Users/Ladislas/.vim/bundle/YouCompleteMe/python/clang_includes'
-,'-I/usr/local/Cellar/avr-libc/1.8.0/avr/include'
-,'-I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
-,'-I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants'
-,'-I/Applications/Arduino.app/Contents/Resources/Java/libraries'
-,'-I./lib'
+,'-std=c++11'
+,'-x'
+,'c++'
+ ,'-I./lib/**'
+ ,'-isystem/usr/local/Cellar/avr-libc/1.8.0/avr/include'
+ ,'-isystem/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
+ ,'-isystem/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
+# ,'-I/Applications/Arduino.app/Contents/Resources/Java/libraries/Wire'
+ ,'-mmcu=atmega2560'
+ ,'-DF_CPU=16000000L'
+ ,'-DARDUINO=105'
+ ,'-D__AVR__'
+ ,'-D__AVR_ATmega2560__'
+# ,'-MMD -DUSB_VID=null'
+# ,'-DUSB_PID=null'
 ]
 
 
