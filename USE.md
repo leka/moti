@@ -1,131 +1,88 @@
-#Moti User Guide
+# Moti User Guide
 
-##About
+## About
 
 If I guess right, you just finished reading the [Installation guide](./INSTALL.md) and you're now ready to build your own code.
 
 
-##Exemple: building a new behavior for Moti
+## Exemple: building a new behavior for Moti
 
 Say we want to design a new behavior for Moti. How are we going to do that?
 
-###1. Create a new directory
+### 1. Create a new directory
 
 We want a place to put our code. Opent the Terminal and type:
 
 ```Bash
-$ cd /path/to/moti
-$ cd src/
-$ mkdir moti_bhvr_happy
-$ cd moti_bhvr_happy
+$ cd /path/to/moti/src && mkdir new-project && cd $_ && touch new-project.ino && cp ../../arduino-mk/examples/MakefileExample/Makefile-example.mk Makefile
 ```
 
+### 2. Write your code
 
-###2. Create the new file for our code
+In your favorite text editor (like Sublime Text 2), open `happyBehavior.ino`. You can use the following example if you want:
 
-In the Terminal, make sure you are in `/path/to/moti/src/moti_bhvr_happy` and then type:
-	$ touch moti_bhvr_happy.ino
+```C++
+#define serial Serial
 
-Make sure that the name of the `.ino` file is always the same as the directory it is in.
-
-###3. Write your code
-
-In your favorite text editor (like Sublime Text 2), open `moti_bhvr_happy.ino`. You can use the following example if you want:
-
-``` C++
 #include <Arduino.h>
+#include "ChibiOS_AVR.h"
+#include "Serial.h"
+#include "Tools.h"
 
-// Include all the classes needed to beautifully develop your robot.
-#include <Moti.h>
-#include <Sensors.h>
-#include <Led.h>
-#include <Motors.h>
-#include <Speakers.h>
-#include <Memory.h>
+#include "Led.h"
 
-// Then create instances of every classes
-Moti moti;
-Sensors sensors;
-Led led;
-Motors motors;
-Speakers speakers;
+Led sleep = Led(11, 12, 13);
+
+static WORKING_AREA(waSleepThread, 1000);
+
+static msg_t SleepThread(void *arg) {
+
+	(void)arg;
+
+	volatile uint8_t basePwm = 5; // divided by ten to have a wait delay higher than 1ms
+	volatile uint8_t bpm = 35;     // must multiply by ten in heart.shine();
+	volatile uint8_t R = 255;
+
+	while (TRUE) {
+
+		serial.println("Up");
+		sleep.fade(1300, 0, 0, 0, 0, basePwm, R);
+
+		serial.println("Down");
+		sleep.fade(650, 0, 0, 0, 0, R, basePwm);
+
+		chThdSleepMilliseconds(30000/ bpm);
+	}
+	return 0;
+}
+
+void chSetup() {
+	chThdCreateStatic(waSleepThread, sizeof(waSleepThread),
+		NORMALPRIO, SleepThread, NULL);
+}
+
 
 void setup() {
-	// Initialize moti
-	moti.init();
+	serial.begin(115200);
+	chBegin(chSetup);
+	while(1) {
+	}
 }
 
 void loop() {
-	Moti.goForward();
-	delay(5000);
-	Moti.blinkLed(4);
-	delay(2000);
-	Moti.spinRight();
-	delay(2000);
-	Moti.stop();
-	delay(2000);
-	Moti.blinkLed(10);
-	delay(1000);
+	// nothing to do here
 }
 ```
 
 Save your file.
 
-###4. Create and configure the `Makefile`
+### 3. Configure the `Makefile`
 
-Re-open your Terminal, make sure you are in `/path/to/moti/src/moti_bhvr_happy` and then type:
-
-```Bash
-$ touch Makefile
-```
-
-Now, open the `Makefile` in your favorite text editor and copy/past that:
-
-```Makefile
-### ATTENTION
-### This is an example Makefile and it MUST be configured to suit your needs.
-
-### the boardtag represents the board you're currently using. select the right one (uno, mega2560, etc.)
-BOARD_TAG         = uno
-
-### don't change this, our Serial communication are always using the 115200 baudrate
-MONITOR_BAUDRATE  = 115200
-
-### path to where you cloned the moti repository
-PROJECT_DIR       = /Users/Ladislas/dev/leka/moti
-
-### this is the path to the Arduino-Makefile directory.
-ARDMK_DIR         = $(PROJECT_DIR)/arduino-makefile
-
-### path to the Arduino.app directory.
-### or linux, use something like:
-### ARDUINO_DIR   = /usr/share/arduino
-ARDUINO_DIR       = /Applications/Arduino.app/Contents/Resources/Java
-
-### path to avr-gcc and co.
-### for linux, just use:
-### AVR_TOOLS_DIR = /usr
-### because it adds the rest (like "/bin")
-AVR_TOOLS_DIR     = /usr/local
-
-### your path to avrdude. if you used homebrew, it should be something like that
-AVRDDUDE          = /usr/local/bin/avrdude
-
-### connect your arduino, open the IDE and look for the port
-MONITOR_PORT      = /dev/tty.usbmodemfa131
-
-### don't touch this
-CURRENT_DIR       = $(shell basename $(CURDIR))
-
-### path to Arduino.mk, inside the ARDMK_DIR, don't touch.
-include $(ARDMK_DIR)/arduino-mk/Arduino.mk
-```
-
-On OS X, you need to change: `BOARD_TAG`, `PROJECT_DIR` and `MONITOR_PORT`.
+Read the `Makefile` and change what you need to change. On OS X, you need to change: `BOARD_TAG`, `PROJECT_DIR` and `MONITOR_PORT`.
 
 ###5. Compile and upload
 
-In your Terminal, type `make` to compile your code. It will create in directory called `bin` in `moti`.
+In your Terminal, type `make` to compile your code.
 
 To upload, type `make upload`.
 
