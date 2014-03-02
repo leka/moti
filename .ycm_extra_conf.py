@@ -9,7 +9,7 @@ flags = [
 ,'-std=c++11'
 ,'-x'
 ,'c++'
- ,'-I./lib/**'
+ ,'-I./lib/ChibiOS_AVR'
  ,'-isystem/usr/local/Cellar/avr-libc/1.8.0/avr/include'
  ,'-isystem/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
  ,'-isystem/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
