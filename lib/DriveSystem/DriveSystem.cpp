@@ -13,8 +13,12 @@
  * @param directionPin for Moti in its most up-to-date configuration, the pins are as follow: Left Dir = 4 / Left Speed = 5 // Right Dir = 7 / Right Speed = 6
  * @param speedPin
  */
-DriveSystem::DriveSystem(){
-	// nothing to do here
+DriveSystem::DriveSystem() {
+	_rightMotorSpeed = 0;
+	_leftMotorSpeed = 0;
+
+	_rightMotorDirection = FORTH;
+	_leftMotorDirection = FORTH;
 }
 
 /*
@@ -23,9 +27,25 @@ DriveSystem::DriveSystem(){
  * @param direction should take 0 for backward, 1 for forward
  * @param speed the speed the motors should have
  */
-void DriveSystem::go(bool direction, uint8_t speed) const {
-	rightMotor.spin(direction, speed);
-	leftMotor.spin(direction, speed);
+void DriveSystem::go(Direction direction, uint8_t speed, uint32_t launchTime) {
+	uint32_t startTime = chTimeNow();
+	uint32_t currentTime = 0;
+
+	_rightMotorDirection = direction;
+	_leftMotorDirection = direction;
+
+	while (currentTime < launchTime) {
+		currentTime = chTimeNow() - startTime;
+
+		_rightMotorSpeed = currentTime * speed / launchTime;
+		_leftMotorSpeed = _rightMotorSpeed;
+
+		activate();
+	}	
+
+	_rightMotorSpeed = speed;
+	_leftMotorSpeed = speed;
+	activate();
 }
 
 /*
@@ -34,21 +54,40 @@ void DriveSystem::go(bool direction, uint8_t speed) const {
  * @param direction should take 0 for backward, 1 for forward
  * @param speed the speed the motors should have
  */
-void DriveSystem::spin(bool spinDirection, uint8_t speed) const {
+void DriveSystem::spin(SpinDirection spinDirection, uint8_t speed) {
 	if(spinDirection == RIGHT) {
-		rightMotor.spin(0, speed);
-		leftMotor.spin(1, speed);
+		_rightMotorDirection = BACK;
+		_leftMotorDirection = FORTH;
 	}
 	else if(spinDirection == LEFT) {
-		rightMotor.spin(1, speed);
-		leftMotor.spin(0, speed);
+		_rightMotorDirection = FORTH;
+		_leftMotorDirection = BACK;
 	}
+
+	_rightMotorSpeed = speed;
+	_leftMotorSpeed = speed;
+
+	activate();
 }
 
 /*
  * @brief DriveSystem stop Method
  */
-void DriveSystem::stop() const{
+void DriveSystem::stop(uint32_t stopTime) {
+	uint32_t startTime = chTimeNow();
+	uint32_t leftTime = stopTime;
+
+	uint8_t rightInitSpeed = _rightMotorSpeed;
+	uint8_t leftInitSpeed = _leftMotorSpeed;
+
+	while (leftTime > 0) {
+		leftTime = stopTime - (chTimeNow() - startTime);
+
+		_rightMotorSpeed = leftTime * rightInitSpeed / stopTime;
+		_leftMotorSpeed = leftTime * leftInitSpeed / stopTime;
+		activate();
+	}
+
 	rightMotor.stop();
 	leftMotor.stop();
 }
@@ -56,15 +95,28 @@ void DriveSystem::stop() const{
 /*
  * @brief DriveSystem turn function
  */
-void DriveSystem::turn(bool turnDirection, uint8_t speed) const {
+void DriveSystem::turn(SpinDirection turnDirection, uint8_t speed) {
 	if(turnDirection == RIGHT) {
-		rightMotor.spin(FORTH, speed);
-		leftMotor.spin(FORTH, speed - 30);
+		_rightMotorSpeed = speed;
+		_leftMotorSpeed = speed - 30;
 	}
 	else if(turnDirection == LEFT) {
-		rightMotor.spin(FORTH, speed - 30);
-		leftMotor.spin(FORTH, speed);
+		_rightMotorSpeed = speed - 30;
+		_leftMotorSpeed = speed;
 	}
+
+	_rightMotorDirection = FORTH;
+	_leftMotorDirection = FORTH;
+
+	activate();
+}
+
+/*
+ * @brief DriveSystem activate method
+ */
+void DriveSystem::activate(void) {
+	rightMotor.spin((bool)_rightMotorDirection, _rightMotorSpeed);
+	leftMotor.spin((bool)_leftMotorDirection, _leftMotorSpeed);
 }
 
 /*
