@@ -9,6 +9,7 @@
 
 #include <Arduino.h>
 #include "Motor.h"
+#include "ChibiOS_AVR.h"
 
 	enum Direction {
 		BACK,
@@ -30,16 +31,16 @@ class DriveSystem {
 
 		DriveSystem();
 
-		void go(bool direction = FORTH, uint8_t speed = DEFAULT_MAX_SPEED) const;
+		void go(Direction direction = FORTH, uint8_t speed = DEFAULT_MAX_SPEED, uint32_t launchTime = 250);
 
-		void spin(bool spinDirection = RIGHT, uint8_t speed = DEFAULT_MAX_SPEED) const;
+		void spin(SpinDirection spinDirection = RIGHT, uint8_t speed = DEFAULT_MAX_SPEED);
 
 		// TODO : is it really useful? shouldn't it be part of a dynamic behavior?
-		void turn(bool turnDirection = RIGHT, uint8_t speed = DEFAULT_MAX_SPEED) const;
+		void turn(SpinDirection turnDirection = RIGHT, uint8_t speed = DEFAULT_MAX_SPEED);
 
 		// void turn(int16_t angle = 45, bool direction = FORTH, uint8_t speed = DEFAULT_MAX_SPEED) const;
 
-		void stop() const;
+		void stop(uint32_t stopTime = 250);
 
 	private:
 
@@ -47,8 +48,13 @@ class DriveSystem {
 		uint8_t _rightMotorSpeed;
 		uint8_t _leftMotorSpeed;
 
+		Direction _rightMotorDirection;
+		Direction _leftMotorDirection;
+
 		uint8_t _motorMinSpeed;
 		uint8_t _motorMaxSpeed;
+
+		void activate();
 
 		//	CONSTANTS
 		static const uint8_t DEFAULT_MIN_SPEED = 0;
