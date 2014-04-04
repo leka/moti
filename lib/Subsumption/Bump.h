@@ -23,8 +23,8 @@ void bumpTask() {
 	robot.spin();
 	delay(1000);
 
-	Serial.println(F("Let's Get Going!"));
 	robot.stop();
+	Serial.println(F("Let's Get Going!"));
 	heart.turnOff();
 	delay(2000);
 	chEvtGetAndClearEvents(bumpEvent);
