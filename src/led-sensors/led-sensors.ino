@@ -21,12 +21,16 @@ Led heart = Led(11, 12, 13);
 Sensors sensors;
 
 int16_t mapYaw, mapPitch, mapRoll;
+int16_t mapYPR[3];
+int16_t mapXYZ[3];
+
 SEMAPHORE_DECL(output, 0);
 
-static WORKING_AREA(waLedThread, 260);
+static WORKING_AREA(waGyrThread, 260);
+static WORKING_AREA(waAccThread, 260);
 static WORKING_AREA(waSensorsThread, 260);
 
-static msg_t LedThread(void *arg) {
+static msg_t GyrThread(void *arg) {
 
 	(void) arg;
 
@@ -34,7 +38,28 @@ static msg_t LedThread(void *arg) {
 		mapYaw = map(sensors.getYPR(0), -180, 180, 0, 255);
 		mapPitch = map(sensors.getYPR(1), -90, 90, 0, 255);
 		mapRoll = map(sensors.getYPR(2), -90, 90, 0, 255);
+
 		heart.shine(mapYaw, mapPitch, mapRoll);
+		chThdSleepMilliseconds(100);
+	}
+	return 0;
+}
+
+static msg_t AccThread(void *arg) {
+
+	(void) arg;
+
+	while (TRUE) {
+		for (uint8_t i = 0; i < 3; i++){
+			if (sensors.getXYZ(i) > 0) {
+				mapXYZ[i] = sensors.getXYZ(i);
+			}
+			else {
+				mapXYZ[i] = - sensors.getXYZ(i);
+			}
+		}
+
+		heart.shine(mapXYZ[0], mapXYZ[1], mapXYZ[2]);
 		chThdSleepMilliseconds(100);
 	}
 	return 0;
@@ -58,8 +83,10 @@ void chSetup() {
 
 	delay(5000);
 
-	chThdCreateStatic(waLedThread, sizeof(waLedThread),
-		NORMALPRIO, LedThread, NULL);
+	// chThdCreateStatic(waGyrThread, sizeof(waGyrThread),
+	// 	NORMALPRIO, GyrThread, NULL);
+	chThdCreateStatic(waAccThread, sizeof(waAccThread),
+		NORMALPRIO, AccThread, NULL);
 	chThdCreateStatic(waSensorsThread, sizeof(waSensorsThread),
 		NORMALPRIO, SensorsThread, NULL);
 }
