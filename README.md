@@ -5,24 +5,19 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [](#)
-- [Moti Readme](#moti-readme)
-	- [About](#about)
+- [About](#about)
+	- [What is Moti](#what-is-moti)
 	- [Why Github?](#why-github)
 	- [Is Moti open source and/or open hardware](#is-moti-open-source-andor-open-hardware)
-	- [TO DO](#to-do)
-		- [Global](#global)
-		- [Sensors](#sensors)
-		- [Motors](#motors)
-		- [Behaviors](#behaviors)
-		- [Hardware](#hardware)
-	- [Actual Version](#actual-version)
-	- [Branches](#branches)
+- [How to...](#how-to)
 	- [How to install](#how-to-install)
 	- [How to use](#how-to-use)
-	- [How to contribute](#how-to-contribute)
 	- [How to make your own Moti](#how-to-make-your-own-moti)
-	- [Copyright and License](#copyright-and-license)
+- [Contributing](#contributing)
+	- [How can I help?](#how-can-i-help)
+	- [To do - Work flow](#to-do---work-flow)
+	- [Branches](#branches)
+- [Copyright and License](#copyright-and-license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -54,6 +49,22 @@ For the hardware, things are a little different. Today, we use Arduino as our pr
 
 In the meantime we are working on a *more robust, more powerful, more sensors* prototype. We haven't decided yet if this new version will be open hardware, but we are currently looking and the pros and cons.
 
+## How to...
+
+### How to install
+
+The full procedure is detailed in [INSTALL.md](./INSTALL.md). It has been written for beginners as well as for advanced hackers.
+
+### How to use
+
+The full procedure on how to use everything you've just installed is described in [USE.md](./USE.md).
+
+### How to make your own Moti
+
+Moti is currently based on Arduino. That's why it is totally open hardware and the full bill of materials will be added soon.
+
+The Arduino Mega2560 is becoming a little tight to suit our power and memory needs. We are currently benchmarking different alternatives such as the [Olimex STM32-H407](#link).
+
 ## Contributing
 
 ### How can I help?
@@ -64,97 +75,16 @@ Help is always more than welcome. If you want to take part in this project, plea
 
 We use [waffle.io](http://waffle.io/WeAreLeka/moti) to manage our to do list and our work flow. Of course, [Github issues](https://github.com/weareleka/moti/issues?state=open) can also be used.
 
-To know what we are working on and what needs to be done, you can click on the following link:
+To know what we are working on and what needs to be done, you can click on the following link: [![Stories in Ready](https://badge.waffle.io/WeAreLeka/moti.png?label=ready)](http://waffle.io/WeAreLeka/moti)
 
-[![Stories in Ready](https://badge.waffle.io/WeAreLeka/moti.png?label=ready)](http://waffle.io/WeAreLeka/moti)
-
-### Global
-
-*	~~make this project more collaborative~~ - DONE :)
-*	implement a real list of all the tasks we need to do to make the robot work! - WIP
-
-### Sensors
-
-*	~~integrate the new version of FreeIMU~~ - DONE
-*	~~make the appropriate changes to get rid of all the useless libs~~ - DONE
-*	implement the sensor analyser to find pattern in the sensors' data - WIP
-
-### Motors
-
-*	~~separate de Motors Class in 2 clases: Motor et DriveSystem to better separate concerns~~ - DONE
-*	~~unit test motor class~~ - DONE
-*	~~test for minimum motor speed~~- CANCELED - too hard to do with our current motors...
-*	use sensors data for `spinRight` and `spinLeft`
-
-### Behaviors
-
-*	~~try and implement a RTOS using [ChibiOS/RT](#link) or [NilRTOS](#link)~~ - DONE - ChibiOS has been chosen and is up and running
-*	develop stabilize behavior - WIP
-*	develop afraid behavior
-*	develop happy behavior
-*	develop seeking interaction behavior
-*	develop stuck behavior
-*	develop hit a wall behavior - WIP
-
-### Hardware
-
-*	design the PCB - WIP
-*	3D print the robot
-
-##Actual Version
-
-We are now working with `MOTI v1.0`.
-
-From now on, the old moti versions (moti_1 & moti_2) are **deprecated** and will only be accessible from the [`oldies` branch](https://github.com/WeAreLeka/moti/tree/oldies).
-
-For today, building a robot behavior is as simple as:
-
-```C++
-motors.go();
-
-delay(2500);
-
-motors.stop();
-
-sensors.read();
-sensors.sendData();
-```
-
-It is a lot easier for everyone to write code and to understand what you do. It is also easier for the other people who will read your code to understand what you're trying to do.
-
-It's not a real `API` but it will eventually become one.
-
-##Branches
+### Branches
 
 **IMPORTANT:** Our model is based on [A successful Git branching Model](http://nvie.com/posts/a-successful-git-branching-model/). PLEASE, take the time to read it carefully before starting. We don't want you to mess things up! :)
 
 *	`master` is the stable branch for production.
 *	`dev` (origin HEAD) is the development branch for unit/lab tests and behavior development. If the lab tests are concluding, a pull request to the master can be made.
 *	`feature branches` are transitory branches used to develop new features to incorporate to the dev branch. When the feature is bug free, a pull request can be made to merge the concluding results inside the dev branch.
-*	`oldies` branch keeps all the old code and libraries we used for the first prototype. It is deprecated now but could be help full for beginners.
-
-##How to install
-
-The full procedure is detailed in [INSTALL.md](./INSTALL.md). It has been written for beginners as well as for advanced hackers.
-
-##How to use
-
-The full procedure on how to use everything you've just installed is described in [USE.md](./USE.md).
-
-##How to contribute
-
-Thanks to Github, the best way to help us is by `forking` the project, coding and then making pull requests.
-
-We will only accept direct merging of pull request, so make sure your code is OK for that.
-
-## How to make your own Moti
-
-Moti is currently based on Arduino. That's why it is totally open hardware and the full bill of materials will be added soon.
-
-The Arduino Mega2560 is becoming a little tight to suit our power and memory needs. We are currently benchmarking different alternatives such as the [Olimex STM32-H407](#link).
-
-In the meantime we are also working with the [Criif](#link) to build custom prototype with a lot of different sensors and actuators and even a real OS (Bare metal is cool but imagine what we could do with Linux!).
-
+*	`oldies` branch keeps all the old code and libraries we used for the first prototype. It is deprecated now but could be helpful for beginners.
 ##Copyright and License
 
 Moti, a free, as in speech, robotic spherical mobile robot for children with autism.
