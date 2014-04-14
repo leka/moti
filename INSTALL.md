@@ -239,7 +239,6 @@ If it's not working, make sure everything has been installed correctly and check
 
 **Workin in progress... stay tuned!**
 
-<!--
 #### Toolbox
 
 Before starting, we need to install different **mandatory** softwares:
@@ -593,4 +592,3 @@ $ make upload
 ```
 
 And your code should upload! :)
--->
