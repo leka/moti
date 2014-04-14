@@ -1,6 +1,3 @@
-[![Stories in Ready](https://badge.waffle.io/WeAreLeka/moti.png?label=ready)](http://waffle.io/WeAreLeka/moti)
-
-=======
 
 #Moti Readme
 
@@ -33,11 +30,11 @@
 
 ![Moti](https://scontent-b.xx.fbcdn.net/hphotos-prn2/t31.0-8/1978378_640660259359885_9078537445630618389_o.jpg)
 
-## What is Moti
+### What is Moti
 
 Moti is a new kind of interactive smart toy: it's a spherical robot specially designed for children with communication and social disabilities.
 
-###Why Github?
+### Why Github?
 
 At first, we wanted to keep the code for ourselves. But then we thought "hey! our project is great, but wouldn't it be better if a lot of people could fork it, add their modifications, features, improvements, and then share it back to the community?"
 
@@ -57,7 +54,19 @@ For the hardware, things are a little different. Today, we use Arduino as our pr
 
 In the meantime we are working on a *more robust, more powerful, more sensors* prototype. We haven't decided yet if this new version will be open hardware, but we are currently looking and the pros and cons.
 
-## TO DO
+## Contributing
+
+### How can I help?
+
+Help is always more than welcome. If you want to take part in this project, please, make sure you read our [Contributing guidelines](./CONTRIBUTING.md).
+
+### To do - Work flow
+
+We use [waffle.io](http://waffle.io/WeAreLeka/moti) to manage our to do list and our work flow. Of course, [Github issues](https://github.com/weareleka/moti/issues?state=open) can also be used.
+
+To know what we are working on and what needs to be done, you can click on the following link:
+
+[![Stories in Ready](https://badge.waffle.io/WeAreLeka/moti.png?label=ready)](http://waffle.io/WeAreLeka/moti)
 
 ### Global
 
