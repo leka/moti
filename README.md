@@ -31,15 +31,19 @@
 
 ##About
 
+![Moti](https://scontent-b.xx.fbcdn.net/hphotos-prn2/t31.0-8/1978378_640660259359885_9078537445630618389_o.jpg)
+
+## What is Moti
+
 Moti is a new kind of interactive smart toy: it's a spherical robot specially designed for children with communication and social disabilities.
 
-##Why Github?
+###Why Github?
 
 At first, we wanted to keep the code for ourselves. But then we thought "hey! our project is great, but wouldn't it be better if a lot of people could fork it, add their modifications, features, improvements, and then share it back to the community?"
 
 For us, the answer is an absolute **YES**! We want people to be able to look at our code, use it for their projects, use it to build their own Moti and then get back to us to improve the awesomeness for a better world today!
 
-## Is Moti open source and/or open hardware
+### Is Moti open source and/or open hardware
 
 **Short answer:** yes.
 
