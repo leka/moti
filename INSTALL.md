@@ -66,7 +66,7 @@ Before starting, please make sure you have those installed:
 
 #### 1. Install `avr-gcc`, `binutils`, `avr-libc` and `avrdude`
 
-We've made a [Homebrew](http://brew.sh/) `formula` that you can `tap` like [**dat ass**](https://www.youtube.com/watch?v=18gp_NBg43c):
+We've made a [Homebrew](http://brew.sh/) `formula` that you can `tap` like [*dat ass*](https://www.youtube.com/watch?v=18gp_NBg43c):
 
 ```Bash
 $ brew tap WeAreLeka/avr
@@ -110,7 +110,40 @@ Then install pyserial:
 $ pip install pyserial
 ```
 
-#### 4. Test if your code is compiled and upload to 
+#### 4. Test if your code is compiled and uploaded correctly
+
+To make sure you're up and running to hack autism, we are going to compile some code.
+
+First `cd` to one of the `src` folders, i.e.:
+
+```Bash
+$ cd path/to/moti
+$ cd src/driveSystem
+```
+
+Then copy the `Makefile` from `arduino-mk`:
+
+```Bash
+$ cp ../../arduino-mk/examples/MakefileExample/Makefile-example.mk ./Makefile
+```
+
+You need to customize the `Makefile` to work on your pc. Open it and change the following line:
+
+```Makefile
+# change line 8 from
+PROJECT_DIR = /Users/Ladislas/dev/leka/moti
+# according to your path to
+PROJECT_DIR = path/to/moti
+```
+
+Then compile and upload your code to an **Arduino Mega2560**:
+
+```Bash
+$ make
+$ make upload
+```
+
+If it's not working, make sure everything has been installed correctly and check your `Makefile` configuration. Also make sure you are using and `Arduino Mega2560`.
 
 #### Toolbox
 
