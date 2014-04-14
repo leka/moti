@@ -4,6 +4,31 @@
 
 #Moti Readme
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [](#)
+- [Moti Readme](#moti-readme)
+	- [About](#about)
+	- [Why Github?](#why-github)
+	- [Is Moti open source and/or open hardware](#is-moti-open-source-andor-open-hardware)
+	- [TO DO](#to-do)
+		- [Global](#global)
+		- [Sensors](#sensors)
+		- [Motors](#motors)
+		- [Behaviors](#behaviors)
+		- [Hardware](#hardware)
+	- [Actual Version](#actual-version)
+	- [Branches](#branches)
+	- [How to install](#how-to-install)
+	- [How to use](#how-to-use)
+	- [How to contribute](#how-to-contribute)
+	- [How to make your own Moti](#how-to-make-your-own-moti)
+	- [Copyright and License](#copyright-and-license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ##About
 
 Moti is a new kind of interactive smart toy: it's a spherical robot specially designed for children with communication and social disabilities.
@@ -13,6 +38,20 @@ Moti is a new kind of interactive smart toy: it's a spherical robot specially de
 At first, we wanted to keep the code for ourselves. But then we thought "hey! our project is great, but wouldn't it be better if a lot of people could fork it, add their modifications, features, improvements, and then share it back to the community?"
 
 For us, the answer is an absolute **YES**! We want people to be able to look at our code, use it for their projects, use it to build their own Moti and then get back to us to improve the awesomeness for a better world today!
+
+## Is Moti open source and/or open hardware
+
+**Short answer:** yes.
+
+**Long answer:** yes, Moti's software is and will continue to be open source. Reasons are numerous, but the three main reasons are:
+
+*	we love open source, we use it constantly, we use GPL libraries, we want to keep that going on
+*	we truly believe we can create a community around our project, composed of parents, developers, researchers, doctors, carers
+*	because we just want to
+
+For the hardware, things are a little different. Today, we use Arduino as our prototype platform. The documentation to build your own Moti is a little outdated and will be updated soon. It will be available for anyone who wants to build it's own Moti. If we have enough time, we will also offer a way to download or order 3D printed pieces to assemble the robot.
+
+In the meantime we are working on a *more robust, more powerful, more sensors* prototype. We haven't decided yet if this new version will be open hardware, but we are currently looking and the pros and cons.
 
 ## TO DO
 
