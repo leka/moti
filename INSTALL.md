@@ -6,30 +6,20 @@
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 - [About](#about)
-- [Quick Install Guide](#quick-install-guide)
+- [Quick Installation Guide](#quick-installation-guide)
 	- [OS X - 10.9.2](#os-x---1092)
 		- [Toolbox](#toolbox)
 		- [1. Install `avr-gcc`, `binutils`, `avr-libc` and `avrdude`](#1-install-avr-gcc-binutils-avr-libc-and-avrdude)
 		- [2. Clone `moti` repository from Github](#2-clone-moti-repository-from-github)
 		- [3. Install `pySerial`](#3-install-pyserial)
-		- [4. Test if your code is compiled and upload to](#4-test-if-your-code-is-compiled-and-upload-to)
-		- [Toolbox](#toolbox-1)
-	- [Advanced & Recommended](#advanced-&-recommended)
-- [Installing, Updating & Removing](#installing-updating-&-removing)
-	- [Hacker's guide - Mac OS X Edition](#hackers-guide---mac-os-x-edition)
-		- [3. Clone the Arduino-Makefile repo from Github - *NOT REQUIRED ANYMORE*](#3-clone-the-arduino-makefile-repo-from-github---not-required-anymore)
-		- [4. Install the `perl` dependencies needed to use the `Makefile`](#4-install-the-perl-dependencies-needed-to-use-the-makefile)
-		- [5. Using the `Makefile` to compile your code](#5-using-the-makefile-to-compile-your-code)
-	- [Hacker's guide - Linux Edition](#hackers-guide---linux-edition)
-	- [Beginner's guide - Installing from scratch on OS X/Unix](#beginners-guide---installing-from-scratch-on-os-xunix)
-		- [Downloading and installing Sublime Text 2](#downloading-and-installing-sublime-text-2)
-		- [Downloading and installing the Arduino IDE](#downloading-and-installing-the-arduino-ide)
-		- [Downloading and installing a Git GUI](#downloading-and-installing-a-git-gui)
-		- [Installing Homebrew](#installing-homebrew)
-		- [Installing Git with Homebrew](#installing-git-with-homebrew)
-		- [Check Git version and amend `$PATH` if necessary](#check-git-version-and-amend-$path-if-necessary)
-		- [Getting ready for the next part](#getting-ready-for-the-next-part)
-		- [Installing `avr-gcc` and co](#installing-avr-gcc-and-co)
+		- [4. Test if your code is compiled and uploaded correctly](#4-test-if-your-code-is-compiled-and-uploaded-correctly)
+	- [Ubuntu](#ubuntu)
+		- [1. Install the toolbox](#1-install-the-toolbox)
+		- [1. Install `avr-gcc`, `binutils`, `avr-libc` and `avrdude`](#1-install-avr-gcc-binutils-avr-libc-and-avrdude-1)
+		- [2. Clone `moti` repository from Github](#2-clone-moti-repository-from-github-1)
+		- [3. Install `pySerial`](#3-install-pyserial-1)
+		- [4. Test if your code is compiled and uploaded correctly](#4-test-if-your-code-is-compiled-and-uploaded-correctly-1)
+- [Full installation Guide for OS X 10.9.2](#full-installation-guide-for-os-x-1092)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -45,14 +35,14 @@ It took us quite some time to figure out what to do, how to do it, which Homebre
 
 Here after, you'll find two sets of instructions:
 
-*	[Quick Install Guide](#quick-install-guide)
+*	[Quick Installation Guide](#quick-install-guide)
 	*	OS X
 	*	Ubuntu
-*	[Detailed Install Guide for OS X](#detailed-install-guide) - WIP
+*	[Full Installation Guide for OS X](#detailed-install-guide) - WIP
 
 Have fun! :)
 
-## Quick Install Guide
+## Quick Installation Guide
 
 ### OS X - 10.9.2
 
@@ -245,7 +235,9 @@ $ make upload
 
 If it's not working, make sure everything has been installed correctly and check your `Makefile` configuration. Also make sure you are using and `Arduino Mega2560`.
 
+## Full installation Guide for OS X 10.9.2
 
+**Workin in progress... stay tuned!**
 
 <!--
 #### Toolbox
