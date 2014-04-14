@@ -3,7 +3,7 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+**Table of Contents**
 
 - [About](#about)
 - [Quick Installation Guide](#quick-installation-guide)
@@ -33,7 +33,7 @@ It took us quite some time to figure out what to do, how to do it, which Homebre
 
 >It's our present to the world!
 
-Here after, you'll find two sets of instructions:
+You'll find two sets of instructions:
 
 *	[Quick Installation Guide](#quick-install-guide)
 	*	OS X
@@ -63,7 +63,7 @@ $ brew tap WeAreLeka/avr
 $ brew install avr-libc
 ```
 
-Check that everything has been installed properly by running `avr-gcc -v`. If `avrdude` is missing, install it with:
+Check that everything has been installed properly by running `avr-gcc -v` and `avrdude -v`. If `avrdude` is missing, install it with:
 
 ```Bash
 $ brew install avrdude
@@ -86,7 +86,7 @@ $ git checkout dev && git submodule update --init --recursive
 
 #### 3. Install `pySerial`
 
-To upload the program, we need to reset the Arduino board. This is done using s `python script` stored in `./arduino-mk/bin`
+To upload the program, we need to reset the Arduino board. This is done using a `python script` stored in `./arduino-mk/bin`
 
 First, if you don't already have Python, you can install it using Homebrew:
 
@@ -94,7 +94,7 @@ First, if you don't already have Python, you can install it using Homebrew:
 $ brew install python
 ```
 
-Then install pyserial:
+Then install `pySerial`:
 
 ```Bash
 $ pip install pyserial
@@ -104,7 +104,7 @@ $ pip install pyserial
 
 To make sure you're up and running to hack autism, we are going to compile some code.
 
-First `cd` to one of the `src` folders, i.e.:
+First `cd` to one of the `src` folders:
 
 ```Bash
 $ cd path/to/moti
@@ -133,7 +133,7 @@ $ make
 $ make upload
 ```
 
-If it's not working, make sure everything has been installed correctly and check your `Makefile` configuration. Also make sure you are using and `Arduino Mega2560`.
+If it's not working, make sure everything has been installed correctly and check your `Makefile` configuration. Also make sure you are using an `Arduino Mega2560`.
 
 ### Ubuntu
 
@@ -179,7 +179,7 @@ First, if you don't already have Python, you can install it:
 $ sudo apt-get install python python-pip
 ```
 
-Then install pyserial:
+Then install `pySerial`:
 
 ```Bash
 $ sudo pip install pyserial --upgrade
