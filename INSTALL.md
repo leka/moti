@@ -47,8 +47,8 @@ Here after, you'll find two sets of instructions:
 
 *	[Quick Install Guide](#quick-install-guide)
 	*	OS X
-	*	Linux
-*	[Detailed Install Guide for OS X](#detailed-install-guide)
+	*	Ubuntu
+*	[Detailed Install Guide for OS X](#detailed-install-guide) - WIP
 
 Have fun! :)
 
@@ -60,9 +60,9 @@ Have fun! :)
 
 Before starting, please make sure you have those installed:
 
-*	[Arduino IDE](http://arduino.cc/en/main/software)
-*	[Homebrew](http://mxcl.github.io/homebrew/)
-*	[Git](http://git-scm.com/)
+*	[Arduino IDE](http://arduino.cc/en/main/software) - Download the app from the website
+*	[Homebrew](http://mxcl.github.io/homebrew/) - Follow the instructions on their website
+*	[Git](http://git-scm.com/) - use `brew install git` to install the latest version
 
 #### 1. Install `avr-gcc`, `binutils`, `avr-libc` and `avrdude`
 
@@ -84,13 +84,13 @@ $ brew install avrdude
 Simply clone the repo:
 
 ```Bash
-$ git clone https://github.com/WeAreLeka/moti.git /path/to/your/moti/directory
+$ git clone https://github.com/WeAreLeka/moti.git path/to/moti
 ```
 
 Initialize and update submodules:
 
 ```Bash
-$ cd /path/to/your/moti/directory
+$ cd path/to/moti
 $ git checkout dev && git submodule update --init --recursive
 ```
 
@@ -145,6 +145,109 @@ $ make upload
 
 If it's not working, make sure everything has been installed correctly and check your `Makefile` configuration. Also make sure you are using and `Arduino Mega2560`.
 
+### Ubuntu
+
+#### 1. Install the toolbox
+
+Before starting we need to install `git` and `arduino`:
+
+```Bash
+$ sudo apt-get update && sudo apt-get upgrade
+$ sudo apt-get install git arduino
+```
+
+#### 1. Install `avr-gcc`, `binutils`, `avr-libc` and `avrdude`
+
+```Bash
+$ sudo apt-get install gcc-avr binutils avr-libc avrdude
+```
+
+Make sure everything is up and running by running `avr-gcc -v` and `avrdude -v`.
+
+#### 2. Clone `moti` repository from Github
+
+Simply clone the repo:
+
+```Bash
+$ git clone https://github.com/WeAreLeka/moti.git path/to/moti
+```
+
+Initialize and update submodules:
+
+```Bash
+$ cd path/to/moti
+$ git checkout dev && git submodule update --init --recursive
+```
+
+#### 3. Install `pySerial`
+
+To upload the program, we need to reset the Arduino board. This is done using s `python script` stored in `./arduino-mk/bin`
+
+First, if you don't already have Python, you can install it:
+
+```Bash
+$ sudo apt-get install python python-pip
+```
+
+Then install pyserial:
+
+```Bash
+$ sudo pip install pyserial --upgrade
+```
+
+#### 4. Test if your code is compiled and uploaded correctly
+
+To make sure you're up and running to hack autism, we are going to compile some code.
+
+First `cd` to one of the `src` folders, i.e.:
+
+```Bash
+$ cd path/to/moti
+$ cd src/driveSystem
+```
+
+Then copy the `Makefile` from `arduino-mk`:
+
+```Bash
+$ cp ../../arduino-mk/examples/MakefileExample/Makefile-example.mk ./Makefile
+```
+
+You need to customize the `Makefile` to work on your pc. Open it and change the following line:
+
+```Makefile
+# change line 8 from
+PROJECT_DIR = /Users/Ladislas/dev/leka/moti
+# according to your path to
+PROJECT_DIR = path/to/moti
+
+# change line 16 from
+ARDUINO_DIR = /Applications/Arduino.app/Contents/Resources/Java
+# to
+ARDUINO_DIR = /usr/share/arduino
+
+# change line 32 from
+AVR_TOOLS_DIR     = /usr/local
+# according to your path to
+AVR_TOOLS_DIR     = /usr
+
+# change line 36 from
+AVRDDUDE          = /usr/local/bin/avrdude
+# according to your path to
+AVRDDUDE          = /usr/bin/avrdude
+```
+
+Then compile and upload your code to an **Arduino Mega2560**:
+
+```Bash
+$ make
+$ make upload
+```
+
+If it's not working, make sure everything has been installed correctly and check your `Makefile` configuration. Also make sure you are using and `Arduino Mega2560`.
+
+
+
+<!--
 #### Toolbox
 
 Before starting, we need to install different **mandatory** softwares:
@@ -498,3 +601,4 @@ $ make upload
 ```
 
 And your code should upload! :)
+-->
