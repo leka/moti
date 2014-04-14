@@ -71,7 +71,7 @@ The Arduino Mega2560 is becoming a little tight to suit our power and memory nee
 
 Help is always more than welcome. If you want to take part in this project, please, make sure you read our [Contributing guidelines](./CONTRIBUTING.md).
 
-### To do - Work flow
+### Work flow/To do list
 
 We use [waffle.io](http://waffle.io/WeAreLeka/moti) to manage our to do list and our work flow. Of course, [Github issues](https://github.com/weareleka/moti/issues?state=open) can also be used.
 

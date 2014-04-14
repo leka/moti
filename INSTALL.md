@@ -1,24 +1,120 @@
-# Moti Installation Guide
+
+# Installation Guide
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [About](#about)
+- [Quick Install Guide](#quick-install-guide)
+	- [OS X - 10.9.2](#os-x---1092)
+		- [Toolbox](#toolbox)
+		- [1. Install `avr-gcc`, `binutils`, `avr-libc` and `avrdude`](#1-install-avr-gcc-binutils-avr-libc-and-avrdude)
+		- [2. Clone `moti` repository from Github](#2-clone-moti-repository-from-github)
+		- [3. Install `pySerial`](#3-install-pyserial)
+		- [4. Test if your code is compiled and upload to](#4-test-if-your-code-is-compiled-and-upload-to)
+		- [Toolbox](#toolbox-1)
+	- [Advanced & Recommended](#advanced-&-recommended)
+- [Installing, Updating & Removing](#installing-updating-&-removing)
+	- [Hacker's guide - Mac OS X Edition](#hackers-guide---mac-os-x-edition)
+		- [3. Clone the Arduino-Makefile repo from Github - *NOT REQUIRED ANYMORE*](#3-clone-the-arduino-makefile-repo-from-github---not-required-anymore)
+		- [4. Install the `perl` dependencies needed to use the `Makefile`](#4-install-the-perl-dependencies-needed-to-use-the-makefile)
+		- [5. Using the `Makefile` to compile your code](#5-using-the-makefile-to-compile-your-code)
+	- [Hacker's guide - Linux Edition](#hackers-guide---linux-edition)
+	- [Beginner's guide - Installing from scratch on OS X/Unix](#beginners-guide---installing-from-scratch-on-os-xunix)
+		- [Downloading and installing Sublime Text 2](#downloading-and-installing-sublime-text-2)
+		- [Downloading and installing the Arduino IDE](#downloading-and-installing-the-arduino-ide)
+		- [Downloading and installing a Git GUI](#downloading-and-installing-a-git-gui)
+		- [Installing Homebrew](#installing-homebrew)
+		- [Installing Git with Homebrew](#installing-git-with-homebrew)
+		- [Check Git version and amend `$PATH` if necessary](#check-git-version-and-amend-$path-if-necessary)
+		- [Getting ready for the next part](#getting-ready-for-the-next-part)
+		- [Installing `avr-gcc` and co](#installing-avr-gcc-and-co)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## About
 
-Here is the guide to correctly setup all you need to peacefully develop awesome code for Moti. Usually, you won't find instructions as detailed as this one, because it's part of the "hacker thing" to know what you're doing and/or to make it work by trials and errors.
+Here after, you will be guided during the installation and setup of our toolchain.
 
-That could work for us, but it's a little different. This project is not a small part in a bigger project. It actually is the bigger project and here after you'll find all the steps to successfully code/debug/compile/upload/test everything on your own robot.
+The toolchain gathers all the pieces of software you need to successfully write, compile, debug, recompile and upload your code to our Arduino based Moti.
 
-The thing is, it took us quite some time to figure out what to do, how to do it, which Homebrew `formula` to install, how to use the `Makefile` and so on. When we say quite some time, you can count full working weeks of reading, trying, trying again, cursing because nothing is working, dead ends, new ideas, clearer vision and finally a working process.
+It took us quite some time to figure out what to do, how to do it, which Homebrew `formula` to install, how to use the `Makefile` and so on. When we say quite some time, you can count full working weeks of reading, trying, trying again, cursing because nothing is working, dead ends, new ideas, clearer vision and finally a working toolchain.
 
-It's our present to the world!
+>It's our present to the world!
 
-You can follow two directions: the detailed way (perfect for beginners) or the more advanced way (perfect for highly talented hackers).
+Here after, you'll find two sets of instructions:
+
+*	[Quick Install Guide](#quick-install-guide)
+	*	OS X
+	*	Linux
+*	[Detailed Install Guide for OS X](#detailed-install-guide)
 
 Have fun! :)
 
-## Toolbox
+## Quick Install Guide
 
-### Basic & Mandatory
+### OS X - 10.9.2
 
-First, you'll need to install different softwares:
+#### Toolbox
+
+Before starting, please make sure you have those installed:
+
+*	[Arduino IDE](http://arduino.cc/en/main/software)
+*	[Homebrew](http://mxcl.github.io/homebrew/)
+*	[Git](http://git-scm.com/)
+
+#### 1. Install `avr-gcc`, `binutils`, `avr-libc` and `avrdude`
+
+We've made a [Homebrew](http://brew.sh/) `formula` that you can `tap` like [**dat ass**](https://www.youtube.com/watch?v=18gp_NBg43c):
+
+```Bash
+$ brew tap WeAreLeka/avr
+$ brew install avr-libc
+```
+
+Check that everything has been installed properly by running `avr-gcc -v`. If `avrdude` is missing, install it with:
+
+```Bash
+$ brew install avrdude
+```
+
+#### 2. Clone `moti` repository from Github
+
+Simply clone the repo:
+
+```Bash
+$ git clone https://github.com/WeAreLeka/moti.git /path/to/your/moti/directory
+```
+
+Initialize and update submodules:
+
+```Bash
+$ cd /path/to/your/moti/directory
+$ git checkout dev && git submodule update --init --recursive
+```
+
+#### 3. Install `pySerial`
+
+To upload the program, we need to reset the Arduino board. This is done using s `python script` stored in `./arduino-mk/bin`
+
+First, if you don't already have Python, you can install it using Homebrew:
+
+```Bash
+$ brew install python
+```
+
+Then install pyserial:
+
+```Bash
+$ pip install pyserial
+```
+
+#### 4. Test if your code is compiled and upload to 
+
+#### Toolbox
+
+Before starting, we need to install different **mandatory** softwares:
 
 *	[Arduino IDE](http://arduino.cc/en/main/software) - this software is used to develop the source code and to upload it to your Arduino board. We recommend going for the 1.0.5 version. If you are a little more advanced user feel free to try the new beta version 1.5. Please note that you may encounter strange behaviors (we do sometimes), so please, take the time to report them in the [Due Forum](http://forum.arduino.cc/index.php?board=87.0) and/or here.
 *	[Homebrew](http://mxcl.github.io/homebrew/) - Homebrew is the best package manager for OS X (a Linux version is under development). Homebrew helps you download and install packages to do whatever your need to do, without compromising your computer and the weird stuff going on in `/usr/local/`
@@ -43,31 +139,6 @@ Okay, so you started with the Arduino IDE, you're now familiar with the language
 For you people working on Max OS X, it should be pretty easy.
 
 Make sure you've installed the Arduino IDE.
-
-#### 1. Installing `avr-gcc`, `binutils`, `avr-libc` and `avrdude`
-
-We've made a Homebrew `formula` that you can `tap` like *dat ass*:
-
-```Bash
-$ brew tap WeAreLeka/avr
-$ brew install avr-libc
-```
-
-Check that everything has been installed properly. If `avrdude` is missing, install it with:
-
-```Bash
-$ brew install avrdude
-```
-
-#### 2. Clone `moti` repository from Github
-
-Simply clone the repo:
-
-```Bash
-$ git clone https://github.com/WeAreLeka/moti.git /path/to/your/moti/directory
-$ cd /path/to/your/moti/directory
-$ git checkout dev
-```
 
 #### 3. Clone the Arduino-Makefile repo from Github - *NOT REQUIRED ANYMORE*
 
