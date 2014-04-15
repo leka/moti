@@ -16,11 +16,20 @@ systime_t timeThreshold = 15000;
 systime_t elapsedTime = 0;
 systime_t lastTime = 0;
 
+uint32_t startBumpTime = 0;
+
+#define Z_HISTORY_SIZE 30
+float dz[Z_HISTORY_SIZE] = { 0.f };
+uint8_t z_index = 0;
+float z = 200.f, old_z = 200.f;
+
 // BASIC TASKS
 void arbitrerTask() {
 	sensors.readAccelerometer();
 	// xAverage = (alpha * sensors.getXYZ(0) + (256 - alpha) * xAverage ) / 256;
-	Serial.println(xAverage);
+	Serial.print(F("X: "));
+	Serial.println(sensors.getXYZ(0));
+	//Serial.println(xAverage);
 	// sensors.sendJson();
 	// elapsedTime = elapsedTime + chTimeNow() - lastTime;
 	// lastTime = chTimeNow();
@@ -29,10 +38,62 @@ void arbitrerTask() {
 	// Serial.print(F("Time = "));
 	// Serial.println(elapsedTime);
 
-	if (sensors.getXYZ(0) >= xThreshold) {
-		sleeping = FALSE;
-		chEvtSignal(BumpThd, bumpEvent);
+	/****** BUMPING PART ******/
+
+	if (abs(sensors.getXYZ(0)) >= 165) { //xThreshold) {
+		if (startBumpTime == 0)
+			startBumpTime = chTimeNow();
+		else if (chTimeNow() - startBumpTime > 265) {
+			Serial.println(F("BUMP!"));
+			sleeping = FALSE;
+			chEvtSignal(BumpThd, bumpEvent);
+		}
 	}
+	else
+		startBumpTime = 0;
+
+	/**************************/
+
+	/****** STABILIZATION PART ******/
+
+	old_z = z;
+	z = sensors.getXYZ(2);
+
+	dz[z_index] = abs(z - old_z);
+	z_index = (z_index + 1) % Z_HISTORY_SIZE;
+
+	float sum = 0;
+	for (uint8_t i = 0; i < Z_HISTORY_SIZE; ++i)
+		sum += dz[i];
+
+	//Serial.print("Sum: ");
+	//Serial.println(sum);
+
+	if (sum > Z_HISTORY_SIZE * 80.f) {
+		Serial.println("STAB");
+		Serial.println(sleeping);
+
+		z_index = 0;
+		for (uint8_t i = 0; i < Z_HISTORY_SIZE; ++i)
+			dz[i] = 0.f;
+
+		robot.stop(0);
+
+		if (sleeping) {
+			//chEvtGetAndClearEvents(stabilizationEvent);
+		}
+		else {
+			Serial.println("Stabilizing");
+			//chEvtSignal(StabilizationThd, stabilizationEvent);
+		}
+
+		sleeping = !sleeping;
+		chThdSleepMilliseconds(1000);
+	}
+
+	/********************************/
+	
+
 	// if (sensors.getXYZ(2) >= zThreshold) {
 	// 	sleeping = FALSE;
 	// 	// Serial.println(F("Calling Cruise Thread"));
@@ -59,6 +120,8 @@ static msg_t ArbitrerThread(void *arg) {
 	while(TRUE) {
 		arbitrerTask();
 	}
+
+	return (msg_t)0;
 }
 
 

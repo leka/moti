@@ -13,12 +13,11 @@
  * @param directionPin for Moti in its most up-to-date configuration, the pins are as follow: Left Dir = 4 / Left Speed = 5 // Right Dir = 7 / Right Speed = 6
  * @param speedPin
  */
-DriveSystem::DriveSystem() {
-	_rightMotorSpeed = 0;
-	_leftMotorSpeed = 0;
+DriveSystem::DriveSystem() :
+rMotor(Motor(DEFAULT_RIGHT_MOTOR_DIRECTION_PIN, DEFAULT_RIGHT_MOTOR_SPEED_PIN)),
+lMotor(Motor(DEFAULT_LEFT_MOTOR_DIRECTION_PIN, DEFAULT_LEFT_MOTOR_SPEED_PIN))
+{
 
-	_rightMotorDirection = FORTH;
-	_leftMotorDirection = FORTH;
 }
 
 /*
@@ -27,25 +26,57 @@ DriveSystem::DriveSystem() {
  * @param direction should take 0 for backward, 1 for forward
  * @param speed the speed the motors should have
  */
-void DriveSystem::go(Direction direction, uint8_t speed, uint32_t launchTime) {
-	uint32_t startTime = chTimeNow();
-	uint32_t currentTime = 0;
+void DriveSystem::go(Direction _direction, uint8_t _speed, uint32_t _time, uint16_t _launchTime) {
+	launch(_direction, _speed, _launchTime);
 
-	_rightMotorDirection = direction;
-	_leftMotorDirection = direction;
+	if (_time - _launchTime)
+		chThdSleepMilliseconds(_time - _launchTime);
+}
 
-	while (currentTime < launchTime) {
-		currentTime = chTimeNow() - startTime;
+/*
+ * @brief DriveSystem launch Method
+ *
+ * @param direction should take 0 for backward, 1 for forward
+ * @param speed the speed the motors should have
+ */
+void DriveSystem::launch(Direction _direction, uint8_t _speed, uint16_t _launchTime) {
+	uint32_t delayValue = 10;
+  uint32_t nLoops = _launchTime / delayValue;
 
-		_rightMotorSpeed = currentTime * speed / launchTime;
-		_leftMotorSpeed = _rightMotorSpeed;
+  uint8_t lInitSpeed = lSpeed;
+  uint8_t rInitSpeed = rSpeed;
 
-		activate();
-	}	
+  if (lInitSpeed != rInitSpeed)
+  	Serial.print("Outch!");
 
-	_rightMotorSpeed = speed;
-	_leftMotorSpeed = speed;
-	activate();
+  if (lInitSpeed == _speed)
+  	return;
+
+  if (lDirection != _direction) {
+  	float leftSpd = (float)lSpeed;
+  	float part = leftSpd / ((float)_speed + leftSpd);
+
+  	stop((uint32_t)(_launchTime * part));
+
+  	lDirection = _direction;
+  	rDirection = _direction;
+
+  	launch(_direction, _speed, (uint32_t)(_launchTime * (1.f - part)));
+  }
+
+  for (uint32_t i = 0; i < nLoops; ++i) {
+    lSpeed = lInitSpeed + (i * (_speed - lInitSpeed)) / nLoops;
+    rSpeed = rInitSpeed + (i * (_speed - rInitSpeed)) / nLoops;
+
+    activate();
+
+    chThdSleepMilliseconds(delayValue);
+  }
+
+  lSpeed = _speed;
+  rSpeed = _speed;
+
+  activate();
 }
 
 /*
@@ -54,69 +85,116 @@ void DriveSystem::go(Direction direction, uint8_t speed, uint32_t launchTime) {
  * @param direction should take 0 for backward, 1 for forward
  * @param speed the speed the motors should have
  */
-void DriveSystem::spin(SpinDirection spinDirection, uint8_t speed) {
-	if(spinDirection == RIGHT) {
-		_rightMotorDirection = BACK;
-		_leftMotorDirection = FORTH;
-	}
-	else if(spinDirection == LEFT) {
-		_rightMotorDirection = FORTH;
-		_leftMotorDirection = BACK;
-	}
+void DriveSystem::spin(Sensors &sensors, SpinDirection spinDirection, uint8_t speed, uint16_t angle) {
+	float alpha = sensors.getEuler(0);
+	float currentAngle = alpha;
+	float lastAngle = alpha;
 
-	_rightMotorSpeed = speed;
-	_leftMotorSpeed = speed;
+	lSpeed = speed;
+	rSpeed = speed;
+
+	if (spinDirection == RIGHT) {
+		lDirection = FORTH;
+		rDirection = BACK;
+	}
+	else {
+		rDirection = FORTH;
+		lDirection = BACK;
+	}
 
 	activate();
+
+	while (1) {
+		float beta = angle >= 360 ? 90. : (float)angle;
+		angle -= (uint16_t)beta;
+
+		if (spinDirection == LEFT)
+			beta = -beta;
+
+		float destination = currentAngle + beta;
+
+		if (abs(destination) >= 180.) {
+			while (currentAngle * lastAngle >= 0) {
+				lastAngle = currentAngle;
+				currentAngle = sensors.getEuler(0);
+			}
+
+			destination = (360. + destination) * (spinDirection == LEFT ? 1. : -1.);
+		}
+
+		if (spinDirection == RIGHT) {
+			while (destination > currentAngle)
+				currentAngle = sensors.getEuler(0);
+		}
+		else {
+			while (destination < currentAngle)
+				currentAngle = sensors.getEuler(0);
+		}
+
+		if (angle == 0)
+			break;
+	}
+
+	stop(0);
 }
 
 /*
  * @brief DriveSystem stop Method
  */
 void DriveSystem::stop(uint32_t stopTime) {
-	uint32_t startTime = chTimeNow();
-	uint32_t leftTime = stopTime;
+	uint32_t delayValue = 10;
+  uint32_t nLoops = stopTime / delayValue;
 
-	uint8_t rightInitSpeed = _rightMotorSpeed;
-	uint8_t leftInitSpeed = _leftMotorSpeed;
+  uint8_t lInitSpeed = lSpeed;
+  uint8_t rInitSpeed = rSpeed;
 
-	while (leftTime > 0) {
-		leftTime = stopTime - (chTimeNow() - startTime);
+  if ((lInitSpeed == 0) && (rInitSpeed == 0))
+  	return;
 
-		_rightMotorSpeed = leftTime * rightInitSpeed / stopTime;
-		_leftMotorSpeed = leftTime * leftInitSpeed / stopTime;
-		activate();
-	}
+  for (uint32_t i = 0; i < nLoops; ++i) {
+    lSpeed = lInitSpeed - (i * lInitSpeed) / nLoops;
+    rSpeed = rInitSpeed - (i * rInitSpeed) / nLoops;
 
-	rightMotor.stop();
-	leftMotor.stop();
+    activate();
+
+    chThdSleepMilliseconds(delayValue);
+  }
+
+  lDirection = FORTH;
+  rDirection = FORTH;
+
+  lSpeed = 0;
+  rSpeed = 0;
+  
+  lMotor.stop();
+  rMotor.stop();
 }
 
 /*
  * @brief DriveSystem turn function
  */
 void DriveSystem::turn(SpinDirection turnDirection, uint8_t speed) {
-	if(turnDirection == RIGHT) {
-		_rightMotorSpeed = speed;
-		_leftMotorSpeed = speed - 30;
-	}
-	else if(turnDirection == LEFT) {
-		_rightMotorSpeed = speed - 30;
-		_leftMotorSpeed = speed;
-	}
+	if (turnDirection == RIGHT) {
+		rSpeed = speed;
+		rDirection = FORTH;
 
-	_rightMotorDirection = FORTH;
-	_leftMotorDirection = FORTH;
+		lSpeed = speed >= 30 ? (speed - 30) : 0;
+		lDirection = FORTH;
+	}
+	else {
+		lSpeed = speed;
+		lDirection = FORTH;
+
+		rSpeed = speed >= 30 ? (speed - 30) : 0;
+		rDirection = FORTH;
+	}
 
 	activate();
 }
 
-/*
- * @brief DriveSystem activate method
- */
-void DriveSystem::activate(void) {
-	rightMotor.spin((bool)_rightMotorDirection, _rightMotorSpeed);
-	leftMotor.spin((bool)_leftMotorDirection, _leftMotorSpeed);
+void DriveSystem::activate() {
+	lMotor.spin((bool)lDirection, lSpeed);
+	rMotor.spin((bool)rDirection, rSpeed);
 }
 
 /*

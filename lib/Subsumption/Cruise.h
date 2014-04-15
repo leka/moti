@@ -8,10 +8,9 @@
 #include "DriveSystem.h"
 
 void cruiseTask() {
-	heart.shine(GREEN_PURE);
-	Serial.println(F("Cruising..."));
-	robot.go();
-	chThdSleepMilliseconds(4000);
+	heart.shine(BLUE_PURE);
+	Serial.println(F("Cruising... ..."));
+	robot.go(FORTH, 180, 4000);
 }
 
 static msg_t CruiseThread(void *arg) {
@@ -21,8 +20,13 @@ static msg_t CruiseThread(void *arg) {
 
 	while(TRUE) {
 		// chEvtWaitAny(cruiseEvent);
-		cruiseTask();
+		if (!sleeping)
+			cruiseTask();
+
+		chThdSleepMilliseconds(70);
 	}
+
+  return (msg_t)0;
 }
 
 #endif // LEKA_MOTI_CRUISE_H

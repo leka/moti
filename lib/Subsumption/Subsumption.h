@@ -19,10 +19,11 @@ static WORKING_AREA(waStabilizationThread, 400);
 static WORKING_AREA(waCruiseThread, 400);
 static WORKING_AREA(waBumpThread, 400);
 
+
 // EVENTS
-eventmask_t cruiseEvent = 0b001;
-eventmask_t bumpEvent = 0b010;
-eventmask_t stabilizationEvent = 0b100;
+eventmask_t cruiseEvent = 1; // 0b001;
+eventmask_t bumpEvent = 2; // 0b010;
+eventmask_t stabilizationEvent = 4; // 0b100;
 
 // STATES
 bool_t sleeping = TRUE;
@@ -30,7 +31,7 @@ bool_t sleeping = TRUE;
 // THREADS
 Thread * ArbitrerThd;
 Thread * CruiseThd;
-Thread * BumpThd;
 Thread * StabilizationThd;
+Thread * BumpThd;
 
 #endif // LEKA_MOTI_BEHAVIORS_H
