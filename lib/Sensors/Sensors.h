@@ -39,6 +39,7 @@ class Sensors {
 
 		int getXYZ(uint8_t index);
 		int getYPR(uint8_t index);
+		float getEuler(uint8_t index);
 
 		void sendJson();
 		void sendData();
@@ -51,11 +52,12 @@ class Sensors {
 		int _YPR[3];
 		float _tmpYPR[3];
 
+		FreeIMU AccelGyro;
+
 		// MUTEX
 		MUTEX_DECL(sensorsDataMutex);
 
 		//	RELATED CLASS
-		FreeIMU AccelGyro;
 };
 
 #endif

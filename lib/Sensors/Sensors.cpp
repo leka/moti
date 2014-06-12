@@ -110,6 +110,22 @@ int Sensors::getYPR(uint8_t index){
 
 	return value;
 }
+
+/**
+ * @brief Accessing Euler angles
+ *
+ * getEuler() is used to acces the Euler angles
+ * @param index index of the value you want to access: 0 -> Y || 1 -> P || 2 -> R
+ * @return angle Psi, Theta or Phi
+ */
+float Sensors::getEuler(uint8_t index){
+	float angles[3];
+
+	AccelGyro.getEuler(angles);
+
+	return angles[index];
+}
+
 /**
  * @brief Send sensors data for debug
  */

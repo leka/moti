@@ -13,20 +13,21 @@ void bumpTask() {
 	delay(2000);
 	heart.shine(RED_PURE);
 
+	/*
 	Serial.println(F("Going Backward"));
-	robot.go(BACK);
-	delay(2000);
+	robot.go(BACK, 220, 1000);
 	robot.stop();
 	delay(1000);
+	*/
 
 	Serial.println(F("Turning Around"));
-	robot.spin();
+	robot.spin(sensors, RIGHT, 160, 120);
 	delay(1000);
 
-	robot.stop();
 	Serial.println(F("Let's Get Going!"));
+	//robot.stop();
 	heart.turnOff();
-	delay(2000);
+	delay(1000);
 	chEvtGetAndClearEvents(bumpEvent);
 }
 
@@ -40,6 +41,8 @@ static msg_t BumpThread(void *arg) {
 		bumpTask();
 		chEvtGetAndClearEvents(bumpEvent);
 	}
+
+	return (msg_t)0;
 }
 
 #endif // LEKA_MOTI_BUMP_H
