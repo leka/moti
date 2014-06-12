@@ -10,7 +10,7 @@
 #include "Serial.h"
 
 DriveSystem drive;
-Led light = Led(8, 9, 10);
+Led light = Led(11, 12, 13);
 
 static WORKING_AREA(waThread1, 1024);
 
@@ -37,18 +37,16 @@ static msg_t Thread1 (void *arg) {
 		// chThdSleepMilliseconds(500);
 		// drive.stop();
 		// chThdSleepMilliseconds(750);
-
-		// drive.go(FORTH, 95);
-		// chThdSleepMilliseconds(1100);
+        //
+		// drive.go();
+		// chThdSleepMilliseconds(5000);
 		// drive.stop();
-		// chThdSleepMilliseconds(750);
+		// chThdSleepMilliseconds(2000);
 		// drive.spin(RIGHT, 100);
 		// chThdSleepMilliseconds(500);
 		// drive.stop();
-		// chThdSleepMilliseconds(750);
-
-		chThdSleepMilliseconds(5000);
-
+		// chThdSleepMilliseconds(2000);
+        //
 	}
 	return 0;
 }
@@ -60,9 +58,9 @@ static msg_t Thread2 (void *arg) {
 	(void)arg;
 
 	while (TRUE) {
-		light.fade(300, RED_PURE, GREEN_PURE);
-		light.fade(300, GREEN_PURE, BLUE_PURE);
-		light.fade(300, BLUE_PURE, RED_PURE);
+		light.fade(300, RAND, RAND);
+		light.fade(300, RAND, RAND);
+		light.fade(300, RAND, RAND);
 	}
 
 	return 0;
