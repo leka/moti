@@ -20,33 +20,15 @@ static msg_t Thread1 (void *arg) {
 
 	while (TRUE) {
 
-		// drive.go(FORTH, 95);
-		// chThdSleepMilliseconds(1100);
-		// drive.stop();
-		// chThdSleepMilliseconds(750);
-		// drive.spin(RIGHT, 100);
-		// chThdSleepMilliseconds(500);
-		// drive.stop();
-		// chThdSleepMilliseconds(750);
+		drive.go();
+		chThdSleepMilliseconds(5000);
+		drive.stop();
+		chThdSleepMilliseconds(3000);
+		drive.spin(RIGHT);
+		chThdSleepMilliseconds(3000);
+		drive.stop();
+		chThdSleepMilliseconds(3000);
 
-		// drive.go(FORTH, 95);
-		// chThdSleepMilliseconds(1100);
-		// drive.stop();
-		// chThdSleepMilliseconds(750);
-		// drive.spin(RIGHT, 100);
-		// chThdSleepMilliseconds(500);
-		// drive.stop();
-		// chThdSleepMilliseconds(750);
-        //
-		// drive.go();
-		// chThdSleepMilliseconds(5000);
-		// drive.stop();
-		// chThdSleepMilliseconds(2000);
-		// drive.spin(RIGHT, 100);
-		// chThdSleepMilliseconds(500);
-		// drive.stop();
-		// chThdSleepMilliseconds(2000);
-        //
 	}
 	return 0;
 }
@@ -81,7 +63,7 @@ void setup() {
 
 	serial.begin(115200);
 
-	delay(3000);
+	delay(13000);
 
 	serial.println("Starting...");
 

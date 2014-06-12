@@ -19,7 +19,7 @@ systime_t lastTime = 0;
 // BASIC TASKS
 void arbitrerTask() {
 	sensors.readAccelerometer();
-	// xAverage = (alpha * sensors.getXYZ(0) + (256 - alpha) * xAverage ) / 256;
+	xAverage = (alpha * sensors.getXYZ(0) + (256 - alpha) * xAverage ) / 256;
 	Serial.println(xAverage);
 	// sensors.sendJson();
 	// elapsedTime = elapsedTime + chTimeNow() - lastTime;

@@ -17,7 +17,7 @@ DriveSystem robot;
 static WORKING_AREA(waArbitrerThread, 800);
 static WORKING_AREA(waStabilizationThread, 400);
 static WORKING_AREA(waCruiseThread, 400);
-static WORKING_AREA(waBumpThread, 400);
+static WORKING_AREA(waBumpThread, 900);
 
 // EVENTS
 eventmask_t cruiseEvent = 0b001;

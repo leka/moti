@@ -38,6 +38,8 @@ void setup() {
 	Serial.begin(115200);
 	sensors.init();
 
+	delay(10000);
+
 	chBegin(chSetup);
 
 	while(1) {
