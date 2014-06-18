@@ -28,23 +28,22 @@ void chSetup() {
 	chThdSleepMilliseconds(5000);
 
 	chThdCreateStatic(waArbitrerThread, sizeof(waArbitrerThread),
-		NORMALPRIO + 10, ArbitrerThread, NULL);
+			NORMALPRIO + 10, ArbitrerThread, NULL);
 	chThdCreateStatic(waStabilizationThread, sizeof(waStabilizationThread),
-	 	NORMALPRIO, StabilizationThread, NULL);
+			NORMALPRIO, StabilizationThread, NULL);
 	chThdCreateStatic(waCruiseThread, sizeof(waCruiseThread),
-		NORMALPRIO + 1, CruiseThread, NULL);
+			NORMALPRIO + 1, CruiseThread, NULL);
 	chThdCreateStatic(waBumpThread, sizeof(waBumpThread),
-		NORMALPRIO + 2, BumpThread, NULL);
-
+			NORMALPRIO + 2, BumpThread, NULL);
 
 	/* chThdSleepMilliseconds(6000);
-	Serial.println("YOLO");
-	robot.spin(sensors, RIGHT, 160, 90);
+	   Serial.println("YOLO");
+	   robot.spin(sensors, RIGHT, 160, 90);
 
-	chThdSleepMilliseconds(600);
+	   chThdSleepMilliseconds(600);
 
-	robot.go(FORTH, 130, 3000, 350);
-	robot.stop(500);
+	   robot.go(FORTH, 130, 3000, 350);
+	   robot.stop(500);
 
 	//chThdSleepMilliseconds(1000);
 

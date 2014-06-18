@@ -43,7 +43,7 @@ void arbitrerTask() {
 	if (abs(sensors.getXYZ(0)) >= 165) { //xThreshold) {
 		if (startBumpTime == 0)
 			startBumpTime = chTimeNow();
-		else if (chTimeNow() - startBumpTime > 265) {
+		else if (chTimeNow() - startBumpTime > 1000) {
 			Serial.println(F("BUMP!"));
 			sleeping = FALSE;
 			chEvtSignal(BumpThd, bumpEvent);
