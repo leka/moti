@@ -14,8 +14,8 @@
 #include "Sensors.h"
 
 enum Direction {
-  BACK,
-  FORTH
+	BACK,
+	FORTH
 };
 
 enum SpinDirection {
@@ -65,12 +65,12 @@ class DriveSystem {
 
 		// CONSTANTS
 		static const uint8_t DEFAULT_MIN_SPEED = 0;
-  	static const uint8_t DEFAULT_MAX_SPEED = 220;
+		static const uint8_t DEFAULT_MAX_SPEED = 220;
 
 		// RIGHT & LEFT MOTOR INSTANCES
 		Motor rMotor, lMotor;
 
-		FreeIMU AccelGyro;
+		Sensors sensors;
 };
 
 #endif

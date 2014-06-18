@@ -21,14 +21,22 @@ static msg_t Thread1 (void *arg) {
 	while (TRUE) {
 
 		drive.go();
-		chThdSleepMilliseconds(5000);
+		chThdSleepMilliseconds(3000);
 		drive.stop();
-		chThdSleepMilliseconds(3000);
-		drive.spin(RIGHT);
-		chThdSleepMilliseconds(3000);
+		chThdSleepMilliseconds(2500);
+		drive.turn(RIGHT);
+		chThdSleepMilliseconds(1500);
 		drive.stop();
 		chThdSleepMilliseconds(3000);
 
+		drive.go();
+		chThdSleepMilliseconds(3000);
+		drive.stop();
+		chThdSleepMilliseconds(2500);
+		drive.turn(LEFT);
+		chThdSleepMilliseconds(1500);
+		drive.stop();
+		chThdSleepMilliseconds(3000);
 	}
 	return 0;
 }
@@ -40,9 +48,7 @@ static msg_t Thread2 (void *arg) {
 	(void)arg;
 
 	while (TRUE) {
-		light.fade(300, RAND, RAND);
-		light.fade(300, RAND, RAND);
-		light.fade(300, RAND, RAND);
+		light.fade(500, RAND, RAND);
 	}
 
 	return 0;
