@@ -33,8 +33,8 @@ void chSetup() {
 			NORMALPRIO, StabilizationThread, NULL);
 	chThdCreateStatic(waCruiseThread, sizeof(waCruiseThread),
 			NORMALPRIO + 1, CruiseThread, NULL);
-	chThdCreateStatic(waBumpThread, sizeof(waBumpThread),
-			NORMALPRIO + 2, BumpThread, NULL);
+	// chThdCreateStatic(waBumpThread, sizeof(waBumpThread),
+	// 		NORMALPRIO + 2, BumpThread, NULL);
 
 	/* chThdSleepMilliseconds(6000);
 	   Serial.println("YOLO");

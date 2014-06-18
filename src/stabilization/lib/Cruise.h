@@ -8,9 +8,7 @@
 #include "DriveSystem.h"
 
 void cruiseTask() {
-	heart.shine(BLUE_PURE);
-	Serial.println(F("Cruising... ..."));
-	robot.go(FORTH, 180, 4000);
+	heart.fade(500, RAND, RAND);
 }
 
 static msg_t CruiseThread(void *arg) {
@@ -20,7 +18,7 @@ static msg_t CruiseThread(void *arg) {
 
 	while(TRUE) {
 		// chEvtWaitAny(cruiseEvent);
-		if (!sleeping)
+		// if (!sleeping)
 			cruiseTask();
 
 		chThdSleepMilliseconds(70);
