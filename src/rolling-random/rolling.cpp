@@ -1,13 +1,23 @@
 #define serial Serial
 
 #include <Arduino.h>
-#include "ChibiOS_AVR.h"
+#include <Wire.h>
 
-#include "Motor.h"
-#include "Led.h"
-#include "Tools.h"
-#include "DriveSystem.h"
+#include "ChibiOS_AVR.h"
 #include "Serial.h"
+#include "Tools.h"
+
+#include "CommunicationUtils.h"
+#include "DebugUtils.h"
+#include "ADXL345.h"
+#include "ITG3200.h"
+#include "FreeIMU.h"
+
+#include "Sensors.h"
+#include "Led.h"
+#include "DriveSystem.h"
+#include "Motor.h"
+
 
 DriveSystem drive;
 Led light = Led(11, 12, 13);
