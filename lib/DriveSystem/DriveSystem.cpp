@@ -14,8 +14,8 @@
  * @param speedPin
  */
 DriveSystem::DriveSystem() :
-rMotor(Motor(DEFAULT_RIGHT_MOTOR_DIRECTION_PIN, DEFAULT_RIGHT_MOTOR_SPEED_PIN)),
-lMotor(Motor(DEFAULT_LEFT_MOTOR_DIRECTION_PIN, DEFAULT_LEFT_MOTOR_SPEED_PIN))
+	rMotor(Motor(DEFAULT_RIGHT_MOTOR_DIRECTION_PIN, DEFAULT_RIGHT_MOTOR_SPEED_PIN)),
+	lMotor(Motor(DEFAULT_LEFT_MOTOR_DIRECTION_PIN, DEFAULT_LEFT_MOTOR_SPEED_PIN))
 {
 
 }
@@ -41,42 +41,42 @@ void DriveSystem::go(Direction _direction, uint8_t _speed, uint32_t _time, uint1
  */
 void DriveSystem::launch(Direction _direction, uint8_t _speed, uint16_t _launchTime) {
 	uint32_t delayValue = 10;
-  uint32_t nLoops = _launchTime / delayValue;
+	uint32_t nLoops = _launchTime / delayValue;
 
-  uint8_t lInitSpeed = lSpeed;
-  uint8_t rInitSpeed = rSpeed;
+	uint8_t lInitSpeed = lSpeed;
+	uint8_t rInitSpeed = rSpeed;
 
-  if (lInitSpeed != rInitSpeed)
-  	Serial.print("Outch!");
+	if (lInitSpeed != rInitSpeed)
+		Serial.print("Outch!");
 
-  if (lInitSpeed == _speed)
-  	return;
+	if (lInitSpeed == _speed)
+		return;
 
-  if (lDirection != _direction) {
-  	float leftSpd = (float)lSpeed;
-  	float part = leftSpd / ((float)_speed + leftSpd);
+	if (lDirection != _direction) {
+		float leftSpd = (float)lSpeed;
+		float part = leftSpd / ((float)_speed + leftSpd);
 
-  	stop((uint32_t)(_launchTime * part));
+		stop((uint32_t)(_launchTime * part));
 
-  	lDirection = _direction;
-  	rDirection = _direction;
+		lDirection = _direction;
+		rDirection = _direction;
 
-  	launch(_direction, _speed, (uint32_t)(_launchTime * (1.f - part)));
-  }
+		launch(_direction, _speed, (uint32_t)(_launchTime * (1.f - part)));
+	}
 
-  for (uint32_t i = 0; i < nLoops; ++i) {
-    lSpeed = lInitSpeed + (i * (_speed - lInitSpeed)) / nLoops;
-    rSpeed = rInitSpeed + (i * (_speed - rInitSpeed)) / nLoops;
+	for (uint32_t i = 0; i < nLoops; ++i) {
+		lSpeed = lInitSpeed + (i * (_speed - lInitSpeed)) / nLoops;
+		rSpeed = rInitSpeed + (i * (_speed - rInitSpeed)) / nLoops;
 
-    activate();
+		activate();
 
-    chThdSleepMilliseconds(delayValue);
-  }
+		chThdSleepMilliseconds(delayValue);
+	}
 
-  lSpeed = _speed;
-  rSpeed = _speed;
+	lSpeed = _speed;
+	rSpeed = _speed;
 
-  activate();
+	activate();
 }
 
 /*
@@ -85,7 +85,7 @@ void DriveSystem::launch(Direction _direction, uint8_t _speed, uint16_t _launchT
  * @param direction should take 0 for backward, 1 for forward
  * @param speed the speed the motors should have
  */
-void DriveSystem::spin(Sensors &sensors, SpinDirection spinDirection, uint8_t speed, uint16_t angle) {
+void DriveSystem::spin(Sensors &sensors, Rotation spinDirection, uint8_t speed, uint16_t angle) {
 	float alpha = sensors.getEuler(0);
 	float currentAngle = alpha;
 	float lastAngle = alpha;
@@ -143,47 +143,47 @@ void DriveSystem::spin(Sensors &sensors, SpinDirection spinDirection, uint8_t sp
  */
 void DriveSystem::stop(uint32_t stopTime) {
 	uint32_t delayValue = 10;
-  uint32_t nLoops = stopTime / delayValue;
+	uint32_t nLoops = stopTime / delayValue;
 
-  uint8_t lInitSpeed = lSpeed;
-  uint8_t rInitSpeed = rSpeed;
+	uint8_t lInitSpeed = lSpeed;
+	uint8_t rInitSpeed = rSpeed;
 
-  if ((lInitSpeed == 0) && (rInitSpeed == 0))
-  	return;
+	if ((lInitSpeed == 0) && (rInitSpeed == 0))
+		return;
 
-  for (uint32_t i = 0; i < nLoops; ++i) {
-    lSpeed = lInitSpeed - (i * lInitSpeed) / nLoops;
-    rSpeed = rInitSpeed - (i * rInitSpeed) / nLoops;
+	for (uint32_t i = 0; i < nLoops; ++i) {
+		lSpeed = lInitSpeed - (i * lInitSpeed) / nLoops;
+		rSpeed = rInitSpeed - (i * rInitSpeed) / nLoops;
 
-    activate();
+		activate();
 
-    chThdSleepMilliseconds(delayValue);
-  }
+		chThdSleepMilliseconds(delayValue);
+	}
 
-  lDirection = FORTH;
-  rDirection = FORTH;
+	lDirection = FORTH;
+	rDirection = FORTH;
 
-  lSpeed = 0;
-  rSpeed = 0;
-  
-  lMotor.stop();
-  rMotor.stop();
+	lSpeed = 0;
+	rSpeed = 0;
+
+	lMotor.stop();
+	rMotor.stop();
 }
 
 /*
  * @brief DriveSystem turn function
  */
-void DriveSystem::turn(SpinDirection turnDirection, uint8_t speed) {
+void DriveSystem::turn(Rotation turnDirection, uint8_t speed) {
 	if (turnDirection == RIGHT) {
 		rSpeed = speed;
 		rDirection = FORTH;
 
 		lSpeed = speed >= 30 ? (speed - 30) : 0;
-		lDirection = FORTH;
+		lDirection = BACK;
 	}
 	else {
 		lSpeed = speed;
-		lDirection = FORTH;
+		lDirection = BACK;
 
 		rSpeed = speed >= 30 ? (speed - 30) : 0;
 		rDirection = FORTH;

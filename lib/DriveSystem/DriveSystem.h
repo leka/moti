@@ -18,7 +18,7 @@ enum Direction {
 	FORTH
 };
 
-enum SpinDirection {
+enum Rotation {
 	RIGHT,
 	LEFT
 };
@@ -37,10 +37,10 @@ class DriveSystem {
 
 		void launch(Direction direction = FORTH, uint8_t speed = DEFAULT_MAX_SPEED, uint16_t launchTime = 250);
 
-		void spin(Sensors &sensors, SpinDirection spinDirection = RIGHT, uint8_t speed = DEFAULT_MAX_SPEED, uint16_t angle = 90);
+		void spin(Sensors &sensors, Rotation rotationDirection = RIGHT, uint8_t speed = DEFAULT_MAX_SPEED, uint16_t angle = 90);
 
 		// TODO : is it really useful? shouldn't it be part of a dynamic behavior?
-		void turn(SpinDirection turnDirection = RIGHT, uint8_t speed = DEFAULT_MAX_SPEED);
+		void turn(Rotation rotationDirection = RIGHT, uint8_t speed = DEFAULT_MAX_SPEED);
 
 		// void turn(int16_t angle = 45, bool direction = FORTH, uint8_t speed = DEFAULT_MAX_SPEED) const;
 
