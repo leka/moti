@@ -85,6 +85,7 @@ To know what we are working on and what needs to be done, you can click on the f
 *	`dev` (origin HEAD) is the development branch for unit/lab tests and behavior development. If the lab tests are concluding, a pull request to the master can be made.
 *	`feature branches` are transitory branches used to develop new features to incorporate to the dev branch. When the feature is bug free, a pull request can be made to merge the concluding results inside the dev branch.
 *	`oldies` branch keeps all the old code and libraries we used for the first prototype. It is deprecated now but could be helpful for beginners.
+
 ##Copyright and License
 
 Moti, a free, as in speech, robotic spherical mobile robot for children with autism.
