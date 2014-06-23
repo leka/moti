@@ -22,6 +22,7 @@ Submit a ticket for your issue, assuming one does not already exist.
 Then:
 
 *	Fork the repository on GitHub
+*	Create a **new branch** for the current story you are working on. Using `master` is [bad practice](http://codeinthehole.com/writing/pull-requests-and-other-good-practices-for-teams-using-github/#work-on-a-story)
 *	Make changes to your forked repository
 *	If you are adding or changing the behavior of any variable, method or class, then update the corresponding documentation in the respective files as well
 *	When committing, reference your issue (if present) and include a note about the fix

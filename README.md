@@ -61,9 +61,24 @@ The full procedure on how to use everything you've just installed is described i
 
 ### How to make your own Moti
 
-Moti is currently based on Arduino. That's why it is totally open hardware and the full bill of materials will be added soon.
+Moti is currently based on Arduino. That's why it is totally open hardware!
 
-The Arduino Mega2560 is becoming a little tight to suit our power and memory needs. We are currently benchmarking different alternatives such as the [Olimex STM32-H407](#link).
+#### Bill of Materials
+
+*	Arduino Mega2560 - [buy it here](http://www.dfrobot.com/index.php?route=product/product&filter_name=mega&page=2&product_id=655)
+*	Motor Shield - [buy it here](http://www.dfrobot.com/index.php?route=product/product&filter_name=motor%20shield&product_id=69)
+*	6DOF IMU Shield- [buy it here](http://www.dfrobot.com/index.php?route=product/product&filter_name=6%20dof&product_id=788)
+*	Motors (x2)- [buy it here](http://www.pololu.com/product/2365)
+*	Extended Brackets (x2)- [buy it here](http://www.pololu.com/product/989)
+*	Wheels (x2)- [buy it here](http://www.pololu.com/product/1087)
+*	Led (x1/x2)- [buy it here](http://www.dfrobot.com/index.php?route=product/product&filter_name=rgb%20led&product_id=900)
+*	Wires - [buy it here](http://www.dfrobot.com/index.php?route=product/product&filter_name=jumper%20wires&product_id=130)
+*	9v Batteries (x2) - buy it in your local retail store
+*	Bluetooth Module - [buy it here](http://www.ebay.com/itm/JY-MCU-HC-06-V1-03-Bluetooth-Transeiver-RF-Module-Wireless-Serial-4p-Port-line-/121267662236?pt=LH_DefaultDomain_0&hash=item1c3c1dad9c)
+
+The chassis is not yet ready to be 3D-printed, [we need your help for that](https://github.com/WeAreLeka/moti/issues/55).
+
+The Arduino Mega2560 is becoming a little tight to suit our power and memory needs. We are currently benchmarking different alternatives. If you know anything about embedded Linux, please [email us](dev@weareleka.com).
 
 ## Contributing
 
