@@ -22,7 +22,7 @@
 DriveSystem drive;
 Led light = Led(11, 12, 13);
 
-uint16_t randomTime(uint16_t min = 1000, uint16_t max = 5000){
+uint16_t randomTime(uint16_t min = 1000, uint16_t max = 4000){
 	return random(min, max);
 }
 
@@ -34,23 +34,23 @@ static msg_t Thread1 (void *arg) {
 
 	while (TRUE) {
 
-		drive.go();
-		chThdSleepMilliseconds(randomTime());
+		drive.launch();
+		chThdSleepMilliseconds(randomTime(1000, 4000));
 		drive.stop();
-		chThdSleepMilliseconds(randomTime());
+		chThdSleepMilliseconds(randomTime(1000, 4000));
 		drive.turn(RIGHT);
-		chThdSleepMilliseconds(randomTime());
+		chThdSleepMilliseconds(randomTime(1000, 4000));
 		drive.stop();
-		chThdSleepMilliseconds(randomTime());
+		chThdSleepMilliseconds(randomTime(1000, 4000));
 
-		drive.go();
-		chThdSleepMilliseconds(randomTime());
+		drive.launch();
+		chThdSleepMilliseconds(randomTime(1000, 4000));
 		drive.stop();
-		chThdSleepMilliseconds(randomTime());
+		chThdSleepMilliseconds(randomTime(1000, 4000));
 		drive.turn(LEFT);
-		chThdSleepMilliseconds(randomTime());
+		chThdSleepMilliseconds(randomTime(1000, 4000));
 		drive.stop();
-		chThdSleepMilliseconds(randomTime());
+		chThdSleepMilliseconds(randomTime(1000, 4000));
 	}
 	return 0;
 }
@@ -62,7 +62,7 @@ static msg_t Thread2 (void *arg) {
 	(void)arg;
 
 	while (TRUE) {
-		light.fade(randomTime(200, 100), RAND, RAND);
+		light.fade(randomTime(200, 600), RAND, RAND);
 	}
 
 	return 0;
@@ -83,7 +83,7 @@ void setup() {
 
 	serial.begin(115200);
 
-	delay(13000);
+	delay(5000);
 
 	serial.println("Starting...");
 
