@@ -21,7 +21,7 @@ flags = [
  ,'-isystem/usr/local/Cellar/avr-libc/1.8.0/avr/include'
  ,'-isystem/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
  ,'-isystem/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
-# ,'-I/Applications/Arduino.app/Contents/Resources/Java/libraries/Wire'
+,'-I/Applications/Arduino.app/Contents/Resources/Java/libraries/Wire'
  ,'-mmcu=atmega2560'
  ,'-DF_CPU=16000000L'
  ,'-DARDUINO=105'
