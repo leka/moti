@@ -17,30 +17,45 @@ You should have received a copy of the GNU General Public License
 along with Moti. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TOOLS_H_
-#define TOOLS_H_
+#include "Color.h"
+
 
 /**
- * @file Tools.h
+ * @file Color.cpp
  * @author Ladislas de Toldi
  * @version 1.0
  */
 
-#include <stdio.h>
+Color::Color() {
+    _r = _g = _b = 0;
+}
 
-//	Methods
-int8_t sabs8(int8_t i);
-int16_t sabs16(int16_t i);
-int32_t sabs32(int32_t i);
+Color::Color(uint8_t r, uint8_t g, uint8_t b) {
+    _r = r;
+    _g = g;
+    _b = b;
+}
 
-//	Constants
-static const int8_t INT8_MIN = -128;
-static const int8_t INT8_MAX = 127;
-static const int16_t INT16_MIN = -32768;
-static const int16_t INT16_MAX = 32767;
-static const int32_t INT32_MIN = -2147483647;
-static const int32_t INT32_MAX = 2147483647;
+void Color::getRGB(uint8_t* r, uint8_t* g, uint8_t* b) {
+    *r = _r;
+    *g = _g;
+    *b = _b;
+}
 
+uint8_t Color::getR(void) {
+    return _r;
+}
 
+uint8_t Color::getG(void) {
+    return _g;
+}
 
-#endif
+uint8_t Color::getB(void) {
+    return _b;
+}
+
+void Color::setRGB(uint8_t r, uint8_t g, uint8_t b) {
+    _r = r;
+    _g = g;
+    _b = b;
+}

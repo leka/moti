@@ -1,5 +1,3 @@
-#define serial Serial
-
 #include <Arduino.h>
 #include <Wire.h>
 
@@ -18,11 +16,10 @@
 #include "DriveSystem.h"
 #include "Motor.h"
 
-
-#include "./lib/Arbitrer.h"
-#include "./lib/Cruise.h"
-#include "./lib/Bump.h"
-#include "./lib/Stabilization.h"
+#include "lib/Arbitrer.h"
+#include "lib/Cruise.h"
+#include "lib/Bump.h"
+#include "lib/Stabilization.h"
 
 void chSetup() {
 	chThdSleepMilliseconds(5000);
@@ -36,16 +33,17 @@ void chSetup() {
 	chThdCreateStatic(waBumpThread, sizeof(waBumpThread),
 			NORMALPRIO + 2, BumpThread, NULL);
 
-	/* chThdSleepMilliseconds(6000);
-	   Serial.println("YOLO");
-	   robot.spin(sensors, RIGHT, 160, 90);
+	/* 
+	chThdSleepMilliseconds(6000);
+    Serial.println("YOLO");
+    robot.spin(sensors, RIGHT, 160, 90);
 
-	   chThdSleepMilliseconds(600);
+    chThdSleepMilliseconds(600);
 
-	   robot.go(FORTH, 130, 3000, 350);
-	   robot.stop(500);
+	robot.go(FORTH, 130, 3000, 350);
+    robot.stop(500);
 
-	//chThdSleepMilliseconds(1000);
+	chThdSleepMilliseconds(1000);
 
 	robot.spin(sensors, LEFT, 160, 90);
 
@@ -55,23 +53,19 @@ void chSetup() {
 	robot.stop(500);
 
 	Serial.println("SWAG");
-	robot.stop();*/
+	robot.stop();
+	*/
 }
 
-void setup() {
+void setup(void) {
 	Serial.begin(115200);
 	sensors.init();
 
-	Serial.println("111");
-
 	chBegin(chSetup);
 
-	while(1) {
-		// nothing to do here
-	}
+	while(1);
 }
 
-void loop() {
+void loop(void) {
 	// nothing to do here
 }
-

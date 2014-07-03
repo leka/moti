@@ -26,32 +26,16 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  * @version 1.0
  */
 
-/**
- * @brief Motor Class Constructor
- *
- * @param directionPin for Moti in its most up-to-date configuration, the pins are as follow: Left Dir = 4 / Left Speed = 5 // Right Dir = 7 / Right Speed = 6
- * @param speedPin
- */
-Motor::Motor(uint8_t directionPin, uint8_t speedPin) : _directionPin(directionPin), _speedPin(speedPin) {
-	// nothing to do here
+Motor::Motor(uint8_t direction_pin, uint8_t speed_pin) {
+    _direction_pin = direction_pin;
+    _speed_pin = speed_pin;
 }
 
-/*
- * @brief Motor Spin Method
- *
- * @param direction should take 0 for backward, 1 for frontward
- * @param speed the speed the motor should have
- */
-void Motor::spin(bool direction, uint8_t speed) const {
-	digitalWrite(_directionPin, direction);
-	analogWrite(_speedPin, speed);
+void Motor::spin(Direction direction, uint8_t speed) {
+    digitalWrite(_direction_pin, direction);
+    analogWrite(_speed_pin, speed);
 }
 
-/*
- * @brief Motor stop Method
- */
-void Motor::stop() const{
-	digitalWrite(_directionPin, 0);
-	digitalWrite(_speedPin, 0);
+void Motor::stop(void) {
+    spin(FORWARD, 0);
 }
-

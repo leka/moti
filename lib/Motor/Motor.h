@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with Moti. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef LEKA_MOTI_ARDUINO_MOTORS_H_
-#define LEKA_MOTI_ARDUINO_MOTORS_H_
+#ifndef LEKA_MOTI_ARDUINO_MOTOR_H_
+#define LEKA_MOTI_ARDUINO_MOTOR_H_
 
 /**
  * @file Motors.h
@@ -27,29 +27,25 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <Arduino.h>
+#include "Moti.h"
 
 /**
  * @class Motor
  * @brief Motor class gathers all the motor functions for Moti.
  */
+
 class Motor {
+public:
+    Motor(uint8_t direction_pin, uint8_t speed_pin);
 
-	public:
+    void spin(Direction direction=FORWARD, uint8_t speed=MAX_SPEED);
+    void stop(void);
 
-		Motor(uint8_t directionPin, uint8_t speedPin);
+    static const uint8_t MAX_SPEED = 255;
 
-		void spin(bool direction = 1, uint8_t speed = DEFAULT_MAX_SPEED) const;
-
-		void stop() const;
-
-	private:
-
-		//	VARIABLES
-		uint8_t _directionPin;
-		uint8_t _speedPin;
-
-		//	CONSTANTS
-		static const uint8_t DEFAULT_MAX_SPEED = 255;
+private:
+    uint8_t _direction_pin;
+    uint8_t _speed_pin;
 };
 
 #endif

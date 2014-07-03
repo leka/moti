@@ -17,25 +17,32 @@ You should have received a copy of the GNU General Public License
 along with Moti. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef LEKA_MOTI_ARDUINO_MOTI_H_
-#define LEKA_MOTI_ARDUINO_MOTI_H_
+#ifndef LEKA_MOTI_ARDUINO_COLOR_H_
+#define LEKA_MOTI_ARDUINO_COLOR_H_
+
+#include <Arduino.h>
 
 /**
- * @file Moti.h
+ * @file Color.h
  * @author Ladislas de Toldi
  * @version 1.0
  */
 
 
-typedef enum {
-    FORWARD,
-    BACKWARD
-} Direction;
+class Color {
+public:
+    Color();
+    Color(uint8_t r, uint8_t g, uint8_t b);
 
+    void getRGB(uint8_t *r, uint8_t* g, uint8_t* b);
+    uint8_t getR(void);
+    uint8_t getG(void);
+    uint8_t getB(void);
 
-typedef enum {
-    LEFT,
-    RIGHT
-} Rotation;
+    void setRGB(uint8_t r, uint8_t g, uint8_t b);
+
+private:
+    uint8_t _r, _g, _b;
+};
 
 #endif

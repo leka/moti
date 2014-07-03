@@ -17,41 +17,33 @@ You should have received a copy of the GNU General Public License
 along with Moti. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef LEKA_MOTI_ARDUINO_SERIAL_H_
-#define LEKA_MOTI_ARDUINO_SERIAL_H_
+#ifndef LEKA_MOTI_ARDUINO_LIGHT_H_
+#define LEKA_MOTI_ARDUINO_LIGHT_H_
+
+/**
+ * @file Light.h
+ * @author Ladislas de Toldi
+ * @version 1.0
+ */
 
 #include <Arduino.h>
 
-#ifndef serial
-#define serial Serial
-#endif
+#include "ChibiOS_AVR.h"
+#include "Color.h"
+#include "Led.h"
 
 
-namespace sio {
+/**
+ * @class Led
+ * @brief Led library gathers all the LED functions for Moti.
+ */
 
-	// Variables
-	static const uint8_t dataHeader = 0x0f;
-	static const uint8_t dataFooter = 0xf0;
+class Light: public Led {
+public:
+    Light();
+    Light(uint8_t red_pin, uint8_t green_pin, uint8_t blue_pin);
 
-	static const uint8_t readyCheck = 0xff;
-
-	static const uint8_t numberOfSensors = 0x02;
-
-	static const uint8_t initPhase = 0xAA;
-
-	static const uint8_t accelSensor = 0x01;
-	static const uint8_t accelData   = 0x06;
-	static const uint8_t gyroSensor  = 0x02;
-	static const uint8_t gyroData    = 0x06;
-
-	//	Methods
-	void writeByte(uint8_t value);
-	void writeInt(int value);
-
-	uint8_t readByte();
-
-	bool avalaible();
-
-}
+    void fade(Color start_color, Color end_color, uint16_t duration);
+};
 
 #endif
