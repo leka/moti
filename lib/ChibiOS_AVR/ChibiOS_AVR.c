@@ -38,7 +38,7 @@ size_t chHeapMainSize() {
 /**
  * Start ChibiOS/RT - does not return
  * \param[in] mainThread Function to be called before repeated calls
- *                       to loop().
+ *					   to loop().
  */
 void chBegin(void (*mainThread)()) {
   mainFcn = mainThread;
@@ -63,8 +63,8 @@ size_t chUnusedHeapMain() {
   size_t n = 0;
   uint8_t* p = stkBrk();
   while (p < RAMEND) {
-    if(*p++ != CH_STACK_FILL_VALUE) break;
-    n++;
+	if(*p++ != CH_STACK_FILL_VALUE) break;
+	n++;
   }
   return n;
 }
@@ -83,8 +83,8 @@ size_t chUnusedStack(void *wsp, size_t size) {
   uint8_t *startp = (uint8_t *)wsp + sizeof(Thread);
   uint8_t *endp = (uint8_t *)wsp + size;
   while (startp < endp) {
-    if(*startp++ != CH_STACK_FILL_VALUE) break;
-    n++;
+	if(*startp++ != CH_STACK_FILL_VALUE) break;
+	n++;
   }
 #endif // CH_DBG_FILL_THREADS
   return n;

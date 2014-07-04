@@ -35,13 +35,13 @@ void chSetup() {
 
 	/* 
 	chThdSleepMilliseconds(6000);
-    Serial.println("YOLO");
-    robot.spin(sensors, RIGHT, 160, 90);
+	Serial.println("YOLO");
+	robot.spin(sensors, RIGHT, 160, 90);
 
-    chThdSleepMilliseconds(600);
+	chThdSleepMilliseconds(600);
 
 	robot.go(FORTH, 130, 3000, 350);
-    robot.stop(500);
+	robot.stop(500);
 
 	chThdSleepMilliseconds(1000);
 

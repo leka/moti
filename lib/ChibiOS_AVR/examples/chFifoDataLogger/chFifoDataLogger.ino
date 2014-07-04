@@ -48,28 +48,28 @@ static msg_t Thread1(void *arg) {
   int count = 0;
 
   while (1) {
-    chThdSleep(intervalTicks);
-    // get a buffer
-    if (chSemWaitTimeout(&fifoSpace, TIME_IMMEDIATE) != RDY_OK) {
-      // fifo full indicate missed point
-      error++;
-      continue;
-    }
-    FifoItem_t* p = &fifoArray[fifoHead];
-    p->usec = micros();
+	chThdSleep(intervalTicks);
+	// get a buffer
+	if (chSemWaitTimeout(&fifoSpace, TIME_IMMEDIATE) != RDY_OK) {
+	  // fifo full indicate missed point
+	  error++;
+	  continue;
+	}
+	FifoItem_t* p = &fifoArray[fifoHead];
+	p->usec = micros();
 
-    // replace next line with data read from sensor such as
-    // p->value = analogRead(0);
-    p->value = count++;
+	// replace next line with data read from sensor such as
+	// p->value = analogRead(0);
+	p->value = count++;
 
-    p->error = error;
-    error = 0;
+	p->error = error;
+	error = 0;
 
-    // signal new data
-    chSemSignal(&fifoData);
-    
-    // advance FIFO index
-    fifoHead = fifoHead < (FIFO_SIZE - 1) ? fifoHead + 1 : 0;
+	// signal new data
+	chSemSignal(&fifoData);
+	
+	// advance FIFO index
+	fifoHead = fifoHead < (FIFO_SIZE - 1) ? fifoHead + 1 : 0;
   }
   return 0;
 }
@@ -84,9 +84,9 @@ void setup() {
   
   // open file
   if (!sd.begin(sdChipSelect)
-    || !file.open("DATA.CSV", O_CREAT | O_WRITE | O_TRUNC)) {
-    Serial.println(F("SD problem"));
-    sd.errorHalt();
+	|| !file.open("DATA.CSV", O_CREAT | O_WRITE | O_TRUNC)) {
+	Serial.println(F("SD problem"));
+	sd.errorHalt();
   }
   
   // throw away input
@@ -114,32 +114,32 @@ void mainThread() {
 
   // start SD write loop
   while (!Serial.available()) {
-    // wait for next data point
-    chSemWait(&fifoData);
+	// wait for next data point
+	chSemWait(&fifoData);
 
-    FifoItem_t* p = &fifoArray[fifoTail];
-    if (fifoTail >= FIFO_SIZE) fifoTail = 0;
+	FifoItem_t* p = &fifoArray[fifoTail];
+	if (fifoTail >= FIFO_SIZE) fifoTail = 0;
 
-    // print interval between points
-    if (last) {
-      file.print(p->usec - last);
-    } else {
-      file.write("NA");
-    }
-    last = p->usec;
-    file.write(',');
-    file.print(p->value);
-    file.write(',');
-    file.println(p->error);
+	// print interval between points
+	if (last) {
+	  file.print(p->usec - last);
+	} else {
+	  file.write("NA");
+	}
+	last = p->usec;
+	file.write(',');
+	file.print(p->value);
+	file.write(',');
+	file.println(p->error);
 
-    // remember error
-    if (p->error) overrunError = true;
+	// remember error
+	if (p->error) overrunError = true;
 
-    // release record
-    chSemSignal(&fifoSpace);
-    
-    // advance FIFO index
-    fifoTail = fifoTail < (FIFO_SIZE - 1) ? fifoTail + 1 : 0;
+	// release record
+	chSemSignal(&fifoSpace);
+	
+	// advance FIFO index
+	fifoTail = fifoTail < (FIFO_SIZE - 1) ? fifoTail + 1 : 0;
   }
   // close file, print stats and stop
   file.close();
@@ -149,8 +149,8 @@ void mainThread() {
   Serial.print(F("Heap/Main unused: "));
   Serial.println(chUnusedHeapMain());
   if (overrunError) {
-    Serial.println();
-    Serial.println(F("** overrun errors **"));
+	Serial.println();
+	Serial.println(F("** overrun errors **"));
   }
   while(1);
 }

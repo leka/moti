@@ -37,31 +37,28 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  */
 class Drive {
 public:
-    static void __start__(void* arg=NULL, tprio_t priority=NORMALPRIO);
+	static void __start__(void* arg=NULL, tprio_t priority=NORMALPRIO+2);
 
-    static void go(Direction direction, uint8_t speed);
-    static void spin(Rotation rotation, uint8_t speed);
-    static void turn(Direction direction, uint8_t speedR, uint8_t speedL);
-    static void stop(void);
+	static void go(Direction direction, uint8_t speed);
+	static void spin(Rotation rotation, uint8_t speed);
+	static void turn(Direction direction, uint8_t speedR, uint8_t speedL);
+	static void stop(void);
 
-    static Direction getRDirection(void);
-    static Direction getLDirection(void);
+	static Direction getRDirection(void);
+	static Direction getLDirection(void);
 
-    static uint8_t getRSpeed(void);
-    static uint8_t getLSpeed(void);
-
-    static bool isRunning();
-    static void setRunning(bool running);
-
-    static Motor _r_motor, _l_motor;
+	static uint8_t getRSpeed(void);
+	static uint8_t getLSpeed(void);
 
 private:
-    static uint8_t _r_speed, _l_speed;
-    static Direction _r_direction, _l_direction;
+	static uint8_t _r_speed, _l_speed;
+	static Direction _r_direction, _l_direction;
+	static Motor _r_motor, _l_motor;
 
-    static bool _is_started, _is_running;
+	static bool _is_started;
 
-    static Mutex _drive_mutex;
+	static Semaphore _sem;
+	static msg_t thread(void* arg);
 };
 
 #endif

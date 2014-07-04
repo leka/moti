@@ -1,29 +1,29 @@
 /****************************************************************************
-* ITG3200.h - ITG-3200/I2C library v0.5 for Arduino                         *
-* Copyright 2010-2011 Filipe Vieira & various contributors                  *
-* http://code.google.com/p/itg-3200driver                                   *
-* This file is part of ITG-3200 Arduino library.                            *
-*                                                                           *
-* This library is free software: you can redistribute it and/or modify      *
+* ITG3200.h - ITG-3200/I2C library v0.5 for Arduino						 *
+* Copyright 2010-2011 Filipe Vieira & various contributors				  *
+* http://code.google.com/p/itg-3200driver								   *
+* This file is part of ITG-3200 Arduino library.							*
+*																		   *
+* This library is free software: you can redistribute it and/or modify	  *
 * it under the terms of the GNU Lesser General Public License as published  *
-* by the Free Software Foundation, either version 3 of the License, or      *
-* (at your option) any later version.                                       *
-*                                                                           *
-* This program is distributed in the hope that it will be useful,           *
-* but WITHOUT ANY WARRANTY; without even the implied warranty of            *
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
-* GNU Lesser General Public License for more details.                       *
-*                                                                           *
+* by the Free Software Foundation, either version 3 of the License, or	  *
+* (at your option) any later version.									   *
+*																		   *
+* This program is distributed in the hope that it will be useful,		   *
+* but WITHOUT ANY WARRANTY; without even the implied warranty of			*
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the			 *
+* GNU Lesser General Public License for more details.					   *
+*																		   *
 * You should have received a copy of the GNU Lesser General Public License  *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.     *
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.	 *
 ****************************************************************************/
 /****************************************************************************
-* Tested on Arduino Mega with ITG-3200 Breakout                             *
-* SCL     -> pin 21     (no pull up resistors)                              *
-* SDA     -> pin 20     (no pull up resistors)                              *
-* CLK & GND -> pin GND                                                      *
-* INT       -> not connected  (but can be used)                             *
-* VIO & VDD -> pin 3.3V                                                     *
+* Tested on Arduino Mega with ITG-3200 Breakout							 *
+* SCL	 -> pin 21	 (no pull up resistors)							  *
+* SDA	 -> pin 20	 (no pull up resistors)							  *
+* CLK & GND -> pin GND													  *
+* INT	   -> not connected  (but can be used)							 *
+* VIO & VDD -> pin 3.3V													 *
 *****************************************************************************/
 #include "ITG3200.h"
 
@@ -32,10 +32,10 @@ ITG3200::ITG3200() {
   setGains(1.0,1.0,1.0);
   setOffsets(0.0,0.0,0.0);
   setRevPolarity(0,0,0);
-  //Wire.begin();       //Normally this code is called from setup() at user code
-                        //but some people reported that joining I2C bus earlier
-                        //apparently solved problems with master/slave conditions.
-                        //Uncomment if needed.
+  //Wire.begin();	   //Normally this code is called from setup() at user code
+						//but some people reported that joining I2C bus earlier
+						//apparently solved problems with master/slave conditions.
+						//Uncomment if needed.
 }
 
 void ITG3200::init(unsigned int  address) {
@@ -177,7 +177,7 @@ bool ITG3200::isRawDataReady() {
 
 void ITG3200::readTemp(float *_Temp) {
   readmem(TEMP_OUT,2,_buff);
-  *_Temp = 35 + (((_buff[0] << 8) | _buff[1]) + 13200) / 280.0;    // F=C*9/5+32
+  *_Temp = 35 + (((_buff[0] << 8) | _buff[1]) + 13200) / 280.0;	// F=C*9/5+32
 }
 
 void ITG3200::readGyroRaw(int *_GyroX, int *_GyroY, int *_GyroZ){
@@ -214,11 +214,11 @@ void ITG3200::zeroCalibrate(unsigned int totSamples, unsigned int sampleDelayMS)
   float tmpOffsets[] = {0,0,0};
 
   for (int i = 0;i < totSamples;i++){
-    delay(sampleDelayMS);
-    readGyroRaw(xyz);
-    tmpOffsets[0] += xyz[0];
-    tmpOffsets[1] += xyz[1];
-    tmpOffsets[2] += xyz[2];
+	delay(sampleDelayMS);
+	readGyroRaw(xyz);
+	tmpOffsets[0] += xyz[0];
+	tmpOffsets[1] += xyz[1];
+	tmpOffsets[2] += xyz[2];
   }
   setOffsets(-tmpOffsets[0] / totSamples, -tmpOffsets[1] / totSamples, -tmpOffsets[2] / totSamples);
 }
@@ -318,8 +318,8 @@ void ITG3200::readmem(uint8_t _addr, uint8_t _nbytes, uint8_t __buff[]) {
   Wire.requestFrom(_dev_address, _nbytes);// send data n-bytes read
   uint8_t i = 0;
   while (Wire.available()) {
-    __buff[i] = Wire.read(); // receive DATA
-    i++;
+	__buff[i] = Wire.read(); // receive DATA
+	i++;
   }
   Wire.endTransmission(); // end transmission
 }

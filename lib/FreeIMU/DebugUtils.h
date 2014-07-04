@@ -26,21 +26,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #ifdef DEBUG_V
   #include <WProgram.h>
-  #define DEBUG_PRINT(str)    \
-    serial.print(millis());     \
-    serial.print(": ");    \
-    serial.print(__PRETTY_FUNCTION__); \
-    serial.print(' ');      \
-    serial.print(__FILE__);     \
-    serial.print(':');      \
-    serial.print(__LINE__);     \
-    serial.print(' ');      \
-    serial.println(str);
+  #define DEBUG_PRINT(str)	\
+	serial.print(millis());	 \
+	serial.print(": ");	\
+	serial.print(__PRETTY_FUNCTION__); \
+	serial.print(' ');	  \
+	serial.print(__FILE__);	 \
+	serial.print(':');	  \
+	serial.print(__LINE__);	 \
+	serial.print(' ');	  \
+	serial.println(str);
 #endif
 
 #ifdef DEBUG
   #define DEBUG_PRINT(str) \
-    serial.println(str);
+	serial.println(str);
 #endif
 
 #ifndef DEBUG_PRINT
@@ -53,7 +53,7 @@ int availableMemory() {
   byte *buf;
 
   while ((buf = (byte *) malloc(--size)) == NULL)
-    ;
+	;
 
   free(buf);
 

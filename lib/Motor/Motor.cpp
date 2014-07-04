@@ -27,15 +27,15 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  */
 
 Motor::Motor(uint8_t direction_pin, uint8_t speed_pin) {
-    _direction_pin = direction_pin;
-    _speed_pin = speed_pin;
+	_direction_pin = direction_pin;
+	_speed_pin = speed_pin;
 }
 
 void Motor::spin(Direction direction, uint8_t speed) {
-    digitalWrite(_direction_pin, direction);
-    analogWrite(_speed_pin, speed);
+	digitalWrite(_direction_pin, direction);
+	analogWrite(_speed_pin, speed);
 }
 
 void Motor::stop(void) {
-    spin(FORWARD, 0);
+	spin(FORWARD, 0);
 }

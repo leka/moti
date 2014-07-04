@@ -31,42 +31,40 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 Led::Led() { }
 
 Led::Led(uint8_t red_pin, uint8_t green_pin, uint8_t blue_pin) {
-    _red_pin = red_pin;
-    _green_pin = green_pin;
-    _blue_pin = blue_pin;
+	_red_pin = red_pin;
+	_green_pin = green_pin;
+	_blue_pin = blue_pin;
 
-    _color = Color(0, 0, 0);
-
-    _color_mutex = _MUTEX_DATA(_color_mutex);
+	_color = Color(0, 0, 0);
 }
 
 Led::Led(uint8_t red_pin, uint8_t green_pin, uint8_t blue_pin, Color color) {
-    Led(red_pin, green_pin, blue_pin);
-    _color = color;
+	Led(red_pin, green_pin, blue_pin);
+	_color = color;
 }
 
 void Led::shine(void) {
-    analogWrite(_red_pin, _color.getR());
-    analogWrite(_green_pin, _color.getG());
-    analogWrite(_blue_pin, _color.getB());
+	Serial.println(_color.getB());
+	
+	analogWrite(_red_pin, _color.getR());
+	analogWrite(_green_pin, _color.getG());
+	analogWrite(_blue_pin, _color.getB());
 }
 
 void Led::shine(Color color) {
-    setColor(color);
-    shine();
+	setColor(color);
+	shine();
 }
 
 void Led::turnOff(void) {
-    setColor(Color(0, 0, 0));
-    shine();
+	setColor(Color(0, 0, 0));
+	shine();
 }
 
 Color Led::getColor(void) {
-    return _color;
+	return _color;
 }
 
 void Led::setColor(Color color) {
-    chMtxLock(&_color_mutex);
-    _color = color;
-    chMtxUnlock();
+	_color = color;
 }

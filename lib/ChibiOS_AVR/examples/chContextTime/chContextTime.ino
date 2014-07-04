@@ -16,8 +16,8 @@ static WORKING_AREA(waThread1, 64);
 static msg_t Thread1(void *arg) {
 
   while (TRUE) {
-    chSemWait(&sem);
-    digitalWrite(LED_PIN, LOW);
+	chSemWait(&sem);
+	digitalWrite(LED_PIN, LOW);
   }
   return 0;
 }
@@ -29,15 +29,15 @@ static WORKING_AREA(waThread2, 64);
 static msg_t Thread2(void *arg) {
   pinMode(LED_PIN, OUTPUT);
   while (TRUE) {
-    // first pulse to get time with no context switch
-    digitalWrite(LED_PIN, HIGH);
-    digitalWrite(LED_PIN, LOW);
-    // start second pulse
-    digitalWrite(LED_PIN, HIGH);
-    // trigger context switch for task that ends pulse
-    chSemSignal(&sem);
-    // sleep until next tick (1024 microseconds tick on Arduino)
-    chThdSleep(1);
+	// first pulse to get time with no context switch
+	digitalWrite(LED_PIN, HIGH);
+	digitalWrite(LED_PIN, LOW);
+	// start second pulse
+	digitalWrite(LED_PIN, HIGH);
+	// trigger context switch for task that ends pulse
+	chSemSignal(&sem);
+	// sleep until next tick (1024 microseconds tick on Arduino)
+	chThdSleep(1);
   }
   return 0;
 }
@@ -53,11 +53,11 @@ void chSetup() {
 
   // start high priority thread
   chThdCreateStatic(waThread1, sizeof(waThread1),
-    NORMALPRIO+2, Thread1, NULL);
+	NORMALPRIO+2, Thread1, NULL);
 
   // start lower priority thread
   chThdCreateStatic(waThread2, sizeof(waThread2),
-    NORMALPRIO+1, Thread2, NULL);
+	NORMALPRIO+1, Thread2, NULL);
 }
 //------------------------------------------------------------------------------
 void loop() {

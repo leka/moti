@@ -26,124 +26,105 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  * @version 1.0
  */
 
+
+bool Drive::_is_started = false;
+Motor Drive::_r_motor = Motor(7, 6);
+Motor Drive::_l_motor = Motor(4, 5);
+Semaphore Drive::_sem = _SEMAPHORE_DATA(Drive::_sem, 0);
+uint8_t Drive::_r_speed = 0;
+uint8_t Drive::_l_speed = 0;
+Direction Drive::_r_direction = FORWARD;
+Direction Drive::_l_direction = FORWARD;
+
 static WORKING_AREA(drive_thread_area, 128);
 
-static msg_t drive_thread(void* arg) {
-    (void*)arg;
-
-    while (TRUE) {
-        if (Drive::isRunning()) {
-            Drive::_r_motor.spin(Drive::getRDirection(), Drive::getRSpeed());
-            Drive::_l_motor.spin(Drive::getLDirection(), Drive::getLSpeed());
-
-            if ((Drive::getRSpeed() == 0) && (Drive::getLSpeed() == 0))
-                Drive::setRunning(false);
-        }
-
-        chThdSleepMilliseconds(10);
-    }
-
-    return (msg_t)0;
-}
-
 void Drive::__start__(void* arg, tprio_t priority) {
-    if (!_is_started) {
-        _drive_mutex = _MUTEX_DATA(_drive_mutex);
+	if (!_is_started) {
+		_is_started = true;
 
-        _is_started = true;
-        _is_running = false;
-
-        _r_motor = Motor(7, 6);
-        _l_motor = Motor(4, 5);
-
-        (void)chThdCreateStatic(drive_thread_area, sizeof(drive_thread_area),
-                                priority, drive_thread, arg);
-    }
+		(void)chThdCreateStatic(drive_thread_area, sizeof(drive_thread_area),
+								priority, thread, arg);
+	}
 }
 
 void Drive::go(Direction direction, uint8_t speed) {
-    if (!_is_started)
-        Drive::__start__();
+	if (!_is_started)
+		Drive::__start__();
 
-    chMtxLock(&_drive_mutex);
+	_l_direction = direction;
+	_r_direction = direction;
 
-    _l_direction = direction;
-    _r_direction = direction;
+	_r_speed = speed;
+	_l_speed = speed;
 
-    _r_speed = speed;
-    _l_speed = speed;
-
-    chMtxUnlock();
+	chSemSignal(&_sem);
 }
 
 void Drive::turn(Direction direction, uint8_t speedR, uint8_t speedL) {
-    if (!_is_started)
-        Drive::__start__();
+	if (!_is_started)
+		Drive::__start__();
 
-    chMtxLock(&_drive_mutex);
+	_l_direction = direction;
+	_r_direction = direction;
 
-    _l_direction = direction;
-    _r_direction = direction;
+	_r_speed = speedR;
+	_l_speed = speedL;
 
-    _r_speed = speedR;
-    _l_speed = speedL;
-
-    chMtxUnlock();
+	chSemSignal(&_sem);
 }
 
 void Drive::spin(Rotation rotation, uint8_t speed) {
-    if (!_is_started)
-        Drive::__start__();
+	if (!_is_started)
+		Drive::__start__();
 
-    chMtxLock(&_drive_mutex);
+	switch (rotation) {
+	case LEFT:
+		_l_direction = BACKWARD;
+		_r_direction = FORWARD;
+		break;
 
-    switch (rotation) {
-    case LEFT:
-        _l_direction = BACKWARD;
-        _r_direction = FORWARD;
-        break;
+	case RIGHT:
+		_l_direction = FORWARD;
+		_r_direction = BACKWARD;
+		break;
+	}
 
-    case RIGHT:
-        _l_direction = FORWARD;
-        _r_direction = BACKWARD;
-        break;
-    }
+	_r_speed = speed;
+	_l_speed = speed;
 
-    _r_speed = speed;
-    _l_speed = speed;
-
-    chMtxUnlock();
+	chSemSignal(&_sem);
 }
 
 void Drive::stop(void) {
-    chMtxLock(&_drive_mutex);
-    _r_direction = _l_direction = FORWARD;
-    _r_speed = _l_speed = 0;
-    chMtxUnlock();
+	_r_direction = _l_direction = FORWARD;
+	_r_speed = _l_speed = 0;
+
+	chSemSignal(&_sem);
 }
 
 Direction Drive::getRDirection(void) {
-    return _r_direction;
+	return _r_direction;
 }
 
 Direction Drive::getLDirection(void) {
-    return _l_direction;
+	return _l_direction;
 }
 
 uint8_t Drive::getRSpeed(void) {
-    return _r_speed;
+	return _r_speed;
 }
 
 uint8_t Drive::getLSpeed(void) {
-    return _l_speed;
+	return _l_speed;
 }
 
-bool Drive::isRunning() {
-    return _is_running;
-}
+msg_t Drive::thread(void* arg) {
+	while (!chThdShouldTerminate()) {
+		chSemWait(&_sem);
 
-void Drive::setRunning(bool running) {
-    chMtxLock(&_drive_mutex);
-    _is_running = running;
-    chMtxUnlock();
+		_r_motor.spin(_r_direction, _r_speed);
+		_l_motor.spin(_l_direction, _l_speed);
+	}
+
+	return (msg_t)0;
 }

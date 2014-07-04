@@ -17,42 +17,65 @@ You should have received a copy of the GNU General Public License
 along with Moti. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef LEKA_MOTI_ARDUINO_LED_H_
-#define LEKA_MOTI_ARDUINO_LED_H_
+#ifndef LEKA_MOTI_ARDUINO_VECTOR_H_
+#define LEKA_MOTI_ARDUINO_VECTOR_H_
 
 /**
- * @file Led.h
+ * @file Vector.h
  * @author Ladislas de Toldi
  * @version 1.0
  */
 
-#include <Arduino.h>
-
-#include "ChibiOS_AVR.h"
-#include "Color.h"
+ #include <Arduino.h>
 
 
-/**
- * @class Led
- * @brief Led library gathers all the LED functions for Moti.
- */
-
-class Led {
+template<class T> class Vector {
 public:
-	Led();
-	Led(uint8_t red_pin, uint8_t green_pin, uint8_t blue_pin);
-	Led(uint8_t red_pin, uint8_t green_pin, uint8_t blue_pin, Color color);
+	Vector() {
+		Vector(1);
+	}
 
-	void shine(void);
-	void shine(Color color);
-	void turnOff(void);
+	Vector(uint16_t size) {
+		_size = size;
+		_length = 0;
 
-	Color getColor(void);
-	void setColor(Color color);
+		Serial.println("Vector created");
 
-protected:
-	uint8_t _red_pin, _green_pin, _blue_pin;
-	Color _color;
+		_data = (T*)malloc(_size * sizeof(T));
+	}
+
+	~Vector() {
+		free(_data);
+	}
+
+	void push(T e) {
+		if (_size == _length) {
+			_size <<= 1;
+			_data = (T*)realloc(_data, _size * sizeof(T));
+		}
+
+		_data[_length++] = e;
+	}
+
+
+	T pop(uint16_t i) {
+		T e = _data[i];
+
+		for (uint16_t j = i + 1; j < _length; j++)
+			_data[j - 1] = _data[j];
+
+		_length--;
+
+		return e;
+	}
+
+	inline T& operator[](uint16_t i) { return _data[i]; }
+
+	uint16_t length() { return _length; }
+
+private:
+	uint16_t _size, _length;
+	T* _data;
 };
 
 #endif

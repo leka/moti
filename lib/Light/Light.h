@@ -31,6 +31,7 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 #include "ChibiOS_AVR.h"
 #include "Color.h"
 #include "Led.h"
+#include "Moti.h"
 
 
 /**
@@ -38,12 +39,27 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  * @brief Led library gathers all the LED functions for Moti.
  */
 
-class Light: public Led {
-public:
-    Light();
-    Light(uint8_t red_pin, uint8_t green_pin, uint8_t blue_pin);
+#define N_LEDS 1
 
-    void fade(Color start_color, Color end_color, uint16_t duration);
+class Light {
+public:
+	static void __init__(void);
+	static void __start__(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+
+	static void fade(LedIndicator led, Color start_color, Color end_color, int16_t duration);
+	static void turnOff(LedIndicator led);
+	static LedState getState(LedIndicator led);
+
+private:
+	static Led leds[N_LEDS];
+	static LedData data[N_LEDS];
+
+	static Semaphore _sem;
+	static msg_t thread(void* arg);
+	static bool _is_init, _is_started;
+
+	static Color _start_color, _end_color;
+	static uint16_t _duration;
 };
 
 #endif

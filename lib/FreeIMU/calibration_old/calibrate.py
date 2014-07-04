@@ -85,26 +85,26 @@ try:
   a_f = open(acc_file, 'w')
   m_f = open(magn_file, 'w')
   while True:
-    ser.write('b')
-    ser.write(chr(count))
-    for j in range(count):
-      for i in range(9):
-        buff[i] = unpack('h', ser.read(2))[0]
-      ser.read(2) # consumes remaining '\r\n'
-            
-      #log accelerometer values
-      readings_line = "%d %d %d\r\n" % (buff[0], buff[1], buff[2])
-      a_f.write(readings_line)
-      
-      # log magnetometer values
-      readings_line = "%d %d %d\r\n" % (buff[6], buff[7], buff[8])
-      m_f.write(readings_line)
-      
-      tot_readings = tot_readings + 1
-      if(tot_readings % 200 == 0):
-        print "%d readings logged. Hit CTRL+C to interrupt." % (tot_readings)
-      
-      
+	ser.write('b')
+	ser.write(chr(count))
+	for j in range(count):
+	  for i in range(9):
+		buff[i] = unpack('h', ser.read(2))[0]
+	  ser.read(2) # consumes remaining '\r\n'
+			
+	  #log accelerometer values
+	  readings_line = "%d %d %d\r\n" % (buff[0], buff[1], buff[2])
+	  a_f.write(readings_line)
+	  
+	  # log magnetometer values
+	  readings_line = "%d %d %d\r\n" % (buff[6], buff[7], buff[8])
+	  m_f.write(readings_line)
+	  
+	  tot_readings = tot_readings + 1
+	  if(tot_readings % 200 == 0):
+		print "%d readings logged. Hit CTRL+C to interrupt." % (tot_readings)
+	  
+	  
 except KeyboardInterrupt:
   ser.close()
   a_f.close()

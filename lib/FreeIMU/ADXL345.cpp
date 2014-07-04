@@ -1,22 +1,22 @@
 /**************************************************************************
- *                                                                         *
- * ADXL345 Driver for Arduino                                              *
- *                                                                         *
+ *																		 *
+ * ADXL345 Driver for Arduino											  *
+ *																		 *
  ***************************************************************************
- *                                                                         *
- * This program is free software; you can redistribute it and/or modify    *
- * it under the terms of the GNU License.                                  *
- * This program is distributed in the hope that it will be useful,         *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of          *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           *
- * GNU License V2 for more details.                                        *
- *                                                                         *
+ *																		 *
+ * This program is free software; you can redistribute it and/or modify	*
+ * it under the terms of the GNU License.								  *
+ * This program is distributed in the hope that it will be useful,		 *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of		  *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the		   *
+ * GNU License V2 for more details.										*
+ *																		 *
  ***************************************************************************/
 
 #include "ADXL345.h"
 #include <Wire.h>
 
-#define TO_READ (6)      // num of bytes we are going to read each time (two bytes for each axis)
+#define TO_READ (6)	  // num of bytes we are going to read each time (two bytes for each axis)
 
 ADXL345::ADXL345() {
   status = ADXL345_OK;
@@ -60,38 +60,38 @@ void ADXL345::get_Gxyz(float *xyz){
   int xyz_int[3];
   readAccel(xyz_int);
   for(i=0; i<3; i++){
-    xyz[i] = xyz_int[i] * gains[i];
+	xyz[i] = xyz_int[i] * gains[i];
   }
 }
 
 // Writes val to address register on device
 void ADXL345::writeTo(byte address, byte val) {
   Wire.beginTransmission(_dev_address); // start transmission to device
-  Wire.write(address);             // send register address
-  Wire.write(val);                 // send value to write
-  Wire.endTransmission();         // end transmission
+  Wire.write(address);			 // send register address
+  Wire.write(val);				 // send value to write
+  Wire.endTransmission();		 // end transmission
 }
 
 // Reads num bytes starting from address register on device in to _buff array
 void ADXL345::readFrom(byte address, int num, byte _buff[]) {
   Wire.beginTransmission(_dev_address); // start transmission to device
-  Wire.write(address);             // sends address to read from
-  Wire.endTransmission();         // end transmission
+  Wire.write(address);			 // sends address to read from
+  Wire.endTransmission();		 // end transmission
 
   Wire.beginTransmission(_dev_address); // start transmission to device
-  Wire.requestFrom(_dev_address, num);    // request 6 bytes from device
+  Wire.requestFrom(_dev_address, num);	// request 6 bytes from device
 
   int i = 0;
-  while(Wire.available())         // device may send less than requested (abnormal)
+  while(Wire.available())		 // device may send less than requested (abnormal)
   {
-    _buff[i] = Wire.read();    // receive a byte
-    i++;
+	_buff[i] = Wire.read();	// receive a byte
+	i++;
   }
   if(i != num){
-    status = ADXL345_ERROR;
-    error_code = ADXL345_READ_ERROR;
+	status = ADXL345_ERROR;
+	error_code = ADXL345_READ_ERROR;
   }
-  Wire.endTransmission();         // end transmission
+  Wire.endTransmission();		 // end transmission
 }
 
 // Gets the range setting and return it into rangeSetting
@@ -109,19 +109,19 @@ void ADXL345::setRangeSetting(int val) {
 
   switch (val) {
   case 2:
-    _s = B00000000;
-    break;
+	_s = B00000000;
+	break;
   case 4:
-    _s = B00000001;
-    break;
+	_s = B00000001;
+	break;
   case 8:
-    _s = B00000010;
-    break;
+	_s = B00000010;
+	break;
   case 16:
-    _s = B00000011;
-    break;
+	_s = B00000011;
+	break;
   default:
-    _s = B00000000;
+	_s = B00000000;
   }
   readFrom(ADXL345_DATA_FORMAT, 1, &_b);
   _s |= (_b & B11101100);
@@ -212,13 +212,13 @@ int ADXL345::getTapThreshold() {
 void ADXL345::setAxisGains(float *_gains){
   int i;
   for(i = 0; i < 3; i++){
-    gains[i] = _gains[i];
+	gains[i] = _gains[i];
   }
 }
 void ADXL345::getAxisGains(float *_gains){
   int i;
   for(i = 0; i < 3; i++){
-    _gains[i] = gains[i];
+	_gains[i] = gains[i];
   }
 }
 
@@ -506,22 +506,22 @@ void ADXL345::setRate(float rate){
   int r = 0;
   while (v >>= 1)
   {
-    r++;
+	r++;
   }
   if (r <= 9) {
-    readFrom(ADXL345_BW_RATE, 1, &_b);
-    _s = (byte) (r + 6) | (_b & B11110000);
-    writeTo(ADXL345_BW_RATE, _s);
+	readFrom(ADXL345_BW_RATE, 1, &_b);
+	_s = (byte) (r + 6) | (_b & B11110000);
+	writeTo(ADXL345_BW_RATE, _s);
   }
 }
 
 void ADXL345::set_bw(byte bw_code){
   if((bw_code < ADXL345_BW_3) || (bw_code > ADXL345_BW_1600)){
-    status = false;
-    error_code = ADXL345_BAD_ARG;
+	status = false;
+	error_code = ADXL345_BAD_ARG;
   }
   else{
-    writeTo(ADXL345_BW_RATE, bw_code);
+	writeTo(ADXL345_BW_RATE, bw_code);
   }
 }
 
@@ -563,10 +563,10 @@ void ADXL345::setRegisterBit(byte regAdress, int bitPos, bool state) {
   byte _b;
   readFrom(regAdress, 1, &_b);
   if (state) {
-    _b |= (1 << bitPos);  // forces nth bit of _b to be 1.  all other bits left alone.
+	_b |= (1 << bitPos);  // forces nth bit of _b to be 1.  all other bits left alone.
   }
   else {
-    _b &= ~(1 << bitPos); // forces nth bit of _b to be 0.  all other bits left alone.
+	_b &= ~(1 << bitPos); // forces nth bit of _b to be 0.  all other bits left alone.
   }
   writeTo(regAdress, _b);
 }
@@ -587,12 +587,12 @@ void ADXL345::printAllRegister() {
   Serial.println("");
   int i;
   for (i=29;i<=57;i++){
-    Serial.print("0x");
-    Serial.print(i, HEX);
-    Serial.print(": ");
-    readFrom(i, 1, &_b);
-    print_byte(_b);
-    Serial.println("");
+	Serial.print("0x");
+	Serial.print(i, HEX);
+	Serial.print(": ");
+	readFrom(i, 1, &_b);
+	print_byte(_b);
+	Serial.println("");
   }
 }
 
@@ -600,7 +600,7 @@ void print_byte(byte val){
   int i;
   Serial.print("B");
   for(i=7; i>=0; i--){
-    Serial.print(val >> i & 1, BIN);
+	Serial.print(val >> i & 1, BIN);
   }
 }
 

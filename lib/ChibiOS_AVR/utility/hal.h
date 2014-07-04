@@ -1,32 +1,32 @@
 /*
-    ChibiOS/RT - Copyright (C) 2006,2007,2008,2009,2010,
-                 2011,2012,2013 Giovanni Di Sirio.
+	ChibiOS/RT - Copyright (C) 2006,2007,2008,2009,2010,
+				 2011,2012,2013 Giovanni Di Sirio.
 
-    This file is part of ChibiOS/RT.
+	This file is part of ChibiOS/RT.
 
-    ChibiOS/RT is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License, or
-    (at your option) any later version.
+	ChibiOS/RT is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 3 of the License, or
+	(at your option) any later version.
 
-    ChibiOS/RT is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	ChibiOS/RT is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-                                      ---
+									  ---
 
-    A special exception to the GPL can be applied should you wish to distribute
-    a combined work that includes ChibiOS/RT, without being obliged to provide
-    the source code for any proprietary components. See the file exception.txt
-    for full details of how and when the exception can be applied.
+	A special exception to the GPL can be applied should you wish to distribute
+	a combined work that includes ChibiOS/RT, without being obliged to provide
+	the source code for any proprietary components. See the file exception.txt
+	for full details of how and when the exception can be applied.
 */
 
 /**
- * @file    hal.h
+ * @file	hal.h
  * @brief   HAL subsystem header.
  *
  * @addtogroup HAL
@@ -75,37 +75,37 @@
 #include "serial_usb.h"
 #endif  // WHG
 /*===========================================================================*/
-/* Driver constants.                                                         */
+/* Driver constants.														 */
 /*===========================================================================*/
 
 /*===========================================================================*/
-/* Driver pre-compile time settings.                                         */
+/* Driver pre-compile time settings.										 */
 /*===========================================================================*/
 
 /*===========================================================================*/
-/* Derived constants and error checks.                                       */
+/* Derived constants and error checks.									   */
 /*===========================================================================*/
 
 /*===========================================================================*/
-/* Driver data structures and types.                                         */
+/* Driver data structures and types.										 */
 /*===========================================================================*/
 
 /*===========================================================================*/
-/* Driver macros.                                                            */
+/* Driver macros.															*/
 /*===========================================================================*/
 
 #if HAL_IMPLEMENTS_COUNTERS || defined(__DOXYGEN__)
 /**
- * @name    Time conversion utilities for the realtime counter
+ * @name	Time conversion utilities for the realtime counter
  * @{
  */
 /**
  * @brief   Seconds to realtime ticks.
  * @details Converts from seconds to realtime ticks number.
- * @note    The result is rounded upward to the next tick boundary.
+ * @note	The result is rounded upward to the next tick boundary.
  *
- * @param[in] sec       number of seconds
- * @return              The number of ticks.
+ * @param[in] sec	   number of seconds
+ * @return			  The number of ticks.
  *
  * @api
  */
@@ -114,10 +114,10 @@
 /**
  * @brief   Milliseconds to realtime ticks.
  * @details Converts from milliseconds to realtime ticks number.
- * @note    The result is rounded upward to the next tick boundary.
+ * @note	The result is rounded upward to the next tick boundary.
  *
- * @param[in] msec      number of milliseconds
- * @return              The number of ticks.
+ * @param[in] msec	  number of milliseconds
+ * @return			  The number of ticks.
  *
  * @api
  */
@@ -126,22 +126,22 @@
 /**
  * @brief   Microseconds to realtime ticks.
  * @details Converts from microseconds to realtime ticks number.
- * @note    The result is rounded upward to the next tick boundary.
+ * @note	The result is rounded upward to the next tick boundary.
  *
- * @param[in] usec      number of microseconds
- * @return              The number of ticks.
+ * @param[in] usec	  number of microseconds
+ * @return			  The number of ticks.
  *
  * @api
  */
 #define US2RTT(usec) (((halGetCounterFrequency() + 999999UL) / 1000000UL) * \
-                      (usec))
+					  (usec))
 
 /**
  * @brief   Realtime ticks to seconds to.
  * @details Converts from realtime ticks number to seconds.
  *
- * @param[in] ticks     number of ticks
- * @return              The number of seconds.
+ * @param[in] ticks	 number of ticks
+ * @return			  The number of seconds.
  *
  * @api
  */
@@ -151,8 +151,8 @@
  * @brief   Realtime ticks to milliseconds.
  * @details Converts from realtime ticks number to milliseconds.
  *
- * @param[in] ticks     number of ticks
- * @return              The number of milliseconds.
+ * @param[in] ticks	 number of ticks
+ * @return			  The number of milliseconds.
  *
  * @api
  */
@@ -162,8 +162,8 @@
  * @brief   Realtime ticks to microseconds.
  * @details Converts from realtime ticks number to microseconds.
  *
- * @param[in] ticks     number of ticks
- * @return              The number of microseconds.
+ * @param[in] ticks	 number of ticks
+ * @return			  The number of microseconds.
  *
  * @api
  */
@@ -171,17 +171,17 @@
 /** @} */
 
 /**
- * @name    Macro Functions
+ * @name	Macro Functions
  * @{
  */
 /**
  * @brief   Returns the current value of the system free running counter.
- * @note    This is an optional service that could not be implemented in
- *          all HAL implementations.
- * @note    This function can be called from any context.
+ * @note	This is an optional service that could not be implemented in
+ *		  all HAL implementations.
+ * @note	This function can be called from any context.
  *
- * @return              The value of the system free running counter of
- *                      type halrtcnt_t.
+ * @return			  The value of the system free running counter of
+ *					  type halrtcnt_t.
  *
  * @special
  */
@@ -189,11 +189,11 @@
 
 /**
  * @brief   Realtime counter frequency.
- * @note    This is an optional service that could not be implemented in
- *          all HAL implementations.
- * @note    This function can be called from any context.
+ * @note	This is an optional service that could not be implemented in
+ *		  all HAL implementations.
+ * @note	This function can be called from any context.
  *
- * @return              The realtime counter frequency of type halclock_t.
+ * @return			  The realtime counter frequency of type halclock_t.
  *
  * @special
  */
@@ -202,7 +202,7 @@
 #endif /* HAL_IMPLEMENTS_COUNTERS */
 
 /*===========================================================================*/
-/* External declarations.                                                    */
+/* External declarations.													*/
 /*===========================================================================*/
 
 #ifdef __cplusplus

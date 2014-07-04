@@ -36,16 +36,16 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 
 class Motor {
 public:
-    Motor(uint8_t direction_pin, uint8_t speed_pin);
+	Motor(uint8_t direction_pin, uint8_t speed_pin);
 
-    void spin(Direction direction=FORWARD, uint8_t speed=MAX_SPEED);
-    void stop(void);
+	void spin(Direction direction=FORWARD, uint8_t speed=MAX_SPEED);
+	void stop(void);
 
-    static const uint8_t MAX_SPEED = 255;
+	static const uint8_t MAX_SPEED = 255;
 
 private:
-    uint8_t _direction_pin;
-    uint8_t _speed_pin;
+	uint8_t _direction_pin;
+	uint8_t _speed_pin;
 };
 
 #endif

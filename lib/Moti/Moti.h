@@ -26,16 +26,44 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  * @version 1.0
  */
 
+#include "ChibiOS_AVR.h"
+#include "Color.h"
 
 typedef enum {
-    FORWARD,
-    BACKWARD
+	FORWARD,
+	BACKWARD
 } Direction;
 
+typedef enum {
+	LEFT,
+	RIGHT
+} Rotation;
 
 typedef enum {
-    LEFT,
-    RIGHT
-} Rotation;
+	GO,
+	SPIN,
+	TURN,
+	STOP,
+	NONE
+} DriveState;
+
+
+typedef enum {
+	HEART
+} LedIndicator;
+
+typedef enum {
+	FADE,
+	SHINE,
+	INACTIVE
+} LedState;
+
+typedef struct {
+	Color start_color, end_color, diff, current;
+	int16_t total_steps, steps;
+	LedState state;
+} LedData;
+
+void waitMs(uint16_t ms);
 
 #endif
