@@ -24,7 +24,7 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * @file Configuration.h
- * @author Ladislas de Toldi
+ * @author Ladislas de Toldi & Flavien Raynaud
  * @version 1.0
  */
 

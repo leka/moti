@@ -26,6 +26,24 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  * @version 1.0
  */
 
+
+const Color Color::Black = Color(0, 0, 0);
+const Color Color::White = Color(255, 255, 255);
+const Color Color::RedPure = Color(255, 0, 0);
+const Color Color::GreenPure = Color(0, 255, 0);
+const Color Color::BluePure = Color(0, 0, 255);
+const Color Color::DarkRed = Color(186, 48, 42);
+const Color Color::LightRed = Color(222, 63, 89);
+const Color Color::Purple = Color(165, 67, 188);
+const Color Color::LightBlue = Color(95, 184, 224);
+const Color Color::LightPink = Color(255, 232, 225);
+const Color Color::Yellow = Color(250, 211, 51);
+const Color Color::DarkYellow = Color(244, 174, 51);
+const Color Color::Orange = Color(240, 143, 51);
+const Color Color::DarkOrange = Color(239, 134, 59);
+const Color Color::LightGreen = Color(216, 255, 56);	
+
+
 Color::Color() {
 	_r = _g = _b = 0;
 }

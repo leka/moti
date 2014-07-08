@@ -41,6 +41,22 @@ class Color {
 
 		void setRGB(int16_t r, int16_t g, int16_t b);
 
+		static const Color Black;
+		static const Color White;
+		static const Color RedPure;
+		static const Color GreenPure;
+		static const Color BluePure;
+		static const Color DarkRed;
+		static const Color LightRed;
+		static const Color Purple;
+		static const Color LightBlue;
+		static const Color LightPink;
+		static const Color Yellow;
+		static const Color DarkYellow;
+		static const Color Orange;
+		static const Color DarkOrange;
+		static const Color LightGreen;	
+
 	private:
 		int16_t _r, _g, _b;
 };

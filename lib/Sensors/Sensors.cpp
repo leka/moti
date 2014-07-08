@@ -22,7 +22,7 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * @file Sensors.cpp
- * @author Ladislas de Toldi
+ * @author Ladislas de Toldi & Flavien Raynaud
  * @version 1.0
  */
 
