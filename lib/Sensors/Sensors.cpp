@@ -194,6 +194,16 @@ void Sensors::init(void) {
 		_imu.acc.setInactivityX(1);
 		_imu.acc.setInactivityY(1);
 		_imu.acc.setInactivityZ(1);
+
+		_imu.acc.setInterruptMapping(ADXL345_INT_INACTIVITY_BIT, ADXL345_INT1_PIN);
+		_imu.acc.setInterrupt(ADXL345_INT_INACTIVITY_BIT, 1);
+
+
+		_imu.acc.setFreeFallThreshold(8);
+		_imu.acc.setFreeFallDuration(3);
+
+		_imu.acc.setInterruptMapping(ADXL345_INT_FREE_FALL_BIT, ADXL345_INT1_PIN);
+		_imu.acc.setInterrupt(ADXL345_INT_FREE_FALL_BIT, 1);
 	}
 }
 

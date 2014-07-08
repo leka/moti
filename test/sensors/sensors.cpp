@@ -1,78 +1,61 @@
-#define serial Serial
-
 #include <Arduino.h>
-#include "ChibiOS_AVR.h"
-
 #include <Wire.h>
 
-#include "CommunicationUtils.h"
-#include "DebugUtils.h"
-#include "ADXL345.h"
-#include "ITG3200.h"
+#include "ChibiOS_AVR.h"
+#include "Color.h"
 #include "FreeIMU.h"
-#include "Serial.h"
-
+#include "Moti.h"
 #include "Sensors.h"
-
-Sensors sensors;
-
-SEMAPHORE_DECL(sens, 0);
-
-static WORKING_AREA(waThread1, 260);
-
-static msg_t Thread1(void *arg) {
-	(void)arg;
-
-	systime_t time = chTimeNow();
-
-	while (TRUE) {
-		time += MS2ST(50);
-		sensors.read();
-		chSemSignal(&sens);
-		chThdSleepUntil(time);
-		serial.print("BTime : ");
-		serial.println(chTimeNow() - time);
-	}
-	return 0;
-}
-
-static WORKING_AREA(waThread2, 260);
-
-static msg_t Thread2(void *arg) {
-	(void)arg;
-
-	while (TRUE) {
-		chSemWait(&sens);
-		sensors.debug();
-	}
-	return 0;
-}
 
 
 void chSetup() {
+	while (TRUE) {
+		Serial.println("Accelerometer:");
+		Serial.print("\tX: ");
+		Serial.println(Sensors::getAccX());
+		Serial.print("\tY: ");
+		Serial.println(Sensors::getAccY());
+		Serial.print("\tZ: ");
+		Serial.println(Sensors::getAccZ());
 
-	chThdCreateStatic(waThread1, sizeof(waThread1),
-		NORMALPRIO, Thread1, NULL);
+		Serial.println("Gyroscope:");
+		Serial.print("\tYaw: ");
+		Serial.println(Sensors::getGyrY());
+		Serial.print("\tPitch: ");
+		Serial.println(Sensors::getGyrP());
+		Serial.print("\tRoll: ");
+		Serial.println(Sensors::getGyrR());
 
-	chThdCreateStatic(waThread2, sizeof(waThread2),
-		NORMALPRIO, Thread2, NULL);
+		Serial.print("\tPhi: ");
+		Serial.println(Sensors::getEulerPhi());
+		Serial.print("\tTheta: ");
+		Serial.println(Sensors::getEulerTheta());
+		Serial.print("\tPsi: ");
+		Serial.println(Sensors::getEulerPsi());
 
+		Serial.print("Is Falling? ");
+		Serial.println(Sensors::isFalling());
+
+		Serial.print("Is Inactive? ");
+		Serial.println(Sensors::isInactive());
+
+		Serial.println();
+
+		waitMs(1000);
+	}
 }
 
 
 void setup() {
+	Serial.begin(115200);
+	while (!Serial);
 
-	serial.begin(115200);
-
-	sensors.init();
+	Wire.begin();
+	delay(500);
 
 	chBegin(chSetup);
 
-	while(1) {
-	}
+	while (TRUE);
 }
 
-void loop() {
-
-}
-
+void loop() { }
