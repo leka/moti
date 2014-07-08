@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
+/*
 #include "Serial.h"
 
 #ifndef DEBUGUTILS_H
@@ -46,7 +47,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef DEBUG_PRINT
   #define DEBUG_PRINT(str)
 #endif
-
+*/
 /*
 int availableMemory() {
   int size = 2048; // Use 2048 with ATmega328
@@ -62,4 +63,4 @@ int availableMemory() {
 */
 
 
-#endif
+//#endif

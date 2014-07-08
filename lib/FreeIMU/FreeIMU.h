@@ -182,6 +182,7 @@ class FreeIMU
 	void getYawPitchRoll(float * ypr);
 	void getEulerRad(float * angles);
 	void getYawPitchRollRad(float * ypr);
+	void getYawPitchRollEulerRad(float * ypr, float * euler);
 	// #if HAS_MS5611()
 	//   float getBaroAlt();
 	//   float getBaroAlt(float sea_press);

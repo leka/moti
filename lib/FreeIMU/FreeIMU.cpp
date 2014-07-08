@@ -478,10 +478,10 @@ void  FreeIMU::AHRSupdate(float gx, float gy, float gz, float ax, float ay, floa
  * @param q the quaternion to populate
 */
 void FreeIMU::getQ(float * q) {
-  float val[9];
+  float val[9] = { 0.f };
   getValues(val);
 
-  DEBUG_PRINT(val[3] * M_PI/180);
+  /*DEBUG_PRINT(val[3] * M_PI/180);
   DEBUG_PRINT(val[4] * M_PI/180);
   DEBUG_PRINT(val[5] * M_PI/180);
   DEBUG_PRINT(val[0]);
@@ -489,11 +489,12 @@ void FreeIMU::getQ(float * q) {
   DEBUG_PRINT(val[2]);
   DEBUG_PRINT(val[6]);
   DEBUG_PRINT(val[7]);
-  DEBUG_PRINT(val[8]);
+  DEBUG_PRINT(val[8]);*/
 
   now = micros();
   sampleFreq = 1.0 / ((now - lastUpdate) / 1000000.0);
   lastUpdate = now;
+
   // gyro values are expressed in deg/sec, the * M_PI/180 will convert it to radians/sec
   // #if IS_9DOM()
   //   #if HAS_AXIS_ALIGNED()
@@ -675,6 +676,24 @@ void FreeIMU::getYawPitchRollRad(float * ypr) {
   ypr[0] = atan2(2 * q[1] * q[2] - 2 * q[0] * q[3], 2 * q[0]*q[0] + 2 * q[1] * q[1] - 1);
   ypr[1] = atan(gx / sqrt(gy*gy + gz*gz));
   ypr[2] = atan(gy / sqrt(gx*gx + gz*gz));
+}
+
+void FreeIMU::getYawPitchRollEulerRad(float * ypr, float * euler) {
+  float q[4]; // quaternion
+  float gx, gy, gz; // estimated gravity direction
+  getQ(q);
+
+  gx = 2 * (q[1]*q[3] - q[0]*q[2]);
+  gy = 2 * (q[0]*q[1] + q[2]*q[3]);
+  gz = q[0]*q[0] - q[1]*q[1] - q[2]*q[2] + q[3]*q[3];
+
+  ypr[0] = atan2(2 * q[1] * q[2] - 2 * q[0] * q[3], 2 * q[0]*q[0] + 2 * q[1] * q[1] - 1); // yaw
+  ypr[1] = atan(gx / sqrt(gy*gy + gz*gz)); // pitch
+  ypr[2] = atan(gy / sqrt(gx*gx + gz*gz)); // roll
+
+  euler[0] = atan2(2 * q[1] * q[2] - 2 * q[0] * q[3], 2 * q[0]*q[0] + 2 * q[1] * q[1] - 1); // psi
+  euler[1] = -asin(2 * q[1] * q[3] + 2 * q[0] * q[2]); // theta
+  euler[2] = atan2(2 * q[2] * q[3] - 2 * q[0] * q[1], 2 * q[0] * q[0] + 2 * q[3] * q[3] - 1); // phi
 }
 
 

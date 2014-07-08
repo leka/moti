@@ -6,44 +6,52 @@
 #include "Color.h"
 #include "Drive.h"
 #include "DriveSystem.h"
+#include "FreeIMU.h"
 #include "Led.h"
 #include "Light.h"
 #include "Motor.h"
+#include "Sensors.h"
 // #include "Vector.h"
 
 
 void chSetup() {
-	pinMode(13, OUTPUT);
-
 	Serial.println("Starting...");
+	
+	/*
+	Light::fade(HEART, Color(255, 195, 170), Color(254, 0, 0), 1500);
+	DriveSystem::go(FORWARD, 180, 500);
 
-	Light::fade(HEART, Color(0, 0, 255), Color(0, 255, 0), 1500);
-    DriveSystem::go(FORWARD, 180, 500);
+	bool drive = false, light = false;
 
-    bool drive = false, light = false;
+	while (TRUE) {
+		if ((DriveSystem::getState() == NONE) && !drive) {
+			DriveSystem::stop();
+			drive = true;
+		}
 
-    while (TRUE) {
-        if ((DriveSystem::getState() == NONE) && !drive) {
-            DriveSystem::stop();
-            drive = true;
-        }
+		if ((Light::getState(HEART) == INACTIVE) && !light) {
+			Light::turnOff(HEART);
+			light = true;
+		}
 
-        if ((Light::getState(HEART) == INACTIVE) && !light) {
-            Light::turnOff(HEART);
-            light = true;
-        }
+		if (light && drive)
+			break;
+	}
+	*/
 
-        if (light && drive)
-            break;
-    }
-
-	while (TRUE);
+	while (TRUE) {
+		Serial.println(Sensors::getGyrY());
+	 	waitMs(200);
+	}
 }
 
 
 void setup() {
 	Serial.begin(115200);
 	while (!Serial);
+
+	Wire.begin();
+	delay(500);
 
 	chBegin(chSetup);
 
@@ -71,14 +79,14 @@ static WORKING_AREA(waThread1, 64);
 
 static msg_t Thread1(void *arg) {
 
-  while (!chThdShouldTerminate()) {
+	while (!chThdShouldTerminate()) {
 	// Wait for signal from thread 2.
 	chSemWait(&sem);
 
 	// Turn LED off.
 	digitalWrite(LED_PIN, LOW);
-  }
-  return 0;
+	}
+	return 0;
 }
 //------------------------------------------------------------------------------
 // Thread 2, turn the LED on and signal thread 1 to turn the LED off.
@@ -87,8 +95,8 @@ static msg_t Thread1(void *arg) {
 static WORKING_AREA(waThread2, 64);
 
 static msg_t Thread2(void *arg) {
-  pinMode(LED_PIN, OUTPUT);
-  while (1) {
+	pinMode(LED_PIN, OUTPUT);
+	while (1) {
 	digitalWrite(LED_PIN, HIGH);
 
 	// Sleep for 200 milliseconds.
@@ -99,18 +107,18 @@ static msg_t Thread2(void *arg) {
 
 	// Sleep for 200 milliseconds.
 	chThdSleepMilliseconds(200);
-  }
-  return 0;  
+	}
+	return 0;  
 }
 
 // main thread runs at NORMALPRIO
 void chSetup() {
 
-  // start blink thread
-  chThdCreateStatic(waThread1, sizeof(waThread1),
+	// start blink thread
+	chThdCreateStatic(waThread1, sizeof(waThread1),
 	NORMALPRIO + 2, Thread1, NULL);
 
-  chThdCreateStatic(waThread2, sizeof(waThread2),
+	chThdCreateStatic(waThread2, sizeof(waThread2),
 	NORMALPRIO + 1, Thread2, NULL);
 
 }
@@ -118,16 +126,16 @@ void chSetup() {
 //------------------------------------------------------------------------------
 void setup() {
 
-  chBegin(chSetup);
-  // chBegin never returns, main thread continues with mainThread()
-  while(1) {
-  }
+	chBegin(chSetup);
+	// chBegin never returns, main thread continues with mainThread()
+	while(1) {
+	}
 }
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 void loop() {
-  // not used
+	// not used
 }
 
 */
