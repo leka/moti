@@ -28,7 +28,7 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  * @version 1.0
  */
 
-bool DriveSystem::_is_started = false;
+bool DriveSystem::_isStarted = false;
 Semaphore DriveSystem::_sem = _SEMAPHORE_DATA(_sem, 0);
 DriveState DriveSystem::_action = NONE;
 uint8_t DriveSystem::_speed = 0;
@@ -36,21 +36,12 @@ uint16_t DriveSystem::_duration = 0;
 Direction DriveSystem::_direction = FORWARD;
 Rotation DriveSystem::_rotation = LEFT;
 
-static WORKING_AREA(drivesystem_thread_area, 64);
+static WORKING_AREA(drivesystemThreadArea, 64);
 
-void DriveSystem::__start__(void* arg, tprio_t priority) {
-	if (!_is_started) {
-		_is_started = true;
-
-		(void)chThdCreateStatic(drivesystem_thread_area,
-								sizeof(drivesystem_thread_area),
-								priority, thread, arg);
-	}
-}
 
 void DriveSystem::go(Direction direction, uint8_t speed, uint16_t duration) {
-	if (!_is_started)
-		DriveSystem::__start__();
+	if (!_isStarted)
+		DriveSystem::start();
 
 	_direction = direction;
 	_speed = speed;
@@ -61,6 +52,9 @@ void DriveSystem::go(Direction direction, uint8_t speed, uint16_t duration) {
 }
 
 void DriveSystem::stop(void) {
+	if (!_isStarted)
+		DriveSystem::start();
+
 	_direction = FORWARD;
 	_rotation = LEFT;
 	_speed = 0;
@@ -71,6 +65,17 @@ void DriveSystem::stop(void) {
 
 DriveState DriveSystem::getState() {
 	return _action;
+}
+
+
+void DriveSystem::start(void* arg, tprio_t priority) {
+	if (!_isStarted) {
+		_isStarted = true;
+
+		(void)chThdCreateStatic(drivesystemThreadArea,
+								sizeof(drivesystemThreadArea),
+								priority, thread, arg);
+	}
 }
 
 msg_t DriveSystem::thread(void* arg) {
@@ -89,9 +94,19 @@ msg_t DriveSystem::thread(void* arg) {
 			}
 			break;
 
+		case SPIN:
+			/* TODO */
+			break;
+
+		case TURN:
+			/* TODO */
+			break;
+
 		case STOP:
-			Serial.println("STAHP");
 			Drive::stop();
+			break;
+
+		case NONE:
 			break;
 		}
 

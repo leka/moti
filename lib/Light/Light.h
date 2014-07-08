@@ -42,24 +42,21 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 #define N_LEDS 1
 
 class Light {
-public:
-	static void __init__(void);
-	static void __start__(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+	public:
+		static void fade(LedIndicator led, Color startColor, Color endColor, int16_t duration);
+		static void turnOff(LedIndicator led);
+		static LedState getState(LedIndicator led);
 
-	static void fade(LedIndicator led, Color start_color, Color end_color, int16_t duration);
-	static void turnOff(LedIndicator led);
-	static LedState getState(LedIndicator led);
+	private:
+		static void init(void);
+		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
 
-private:
-	static Led leds[N_LEDS];
-	static LedData data[N_LEDS];
+		static Led leds[N_LEDS];
+		static LedData data[N_LEDS];
 
-	static Semaphore _sem;
-	static msg_t thread(void* arg);
-	static bool _is_init, _is_started;
-
-	static Color _start_color, _end_color;
-	static uint16_t _duration;
+		static Semaphore _sem;
+		static msg_t thread(void* arg);
+		static bool _isInit, _isStarted;
 };
 
 #endif

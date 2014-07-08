@@ -59,8 +59,8 @@ typedef enum {
 } LedState;
 
 typedef struct {
-	Color start_color, end_color, diff, current;
-	int16_t total_steps, steps;
+	Color startColor, endColor, diff, current;
+	int16_t totalSteps, steps;
 	LedState state;
 } LedData;
 

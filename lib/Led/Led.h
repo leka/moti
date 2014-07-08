@@ -38,21 +38,21 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  */
 
 class Led {
-public:
-	Led();
-	Led(uint8_t red_pin, uint8_t green_pin, uint8_t blue_pin);
-	Led(uint8_t red_pin, uint8_t green_pin, uint8_t blue_pin, Color color);
+	public:
+		Led();
+		Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin);
+		Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin, Color color);
 
-	void shine(void);
-	void shine(Color color);
-	void turnOff(void);
+		void shine(void);
+		void shine(Color color);
+		void turnOff(void);
 
-	Color getColor(void);
-	void setColor(Color color);
+		Color getColor(void);
+		void setColor(Color color);
 
-protected:
-	uint8_t _red_pin, _green_pin, _blue_pin;
-	Color _color;
+	protected:
+		uint8_t _redPin, _greenPin, _bluePin;
+		Color _color;
 };
 
 #endif

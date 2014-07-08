@@ -30,25 +30,25 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 
 Led::Led() { }
 
-Led::Led(uint8_t red_pin, uint8_t green_pin, uint8_t blue_pin) {
-	_red_pin = red_pin;
-	_green_pin = green_pin;
-	_blue_pin = blue_pin;
+Led::Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin) {
+	_redPin = redPin;
+	_greenPin = greenPin;
+	_bluePin = bluePin;
 
 	_color = Color(0, 0, 0);
 }
 
-Led::Led(uint8_t red_pin, uint8_t green_pin, uint8_t blue_pin, Color color) {
-	Led(red_pin, green_pin, blue_pin);
+Led::Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin, Color color) {
+	Led(redPin, greenPin, bluePin);
 	_color = color;
 }
 
 void Led::shine(void) {
 	Serial.println(_color.getB());
 	
-	analogWrite(_red_pin, _color.getR());
-	analogWrite(_green_pin, _color.getG());
-	analogWrite(_blue_pin, _color.getB());
+	analogWrite(_redPin, _color.getR());
+	analogWrite(_greenPin, _color.getG());
+	analogWrite(_bluePin, _color.getB());
 }
 
 void Led::shine(Color color) {

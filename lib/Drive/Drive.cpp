@@ -27,103 +27,108 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  */
 
 
-bool Drive::_is_started = false;
-Motor Drive::_r_motor = Motor(7, 6);
-Motor Drive::_l_motor = Motor(4, 5);
+bool Drive::_isStarted = false;
+Motor Drive::_rMotor = Motor(7, 6);
+Motor Drive::_lMotor = Motor(4, 5);
 Semaphore Drive::_sem = _SEMAPHORE_DATA(Drive::_sem, 0);
-uint8_t Drive::_r_speed = 0;
-uint8_t Drive::_l_speed = 0;
-Direction Drive::_r_direction = FORWARD;
-Direction Drive::_l_direction = FORWARD;
+uint8_t Drive::_rSpeed = 0;
+uint8_t Drive::_lSpeed = 0;
+Direction Drive::_rDirection = FORWARD;
+Direction Drive::_lDirection = FORWARD;
 
-static WORKING_AREA(drive_thread_area, 128);
+static WORKING_AREA(driveThreadArea, 128);
 
-void Drive::__start__(void* arg, tprio_t priority) {
-	if (!_is_started) {
-		_is_started = true;
-
-		(void)chThdCreateStatic(drive_thread_area, sizeof(drive_thread_area),
-								priority, thread, arg);
-	}
-}
 
 void Drive::go(Direction direction, uint8_t speed) {
-	if (!_is_started)
-		Drive::__start__();
+	if (!_isStarted)
+		Drive::start();
 
-	_l_direction = direction;
-	_r_direction = direction;
+	_lDirection = direction;
+	_rDirection = direction;
 
-	_r_speed = speed;
-	_l_speed = speed;
+	_rSpeed = speed;
+	_lSpeed = speed;
 
 	chSemSignal(&_sem);
 }
 
 void Drive::turn(Direction direction, uint8_t speedR, uint8_t speedL) {
-	if (!_is_started)
-		Drive::__start__();
+	if (!_isStarted)
+		Drive::start();
 
-	_l_direction = direction;
-	_r_direction = direction;
+	_lDirection = direction;
+	_rDirection = direction;
 
-	_r_speed = speedR;
-	_l_speed = speedL;
+	_rSpeed = speedR;
+	_lSpeed = speedL;
 
 	chSemSignal(&_sem);
 }
 
 void Drive::spin(Rotation rotation, uint8_t speed) {
-	if (!_is_started)
-		Drive::__start__();
+	if (!_isStarted)
+		Drive::start();
 
 	switch (rotation) {
 	case LEFT:
-		_l_direction = BACKWARD;
-		_r_direction = FORWARD;
+		_lDirection = BACKWARD;
+		_rDirection = FORWARD;
 		break;
 
 	case RIGHT:
-		_l_direction = FORWARD;
-		_r_direction = BACKWARD;
+		_lDirection = FORWARD;
+		_rDirection = BACKWARD;
 		break;
 	}
 
-	_r_speed = speed;
-	_l_speed = speed;
+	_rSpeed = speed;
+	_lSpeed = speed;
 
 	chSemSignal(&_sem);
 }
 
 void Drive::stop(void) {
-	_r_direction = _l_direction = FORWARD;
-	_r_speed = _l_speed = 0;
+	if (!_isStarted)
+		Drive::start();
+
+	_rDirection = _lDirection = FORWARD;
+	_rSpeed = _lSpeed = 0;
 
 	chSemSignal(&_sem);
 }
 
 Direction Drive::getRDirection(void) {
-	return _r_direction;
+	return _rDirection;
 }
 
 Direction Drive::getLDirection(void) {
-	return _l_direction;
+	return _lDirection;
 }
 
 uint8_t Drive::getRSpeed(void) {
-	return _r_speed;
+	return _rSpeed;
 }
 
 uint8_t Drive::getLSpeed(void) {
-	return _l_speed;
+	return _lSpeed;
+}
+
+
+void Drive::start(void* arg, tprio_t priority) {
+	if (!_isStarted) {
+		_isStarted = true;
+
+		(void)chThdCreateStatic(driveThreadArea, sizeof(driveThreadArea),
+								priority, thread, arg);
+	}
 }
 
 msg_t Drive::thread(void* arg) {
 	while (!chThdShouldTerminate()) {
 		chSemWait(&_sem);
 
-		_r_motor.spin(_r_direction, _r_speed);
-		_l_motor.spin(_l_direction, _l_speed);
+		_rMotor.spin(_rDirection, _rSpeed);
+		_lMotor.spin(_lDirection, _lSpeed);
 	}
 
 	return (msg_t)0;

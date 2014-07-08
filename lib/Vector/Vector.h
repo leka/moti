@@ -30,52 +30,52 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 
 
 template<class T> class Vector {
-public:
-	Vector() {
-		Vector(1);
-	}
-
-	Vector(uint16_t size) {
-		_size = size;
-		_length = 0;
-
-		Serial.println("Vector created");
-
-		_data = (T*)malloc(_size * sizeof(T));
-	}
-
-	~Vector() {
-		free(_data);
-	}
-
-	void push(T e) {
-		if (_size == _length) {
-			_size <<= 1;
-			_data = (T*)realloc(_data, _size * sizeof(T));
+	public:
+		Vector() {
+			Vector(1);
 		}
 
-		_data[_length++] = e;
-	}
+		Vector(uint16_t size) {
+			_size = size;
+			_length = 0;
+
+			Serial.println("Vector created");
+
+			_data = (T*)malloc(_size * sizeof(T));
+		}
+
+		~Vector() {
+			free(_data);
+		}
+
+		void push(T e) {
+			if (_size == _length) {
+				_size <<= 1;
+				_data = (T*)realloc(_data, _size * sizeof(T));
+			}
+
+			_data[_length++] = e;
+		}
 
 
-	T pop(uint16_t i) {
-		T e = _data[i];
+		T pop(uint16_t i) {
+			T e = _data[i];
 
-		for (uint16_t j = i + 1; j < _length; j++)
-			_data[j - 1] = _data[j];
+			for (uint16_t j = i + 1; j < _length; j++)
+				_data[j - 1] = _data[j];
 
-		_length--;
+			_length--;
 
-		return e;
-	}
+			return e;
+		}
 
-	inline T& operator[](uint16_t i) { return _data[i]; }
+		inline T& operator[](uint16_t i) { return _data[i]; }
 
-	uint16_t length() { return _length; }
+		uint16_t length() { return _length; }
 
-private:
-	uint16_t _size, _length;
-	T* _data;
+	private:
+		uint16_t _size, _length;
+		T* _data;
 };
 
 #endif

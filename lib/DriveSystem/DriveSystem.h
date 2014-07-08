@@ -35,24 +35,24 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  * @brief DriveSystem gathers all the driving related functions such as going forward, backward, turning and spinning.
  */
 class DriveSystem {
-public:
-	static void __start__(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+	public:
+		static void go(Direction direction, uint8_t speed, uint16_t duration);
+		static void stop(void);
 
-	static void go(Direction _direction, uint8_t speed, uint16_t duration);
-	static void stop(void);
+		static DriveState getState();
 
-	static DriveState getState();
+	private:
+		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
 
-private:
-	static DriveState _action;
-	static Direction _direction;
-	static Rotation _rotation;
-	static uint8_t _speed;
-	static uint16_t _duration;
+		static DriveState _action;
+		static Direction _direction;
+		static Rotation _rotation;
+		static uint8_t _speed;
+		static uint16_t _duration;
 
-	static bool _is_started;
-	static Semaphore _sem;
-	static msg_t thread(void *arg);
+		static bool _isStarted;
+		static Semaphore _sem;
+		static msg_t thread(void *arg);
 };
 
 #endif

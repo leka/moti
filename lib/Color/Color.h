@@ -30,19 +30,19 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 
 
 class Color {
-public:
-	Color();
-	Color(int16_t r, int16_t g, int16_t b);
+	public:
+		Color();
+		Color(int16_t r, int16_t g, int16_t b);
 
-	void getRGB(int16_t *r, int16_t* g, int16_t* b);
-	int16_t getR(void);
-	int16_t getG(void);
-	int16_t getB(void);
+		void getRGB(int16_t *r, int16_t* g, int16_t* b);
+		int16_t getR(void);
+		int16_t getG(void);
+		int16_t getB(void);
 
-	void setRGB(int16_t r, int16_t g, int16_t b);
+		void setRGB(int16_t r, int16_t g, int16_t b);
 
-private:
-	int16_t _r, _g, _b;
+	private:
+		int16_t _r, _g, _b;
 };
 
 #endif

@@ -36,29 +36,29 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  * @brief DriveSystem gathers all the driving related functions such as going forward, backward, turning and spinning.
  */
 class Drive {
-public:
-	static void __start__(void* arg=NULL, tprio_t priority=NORMALPRIO+2);
+	public:
+		static void go(Direction direction, uint8_t speed);
+		static void spin(Rotation rotation, uint8_t speed);
+		static void turn(Direction direction, uint8_t speedR, uint8_t speedL);
+		static void stop(void);
 
-	static void go(Direction direction, uint8_t speed);
-	static void spin(Rotation rotation, uint8_t speed);
-	static void turn(Direction direction, uint8_t speedR, uint8_t speedL);
-	static void stop(void);
+		static Direction getRDirection(void);
+		static Direction getLDirection(void);
 
-	static Direction getRDirection(void);
-	static Direction getLDirection(void);
+		static uint8_t getRSpeed(void);
+		static uint8_t getLSpeed(void);
 
-	static uint8_t getRSpeed(void);
-	static uint8_t getLSpeed(void);
+	private:
+		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+2);
 
-private:
-	static uint8_t _r_speed, _l_speed;
-	static Direction _r_direction, _l_direction;
-	static Motor _r_motor, _l_motor;
+		static uint8_t _rSpeed, _lSpeed;
+		static Direction _rDirection, _lDirection;
+		static Motor _rMotor, _lMotor;
 
-	static bool _is_started;
+		static bool _isStarted;
 
-	static Semaphore _sem;
-	static msg_t thread(void* arg);
+		static Semaphore _sem;
+		static msg_t thread(void* arg);
 };
 
 #endif

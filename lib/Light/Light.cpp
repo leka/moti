@@ -28,58 +28,38 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  */
 
 Semaphore Light::_sem = _SEMAPHORE_DATA(_sem, 0);
-bool Light::_is_init = false;
-bool Light::_is_started = false;
-Led Light::leds[N_LEDS] = { Led(9, 10, 11) };
+bool Light::_isInit = false;
+bool Light::_isStarted = false;
+Led Light::leds[N_LEDS] = { Led(11, 12, 13) };
 LedData Light::data[N_LEDS] = { {Color(0,0,0), Color(0,0,0), Color(0,0,0), Color(0,0,0), 0, 0, INACTIVE} };
 
-static WORKING_AREA(light_thread_area, 64);
+static WORKING_AREA(lightThreadArea, 64);
 
-void Light::__init__(void) {
-	if (!_is_init) {
-		_is_init = true;
 
-		leds[0] = Led(11, 12, 13);
-	}
-}
-
-void Light::__start__(void* arg, tprio_t priority) {
-	if (!_is_init)
-		Light::__init__();
-
-	if (!_is_started) {
-		_is_started = true;
-
-		(void)chThdCreateStatic(light_thread_area,
-								sizeof(light_thread_area),
-								priority, thread, arg);
-	}
-}
-
-void Light::fade(LedIndicator led, Color start_color, Color end_color, int16_t duration) {
-	if (!_is_started)
-		Light::__start__();
+void Light::fade(LedIndicator led, Color startColor, Color endColor, int16_t duration) {
+	if (!_isStarted)
+		start();
 
 	uint8_t i = (uint8_t)led;
 
-	data[i].start_color = start_color;
-	data[i].end_color = end_color;
-	data[i].total_steps = duration / 30;
+	data[i].startColor = startColor;
+	data[i].endColor = endColor;
+	data[i].totalSteps = duration / 30;
 	data[i].steps = 0;
 	data[i].state = FADE;
 
-	data[i].diff = Color(end_color.getR() - start_color.getR(),
-						 end_color.getG() - start_color.getG(),
-						 end_color.getB() - start_color.getB());
+	data[i].diff = Color(endColor.getR() - startColor.getR(),
+						 endColor.getG() - startColor.getG(),
+						 endColor.getB() - startColor.getB());
 
-	data[i].current = start_color;
+	data[i].current = startColor;
 
 	chSemSignal(&_sem);
 }
 
 void Light::turnOff(LedIndicator led) {
-	if (!_is_started)
-		Light::__start__();
+	if (!_isStarted)
+		start();
 
 	uint8_t i = (uint8_t)led;
 
@@ -93,31 +73,53 @@ LedState Light::getState(LedIndicator led) {
 	return data[i].state;
 }
 
+
+void Light::init(void) {
+	if (!_isInit) {
+		_isInit = true;
+
+		leds[0] = Led(11, 12, 13);
+	}
+}
+
+void Light::start(void* arg, tprio_t priority) {
+	if (!_isInit)
+		init();
+
+	if (!_isStarted) {
+		_isStarted = true;
+
+		(void)chThdCreateStatic(lightThreadArea,
+								sizeof(lightThreadArea),
+								priority, thread, arg);
+	}
+}
+
 msg_t Light::thread(void* arg) {
-	bool no_recall = true;
+	bool noRecall = true;
 
 	while (!chThdShouldTerminate()) {
 		chSemWait(&_sem);
 
 		while (TRUE) {
-			no_recall = true;
+			noRecall = true;
 
 			for (uint8_t i = 0; i < N_LEDS; ++i) {
 				switch (data[i].state) {
 				case FADE:
-					data[i].current.setRGB(data[i].start_color.getR() + data[i].diff.getR() * data[i].steps / data[i].total_steps,
-										   data[i].start_color.getG() + data[i].diff.getG() * data[i].steps / data[i].total_steps,
-										   data[i].start_color.getB() + data[i].diff.getB() * data[i].steps / data[i].total_steps);
+					data[i].current.setRGB(data[i].startColor.getR() + data[i].diff.getR() * data[i].steps / data[i].totalSteps,
+										   data[i].startColor.getG() + data[i].diff.getG() * data[i].steps / data[i].totalSteps,
+										   data[i].startColor.getB() + data[i].diff.getB() * data[i].steps / data[i].totalSteps);
 					leds[i].shine(data[i].current);
 					
 					++data[i].steps;
 
-					if (data[i].steps == data[i].total_steps) {
+					if (data[i].steps == data[i].totalSteps) {
 						data[i].state = INACTIVE;
-						leds[i].shine(data[i].end_color);
+						leds[i].shine(data[i].endColor);
 					}
 					else
-						no_recall = false;
+						noRecall = false;
 
 					break;
 
@@ -131,7 +133,7 @@ msg_t Light::thread(void* arg) {
 
 			waitMs(30);
 
-			if (no_recall)
+			if (noRecall)
 				break;
 		}
 	}
