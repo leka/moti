@@ -28,8 +28,8 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 
 
 bool Drive::_isStarted = false;
-Motor Drive::_rMotor = Motor(7, 6);
-Motor Drive::_lMotor = Motor(4, 5);
+Motor Drive::_rMotor = Motor(RIGHT_MOTOR_DIRECTION_PIN, RIGHT_MOTOR_SPEED_PIN);
+Motor Drive::_lMotor = Motor(LEFT_MOTOR_DIRECTION_PIN, LEFT_MOTOR_SPEED_PIN);
 Semaphore Drive::_sem = _SEMAPHORE_DATA(Drive::_sem, 0);
 uint8_t Drive::_rSpeed = 0;
 uint8_t Drive::_lSpeed = 0;

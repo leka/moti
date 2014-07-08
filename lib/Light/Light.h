@@ -29,6 +29,7 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 #include <Arduino.h>
 
 #include "ChibiOS_AVR.h"
+#include "Configuration.h"
 #include "Color.h"
 #include "Led.h"
 #include "Moti.h"

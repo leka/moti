@@ -2,6 +2,7 @@
 #include <Wire.h>
 
 #include "ChibiOS_AVR.h"
+#include "Configuration.h"
 #include "Color.h"
 #include "FreeIMU.h"
 #include "Moti.h"

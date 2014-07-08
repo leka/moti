@@ -27,6 +27,7 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <Arduino.h>
+#include "Configuration.h"
 #include "Moti.h"
 
 /**
@@ -38,10 +39,8 @@ class Motor {
 public:
 	Motor(uint8_t directionPin, uint8_t speedPin);
 
-	void spin(Direction direction=FORWARD, uint8_t speed=MAX_SPEED);
+	void spin(Direction direction=FORWARD, uint8_t speed=MOTOR_MAX_SPEED);
 	void stop(void);
-
-	static const uint8_t MAX_SPEED = 255;
 
 private:
 	uint8_t _directionPin;

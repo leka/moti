@@ -30,7 +30,7 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 Semaphore Light::_sem = _SEMAPHORE_DATA(_sem, 0);
 bool Light::_isInit = false;
 bool Light::_isStarted = false;
-Led Light::leds[N_LEDS] = { Led(11, 12, 13) };
+Led Light::leds[N_LEDS] = { Led(HEART_LED_RED_PIN, HEART_LED_GREEN_PIN, HEART_LED_BLUE_PIN) };
 LedData Light::data[N_LEDS] = { {Color(0,0,0), Color(0,0,0), Color(0,0,0), Color(0,0,0), 0, 0, INACTIVE} };
 
 static WORKING_AREA(lightThreadArea, 64);
@@ -78,7 +78,7 @@ void Light::init(void) {
 	if (!_isInit) {
 		_isInit = true;
 
-		leds[0] = Led(11, 12, 13);
+		/* leds[0] = Led(HEART_LED_RED_PIN, HEART_LED_GREEN_PIN, HEART_LED_BLUE_PIN); */
 	}
 }
 

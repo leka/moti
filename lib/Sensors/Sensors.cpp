@@ -189,11 +189,11 @@ void Sensors::init(void) {
 
 		_imu.init();
 
-		_imu.acc.setInactivityThreshold(75);
-		_imu.acc.setTimeInactivity(15);
-		_imu.acc.setInactivityX(1);
-		_imu.acc.setInactivityY(1);
-		_imu.acc.setInactivityZ(1);
+		_imu.acc.setInactivityThreshold(SENSORS_INACTIVITY_THRESHOLD);
+		_imu.acc.setTimeInactivity(SENSORS_INACTIVITY_TIME);
+		_imu.acc.setInactivityX(SENSORS_INACTIVITY_X);
+		_imu.acc.setInactivityY(SENSORS_INACTIVITY_Y);
+		_imu.acc.setInactivityZ(SENSORS_INACTIVITY_Z);
 
 		_imu.acc.setInterruptMapping(ADXL345_INT_INACTIVITY_BIT, ADXL345_INT1_PIN);
 		_imu.acc.setInterrupt(ADXL345_INT_INACTIVITY_BIT, 1);
