@@ -44,7 +44,7 @@ void Light::fade(LedIndicator led, Color startColor, Color endColor, int16_t dur
 
 	data[i].startColor = startColor;
 	data[i].endColor = endColor;
-	data[i].totalSteps = duration / 30;
+	data[i].totalSteps = duration / LIGHT_THREAD_DELAY;
 	data[i].steps = 0;
 	data[i].state = FADE;
 
@@ -131,7 +131,7 @@ msg_t Light::thread(void* arg) {
 				}
 			}
 
-			waitMs(30);
+			waitMs(LIGHT_THREAD_DELAY);
 
 			if (noRecall)
 				break;

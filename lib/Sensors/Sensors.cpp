@@ -37,8 +37,7 @@ bool Sensors::_isInit = false;
 
 
 void Sensors::getAccXYZ(float* x, float* y, float* z) {
-	if (abs(millis() - _lastTimeXYZ) > 50)
-		readXYZ();
+	readXYZ();
 
 	*x = _XYZ[0];
 	*y = _XYZ[1];
@@ -46,29 +45,25 @@ void Sensors::getAccXYZ(float* x, float* y, float* z) {
 }
 
 float Sensors::getAccX() {
-	if (abs(millis() - _lastTimeXYZ) > 50)
-		readXYZ();
+	readXYZ();
 	
 	return _XYZ[0];
 }
 
 float Sensors::getAccY() {
-	if (abs(millis() - _lastTimeXYZ) > 50)
-		readXYZ();
+	readXYZ();
 	
 	return _XYZ[1];
 }
 
 float Sensors::getAccZ() {
-	if (abs(millis() - _lastTimeXYZ) > 50)
-		readXYZ();
+	readXYZ();
 	
 	return _XYZ[2];
 }
 
 void Sensors::getGyrYPR(float* y, float* p, float* r) {
-	if (abs(millis() - _lastTimeYPR) > 50)
-		readYPR();
+	readYPR();
 
 	*y = _YPR[0];
 	*p = _YPR[1];
@@ -76,29 +71,25 @@ void Sensors::getGyrYPR(float* y, float* p, float* r) {
 }
 
 float Sensors::getGyrY() {
-	if (abs(millis() - _lastTimeYPR) > 50)
-		readYPR();
+	readYPR();
 
 	return _YPR[0];
 }
 
 float Sensors::getGyrP() {
-	if (abs(millis() - _lastTimeYPR) > 50)
-		readYPR();
+	readYPR();
 
 	return _YPR[1];
 }
 
 float Sensors::getGyrR() {
-	if (abs(millis() - _lastTimeYPR) > 50)
-		readYPR();
+	readYPR();
 
 	return _YPR[2];
 }
 
 void Sensors::getEuler(float* phi, float* theta, float* psi) {
-	if (abs(millis() - _lastTimeYPR) > 50)
-		readYPR();
+	readYPR();
 
 	*phi = _PTP[0];
 	*theta = _PTP[1];
@@ -106,15 +97,13 @@ void Sensors::getEuler(float* phi, float* theta, float* psi) {
 }
 
 float Sensors::getEulerPhi() {
-	if (abs(millis() - _lastTimeYPR) > 50)
-		readYPR();
+	readYPR();
 
 	return _PTP[0];
 }
 
 float Sensors::getEulerTheta() {
-	if (abs(millis() - _lastTimeYPR) > 50)
-		readYPR();
+	readYPR();
 
 	return _PTP[1];
 }
@@ -211,6 +200,9 @@ void Sensors::readXYZ(void) {
 	if (!_isInit)
 		init();
 
+	if (abs(millis() - _lastTimeXYZ < SENSORS_REFRESH_DELAY))
+		return;
+
 	_imu.getValues(_XYZ);
 	_lastTimeXYZ = millis();
 }
@@ -218,6 +210,9 @@ void Sensors::readXYZ(void) {
 void Sensors::readYPR(void) {
 	if (!_isInit)
 		init();
+
+	if (abs(millis() - _lastTimeYPR < SENSORS_REFRESH_DELAY))
+		return;
 
 	_imu.getYawPitchRollEulerRad(_YPR, _PTP);
 	_lastTimeYPR = millis();

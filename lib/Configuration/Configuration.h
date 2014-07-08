@@ -37,6 +37,9 @@ static const uint8_t RIGHT_MOTOR_SPEED_PIN = 6;
 static const uint8_t MOTOR_MAX_SPEED = 255;
 
 
+static const uint8_t DRIVESYSTEM_THREAD_DELAY = 50;
+
+
 static const uint8_t N_LEDS = 1;
 
 static const uint8_t HEART_LED_RED_PIN = 11;
@@ -44,10 +47,15 @@ static const uint8_t HEART_LED_GREEN_PIN = 12;
 static const uint8_t HEART_LED_BLUE_PIN = 13;
 
 
+static const uint8_t LIGHT_THREAD_DELAY = 30;
+
+
 static const uint8_t SENSORS_INACTIVITY_THRESHOLD = 75;
 static const uint8_t SENSORS_INACTIVITY_TIME = 10;
 static const uint8_t SENSORS_INACTIVITY_X = 1; /* 1 for activated, 0 else */
 static const uint8_t SENSORS_INACTIVITY_Y = 1; /* 1 for activated, 0 else */
 static const uint8_t SENSORS_INACTIVITY_Z = 1; /* 1 for activated, 0 else */
+
+static const uint8_t SENSORS_REFRESH_DELAY = 50;
 
 #endif

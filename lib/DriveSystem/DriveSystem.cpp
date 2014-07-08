@@ -87,10 +87,10 @@ msg_t DriveSystem::thread(void* arg) {
 		switch (_action) {
 		case GO:
 			count = 0;
-			while ((count++) * 50 < _duration) {
+			while ((count++) * DRIVESYSTEM_THREAD_DELAY < _duration) {
 				Serial.println(_speed);
 				Drive::go(_direction, _speed);
-				waitMs(50);
+				waitMs(DRIVESYSTEM_THREAD_DELAY);
 			}
 			break;
 
