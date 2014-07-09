@@ -36,6 +36,13 @@ LedData Light::data[N_LEDS] = { {Color(0,0,0), Color(0,0,0), Color(0,0,0), Color
 static WORKING_AREA(lightThreadArea, 64);
 
 
+/**
+ * @brief Tells a led to fade between two given colors, for a given duration
+ * @param led the indicator of the led
+ * @param startColor the color the led will shine at the beginning
+ * @param endColor the color the led will shine at the end
+ * @param duration the duration (in ms)
+ */
 void Light::fade(LedIndicator led, Color startColor, Color endColor, int16_t duration) {
 	if (!_isStarted)
 		start();
@@ -57,6 +64,10 @@ void Light::fade(LedIndicator led, Color startColor, Color endColor, int16_t dur
 	chSemSignal(&_sem);
 }
 
+/**
+ * @brief Tells a led to turn off
+ * @param led the indicator of the led
+ */
 void Light::turnOff(LedIndicator led) {
 	if (!_isStarted)
 		start();
@@ -64,9 +75,13 @@ void Light::turnOff(LedIndicator led) {
 	uint8_t i = (uint8_t)led;
 
 	leds[i].turnOff();
-	Serial.println("OFF");
 }
 
+/**
+ * @brief Gets the state of a given led
+ * @param led the indicator of the led
+ * @return one of the available LedStates
+ */
 LedState Light::getState(LedIndicator led) {
 	uint8_t i = (uint8_t)led;
 

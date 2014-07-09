@@ -29,16 +29,20 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 #include "ChibiOS_AVR.h"
 #include "Color.h"
 
+
+/*! Direction enumeration, for the DriveSystem */
 typedef enum {
 	FORWARD,
 	BACKWARD
 } Direction;
 
+/*! Rotation enumeration, for the DriveSystem spin */
 typedef enum {
 	LEFT,
 	RIGHT
 } Rotation;
 
+/*! All the DriveStates the DriveSystem can be */
 typedef enum {
 	GO,
 	SPIN,
@@ -48,10 +52,12 @@ typedef enum {
 } DriveState;
 
 
+/*! Indicators for the leds in the device */
 typedef enum {
 	HEART
 } LedIndicator;
 
+/*! All the LedStates a led can be */
 typedef enum {
 	FADE,
 	SHINE,

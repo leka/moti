@@ -39,6 +39,11 @@ Direction Drive::_lDirection = FORWARD;
 static WORKING_AREA(driveThreadArea, 128);
 
 
+/**
+ * @brief Tells the motors to spin in a given direction, at a given speed
+ * @param direction the direction (FORWARD | BACKWARD)
+ * @param speed the speed (0 - MOTOR_MAX_SPEED)
+ */
 void Drive::go(Direction direction, uint8_t speed) {
 	if (!_isStarted)
 		Drive::start();
@@ -52,6 +57,12 @@ void Drive::go(Direction direction, uint8_t speed) {
 	chSemSignal(&_sem);
 }
 
+/**
+ * @brief Tells the motors to spin in a given direction, at a given speed, with different speed for right and left motors
+ * @param direction the direction (FORWARD | BACKWARD)
+ * @param speedR the speed of the right motor (0 - MOTOR_MAX_SPEED)
+ * @param speedL the speed of the left motor (0 - MOTOR_MAX_SPEED)
+ */
 void Drive::turn(Direction direction, uint8_t speedR, uint8_t speedL) {
 	if (!_isStarted)
 		Drive::start();
@@ -65,6 +76,11 @@ void Drive::turn(Direction direction, uint8_t speedR, uint8_t speedL) {
 	chSemSignal(&_sem);
 }
 
+/**
+ * @brief Tells the motors to spin in the opposite direction (rotation), at a given speed
+ * @param rotation the rotation side (RIGHT | LEFT)
+ * @param speed the speed (0 - MOTOR_MAX_SPEED)
+ */
 void Drive::spin(Rotation rotation, uint8_t speed) {
 	if (!_isStarted)
 		Drive::start();
@@ -87,6 +103,9 @@ void Drive::spin(Rotation rotation, uint8_t speed) {
 	chSemSignal(&_sem);
 }
 
+/**
+ * @brief Tells the motors to immediately stop spinning
+ */
 void Drive::stop(void) {
 	if (!_isStarted)
 		Drive::start();
@@ -95,22 +114,6 @@ void Drive::stop(void) {
 	_rSpeed = _lSpeed = 0;
 
 	chSemSignal(&_sem);
-}
-
-Direction Drive::getRDirection(void) {
-	return _rDirection;
-}
-
-Direction Drive::getLDirection(void) {
-	return _lDirection;
-}
-
-uint8_t Drive::getRSpeed(void) {
-	return _rSpeed;
-}
-
-uint8_t Drive::getLSpeed(void) {
-	return _lSpeed;
 }
 
 

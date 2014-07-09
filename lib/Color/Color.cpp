@@ -44,34 +44,68 @@ const Color Color::DarkOrange = Color(239, 134, 59);
 const Color Color::LightGreen = Color(216, 255, 56);	
 
 
+/*
+ * @brief Default constructor, sets R, G, B to be equal to 0
+ */
 Color::Color() {
 	_r = _g = _b = 0;
 }
 
+/*
+ * @brief R, G, B constructor (0-255)
+ * @param r the red intensity of the color
+ * @param g the green intensity of the color
+ * @param b the blue intensity of the color
+ */
 Color::Color(int16_t r, int16_t g, int16_t b) {
 	_r = r;
 	_g = g;
 	_b = b;
 }
 
+
+/**
+ * @brief Reads the RGB values (0-255)
+ * @param r pointer that will receive the content of the red intensity
+ * @param g pointer that will receive the content of the green intensity
+ * @param b pointer that will receive the content of the blue intensity
+ */
 void Color::getRGB(int16_t* r, int16_t* g, int16_t* b) {
 	*r = _r;
 	*g = _g;
 	*b = _b;
 }
 
+/**
+ * @brief Getter method to get the red intensity of the color (0-255)
+ * @return the red intensity
+ */
 int16_t Color::getR(void) {
 	return _r;
 }
 
+/**
+ * @brief Getter method to get the green intensity of the color (0-255)
+ * @return the green intensity
+ */
 int16_t Color::getG(void) {
 	return _g;
 }
 
+/**
+ * @brief Getter method to get the blue intensity of the color (0-255)
+ * @return the blue intensity
+ */
 int16_t Color::getB(void) {
 	return _b;
 }
 
+/**
+ * @brief Setter method to set the red, green and blue intensities of the color (0-255)
+ * @param r the new red intensity of the color
+ * @param g the new green intensity of the color
+ * @param b the new blue intensity of the color
+ */
 void Color::setRGB(int16_t r, int16_t g, int16_t b) {
 	_r = r;
 	_g = g;

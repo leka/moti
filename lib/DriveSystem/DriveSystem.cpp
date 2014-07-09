@@ -39,6 +39,12 @@ Rotation DriveSystem::_rotation = LEFT;
 static WORKING_AREA(drivesystemThreadArea, 64);
 
 
+/**
+ * @brief Tells the motors to spin in a given direction, at a given speed, during a given duration
+ * @param direction the direction (FORWARD | BACKWARD)
+ * @param speed the speed (0 - MOTOR_MAX_SPEED)
+ * @param duration the duration (in ms)
+ */
 void DriveSystem::go(Direction direction, uint8_t speed, uint16_t duration) {
 	if (!_isStarted)
 		DriveSystem::start();
@@ -51,6 +57,9 @@ void DriveSystem::go(Direction direction, uint8_t speed, uint16_t duration) {
 	chSemSignal(&_sem);
 }
 
+/**
+ * @brief Tells the motors to stop spinning
+ */
 void DriveSystem::stop(void) {
 	if (!_isStarted)
 		DriveSystem::start();
@@ -63,6 +72,10 @@ void DriveSystem::stop(void) {
 	chSemSignal(&_sem);
 }
 
+/**
+ * @brief Gets the state of the DriveSystem (DriveState)
+ * @return one of the available DriveStates
+ */
 DriveState DriveSystem::getState() {
 	return _action;
 }

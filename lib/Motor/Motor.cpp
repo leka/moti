@@ -26,16 +26,30 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  * @version 1.0
  */
 
+
+/**
+ * @brief Instantiates a new motor, given its direction and speed pins
+ * @param directionPin the direction pin of the motor
+ * @param speedPin the speed pin of the motor
+ */
 Motor::Motor(uint8_t directionPin, uint8_t speedPin) {
 	_directionPin = directionPin;
 	_speedPin = speedPin;
 }
 
+/**
+ * @brief Tells a motor to spin in a given direction, at a given speed
+ * @param direction the direction to spin (FORWARD | BACKWARD)
+ * @param speed the speed to spin (0-MOTOR_MAX_SPEED)
+ */
 void Motor::spin(Direction direction, uint8_t speed) {
 	digitalWrite(_directionPin, direction);
 	analogWrite(_speedPin, speed);
 }
 
+/**
+ * @brief Tells a motor to immediately stop
+ */
 void Motor::stop(void) {
 	spin(FORWARD, 0);
 }
