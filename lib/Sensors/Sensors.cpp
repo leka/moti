@@ -163,9 +163,6 @@ float Sensors::getEulerTheta() {
  * @return Psi
  */
 float Sensors::getEulerPsi() {
-	if (abs(millis() - _lastTimeYPR) > 50)
-		readYPR();
-
 	return _PTP[2];
 }
 
@@ -319,7 +316,7 @@ void Sensors::readYPR(void) {
 
 	if (abs(millis() - _lastTimeYPR < SENSORS_REFRESH_DELAY))
 		return;
-
+	
 	_imu.getYawPitchRollEulerRad(_YPR, _PTP);
 	_lastTimeYPR = millis();
 }

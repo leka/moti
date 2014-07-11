@@ -8,8 +8,8 @@
 #include "Drive.h"
 #include "DriveSystem.h"
 #include "FreeIMU.h"
-#include "Led.h"
-#include "Light.h"
+//#include "Led.h"
+//#include "Light.h"
 #include "Motor.h"
 #include "Sensors.h"
 // #include "Vector.h"
@@ -40,10 +40,17 @@ void chSetup() {
 	}
 	*/
 
+	DriveSystem::spin(RIGHT, 255, 2 * M_PI + 1.57f);
+	while (DriveSystem::getState() != NONE);
+
+	Serial.println("YOLOL");
+
+	/*
 	while (TRUE) {
-		Serial.println(Sensors::getGyrY());
+		Serial.println(Sensors::getEulerPhi());
 	 	waitMs(200);
 	}
+	*/
 }
 
 

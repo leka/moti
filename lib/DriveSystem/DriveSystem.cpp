@@ -35,12 +35,15 @@ uint8_t DriveSystem::_speed = 0;
 uint16_t DriveSystem::_duration = 0;
 Direction DriveSystem::_direction = FORWARD;
 Rotation DriveSystem::_rotation = LEFT;
+float DriveSystem::_angle = 0.0f;
+float DriveSystem::_originAngle = 0.0f;
+bool DriveSystem::_jump = false;
 
-static WORKING_AREA(drivesystemThreadArea, 64);
+static WORKING_AREA(drivesystemThreadArea, 512);
 
 
 /**
- * @brief Tells the motors to spin in a given direction, at a given speed, during a given duration
+ * @brief Tells the drivesystem to go straight in a given direction, at a given speed, during a given duration
  * @param direction the direction (FORWARD | BACKWARD)
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  * @param duration the duration (in ms)
@@ -58,7 +61,27 @@ void DriveSystem::go(Direction direction, uint8_t speed, uint16_t duration) {
 }
 
 /**
- * @brief Tells the motors to stop spinning
+ * @brief Tells the drivesystem to spin
+ * @param rotation the rotation direction (LEFT | RIGHT)
+ * @param speed the speed (0 - MOTOR_MAX_SPEED)
+ * @param angle the angle to spin (in radians, < 2 * M_PI)
+ */
+void DriveSystem::spin(Rotation rotation, uint8_t speed, float angle) {
+	if (!_isStarted)
+		DriveSystem::start();
+
+	_rotation = rotation;
+	_speed = speed;
+	_angle = angle;
+	_originAngle = Sensors::getEulerPhi();
+	_jump = false;
+	_action = SPIN;
+
+	chSemSignal(&_sem);
+}
+
+/**
+ * @brief Tells the drivesystem to stop
  */
 void DriveSystem::stop(void) {
 	if (!_isStarted)
@@ -91,9 +114,64 @@ void DriveSystem::start(void* arg, tprio_t priority) {
 	}
 }
 
+float DriveSystem::computeAimAngle(Rotation rotation, float originAngle, float angle) {
+	float aimAngle = originAngle;
+
+	switch (rotation) {
+	case LEFT:
+		aimAngle -= angle;
+		break;
+
+	case RIGHT:
+		aimAngle += angle;
+		break;
+	}
+
+	if (aimAngle < -M_PI) {
+		_jump = true;
+		return aimAngle + 2 * M_PI;
+	}
+	else if (aimAngle > M_PI) {
+		_jump = true;
+		return aimAngle - 2 * M_PI;
+	}
+
+	return aimAngle;
+}
+
+bool DriveSystem::rotationEnded(Rotation rotation, float aimAngle, float* lastAngle) {
+	float currentAngle = Sensors::getEulerPhi();
+
+	Serial.print(F("Current angle: "));
+	Serial.println(currentAngle);
+	Serial.println(*lastAngle);
+	Serial.println(_jump);
+	Serial.println(aimAngle);
+
+	if (_jump && (*lastAngle * currentAngle < -3.0f)) {
+		Serial.println(F("lol"));
+		_jump = false;
+	}
+
+	*lastAngle = currentAngle;
+
+	Serial.println(_jump);
+
+	switch (rotation) {
+	case LEFT:
+		return (!_jump && currentAngle < aimAngle);
+	case RIGHT:
+		return (!_jump && currentAngle > aimAngle);
+	}
+
+	return false;
+}
+
 msg_t DriveSystem::thread(void* arg) {
 	uint16_t count = 0;
-	
+	float lastAngle = 0.0f;
+	float aimAngle = 0.0f;
+
 	while (!chThdShouldTerminate()) {
 		chSemWait(&_sem);
 
@@ -101,14 +179,25 @@ msg_t DriveSystem::thread(void* arg) {
 		case GO:
 			count = 0;
 			while ((count++) * DRIVESYSTEM_THREAD_DELAY < _duration) {
-				Serial.println(_speed);
 				Drive::go(_direction, _speed);
 				waitMs(DRIVESYSTEM_THREAD_DELAY);
 			}
 			break;
 
 		case SPIN:
-			/* TODO */
+			while (_angle > 0.0f) {
+				aimAngle = computeAimAngle(_rotation, _originAngle, _angle);
+				lastAngle = 0.0f;
+
+				while (!rotationEnded(_rotation, aimAngle, &lastAngle)) {
+					Drive::spin(_rotation, _speed);
+					waitMs(DRIVESYSTEM_THREAD_DELAY);
+				}
+
+				_angle -= 2 * M_PI;
+			}
+
+			Drive::stop();
 			break;
 
 		case TURN:

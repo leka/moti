@@ -32,8 +32,8 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 
 /*! Direction enumeration, for the DriveSystem */
 typedef enum {
-	FORWARD,
-	BACKWARD
+	BACKWARD,
+	FORWARD
 } Direction;
 
 /*! Rotation enumeration, for the DriveSystem spin */

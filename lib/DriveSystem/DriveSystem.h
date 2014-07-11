@@ -26,9 +26,12 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  * @version 1.0
  */
 
+#include <math.h>
+
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
 #include "Drive.h"
+#include "Sensors.h"
 
 /**
  * @class DriveSystem
@@ -37,18 +40,25 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 class DriveSystem {
 	public:
 		static void go(Direction direction, uint8_t speed, uint16_t duration);
+		static void spin(Rotation rotation, uint8_t speed, float angle);
+		static void spinDeg(Rotation rotation, uint8_t speed, float angle);
 		static void stop(void);
 
 		static DriveState getState();
 
 	private:
-		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO);
+
+		static float computeAimAngle(Rotation rotation, float originAngle, float angle);
+		static bool rotationEnded(Rotation rotation, float aimAngle, float* last_angle);
 
 		static DriveState _action;
 		static Direction _direction;
 		static Rotation _rotation;
 		static uint8_t _speed;
 		static uint16_t _duration;
+		static float _angle, _originAngle;
+		static bool _jump;
 
 		static bool _isStarted;
 		static Semaphore _sem;
