@@ -41,6 +41,8 @@ class Color {
 
 		void setRGB(int16_t r, int16_t g, int16_t b);
 
+		static Color randomColor();
+
 		static const Color Black;
 		static const Color White;
 		static const Color RedPure;

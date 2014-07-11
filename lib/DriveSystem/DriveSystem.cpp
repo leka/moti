@@ -64,7 +64,7 @@ void DriveSystem::go(Direction direction, uint8_t speed, uint16_t duration) {
  * @brief Tells the drivesystem to spin
  * @param rotation the rotation direction (LEFT | RIGHT)
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
- * @param angle the angle to spin (in radians, < 2 * M_PI)
+ * @param angle the angle to spin (in radians)
  */
 void DriveSystem::spin(Rotation rotation, uint8_t speed, float angle) {
 	if (!_isStarted)
@@ -78,6 +78,16 @@ void DriveSystem::spin(Rotation rotation, uint8_t speed, float angle) {
 	_action = SPIN;
 
 	chSemSignal(&_sem);
+}
+
+/**
+ * @brief Tells the drivesystem to spin
+ * @param rotation the rotation direction (LEFT | RIGHT)
+ * @param speed the speed (0 - MOTOR_MAX_SPEED)
+ * @param angle the angle to spin (in degrees)
+ */
+void DriveSystem::spinDeg(Rotation rotation, uint8_t speed, float angle) {
+	spin(rotation, speed, angle * M_PI / 180.0f);
 }
 
 /**
@@ -178,10 +188,11 @@ msg_t DriveSystem::thread(void* arg) {
 		switch (_action) {
 		case GO:
 			count = 0;
-			while ((count++) * DRIVESYSTEM_THREAD_DELAY < _duration) {
+			while ((_action == GO) && ((_duration == 0) || (count++) * DRIVESYSTEM_THREAD_DELAY < _duration)) {
 				Drive::go(_direction, _speed);
 				waitMs(DRIVESYSTEM_THREAD_DELAY);
 			}
+			Drive::stop();
 			break;
 
 		case SPIN:
@@ -189,7 +200,7 @@ msg_t DriveSystem::thread(void* arg) {
 				aimAngle = computeAimAngle(_rotation, _originAngle, _angle);
 				lastAngle = 0.0f;
 
-				while (!rotationEnded(_rotation, aimAngle, &lastAngle)) {
+				while ((_action == SPIN) && !rotationEnded(_rotation, aimAngle, &lastAngle)) {
 					Drive::spin(_rotation, _speed);
 					waitMs(DRIVESYSTEM_THREAD_DELAY);
 				}

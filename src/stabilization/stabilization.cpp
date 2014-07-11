@@ -1,77 +1,76 @@
-#define serial Serial
-
 #include <Arduino.h>
 #include <Wire.h>
 
+#include "Moti.h"
 #include "ChibiOS_AVR.h"
-#include "Serial.h"
-#include "Tools.h"
-
-#include "CommunicationUtils.h"
-#include "DebugUtils.h"
-#include "ADXL345.h"
-#include "ITG3200.h"
-#include "FreeIMU.h"
-
-#include "Sensors.h"
-#include "Led.h"
+#include "Configuration.h"
+#include "Color.h"
+#include "Drive.h"
 #include "DriveSystem.h"
+#include "FreeIMU.h"
+#include "Led.h"
+#include "Light.h"
 #include "Motor.h"
+#include "Sensors.h"
 
+/* #include "Vector.h" */
 
-#include "./lib/Arbitrer.h"
-#include "./lib/Cruise.h"
-#include "./lib/Bump.h"
-#include "./lib/Stabilization.h"
 
 void chSetup() {
-	chThdSleepMilliseconds(5000);
+	Serial.println("Starting...");
 
-	chThdCreateStatic(waArbitrerThread, sizeof(waArbitrerThread),
-			NORMALPRIO + 10, ArbitrerThread, NULL);
-	chThdCreateStatic(waStabilizationThread, sizeof(waStabilizationThread),
-			NORMALPRIO, StabilizationThread, NULL);
-	chThdCreateStatic(waCruiseThread, sizeof(waCruiseThread),
-			NORMALPRIO + 1, CruiseThread, NULL);
-	// chThdCreateStatic(waBumpThread, sizeof(waBumpThread),
-	// 		NORMALPRIO + 2, BumpThread, NULL);
+	float currentAngle = 0.f;
 
-	/* chThdSleepMilliseconds(6000);
-	   Serial.println("YOLO");
-	   robot.spin(sensors, RIGHT, 160, 90);
+	while (TRUE) {
+		// Serial.println(Sensors::getAccX());
 
-	   chThdSleepMilliseconds(600);
+		/*
+		if (Light::getState(HEART) == INACTIVE) {
+			Light::fade(HEART, Color::randomColor(), Color::randomColor(), 1500);
+		}
+		*/
 
-	   robot.go(FORTH, 130, 3000, 350);
-	   robot.stop(500);
+		currentAngle = Sensors::getEulerPhi();
+		
+		if (Sensors::getAccX() > 80) {
+			Serial.println(F("BACKWARD"));
+			DriveSystem::go(BACKWARD, 200, 0);
+		}
+		else if (Sensors::getAccX() < -80) {
+			Serial.println(F("FORWARD"));
+			DriveSystem::go(FORWARD, 200, 0);
+		}
+		else if (Sensors::getAccY() > 80) {
+			Serial.println(F("SPIN RIGHT"));
+			DriveSystem::spin(RIGHT, 200, 1.57f);
+		}
+		else if (Sensors::getAccY() < -80) {
+			Serial.println(F("SPIN LEFT"));
+			DriveSystem::spin(LEFT, 200, 1.57f);
+		}
+		else if (abs(currentAngle) > 0.34f) {
+			Serial.println(F("FACING"));
+			DriveSystem::spin(currentAngle > 0.0f ? LEFT : RIGHT, 180, abs(currentAngle));
+		}
+		else if (DriveSystem::getState() != NONE) {
+				DriveSystem::stop();
+		}
 
-	//chThdSleepMilliseconds(1000);
-
-	robot.spin(sensors, LEFT, 160, 90);
-
-	chThdSleepMilliseconds(600);
-
-	robot.go(BACK, 130, 3000, 350);
-	robot.stop(500);
-
-	Serial.println("SWAG");
-	robot.stop();*/
-}
-
-void setup() {
-	Serial.begin(115200);
-	sensors.init();
-
-	Serial.println("111");
-
-	chBegin(chSetup);
-
-	while(1) {
-		// nothing to do here
+		waitMs(50);
 	}
 }
 
-void loop() {
-	// nothing to do here
+
+void setup() {
+	Serial.begin(115200);
+	while (!Serial);
+
+	Wire.begin();
+	delay(500);
+
+	chBegin(chSetup);
+
+	while(1);
 }
 
+void loop() { }

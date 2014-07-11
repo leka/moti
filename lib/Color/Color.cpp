@@ -111,3 +111,11 @@ void Color::setRGB(int16_t r, int16_t g, int16_t b) {
 	_g = g;
 	_b = b;
 }
+
+/**
+ * @brief Returns a random color
+ * @return the color
+ */
+Color Color::randomColor() {
+	return Color(random(0, 255), random(0, 255), random(0, 255));
+}
