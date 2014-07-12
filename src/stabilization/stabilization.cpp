@@ -12,23 +12,22 @@
 #include "Light.h"
 #include "Motor.h"
 #include "Sensors.h"
+#include "Serial.h"
 
 /* #include "Vector.h" */
 
 
 void chSetup() {
-	Serial.println("Starting...");
+	Serial.println(F("Starting..."));
 
 	float currentAngle = 0.f;
 
 	while (TRUE) {
 		// Serial.println(Sensors::getAccX());
 
-		/*
 		if (Light::getState(HEART) == INACTIVE) {
 			Light::fade(HEART, Color::randomColor(), Color::randomColor(), 1500);
 		}
-		*/
 
 		currentAngle = Sensors::getEulerPhi();
 		

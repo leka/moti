@@ -39,7 +39,7 @@ float DriveSystem::_angle = 0.0f;
 float DriveSystem::_originAngle = 0.0f;
 bool DriveSystem::_jump = false;
 
-static WORKING_AREA(drivesystemThreadArea, 512);
+static WORKING_AREA(drivesystemThreadArea, 256);
 
 
 /**
@@ -152,20 +152,10 @@ float DriveSystem::computeAimAngle(Rotation rotation, float originAngle, float a
 bool DriveSystem::rotationEnded(Rotation rotation, float aimAngle, float* lastAngle) {
 	float currentAngle = Sensors::getEulerPhi();
 
-	Serial.print(F("Current angle: "));
-	Serial.println(currentAngle);
-	Serial.println(*lastAngle);
-	Serial.println(_jump);
-	Serial.println(aimAngle);
-
-	if (_jump && (*lastAngle * currentAngle < -3.0f)) {
-		Serial.println(F("lol"));
+	if (_jump && (*lastAngle * currentAngle < -3.0f))
 		_jump = false;
-	}
 
 	*lastAngle = currentAngle;
-
-	Serial.println(_jump);
 
 	switch (rotation) {
 	case LEFT:
