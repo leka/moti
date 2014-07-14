@@ -31,7 +31,9 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 /**
  * @brief Default constructor
  */
-Led::Led() { }
+Led::Led() {
+	// nothing to do here
+}
 
 /**
  * @brief Instantiates a new led, given its red, green and blue pins
@@ -44,7 +46,7 @@ Led::Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin) {
 	_greenPin = greenPin;
 	_bluePin = bluePin;
 
-	_color = Color(0, 0, 0);
+	_colorValue = Color(0, 0, 0);
 }
 
 /**
@@ -54,28 +56,28 @@ Led::Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin) {
  * @param bluePin the blue pin
  * @param color the start color
  */
-Led::Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin, Color color) {
+Led::Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin, Color colorValue) {
 	Led(redPin, greenPin, bluePin);
-	_color = color;
+	_colorValue = colorValue;
 }
 
 /**
  * @brief Tells the led to shine with its color
  */
 void Led::shine(void) {
-	Serial.println(_color.getB());
+	Serial.println(_colorValue.getB());
 	
-	analogWrite(_redPin, _color.getR());
-	analogWrite(_greenPin, _color.getG());
-	analogWrite(_bluePin, _color.getB());
+	analogWrite(_redPin, _colorValue.getR());
+	analogWrite(_greenPin, _colorValue.getG());
+	analogWrite(_bluePin, _colorValue.getB());
 }
 
 /**
  * @brief Tells the led to shine with a given color
  * @param color the color the led will shine
  */
-void Led::shine(Color color) {
-	setColor(color);
+void Led::shine(Color colorValue) {
+	setColor(colorValue);
 	shine();
 }
 
@@ -91,13 +93,13 @@ void Led::turnOff(void) {
  * @brief Getter method to get the color of the led
  */
 Color Led::getColor(void) {
-	return _color;
+	return _colorValue;
 }
 
 /**
  * @brief Setter method to set the color of the led
  * @param color the new color of the led
  */
-void Led::setColor(Color color) {
-	_color = color;
+void Led::setColor(Color colorValue) {
+	_colorValue = colorValue;
 }
