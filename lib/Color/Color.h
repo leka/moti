@@ -32,16 +32,16 @@
 class Color {
 	public:
 		Color();
-		Color(int16_t r, int16_t g, int16_t b);
+		Color(uint8_t r, uint8_t g, uint8_t b);
 
-		void getRGB(int16_t *r, int16_t* g, int16_t* b);
-		int16_t getR(void);
-		int16_t getG(void);
-		int16_t getB(void);
+		void getRGB(uint8_t* r, uint8_t* g, uint8_t* b);
+		uint8_t getR(void);
+		uint8_t getG(void);
+		uint8_t getB(void);
 
-		void setRGB(int16_t r, int16_t g, int16_t b);
+		void setRGB(uint8_t r, uint8_t g, uint8_t b);
 
-		static Color randomColor();
+		static Color randomColor(void);
 
 		static const Color Black;
 		static const Color White;
@@ -60,7 +60,7 @@ class Color {
 		static const Color LightGreen;	
 
 	private:
-		int16_t _r, _g, _b;
+		uint8_t _r, _g, _b;
 };
 
 #endif
