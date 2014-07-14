@@ -1,21 +1,21 @@
 /*
-Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at weareleka dot com> and Leka <http://weareleka.com>
+   Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at weareleka dot com> and Leka <http://weareleka.com>
 
-This file is part of Moti, a spherical robotic smart toy for autistic children.
+   This file is part of Moti, a spherical robotic smart toy for autistic children.
 
-Moti is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+   Moti is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-Moti is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+   Moti is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with Moti. If not, see <http://www.gnu.org/licenses/>.
-*/
+   You should have received a copy of the GNU General Public License
+   along with Moti. If not, see <http://www.gnu.org/licenses/>.
+   */
 
 #include <Arduino.h>
 #include "DriveSystem.h"
@@ -119,8 +119,8 @@ void DriveSystem::start(void* arg, tprio_t priority) {
 		_isStarted = true;
 
 		(void)chThdCreateStatic(drivesystemThreadArea,
-								sizeof(drivesystemThreadArea),
-								priority, thread, arg);
+				sizeof(drivesystemThreadArea),
+				priority, thread, arg);
 	}
 }
 
@@ -128,13 +128,13 @@ float DriveSystem::computeAimAngle(Rotation rotation, float originAngle, float a
 	float aimAngle = originAngle;
 
 	switch (rotation) {
-	case LEFT:
-		aimAngle -= angle;
-		break;
+		case LEFT:
+			aimAngle -= angle;
+			break;
 
-	case RIGHT:
-		aimAngle += angle;
-		break;
+		case RIGHT:
+			aimAngle += angle;
+			break;
 	}
 
 	if (aimAngle < -M_PI) {
@@ -158,10 +158,10 @@ bool DriveSystem::rotationEnded(Rotation rotation, float aimAngle, float* lastAn
 	*lastAngle = currentAngle;
 
 	switch (rotation) {
-	case LEFT:
-		return (!_jump && currentAngle < aimAngle);
-	case RIGHT:
-		return (!_jump && currentAngle > aimAngle);
+		case LEFT:
+			return (!_jump && currentAngle < aimAngle);
+		case RIGHT:
+			return (!_jump && currentAngle > aimAngle);
 	}
 
 	return false;
@@ -176,41 +176,41 @@ msg_t DriveSystem::thread(void* arg) {
 		chSemWait(&_sem);
 
 		switch (_action) {
-		case GO:
-			count = 0;
-			while ((_action == GO) && ((_duration == 0) || (count++) * DRIVESYSTEM_THREAD_DELAY < _duration)) {
-				Drive::go(_direction, _speed);
-				waitMs(DRIVESYSTEM_THREAD_DELAY);
-			}
-			Drive::stop();
-			break;
-
-		case SPIN:
-			while (_angle > 0.0f) {
-				aimAngle = computeAimAngle(_rotation, _originAngle, _angle);
-				lastAngle = 0.0f;
-
-				while ((_action == SPIN) && !rotationEnded(_rotation, aimAngle, &lastAngle)) {
-					Drive::spin(_rotation, _speed);
+			case GO:
+				count = 0;
+				while ((_action == GO) && ((_duration == 0) || (count++) * DRIVESYSTEM_THREAD_DELAY < _duration)) {
+					Drive::go(_direction, _speed);
 					waitMs(DRIVESYSTEM_THREAD_DELAY);
 				}
+				Drive::stop();
+				break;
 
-				_angle -= 2 * M_PI;
-			}
+			case SPIN:
+				while (_angle > 0.0f) {
+					aimAngle = computeAimAngle(_rotation, _originAngle, _angle);
+					lastAngle = 0.0f;
 
-			Drive::stop();
-			break;
+					while ((_action == SPIN) && !rotationEnded(_rotation, aimAngle, &lastAngle)) {
+						Drive::spin(_rotation, _speed);
+						waitMs(DRIVESYSTEM_THREAD_DELAY);
+					}
 
-		case TURN:
-			/* TODO */
-			break;
+					_angle -= 2 * M_PI;
+				}
 
-		case STOP:
-			Drive::stop();
-			break;
+				Drive::stop();
+				break;
 
-		case NONE:
-			break;
+			case TURN:
+				/* TODO */
+				break;
+
+			case STOP:
+				Drive::stop();
+				break;
+
+			case NONE:
+				break;
 		}
 
 		_action = NONE;
