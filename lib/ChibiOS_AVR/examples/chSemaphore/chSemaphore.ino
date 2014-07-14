@@ -16,13 +16,13 @@ static msg_t thdFcn(void *name) {
   // wait for slot
   chSemWait(&twoSlots);
 
-    // only two threads can be in this region at a time
-    Serial.println((char*)name);
+	// only two threads can be in this region at a time
+	Serial.println((char*)name);
 
-    chThdSleep(1000);
+	chThdSleep(1000);
 
-    // exit region
-    chSemSignal(&twoSlots);
+	// exit region
+	chSemSignal(&twoSlots);
   }
 }
 //------------------------------------------------------------------------------

@@ -15,11 +15,11 @@ static WORKING_AREA(waThread1, 64);
 static msg_t Thread1(void *arg) {
 
   while (!chThdShouldTerminate()) {
-    // Wait for signal from thread 2.
-    chSemWait(&sem);
+	// Wait for signal from thread 2.
+	chSemWait(&sem);
 
-    // Turn LED off.
-    digitalWrite(LED_PIN, LOW);
+	// Turn LED off.
+	digitalWrite(LED_PIN, LOW);
   }
   return 0;
 }
@@ -32,16 +32,16 @@ static WORKING_AREA(waThread2, 64);
 static msg_t Thread2(void *arg) {
   pinMode(LED_PIN, OUTPUT);
   while (1) {
-    digitalWrite(LED_PIN, HIGH);
+	digitalWrite(LED_PIN, HIGH);
 
-    // Sleep for 200 milliseconds.
-    chThdSleepMilliseconds(200);
+	// Sleep for 200 milliseconds.
+	chThdSleepMilliseconds(200);
 
-    // Signal thread 1 to turn LED off.
-    chSemSignal(&sem);
+	// Signal thread 1 to turn LED off.
+	chSemSignal(&sem);
 
-    // Sleep for 200 milliseconds.
-    chThdSleepMilliseconds(200);
+	// Sleep for 200 milliseconds.
+	chThdSleepMilliseconds(200);
   }
   return 0;  
 }
@@ -59,10 +59,10 @@ void chSetup() {
 
   // start blink thread
   chThdCreateStatic(waThread1, sizeof(waThread1),
-    NORMALPRIO + 2, Thread1, NULL);
+	NORMALPRIO + 2, Thread1, NULL);
 
   chThdCreateStatic(waThread2, sizeof(waThread2),
-    NORMALPRIO + 1, Thread2, NULL);
+	NORMALPRIO + 1, Thread2, NULL);
 
 }
 //------------------------------------------------------------------------------

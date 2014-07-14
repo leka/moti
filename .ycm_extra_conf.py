@@ -1,34 +1,27 @@
 import os
 import ycm_core
 
+libDir = "./lib"
+
 flags = [
-'-Wall'
-,'-Wextra'
-,'-Werror'
-,'-Wno-attributes'
-,'-std=c++11'
-,'-x'
-,'c++'
- ,'-I./lib/ChibiOS_AVR'
- ,'-I./lib/DriveSystem'
- ,'-I./lib/FreeIMU'
- ,'-I./lib/Led'
- ,'-I./lib/Motor'
- ,'-I./lib/Sensors'
- ,'-I./lib/Serial'
- ,'-I./lib/Subsumption'
- ,'-I./lib/Tools'
- ,'-isystem/usr/local/Cellar/avr-libc/1.8.0/avr/include'
- ,'-isystem/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
- ,'-isystem/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
-,'-I/Applications/Arduino.app/Contents/Resources/Java/libraries/Wire'
- ,'-mmcu=atmega2560'
- ,'-DF_CPU=16000000L'
- ,'-DARDUINO=105'
- ,'-D__AVR__'
- ,'-D__AVR_ATmega2560__'
-# ,'-MMD -DUSB_VID=null'
-# ,'-DUSB_PID=null'
+	'-Wall'
+	,'-Wextra'
+	,'-Werror'
+	,'-Wno-attributes'
+	,'-std=c++11'
+	,'-x'
+	,'c++'
+	,'-isystem/usr/local/Cellar/avr-libc/1.8.0/avr/include'
+	,'-isystem/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
+	,'-isystem/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
+	,'-I/Applications/Arduino.app/Contents/Resources/Java/libraries/Wire'
+	,'-mmcu=atmega2560'
+	,'-DF_CPU=16000000L'
+	,'-DARDUINO=105'
+	,'-D__AVR__'
+	,'-D__AVR_ATmega2560__'
+	# ,'-MMD -DUSB_VID=null'
+	# ,'-DUSB_PID=null'
 ]
 
 
@@ -48,9 +41,16 @@ def DirectoryOfThisScript():
 def MakeRelativePathsInFlagsAbsolute( flags, working_directory ):
   if not working_directory:
     return list( flags )
+
   new_flags = []
   make_next_absolute = False
   path_flags = [ '-isystem', '-I', '-iquote', '--sysroot=' ]
+
+  for path, dirs, files in os.walk(libDir):
+    for d in dirs:
+      flag = '-I' + os.path.join(path, d)
+      flags.append(flag)
+
   for flag in flags:
     new_flag = flag
 

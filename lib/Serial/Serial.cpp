@@ -18,58 +18,75 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <Arduino.h>
-#include <Serial.h>
+#include "Serial.h"
 
 /**
  * @file Serial.cpp
- * @author Ladislas de Toldi
+ * @author Ladislas de Toldi & Flavien Raynaud
  * @version 1.0
  */
 
-/**
- * @brief Send the value of a uint8_t as a 8 bits (1 byte) binary
- *
- * writeByte() sends values as 8 bits binaries. It uses Serial.write() and is used inside sendDataBinary().
- *
- * @param value the value you need to write.
- */
-void sio::writeByte(uint8_t value){
-	serial.write(value);
+uint8_t readByte(void) {
+    while (!Serial.available());
+
+    return (uint8_t)Serial.read();
 }
 
-/**
- * @brief Send the value of a int16_t as a 16 bits (2 bytes) binary
- *
- * writeInt() is used to send the two bytes that comprise a two byte (16 bit) integer.
- *
- * Serial.write(lowByte(value)) sends the low byte
- * Serial.write(highByte(value)) sends the high byte
- *
- * @param value the value you want to write
- */
-void sio::writeInt(int value){
-	serial.write(lowByte(value));
-	serial.write(highByte(value));
+uint16_t readTwoBytes(void) {
+    uint8_t first = readByte();
+    uint8_t second = readByte();
+
+    return ((uint16_t)first << 8) + (uint16_t)second;
 }
 
-/**
- * @brief read byte in serial buffer
- *
- * @return the value
- */
-uint8_t sio::readByte(){
-	return serial.read();
-}
+READ_COMMAND readCommand(void) {
+    READ_COMMAND cmd;
 
-/**
- * @brief check if there is serial data avalaible
- *
- * @return return true if serial communication is avalaible, false if it's not.
- */
-bool sio::avalaible(){
-	if (serial.available() > 0) {
-		return true;
-	}
-	else
-		return false;
+    cmd.type = COMMAND_NONE;
+
+    while (!Serial.available());
+
+    if (readByte() == 42) {
+        uint8_t actionByte = readByte();
+
+        if (actionByte > 0x03)
+            return cmd;
+
+        cmd.type = (COMMAND_TYPE)actionByte;
+
+        switch (cmd.type) {
+        case COMMAND_GO:
+            if (readByte() == 1)
+                cmd.cmd.go.direction = FORWARD;
+            else
+                cmd.cmd.go.direction = BACKWARD;
+
+            cmd.cmd.go.speed = readByte();
+            cmd.cmd.go.duration = readTwoBytes();
+            break;
+
+        case COMMAND_SPIN:
+            cmd.cmd.spin.rotation = (Rotation)readByte();
+            cmd.cmd.spin.speed = readByte();
+            cmd.cmd.spin.angle = readTwoBytes();
+            break;
+
+        case COMMAND_STOP:
+            break;
+
+        case COMMAND_FADE:
+            cmd.cmd.fade.indicator = (LedIndicator)readByte();
+            cmd.cmd.fade.startR = readByte();
+            cmd.cmd.fade.startG = readByte();
+            cmd.cmd.fade.startB = readByte();
+            cmd.cmd.fade.endR = readByte();
+            cmd.cmd.fade.endG = readByte();
+            cmd.cmd.fade.endB = readByte();
+            cmd.cmd.fade.duration = readTwoBytes();
+        }
+    }
+    else
+        return readCommand();
+
+    return cmd;
 }

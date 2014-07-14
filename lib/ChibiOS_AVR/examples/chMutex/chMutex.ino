@@ -25,10 +25,10 @@ void notify(const char* name, int state) {
 //------------------------------------------------------------------------------
 msg_t thdFcn(void  *args) {
   while (true) {
-    notify((const char*)args, 0);
-    chThdSleep(1000);
-    notify((const char*)args, 1);
-    chThdSleep(1000);
+	notify((const char*)args, 0);
+	chThdSleep(1000);
+	notify((const char*)args, 1);
+	chThdSleep(1000);
   }
 }
 //------------------------------------------------------------------------------

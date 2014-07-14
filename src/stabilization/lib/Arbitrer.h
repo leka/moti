@@ -39,7 +39,7 @@ void arbitrerTask() {
 	// Serial.println(elapsedTime);
 
 	/****** BUMPING PART ******/
-    //
+	//
 	// if (abs(sensors.getXYZ(0)) >= 165) { //xThreshold) {
 	// 	if (startBumpTime == 0)
 	// 		startBumpTime = chTimeNow();
@@ -51,7 +51,7 @@ void arbitrerTask() {
 	// }
 	// else
 	// 	startBumpTime = 0;
-    //
+	//
 	/**************************/
 
 	/****** STABILIZATION PART ******/
@@ -68,17 +68,17 @@ void arbitrerTask() {
 
 	//Serial.print("Sum: ");
 	//Serial.println(sum);
-    //
+	//
 	// if (sum > Z_HISTORY_SIZE * 80.f) {
 	// 	Serial.println("STAB");
 	// 	Serial.println(sleeping);
-    //
+	//
 	// 	z_index = 0;
 	// 	for (uint8_t i = 0; i < Z_HISTORY_SIZE; ++i)
 	// 		dz[i] = 0.f;
-    //
+	//
 	// 	robot.stop(0);
-    //
+	//
 	// 	if (sleeping) {
 	// 		//chEvtGetAndClearEvents(stabilizationEvent);
 	// 	}
@@ -86,7 +86,7 @@ void arbitrerTask() {
 	// 		Serial.println("Stabilizing");
 	// 		//chEvtSignal(StabilizationThd, stabilizationEvent);
 	// 	}
-    //
+	//
 	// 	sleeping = !sleeping;
 	// 	chThdSleepMilliseconds(1000);
 	// }

@@ -42,15 +42,17 @@ void stabilizationTask() {
 	}
 
 	float alpha = sensors.getEuler(0);
-	SpinDirection sDir = LEFT;
+	Rotation sDir = LEFT;
 
 	if (alpha < 0) {
 		alpha *= -1;
 		sDir = RIGHT;
 	}
 
-	//if (alpha > 25.)
-	//	robot.spin(sensors, sDir, 110, alpha - 25.);
+	/*
+	if (alpha > 25.)
+		robot.spin(sensors, sDir, 110, alpha - 25.);
+	*/
 
 	robot.stop(0);
 }

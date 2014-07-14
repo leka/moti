@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
+/*
 #include "Serial.h"
 
 #ifndef DEBUGUTILS_H
@@ -26,34 +27,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #ifdef DEBUG_V
   #include <WProgram.h>
-  #define DEBUG_PRINT(str)    \
-    serial.print(millis());     \
-    serial.print(": ");    \
-    serial.print(__PRETTY_FUNCTION__); \
-    serial.print(' ');      \
-    serial.print(__FILE__);     \
-    serial.print(':');      \
-    serial.print(__LINE__);     \
-    serial.print(' ');      \
-    serial.println(str);
+  #define DEBUG_PRINT(str)	\
+	serial.print(millis());	 \
+	serial.print(": ");	\
+	serial.print(__PRETTY_FUNCTION__); \
+	serial.print(' ');	  \
+	serial.print(__FILE__);	 \
+	serial.print(':');	  \
+	serial.print(__LINE__);	 \
+	serial.print(' ');	  \
+	serial.println(str);
 #endif
 
 #ifdef DEBUG
   #define DEBUG_PRINT(str) \
-    serial.println(str);
+	serial.println(str);
 #endif
 
 #ifndef DEBUG_PRINT
   #define DEBUG_PRINT(str)
 #endif
-
+*/
 /*
 int availableMemory() {
   int size = 2048; // Use 2048 with ATmega328
   byte *buf;
 
   while ((buf = (byte *) malloc(--size)) == NULL)
-    ;
+	;
 
   free(buf);
 
@@ -62,4 +63,4 @@ int availableMemory() {
 */
 
 
-#endif
+//#endif

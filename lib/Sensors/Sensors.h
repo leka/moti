@@ -22,61 +22,67 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * @file Sensors.h
- * @author Ladislas de Toldi
+ * @author Ladislas de Toldi & Flavien Raynaud
  * @version 1.0
  */
 
+
+#include <math.h>
+
 #include <Arduino.h>
-#include <Wire.h>
-
 #include "ChibiOS_AVR.h"
-
-#include "CommunicationUtils.h"
-#include "DebugUtils.h"
-#include "ADXL345.h"
-#include "ITG3200.h"
+#include "Configuration.h"
 #include "FreeIMU.h"
+#include "Moti.h"
 
-#include "Serial.h"
 
-/**
- * @class Sensors
- * @brief Sensors class gathers all the Motors functions for Moti.
- */
 class Sensors {
-
 	public:
+		static void getAccXYZ(float* x, float* y, float* z);
+		static float getAccX();
+		static float getAccY();
+		static float getAccZ();
 
-		Sensors();
+		static void getGyrYPR(float* y, float* p, float* r);
+		static float getGyrY();
+		static float getGyrP();
+		static float getGyrR();
 
-		void init();
+		static void getEuler(float* phi, float* theta, float* psi);
+		static float getEulerPhi();
+		static float getEulerTheta();
+		static float getEulerPsi();
 
-		//	SENSORS
-		void read();
-		void readAccelerometer();
-		void readGyroscope();
+		static void getGyrYPRDeg(float* y, float* p, float* r);
+		static float getGyrYDeg();
+		static float getGyrPDeg();
+		static float getGyrRDeg();
 
-		int getXYZ(uint8_t index);
-		int getYPR(uint8_t index);
-		float getEuler(uint8_t index);
+		static void getEulerDeg(float* y, float* p, float* r);
+		static float getEulerPhiDeg();
+		static float getEulerThetaDeg();
+		static float getEulerPsiDeg();
 
-		void sendJson();
-		void sendData();
-		void debug();
+		static bool isFalling();
+		static bool isInactive();
+
+		static float radToDeg(float rad);
+		static float degToRad(float deg);
 
 	private:
+		static void init(void);
+		static void readXYZ(void);
+		static void readYPR(void);
 
-		//	VARIABLES
-		int _XYZ[3], _tmpXYZ[3];
-		int _YPR[3];
-		float _tmpYPR[3];
+		static float _XYZ[6]; /* X, Y, Z */
+		static float _YPR[3]; /* Yaw, Pitch, Roll */
+		static float _PTP[3]; /* Phi, Theta, Psi */
 
-		FreeIMU AccelGyro;
+		static uint32_t _lastTimeXYZ, _lastTimeYPR;
 
-		// MUTEX
-		MUTEX_DECL(sensorsDataMutex);
+		static FreeIMU _imu;
 
-		//	RELATED CLASS
+		static bool _isInit;
 };
 
 #endif

@@ -21,17 +21,17 @@ static msg_t Thread1(void *arg) {
   
   while (TRUE) {
   
-    // sleep until next tick
-    chThdSleep(1);
-    
-    // get wake time
-    uint32_t tmp = micros();
-    
-    // calculate min and max interval between wake times
-    uint16_t diff = tmp - tlast;
-    if (diff < tmin) tmin = diff;
-    if (diff > tmax) tmax = diff;
-    tlast = tmp;
+	// sleep until next tick
+	chThdSleep(1);
+	
+	// get wake time
+	uint32_t tmp = micros();
+	
+	// calculate min and max interval between wake times
+	uint16_t diff = tmp - tlast;
+	if (diff < tmin) tmin = diff;
+	if (diff > tmax) tmax = diff;
+	tlast = tmp;
   }
   return 0;
 }
@@ -51,19 +51,19 @@ void mainThread() {
 
   // start higher priority thread
   chThdCreateStatic(waThread1, sizeof(waThread1), 
-    NORMALPRIO + 1, Thread1, NULL);
-    
+	NORMALPRIO + 1, Thread1, NULL);
+	
   while (1) {
-    chThdSleepMilliseconds(1000);
-    Serial.print(tmin);
-    Serial.write(',');
-    Serial.println(tmax);
-    if (np++ == 10) {
-      np = 0;
-      tmin = 0XFFFF;
-      tmax = 0;
-      Serial.println("clear");
-    }
+	chThdSleepMilliseconds(1000);
+	Serial.print(tmin);
+	Serial.write(',');
+	Serial.println(tmax);
+	if (np++ == 10) {
+	  np = 0;
+	  tmin = 0XFFFF;
+	  tmax = 0;
+	  Serial.println("clear");
+	}
   }
 }
 //------------------------------------------------------------------------------

@@ -20,38 +20,54 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 #ifndef LEKA_MOTI_ARDUINO_SERIAL_H_
 #define LEKA_MOTI_ARDUINO_SERIAL_H_
 
+/**
+ * @file Serial.h
+ * @author Ladislas de Toldi & Flavien Raynaud
+ * @version 1.0
+ */
+
 #include <Arduino.h>
+#include "Moti.h"
+#include "Color.h"
 
-#ifndef serial
-#define serial Serial
-#endif
+typedef enum {
+    COMMAND_GO,
+    COMMAND_SPIN,
+    COMMAND_STOP,
+    COMMAND_FADE,
+    COMMAND_NONE
+} COMMAND_TYPE;
 
+typedef struct {
+    Direction direction;
+    uint8_t speed;
+    uint16_t duration;
+} GO_CMD;
 
-namespace sio {
+typedef struct {
+    Rotation rotation;
+    uint8_t speed;
+    uint16_t angle;
+} SPIN_CMD;
 
-	// Variables
-	static const uint8_t dataHeader = 0x0f;
-	static const uint8_t dataFooter = 0xf0;
+typedef struct {
+    LedIndicator indicator;
+    uint8_t startR, startG, startB;
+    uint8_t endR, endG, endB;
+    uint16_t duration;
+} FADE_CMD;
 
-	static const uint8_t readyCheck = 0xff;
+typedef union {
+    GO_CMD go;
+    SPIN_CMD spin;
+    FADE_CMD fade;
+} COMMAND;
 
-	static const uint8_t numberOfSensors = 0x02;
+typedef struct {
+    COMMAND_TYPE type;
+    COMMAND cmd;
+} READ_COMMAND;
 
-	static const uint8_t initPhase = 0xAA;
-
-	static const uint8_t accelSensor = 0x01;
-	static const uint8_t accelData   = 0x06;
-	static const uint8_t gyroSensor  = 0x02;
-	static const uint8_t gyroData    = 0x06;
-
-	//	Methods
-	void writeByte(uint8_t value);
-	void writeInt(int value);
-
-	uint8_t readByte();
-
-	bool avalaible();
-
-}
+READ_COMMAND readCommand(void);
 
 #endif
