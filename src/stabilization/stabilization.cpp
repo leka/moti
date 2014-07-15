@@ -11,6 +11,7 @@
 #include "Led.h"
 #include "Light.h"
 #include "Motor.h"
+#include "Queue.h"
 #include "Sensors.h"
 #include "Serial.h"
 

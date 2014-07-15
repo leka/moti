@@ -31,7 +31,7 @@ Semaphore Light::_sem = _SEMAPHORE_DATA(_sem, 0);
 bool Light::_isInit = false;
 bool Light::_isStarted = false;
 Led Light::leds[N_LEDS] = { Led(HEART_LED_RED_PIN, HEART_LED_GREEN_PIN, HEART_LED_BLUE_PIN) };
-LedData Light::data[N_LEDS] = { {Color(0,0,0), Color(0,0,0), Color(0,0,0), Color(0,0,0), 0, 0, INACTIVE} };
+Queue<LedData*> Light::data[N_LEDS] = { Queue<LedData*>() };
 
 static WORKING_AREA(lightThreadArea, 64);
 
@@ -49,17 +49,21 @@ void Light::fade(LedIndicator led, Color startColor, Color endColor, int16_t dur
 
 	uint8_t i = (uint8_t)led;
 
-	data[i].startColor = startColor;
-	data[i].endColor = endColor;
-	data[i].totalSteps = duration / LIGHT_THREAD_DELAY;
-	data[i].steps = 0;
-	data[i].state = FADE;
+	LedData* newData = new LedData;
 
-	data[i].diff = Color(endColor.getR() - startColor.getR(),
+	newData->startColor = startColor;
+	newData->endColor = endColor;
+	newData->totalSteps = duration / LIGHT_THREAD_DELAY;
+	newData->steps = 0;
+	newData->state = FADE;
+
+	newData->diff = Color(endColor.getR() - startColor.getR(),
 						 endColor.getG() - startColor.getG(),
 						 endColor.getB() - startColor.getB());
 
-	data[i].current = startColor;
+	newData->current = startColor;
+
+	data[i].push(newData);
 
 	chSemSignal(&_sem);
 }
@@ -85,7 +89,10 @@ void Light::turnOff(LedIndicator led) {
 LedState Light::getState(LedIndicator led) {
 	uint8_t i = (uint8_t)led;
 
-	return data[i].state;
+	if (data[i].isEmpty())
+		return INACTIVE;
+
+	return data[i].getHead()->state;
 }
 
 
@@ -94,6 +101,9 @@ void Light::init(void) {
 		_isInit = true;
 
 		/* leds[0] = Led(HEART_LED_RED_PIN, HEART_LED_GREEN_PIN, HEART_LED_BLUE_PIN); */
+
+		/* for (uint8_t i = 0; i < N_LEDS; ++i)
+			 data[i] = Queue<LedData*>(); */
 	}
 }
 
@@ -112,6 +122,7 @@ void Light::start(void* arg, tprio_t priority) {
 
 msg_t Light::thread(void* arg) {
 	bool noRecall = true;
+	LedData* state;
 
 	while (!chThdShouldTerminate()) {
 		chSemWait(&_sem);
@@ -120,29 +131,37 @@ msg_t Light::thread(void* arg) {
 			noRecall = true;
 
 			for (uint8_t i = 0; i < N_LEDS; ++i) {
-				switch (data[i].state) {
-				case FADE:
-					data[i].current.setRGB(data[i].startColor.getR() + data[i].diff.getR() * data[i].steps / data[i].totalSteps,
-										   data[i].startColor.getG() + data[i].diff.getG() * data[i].steps / data[i].totalSteps,
-										   data[i].startColor.getB() + data[i].diff.getB() * data[i].steps / data[i].totalSteps);
-					leds[i].shine(data[i].current);
-					
-					++data[i].steps;
+				if (!data[i].isEmpty()) {
+					switch (state->state) {
+					case FADE:
+							state = data[i].getHead();
 
-					if (data[i].steps == data[i].totalSteps) {
-						data[i].state = INACTIVE;
-						leds[i].shine(data[i].endColor);
+							state->current.setRGB(state->startColor.getR() + state->diff.getR() * state->steps / state->totalSteps,
+												  state->startColor.getG() + state->diff.getG() * state->steps / state->totalSteps,
+												  state->startColor.getB() + state->diff.getB() * state->steps / state->totalSteps);
+							leds[i].shine(state->current);
+							
+							state->steps++;
+
+							if (state->steps == state->totalSteps) {
+								leds[i].shine(state->endColor);
+								delete state;
+								data[i].pop();
+
+								if (!data[i].isEmpty())
+									noRecall = false;
+							}
+							else
+								noRecall = false;
+
+						break;
+
+					case SHINE:
+						break;
+
+					case INACTIVE:
+						break;			
 					}
-					else
-						noRecall = false;
-
-					break;
-
-				case SHINE:
-					break;
-
-				case INACTIVE:
-					break;			
 				}
 			}
 

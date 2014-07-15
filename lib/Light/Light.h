@@ -33,6 +33,7 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 #include "Color.h"
 #include "Led.h"
 #include "Moti.h"
+#include "Queue.h"
 
 
 /**
@@ -53,7 +54,7 @@ class Light {
 		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
 
 		static Led leds[N_LEDS];
-		static LedData data[N_LEDS];
+		static Queue<LedData*> data[N_LEDS];
 
 		static Semaphore _sem;
 		static msg_t thread(void* arg);

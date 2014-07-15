@@ -11,6 +11,7 @@
 #include "Led.h"
 #include "Light.h"
 #include "Motor.h"
+#include "Queue.h"
 #include "Sensors.h"
 #include "Serial.h"
 
@@ -19,6 +20,10 @@
 
 void chSetup() {
     Serial.println(F("Starting..."));
+
+    Light::fade(HEART, Color::RedPure, Color::BluePure, 1500);
+    Light::fade(HEART, Color::BluePure, Color::RedPure, 1500);
+    Light::fade(HEART, Color::RedPure, Color::BluePure, 1500);
 
     while (TRUE) {
         Serial.println(F("Reading..."));
