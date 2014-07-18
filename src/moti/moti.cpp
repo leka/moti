@@ -1,71 +1,49 @@
 #include <Arduino.h>
 #include <Wire.h>
 
+#include "Moti.h"
 #include "ChibiOS_AVR.h"
-#include "Serial.h"
-#include "Tools.h"
-
-#include "CommunicationUtils.h"
-#include "DebugUtils.h"
-#include "ADXL345.h"
-#include "ITG3200.h"
-#include "FreeIMU.h"
-
-#include "Sensors.h"
-#include "Led.h"
+#include "Configuration.h"
+#include "Color.h"
+#include "Drive.h"
 #include "DriveSystem.h"
+#include "Environment.h"
+#include "FreeIMU.h"
+#include "Led.h"
+#include "Light.h"
 #include "Motor.h"
+#include "Queue.h"
+#include "Sensors.h"
+#include "Serial.h"
 
-#include "lib/Arbitrer.h"
-#include "lib/Cruise.h"
-#include "lib/Bump.h"
-#include "lib/Stabilization.h"
+#include "lib/Arbitrer/Arbitrer.h"
+/*
+#include "lib/Cruise/Cruise.h"
+#include "lib/Environment/Environment.h"
+*/
+
 
 void chSetup() {
-	chThdSleepMilliseconds(5000);
+	Serial.println(F("Starting..."));
 
-	chThdCreateStatic(waArbitrerThread, sizeof(waArbitrerThread),
-			NORMALPRIO + 10, ArbitrerThread, NULL);
-	chThdCreateStatic(waStabilizationThread, sizeof(waStabilizationThread),
-			NORMALPRIO, StabilizationThread, NULL);
-	chThdCreateStatic(waCruiseThread, sizeof(waCruiseThread),
-			NORMALPRIO + 1, CruiseThread, NULL);
-	chThdCreateStatic(waBumpThread, sizeof(waBumpThread),
-			NORMALPRIO + 2, BumpThread, NULL);
+    delay(5000);
 
-	/* 
-	chThdSleepMilliseconds(6000);
-	Serial.println("YOLO");
-	robot.spin(sensors, RIGHT, 160, 90);
+    Light::start();
 
-	chThdSleepMilliseconds(600);
-
-	robot.go(FORTH, 130, 3000, 350);
-	robot.stop(500);
-
-	chThdSleepMilliseconds(1000);
-
-	robot.spin(sensors, LEFT, 160, 90);
-
-	chThdSleepMilliseconds(600);
-
-	robot.go(BACK, 130, 3000, 350);
-	robot.stop(500);
-
-	Serial.println("SWAG");
-	robot.stop();
-	*/
+	Arbitrer::launch();
 }
 
-void setup(void) {
+
+void setup() {
 	Serial.begin(115200);
-	sensors.init();
+	while (!Serial);
+
+	Wire.begin();
+	delay(500);
 
 	chBegin(chSetup);
 
 	while(1);
 }
 
-void loop(void) {
-	// nothing to do here
-}
+void loop() { }

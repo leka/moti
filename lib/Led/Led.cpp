@@ -64,9 +64,7 @@ Led::Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin, Color colorValue) {
 /**
  * @brief Tells the led to shine with its color
  */
-void Led::shine(void) {
-	Serial.println(_colorValue.getB());
-	
+void Led::shine(void) {	
 	analogWrite(_redPin, _colorValue.getR());
 	analogWrite(_greenPin, _colorValue.getG());
 	analogWrite(_bluePin, _colorValue.getB());

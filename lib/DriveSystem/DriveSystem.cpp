@@ -20,8 +20,6 @@
 #include <Arduino.h>
 #include "DriveSystem.h"
 
-#include "DriveSystem.h"
-
 /**
  * @file DriveSystem.cpp
  * @author Ladislas de Toldi
@@ -31,6 +29,7 @@
 bool DriveSystem::_isStarted = false;
 Semaphore DriveSystem::_sem = _SEMAPHORE_DATA(_sem, 0);
 DriveState DriveSystem::_action = NONE;
+DriveState DriveSystem::_oldAction = NONE;
 uint8_t DriveSystem::_speed = 0;
 uint16_t DriveSystem::_duration = 0;
 Direction DriveSystem::_direction = FORWARD;
@@ -55,6 +54,7 @@ void DriveSystem::go(Direction direction, uint8_t speed, uint16_t duration) {
 	_direction = direction;
 	_speed = speed;
 	_duration = duration;
+	_oldAction = _action;
 	_action = GO;
 
 	chSemSignal(&_sem);
@@ -75,6 +75,7 @@ void DriveSystem::spin(Rotation rotation, uint8_t speed, float angle) {
 	_angle = angle;
 	_originAngle = Sensors::getEulerPhi();
 	_jump = false;
+	_oldAction = _action;
 	_action = SPIN;
 
 	chSemSignal(&_sem);
@@ -93,14 +94,13 @@ void DriveSystem::spinDeg(Rotation rotation, uint8_t speed, float angle) {
 /**
  * @brief Tells the drivesystem to stop
  */
-void DriveSystem::stop(void) {
+void DriveSystem::stop(uint16_t stopDuration) {
 	if (!_isStarted)
 		DriveSystem::start();
 
-	_direction = FORWARD;
-	_rotation = LEFT;
-	_speed = 0;
+	_oldAction = _action;
 	_action = STOP;
+	_duration = stopDuration;
 
 	chSemSignal(&_sem);
 }
@@ -169,48 +169,57 @@ bool DriveSystem::rotationEnded(Rotation rotation, float aimAngle, float* lastAn
 
 msg_t DriveSystem::thread(void* arg) {
 	uint16_t count = 0;
+	uint16_t nSteps = 0;
+
 	float lastAngle = 0.0f;
 	float aimAngle = 0.0f;
 
 	while (!chThdShouldTerminate()) {
 		chSemWait(&_sem);
 
-		switch (_action) {
-			case GO:
+		if (_action == GO) {
+			count = 0;
+			while ((_action == GO) && ((_duration == 0) || (count++) * DRIVESYSTEM_THREAD_DELAY < _duration)) {
+				Drive::go(_direction, _speed);
+				waitMs(DRIVESYSTEM_THREAD_DELAY);
+			}
+		}
+
+		if (_action == SPIN) {
+			while (_angle > 0.0f) {
+				aimAngle = computeAimAngle(_rotation, _originAngle, _angle);
+				lastAngle = 0.0f;
+
+				while ((_action == SPIN) && !rotationEnded(_rotation, aimAngle, &lastAngle)) {
+					Drive::spin(_rotation, _speed);
+					waitMs(DRIVESYSTEM_THREAD_DELAY);
+				}
+
+				_angle -= 2 * M_PI;
+			}
+		}
+
+		if (_action == TURN) {
+			/* TODO */
+		}
+
+		if (_action == STOP) {
+			if (_oldAction == GO) {
 				count = 0;
-				while ((_action == GO) && ((_duration == 0) || (count++) * DRIVESYSTEM_THREAD_DELAY < _duration)) {
+				nSteps = _duration / DRIVESYSTEM_THREAD_DELAY;
+
+				while ((count++) * DRIVESYSTEM_THREAD_DELAY < _duration) {
+					_speed = (uint8_t)max(0, _speed - _speed / nSteps);
 					Drive::go(_direction, _speed);
 					waitMs(DRIVESYSTEM_THREAD_DELAY);
 				}
-				Drive::stop();
-				break;
+			}
 
-			case SPIN:
-				while (_angle > 0.0f) {
-					aimAngle = computeAimAngle(_rotation, _originAngle, _angle);
-					lastAngle = 0.0f;
+			Drive::stop();
 
-					while ((_action == SPIN) && !rotationEnded(_rotation, aimAngle, &lastAngle)) {
-						Drive::spin(_rotation, _speed);
-						waitMs(DRIVESYSTEM_THREAD_DELAY);
-					}
-
-					_angle -= 2 * M_PI;
-				}
-
-				Drive::stop();
-				break;
-
-			case TURN:
-				/* TODO */
-				break;
-
-			case STOP:
-				Drive::stop();
-				break;
-
-			case NONE:
-				break;
+			_direction = FORWARD;
+			_rotation = LEFT;
+			_speed = 0;
 		}
 
 		_action = NONE;

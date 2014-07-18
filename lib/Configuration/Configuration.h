@@ -56,7 +56,7 @@ static const uint8_t MOTOR_MAX_SPEED = 255;
 
 
 /*
- * @brief The delay between two operations in the DriveSystem
+ * @brief The delay between two operations in the DriveSystem (in ms)
  */
 static const uint8_t DRIVESYSTEM_THREAD_DELAY = 50;
 
@@ -85,7 +85,7 @@ static const uint8_t HEART_LED_BLUE_PIN = 13;
 
 
 /*
- * @brief The delay between two operations in the Light system
+ * @brief The delay between two operations in the Light system (in ms)
  */
 static const uint8_t LIGHT_THREAD_DELAY = 30;
 
@@ -117,8 +117,30 @@ static const uint8_t SENSORS_INACTIVITY_Y = 1;
 static const uint8_t SENSORS_INACTIVITY_Z = 1;
 
 /*
- * @brief The minimum delay between two sensors refresh
+ * @brief The minimum delay between two sensors refresh (in ms)
  */
 static const uint8_t SENSORS_REFRESH_DELAY = 50;
+
+
+/*
+ * @brief The threshold that detects whether the device is stuck or not
+ */
+static const uint8_t ENVIRONMENT_STUCK_THRESHOLD = 85;
+
+/*
+ * @brief The time after which the device is considered stuck (in ms)
+ */
+static const uint16_t ENVIRONMENT_STUCK_TIME = 350;
+
+/*
+ * @brief The minimum delay between two environment checks (in ms)
+ */
+static const uint8_t ENVIRONMENT_THREAD_DELAY = 50;
+
+
+/*
+ * @brief The minimum delay between two stabilization steps (in ms)
+ */
+static const uint8_t STABILIZATION_THREAD_DELAY = 50;
 
 #endif

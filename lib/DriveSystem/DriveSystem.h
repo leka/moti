@@ -42,7 +42,7 @@ class DriveSystem {
 		static void go(Direction direction, uint8_t speed, uint16_t duration);
 		static void spin(Rotation rotation, uint8_t speed, float angle);
 		static void spinDeg(Rotation rotation, uint8_t speed, float angle);
-		static void stop(void);
+		static void stop(uint16_t stopDuration);
 
 		static DriveState getState();
 
@@ -52,7 +52,7 @@ class DriveSystem {
 		static float computeAimAngle(Rotation rotation, float originAngle, float angle);
 		static bool rotationEnded(Rotation rotation, float aimAngle, float* last_angle);
 
-		static DriveState _action;
+		static DriveState _action, _oldAction;
 		static Direction _direction;
 		static Rotation _rotation;
 		static uint8_t _speed;

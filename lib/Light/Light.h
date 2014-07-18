@@ -45,13 +45,14 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 
 class Light {
 	public:
+		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+		
 		static void fade(LedIndicator led, Color startColor, Color endColor, int16_t duration);
 		static void turnOff(LedIndicator led);
 		static LedState getState(LedIndicator led);
 
 	private:
 		static void init(void);
-		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
 
 		static Led leds[N_LEDS];
 		static Queue<LedData*> data[N_LEDS];

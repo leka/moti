@@ -87,13 +87,11 @@ void Drive::spin(Rotation rotation, uint8_t speed) {
 
 	switch (rotation) {
 		case LEFT:
-			Serial.println(F("1"));
 			_leftDirection = BACKWARD;
 			_rightDirection = FORWARD;
 			break;
 
 		case RIGHT:
-			Serial.println(F("2"));
 			_leftDirection = FORWARD;
 			_rightDirection = BACKWARD;
 			break;

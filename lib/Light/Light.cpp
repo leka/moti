@@ -33,7 +33,7 @@ bool Light::_isStarted = false;
 Led Light::leds[N_LEDS] = { Led(HEART_LED_RED_PIN, HEART_LED_GREEN_PIN, HEART_LED_BLUE_PIN) };
 Queue<LedData*> Light::data[N_LEDS] = { Queue<LedData*>() };
 
-static WORKING_AREA(lightThreadArea, 64);
+static WORKING_AREA(lightThreadArea, 256);
 
 
 /**
@@ -49,7 +49,7 @@ void Light::fade(LedIndicator led, Color startColor, Color endColor, int16_t dur
 
 	uint8_t i = (uint8_t)led;
 
-	LedData* newData = new LedData;
+	LedData* newData = data[i].getTail();
 
 	newData->startColor = startColor;
 	newData->endColor = endColor;
@@ -63,7 +63,7 @@ void Light::fade(LedIndicator led, Color startColor, Color endColor, int16_t dur
 
 	newData->current = startColor;
 
-	data[i].push(newData);
+	data[i].push();
 
 	chSemSignal(&_sem);
 }
@@ -117,6 +117,10 @@ void Light::start(void* arg, tprio_t priority) {
 		(void)chThdCreateStatic(lightThreadArea,
 								sizeof(lightThreadArea),
 								priority, thread, arg);
+
+		for (uint8_t i = 0; i < N_LEDS; ++i)
+			for (uint16_t j = 0; j < QUEUE_MAX_SIZE; ++j)
+				data[i].fill(j, new LedData);
 	}
 }
 
@@ -132,27 +136,26 @@ msg_t Light::thread(void* arg) {
 
 			for (uint8_t i = 0; i < N_LEDS; ++i) {
 				if (!data[i].isEmpty()) {
+					state = data[i].getHead();
+
 					switch (state->state) {
 					case FADE:
-							state = data[i].getHead();
+						state->current.setRGB(state->startColor.getR() + state->diff.getR() * state->steps / state->totalSteps,
+											  state->startColor.getG() + state->diff.getG() * state->steps / state->totalSteps,
+											  state->startColor.getB() + state->diff.getB() * state->steps / state->totalSteps);
+						leds[i].shine(state->current);
+						
+						state->steps++;
 
-							state->current.setRGB(state->startColor.getR() + state->diff.getR() * state->steps / state->totalSteps,
-												  state->startColor.getG() + state->diff.getG() * state->steps / state->totalSteps,
-												  state->startColor.getB() + state->diff.getB() * state->steps / state->totalSteps);
-							leds[i].shine(state->current);
-							
-							state->steps++;
+						if (state->steps == state->totalSteps) {
+							leds[i].shine(state->endColor);
+							data[i].pop();
 
-							if (state->steps == state->totalSteps) {
-								leds[i].shine(state->endColor);
-								delete state;
-								data[i].pop();
-
-								if (!data[i].isEmpty())
-									noRecall = false;
-							}
-							else
+							if (!data[i].isEmpty())
 								noRecall = false;
+						}
+						else
+							noRecall = false;
 
 						break;
 

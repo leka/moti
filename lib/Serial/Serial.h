@@ -63,11 +63,16 @@ typedef union {
     FADE_CMD fade;
 } COMMAND;
 
-typedef struct {
-    COMMAND_TYPE type;
-    COMMAND cmd;
-} READ_COMMAND;
+class ReadCommand {
+    public:
+        ReadCommand(void);
 
-READ_COMMAND readCommand(void);
+        COMMAND getCommand();
+        COMMAND_TYPE getType();
+
+    private:
+        COMMAND cmd;
+        COMMAND_TYPE type;
+};
 
 #endif
