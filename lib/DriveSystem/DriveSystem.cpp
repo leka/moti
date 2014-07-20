@@ -183,6 +183,12 @@ msg_t DriveSystem::thread(void* arg) {
 				Drive::go(_direction, _speed);
 				waitMs(DRIVESYSTEM_THREAD_DELAY);
 			}
+
+			if (_action == GO) {
+				_oldAction = GO;
+				_action = STOP;
+				_duration = 0;
+			}
 		}
 
 		if (_action == SPIN) {

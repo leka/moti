@@ -21,6 +21,12 @@
 void chSetup() {
 	Serial.println(F("Starting..."));
 
+	Drive::start();
+    DriveSystem::start();
+    Environment::start();
+    Light::start();
+    Stabilization::start();
+
 	float currentAngle = 0.0f;
 
 	double input = 0.0f;

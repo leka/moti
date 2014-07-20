@@ -28,7 +28,11 @@ void chSetup() {
 
     delay(5000);
 
+    Drive::start();
+    DriveSystem::start();
+    Environment::start();
     Light::start();
+    Stabilization::start();
 
 	Arbitrer::launch();
 }

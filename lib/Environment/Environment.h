@@ -35,13 +35,13 @@
 
 class Environment {
 	public:
+		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO);
+		
 		static bool isStuck(void);
 		static bool isShaken(void);
 		static bool isFalling(void);
 
 	private:
-		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO);
-
 		static bool _isStarted, _isStuck;
 
 		static uint16_t _startStuckTime;

@@ -38,14 +38,14 @@
  */
 class Drive {
 	public:
+        static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+2);
+        
 		static void go(Direction direction, uint8_t speed);
 		static void spin(Rotation rotation, uint8_t speed);
 		static void turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed);
 		static void stop(void);
 
 	private:
-		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+2);
-
 		static uint8_t _rightSpeed, _leftSpeed;
 		static Direction _rightDirection, _leftDirection;
 		static Motor _rightMotor, _leftMotor;

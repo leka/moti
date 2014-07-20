@@ -39,6 +39,8 @@
  */
 class DriveSystem {
 	public:
+        static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+        
 		static void go(Direction direction, uint8_t speed, uint16_t duration);
 		static void spin(Rotation rotation, uint8_t speed, float angle);
 		static void spinDeg(Rotation rotation, uint8_t speed, float angle);
@@ -47,8 +49,6 @@ class DriveSystem {
 		static DriveState getState();
 
 	private:
-		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
-
 		static float computeAimAngle(Rotation rotation, float originAngle, float angle);
 		static bool rotationEnded(Rotation rotation, float aimAngle, float* last_angle);
 

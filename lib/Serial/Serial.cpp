@@ -29,74 +29,69 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  */
 
 uint8_t readByte(void) {
-    while (!serial.available());
+	while (!serial.available());
 
-    return (uint8_t)serial.read();
+	return (uint8_t)serial.read();
 }
 
 uint16_t readTwoBytes(void) {
-    uint8_t first = readByte();
-    uint8_t second = readByte();
+	uint8_t first = readByte();
+	uint8_t second = readByte();
 
-    return ((uint16_t)first << 8) + (uint16_t)second;
+	return ((uint16_t)first << 8) + (uint16_t)second;
 }
 
-ReadCommand::ReadCommand(void) {
-    type = COMMAND_NONE;
+ReadCommand::ReadCommand(void) { }
 
-    while (!serial.available());
+void ReadCommand::read(void) {
+	type = COMMAND_NONE;
 
-    Serial.println(F("a"));
+	if (readByte() == 42) {
+		uint8_t actionByte = readByte();
 
-    if (readByte() == 42) {
-        Serial.println(F("bb"));
-        uint8_t actionByte = readByte();
+		if (actionByte > 0x03)
+			return;
 
-        if (actionByte > 0x03)
-            return;
+		type = (COMMAND_TYPE)actionByte;
 
-        type = (COMMAND_TYPE)actionByte;
+		switch (type) {
+		case COMMAND_GO:
+			cmd.go.direction = (Direction)readByte();
+			cmd.go.speed = readByte();
+			cmd.go.duration = readTwoBytes();
+			break;
 
-        switch (type) {
-        case COMMAND_GO:
-            cmd.go.direction = (Direction)readByte();
-            cmd.go.speed = readByte();
-            cmd.go.duration = readTwoBytes();
-            break;
+		case COMMAND_SPIN:
+			cmd.spin.rotation = (Rotation)readByte();
+			cmd.spin.speed = readByte();
+			cmd.spin.angle = readTwoBytes();
+			break;
 
-        case COMMAND_SPIN:
-            cmd.spin.rotation = (Rotation)readByte();
-            cmd.spin.speed = readByte();
-            cmd.spin.angle = readTwoBytes();
-            break;
+		case COMMAND_STOP:
+			break;
 
-        case COMMAND_STOP:
-            break;
+		case COMMAND_FADE:
+			cmd.fade.indicator = (LedIndicator)readByte();
+			cmd.fade.startR = readByte();
+			cmd.fade.startG = readByte();
+			cmd.fade.startB = readByte();
+			cmd.fade.endR = readByte();
+			cmd.fade.endG = readByte();
+			cmd.fade.endB = readByte();
+			cmd.fade.duration = readTwoBytes();
 
-        case COMMAND_FADE:
-            cmd.fade.indicator = (LedIndicator)readByte();
-            cmd.fade.startR = readByte();
-            cmd.fade.startG = readByte();
-            cmd.fade.startB = readByte();
-            cmd.fade.endR = readByte();
-            cmd.fade.endG = readByte();
-            cmd.fade.endB = readByte();
-            cmd.fade.duration = readTwoBytes();
-
-        default:
-            break;
-        }
-    }
-    else
-        ReadCommand();
-
-    Serial.println(type);
+		default:
+			break;
+		}
+	}
+	else
+		ReadCommand();
 }
 
 COMMAND ReadCommand::getCommand(void) {
-    return cmd;
+	return cmd;
 }
 
 COMMAND_TYPE ReadCommand::getType(void) {
-    return type;
+	return type;
 }
