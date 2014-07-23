@@ -31,6 +31,10 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 uint8_t readByte(void) {
 	while (!serial.available());
 
+	/* uint8_t u = serial.read();
+
+	Serial.println(u); */
+
 	return (uint8_t)serial.read();
 }
 

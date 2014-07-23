@@ -32,7 +32,6 @@ void chSetup() {
     DriveSystem::start();
     Environment::start();
     Light::start();
-    Stabilization::start();
 
 	Arbitrer::launch();
 }

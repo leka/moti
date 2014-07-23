@@ -25,7 +25,6 @@ void chSetup() {
     DriveSystem::start();
     Environment::start();
     Light::start();
-    Stabilization::start();
 
 	float currentAngle = 0.0f;
 
