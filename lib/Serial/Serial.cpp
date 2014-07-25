@@ -28,7 +28,65 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  * @version 1.0
  */
 
-uint8_t readByte(void) {
+ReadCommand::ReadCommand(void) {
+	_header = 0;
+}
+
+uint8_t ReadCommand::getHeader(void) {
+	if ((_header != 1) && (_header != 42) && serial.available())
+		_header = readByte();
+
+	return _header;
+}
+
+void ReadCommand::resetHeader(void) {
+	_header = 0;
+}
+
+void ReadCommand::readControlCommand(void) {
+	type = COMMAND_NONE;
+
+	uint8_t actionByte = readByte();
+
+	if (actionByte > 0x03)
+		return;
+
+	type = (COMMAND_TYPE)actionByte;
+
+	switch (type) {
+	case COMMAND_GO:
+		cmd.go.direction = (Direction)readByte();
+		cmd.go.speed = readByte();
+		cmd.go.duration = readTwoBytes();
+		break;
+
+	case COMMAND_SPIN:
+		cmd.spin.rotation = (Rotation)readByte();
+		cmd.spin.speed = readByte();
+		cmd.spin.angle = readTwoBytes();
+		break;
+
+	case COMMAND_STOP:
+		break;
+
+	case COMMAND_FADE:
+		cmd.fade.indicator = (LedIndicator)readByte();
+		cmd.fade.startR = readByte();
+		cmd.fade.startG = readByte();
+		cmd.fade.startB = readByte();
+		cmd.fade.endR = readByte();
+		cmd.fade.endG = readByte();
+		cmd.fade.endB = readByte();
+		cmd.fade.duration = readTwoBytes();
+
+	default:
+		break;
+	}
+
+	_header = 0; /* Reset the header to tell that the control command has been handled */
+}
+
+uint8_t ReadCommand::readByte(void) {
 	while (!serial.available());
 
 	/* uint8_t u = serial.read();
@@ -38,58 +96,11 @@ uint8_t readByte(void) {
 	return (uint8_t)serial.read();
 }
 
-uint16_t readTwoBytes(void) {
+uint16_t ReadCommand::readTwoBytes(void) {
 	uint8_t first = readByte();
 	uint8_t second = readByte();
 
 	return ((uint16_t)first << 8) + (uint16_t)second;
-}
-
-ReadCommand::ReadCommand(void) { }
-
-void ReadCommand::read(void) {
-	type = COMMAND_NONE;
-
-	if (readByte() == 42) {
-		uint8_t actionByte = readByte();
-
-		if (actionByte > 0x03)
-			return;
-
-		type = (COMMAND_TYPE)actionByte;
-
-		switch (type) {
-		case COMMAND_GO:
-			cmd.go.direction = (Direction)readByte();
-			cmd.go.speed = readByte();
-			cmd.go.duration = readTwoBytes();
-			break;
-
-		case COMMAND_SPIN:
-			cmd.spin.rotation = (Rotation)readByte();
-			cmd.spin.speed = readByte();
-			cmd.spin.angle = readTwoBytes();
-			break;
-
-		case COMMAND_STOP:
-			break;
-
-		case COMMAND_FADE:
-			cmd.fade.indicator = (LedIndicator)readByte();
-			cmd.fade.startR = readByte();
-			cmd.fade.startG = readByte();
-			cmd.fade.startB = readByte();
-			cmd.fade.endR = readByte();
-			cmd.fade.endG = readByte();
-			cmd.fade.endB = readByte();
-			cmd.fade.duration = readTwoBytes();
-
-		default:
-			break;
-		}
-	}
-	else
-		ReadCommand();
 }
 
 COMMAND ReadCommand::getCommand(void) {

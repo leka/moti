@@ -56,8 +56,11 @@ void Arbitrer::stop(void) {
 	if (!_isStarted)
 		Arbitrer::start();
 
-	if (_isRunning)
+	if (_isRunning) {
+		_state = SLEEPING;
+		_isCruising = false;
 		_isRunning = false;
+	}
 }
 
 
@@ -84,21 +87,23 @@ msg_t Arbitrer::thread(void* arg) {
 					break;
 
 				case SEEKING_INTERACTION:
-					for (uint8_t i = 0; i < 4; ++i) {						
+					/* for (uint8_t i = 0; i < 4; ++i) {						
 						DriveSystem::spin(i % 2 == 0 ? LEFT : RIGHT, 200, 1.0);
 
-						while (DriveSystem::getState() != NONE)
+						while ((_state == SEEKING_INTERACTION) && (DriveSystem::getState() != NONE))
 							waitMs(15);
 
 						waitMs(500);
 					}
 
-					waitMs(2000);
+					waitMs(2000); */
 					_state = CRUISING;
 
 					break;
 
 				case CRUISING:
+					Serial1.println(Environment::isStuck());
+
 					if (Light::getState(HEART) == INACTIVE)
 					 	Light::fade(HEART, Color::GreenPure, Color::GreenPure, 1500);
 
@@ -110,10 +115,10 @@ msg_t Arbitrer::thread(void* arg) {
 
 					if (Environment::isStuck() && (cruiseStart + 1000 < millis())) {
 						DriveSystem::stop(0);
-						while (DriveSystem::getState() != NONE)
+						while ((_state == CRUISING) && (DriveSystem::getState() != NONE))
 							waitMs(15);
 
-						DriveSystem::spin(rand() % 2 == 0 ? LEFT : RIGHT, 120, 1.57f);
+						DriveSystem::spin(rand() % 2 == 0 ? LEFT : RIGHT, 100, 1.57f);
 
 						spinStart = millis();
 
@@ -128,6 +133,9 @@ msg_t Arbitrer::thread(void* arg) {
 					 	Light::fade(HEART, Color::RedPure, Color::RedPure, 1500);
 
 					if ((DriveSystem::getState() == NONE) && (spinStart + 100 < millis())) {
+						_state = CRUISING;
+					}
+					else if ((DriveSystem::getState() != NONE) && (spinStart + 1200 < millis())) {
 						_state = CRUISING;
 					}
 

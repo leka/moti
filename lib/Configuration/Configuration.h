@@ -125,12 +125,12 @@ static const uint8_t SENSORS_REFRESH_DELAY = 50;
 /*
  * @brief The threshold that detects whether the device is stuck or not
  */
-static const uint8_t ENVIRONMENT_STUCK_THRESHOLD = 85;
+static const uint8_t ENVIRONMENT_STUCK_THRESHOLD = 75;
 
 /*
  * @brief The time after which the device is considered stuck (in ms)
  */
-static const uint16_t ENVIRONMENT_STUCK_TIME = 350;
+static const uint16_t ENVIRONMENT_STUCK_TIME = 500;
 
 /*
  * @brief The minimum delay between two environment checks (in ms)

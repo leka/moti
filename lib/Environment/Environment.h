@@ -35,7 +35,7 @@
 
 class Environment {
 	public:
-		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO);
+		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
 		
 		static bool isStuck(void);
 		static bool isShaken(void);

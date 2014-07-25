@@ -38,34 +38,36 @@ void chSetup() {
 	while (TRUE) {
 		Serial.println(F("Reading..."));
 
-		readCmd.read();
-		cmd = readCmd.getCommand();
+		if (readCmd.getHeader() == 42) {
+			readCmd.readControlCommand();
+			cmd = readCmd.getCommand();
 
-		switch (readCmd.getType()) {
-		case COMMAND_GO:
-			Stabilization::stop();
-			DriveSystem::go(cmd.go.direction, cmd.go.speed, cmd.go.duration);
-			break;
+			switch (readCmd.getType()) {
+			case COMMAND_GO:
+				Stabilization::stop();
+				DriveSystem::go(cmd.go.direction, cmd.go.speed, cmd.go.duration);
+				break;
 
-		case COMMAND_SPIN:
-			Stabilization::stop();
-			DriveSystem::spinDeg(cmd.spin.rotation, cmd.spin.speed, cmd.spin.angle);
-			break;
+			case COMMAND_SPIN:
+				Stabilization::stop();
+				DriveSystem::spinDeg(cmd.spin.rotation, cmd.spin.speed, cmd.spin.angle);
+				break;
 
-		case COMMAND_STOP:
-			Stabilization::run();
-			/* DriveSystem::stop(250); */
-			break;
+			case COMMAND_STOP:
+				Stabilization::run();
+				/* DriveSystem::stop(250); */
+				break;
 
-		case COMMAND_FADE:
-			Light::fade(cmd.fade.indicator,
-						Color(cmd.fade.startR, cmd.fade.startG, cmd.fade.startB),
-						Color(cmd.fade.endR, cmd.fade.endG, cmd.fade.endB),
-						cmd.fade.duration);
-			break;
-		
-		default:
-			break;
+			case COMMAND_FADE:
+				Light::fade(cmd.fade.indicator,
+							Color(cmd.fade.startR, cmd.fade.startG, cmd.fade.startB),
+							Color(cmd.fade.endR, cmd.fade.endG, cmd.fade.endB),
+							cmd.fade.duration);
+				break;
+			
+			default:
+				break;
+			}
 		}
 	}
 }

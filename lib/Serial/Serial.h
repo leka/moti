@@ -35,6 +35,9 @@ typedef enum {
 	COMMAND_SPIN,
 	COMMAND_STOP,
 	COMMAND_FADE,
+
+	COMMAND_TOGGLE,
+
 	COMMAND_NONE
 } COMMAND_TYPE;
 
@@ -67,7 +70,13 @@ class ReadCommand {
 	public:
 		ReadCommand(void);
 
-		void read(void);
+		uint8_t getHeader(void);
+		void resetHeader(void);
+
+		void readControlCommand(void);
+
+		uint8_t readByte(void);
+		uint16_t readTwoBytes(void);
 
 		COMMAND getCommand();
 		COMMAND_TYPE getType();
@@ -75,6 +84,7 @@ class ReadCommand {
 	private:
 		COMMAND cmd;
 		COMMAND_TYPE type;
+		uint8_t _header;
 };
 
 #endif

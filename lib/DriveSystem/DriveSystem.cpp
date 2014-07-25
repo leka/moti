@@ -203,6 +203,12 @@ msg_t DriveSystem::thread(void* arg) {
 
 				_angle -= 2 * M_PI;
 			}
+
+			if (_action == SPIN) {
+				_oldAction = SPIN;
+				_action = STOP;
+				_duration = 0;
+			}
 		}
 
 		if (_action == TURN) {
