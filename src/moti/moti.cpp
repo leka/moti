@@ -59,7 +59,7 @@ void chSetup() {
                 switch (readCmd.getType()) {
                 case COMMAND_GO:
                     Stabilization::stop();
-                    DriveSystem::go(cmd.go.direction, cmd.go.speed, cmd.go.duration);
+                    DriveSystem::go(cmd.go.direction, cmd.go.speed, cmd.go.duration, 500);
                     break;
 
                 case COMMAND_SPIN:

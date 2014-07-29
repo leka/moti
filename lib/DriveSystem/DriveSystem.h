@@ -41,7 +41,7 @@ class DriveSystem {
 	public:
         static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
         
-		static void go(Direction direction, uint8_t speed, uint16_t duration);
+		static void go(Direction direction, uint8_t speed, uint16_t duration, uint16_t launchDuration=0);
 		static void spin(Rotation rotation, uint8_t speed, float angle);
 		static void spinDeg(Rotation rotation, uint8_t speed, float angle);
 		static void stop(uint16_t stopDuration);
@@ -56,7 +56,7 @@ class DriveSystem {
 		static Direction _direction;
 		static Rotation _rotation;
 		static uint8_t _speed;
-		static uint16_t _duration;
+		static uint16_t _duration, _launchDuration;
 		static float _angle, _originAngle;
 		static bool _jump;
 

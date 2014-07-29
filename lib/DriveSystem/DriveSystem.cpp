@@ -32,6 +32,7 @@ DriveState DriveSystem::_action = NONE;
 DriveState DriveSystem::_oldAction = NONE;
 uint8_t DriveSystem::_speed = 0;
 uint16_t DriveSystem::_duration = 0;
+uint16_t DriveSystem::_launchDuration = 0;
 Direction DriveSystem::_direction = FORWARD;
 Rotation DriveSystem::_rotation = LEFT;
 float DriveSystem::_angle = 0.0f;
@@ -47,13 +48,14 @@ static WORKING_AREA(drivesystemThreadArea, 256);
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  * @param duration the duration (in ms)
  */
-void DriveSystem::go(Direction direction, uint8_t speed, uint16_t duration) {
+void DriveSystem::go(Direction direction, uint8_t speed, uint16_t duration, uint16_t launchDuration) {
 	if (!_isStarted)
 		DriveSystem::start();
 
 	_direction = direction;
 	_speed = speed;
 	_duration = duration;
+	_launchDuration = launchDuration;
 	_oldAction = _action;
 	_action = GO;
 
@@ -159,9 +161,9 @@ bool DriveSystem::rotationEnded(Rotation rotation, float aimAngle, float* lastAn
 
 	switch (rotation) {
 		case LEFT:
-			return (!_jump && currentAngle < aimAngle);
+			return (!_jump && (currentAngle < aimAngle));
 		case RIGHT:
-			return (!_jump && currentAngle > aimAngle);
+			return (!_jump && (currentAngle > aimAngle));
 	}
 
 	return false;
@@ -180,7 +182,11 @@ msg_t DriveSystem::thread(void* arg) {
 		if (_action == GO) {
 			count = 0;
 			while ((_action == GO) && ((_duration == 0) || (count++) * DRIVESYSTEM_THREAD_DELAY < _duration)) {
-				Drive::go(_direction, _speed);
+				if (_launchDuration / DRIVESYSTEM_THREAD_DELAY > count)
+					Drive::go(_direction, (count * _speed) / (_launchDuration / DRIVESYSTEM_THREAD_DELAY));
+				else
+					Drive::go(_direction, _speed);
+				
 				waitMs(DRIVESYSTEM_THREAD_DELAY);
 			}
 
