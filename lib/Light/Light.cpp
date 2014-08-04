@@ -95,6 +95,17 @@ LedState Light::getState(LedIndicator led) {
 	return data[i].getHead()->state;
 }
 
+/**
+ * @brief Gets the color of a given led
+ * @param led the indicator of the led
+ * @return the color  of the led
+ */
+Color Light::getColor(LedIndicator led) {
+	uint8_t i = (uint8_t)led;
+
+	return leds[i].getColor();
+}
+
 
 void Light::init(void) {
 	if (!_isInit) {

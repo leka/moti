@@ -45,6 +45,13 @@ class Drive {
 		static void turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed);
 		static void stop(void);
 
+      static Direction getRightDirection(void);
+      static uint8_t getRightSpeed(void);
+      
+      static Direction getLeftDirection(void);
+      static uint8_t getLeftSpeed(void);
+      
+
 	private:
 		static uint8_t _rightSpeed, _leftSpeed;
 		static Direction _rightDirection, _leftDirection;

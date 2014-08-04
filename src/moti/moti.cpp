@@ -11,6 +11,7 @@
 #include "FreeIMU.h"
 #include "Led.h"
 #include "Light.h"
+#include "Monitor.h"
 #include "Motor.h"
 #include "Queue.h"
 #include "Sensors.h"
@@ -83,6 +84,9 @@ void chSetup() {
                 }
             }
         }
+
+        Monitor::sendAllData();
+        waitMs(50);
     }
 }
 

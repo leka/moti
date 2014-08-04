@@ -50,6 +50,7 @@ class Light {
 		static void fade(LedIndicator led, Color startColor, Color endColor, int16_t duration);
 		static void turnOff(LedIndicator led);
 		static LedState getState(LedIndicator led);
+		static Color getColor(LedIndicator led);
 
 	private:
 		static void init(void);

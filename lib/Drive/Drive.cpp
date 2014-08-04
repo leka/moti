@@ -116,6 +116,22 @@ void Drive::stop(void) {
 	chSemSignal(&_sem);
 }
 
+Direction Drive::getRightDirection(void) {
+    return _rightDirection;
+}
+
+uint8_t Drive::getRightSpeed(void) {
+    return _rightSpeed;
+}
+
+Direction Drive::getLeftDirection(void) {
+    return _leftDirection;
+}
+
+uint8_t Drive::getLeftSpeed(void) {
+    return _leftSpeed;
+}
+
 
 void Drive::start(void* arg, tprio_t priority) {
 	if (!_isStarted) {
