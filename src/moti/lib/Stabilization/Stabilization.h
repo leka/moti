@@ -3,24 +3,27 @@
 #include "ChibiOS_AVR.h"
 #include "Configuration.h"
 
-class Stabilization {
-	public:
-		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO);
+namespace Stabilization {
 
-		static void run(void);
-		static void stop(void);
+	void start(void* arg=NULL, tprio_t priority=NORMALPRIO);
 
-	private:
-		static bool _isStarted, _isRunning;
-		static msg_t thread(void* arg);
-};
+	void run(void);
+	void stop(void);
 
-bool Stabilization::_isStarted = false;
-bool Stabilization::_isRunning = false;
+}
 
 static WORKING_AREA(stabilizationThreadArea, 256);
 
-void Stabilization::start(void* arg, tprio_t priority) {
+namespace Stabilization {
+
+	bool _isStarted = false;
+	bool _isRunning;
+
+	static msg_t thread(void* arg);
+
+	MUTEX_DECL(_stabMutex);
+
+void start(void* arg, tprio_t priority) {
 	if (!_isStarted) {
 		_isStarted = true;
 		_isRunning = true;
@@ -31,48 +34,60 @@ void Stabilization::start(void* arg, tprio_t priority) {
 	}
 }
 
-void Stabilization::run(void) {
+void run(void) {
+	chMtxLock(&_stabMutex);
+
 	_isRunning = true;
+
+	chMtxUnlock();
 }
 
-void Stabilization::stop(void) {
+void stop(void) {
+	chMtxLock(&_stabMutex);
+
 	_isRunning = false;
+
+	chMtxUnlock();
 }
 
-msg_t Stabilization::thread(void* arg) {
+msg_t thread(void* arg) {
 	/* float currentAngle = 0.0; */
 	float input = 0.0;
 	int16_t output = 0.0;
 
+	uint8_t speed = 0;
+	int16_t accY = 0;
+
 	while (!chThdShouldTerminate()) {
 		if (_isRunning) {
-			if (Light::getState(HEART) == INACTIVE)
-				Light::fade(HEART, Color::randomColor(), Color::randomColor(), 1500);
-
 			/* currentAngle = Sensors::getEulerPhi(); */
 
 			input = Sensors::getAccX();
 			output = (int16_t)(-0.5 * input);
 			
 			if (abs(output) > 100.0f) {
-				DriveSystem::go(output < 0 ? BACKWARD : FORWARD, (uint8_t)abs(output), 100);
+				speed = (uint8_t)abs(output);
+				DriveSystem::go(output < 0 ? BACKWARD : FORWARD, speed, 100);
 			}
-			else if (Sensors::getAccY() > 80) {
-				DriveSystem::spin(RIGHT, 130, 1.57f);
+			else {
+				accY = Sensors::getAccY();
+
+				if (abs(accY) > 80)
+					DriveSystem::spin(accY > 0 ? RIGHT : LEFT, 105, 1.57);
+
+				else if (DriveSystem::getState() != NONE)
+					DriveSystem::stop(0);
 			}
-			else if (Sensors::getAccY() < -80) {
-				DriveSystem::spin(LEFT, 153, 1.57f);
-			}
+
 			/* else if (abs(currentAngle) > 0.45f) {
 				DriveSystem::spin(currentAngle > 0.0f ? LEFT : RIGHT, 150, abs(currentAngle));
 			} */
-			else if (DriveSystem::getState() != NONE) {
-				DriveSystem::stop(0);
-			}
 		}
 
 		waitMs(STABILIZATION_THREAD_DELAY);
 	}
 
 	return (msg_t)0;
+}
+
 }

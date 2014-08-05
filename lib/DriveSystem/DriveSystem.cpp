@@ -26,21 +26,30 @@
  * @version 1.0
  */
 
-bool DriveSystem::_isStarted = false;
-Semaphore DriveSystem::_sem = _SEMAPHORE_DATA(_sem, 0);
-DriveState DriveSystem::_action = NONE;
-DriveState DriveSystem::_oldAction = NONE;
-uint8_t DriveSystem::_speed = 0;
-uint16_t DriveSystem::_duration = 0;
-uint16_t DriveSystem::_launchDuration = 0;
-Direction DriveSystem::_direction = FORWARD;
-Rotation DriveSystem::_rotation = LEFT;
-float DriveSystem::_angle = 0.0f;
-float DriveSystem::_originAngle = 0.0f;
-bool DriveSystem::_jump = false;
-
 static WORKING_AREA(drivesystemThreadArea, 256);
 
+namespace DriveSystem {
+
+
+	float _computeAimAngle(Rotation rotation, float originAngle, float angle);
+	bool _rotationEnded(Rotation rotation, float aimAngle, float* last_angle);
+
+	DriveState _action = NONE;
+    DriveState _oldAction = NONE;
+	Direction _direction = FORWARD;
+	Rotation _rotation = LEFT;
+	uint8_t _speed = 0;
+	uint16_t _duration = 0;
+    uint16_t _launchDuration = 0;
+	float _angle = 0.f;
+    float _originAngle = 0.f;
+	bool _jump = false;
+    
+    bool _isStarted = false;
+	Semaphore _sem = _SEMAPHORE_DATA(_sem, 0);
+	static msg_t thread(void *arg);
+
+	MUTEX_DECL(_dataMutex);
 
 /**
  * @brief Tells the drivesystem to go straight in a given direction, at a given speed, during a given duration
@@ -48,9 +57,11 @@ static WORKING_AREA(drivesystemThreadArea, 256);
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  * @param duration the duration (in ms)
  */
-void DriveSystem::go(Direction direction, uint8_t speed, uint16_t duration, uint16_t launchDuration) {
+void go(Direction direction, uint8_t speed, uint16_t duration, uint16_t launchDuration) {
 	if (!_isStarted)
-		DriveSystem::start();
+		start();
+
+	chMtxLock(&_dataMutex);
 
 	_direction = direction;
 	_speed = speed;
@@ -58,6 +69,8 @@ void DriveSystem::go(Direction direction, uint8_t speed, uint16_t duration, uint
 	_launchDuration = launchDuration;
 	_oldAction = _action;
 	_action = GO;
+
+	chMtxUnlock();
 
 	chSemSignal(&_sem);
 }
@@ -68,9 +81,11 @@ void DriveSystem::go(Direction direction, uint8_t speed, uint16_t duration, uint
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  * @param angle the angle to spin (in radians)
  */
-void DriveSystem::spin(Rotation rotation, uint8_t speed, float angle) {
+void spin(Rotation rotation, uint8_t speed, float angle) {
 	if (!_isStarted)
-		DriveSystem::start();
+		start();
+
+	chMtxLock(&_dataMutex);
 
 	_rotation = rotation;
 	_speed = speed;
@@ -79,6 +94,8 @@ void DriveSystem::spin(Rotation rotation, uint8_t speed, float angle) {
 	_jump = false;
 	_oldAction = _action;
 	_action = SPIN;
+
+	chMtxUnlock();
 
 	chSemSignal(&_sem);
 }
@@ -89,20 +106,24 @@ void DriveSystem::spin(Rotation rotation, uint8_t speed, float angle) {
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  * @param angle the angle to spin (in degrees)
  */
-void DriveSystem::spinDeg(Rotation rotation, uint8_t speed, float angle) {
+void spinDeg(Rotation rotation, uint8_t speed, float angle) {
 	spin(rotation, speed, angle * M_PI / 180.0f);
 }
 
 /**
  * @brief Tells the drivesystem to stop
  */
-void DriveSystem::stop(uint16_t stopDuration) {
+void stop(uint16_t stopDuration) {
 	if (!_isStarted)
-		DriveSystem::start();
+		start();
 
+	chMtxLock(&_dataMutex);
+
+	_duration = stopDuration;
 	_oldAction = _action;
 	_action = STOP;
-	_duration = stopDuration;
+
+	chMtxUnlock();
 
 	chSemSignal(&_sem);
 }
@@ -111,12 +132,12 @@ void DriveSystem::stop(uint16_t stopDuration) {
  * @brief Gets the state of the DriveSystem (DriveState)
  * @return one of the available DriveStates
  */
-DriveState DriveSystem::getState() {
+DriveState getState() {
 	return _action;
 }
 
 
-void DriveSystem::start(void* arg, tprio_t priority) {
+void start(void* arg, tprio_t priority) {
 	if (!_isStarted) {
 		_isStarted = true;
 
@@ -126,7 +147,7 @@ void DriveSystem::start(void* arg, tprio_t priority) {
 	}
 }
 
-float DriveSystem::computeAimAngle(Rotation rotation, float originAngle, float angle) {
+float _computeAimAngle(Rotation rotation, float originAngle, float angle) {
 	float aimAngle = originAngle;
 
 	switch (rotation) {
@@ -151,7 +172,14 @@ float DriveSystem::computeAimAngle(Rotation rotation, float originAngle, float a
 	return aimAngle;
 }
 
-bool DriveSystem::rotationEnded(Rotation rotation, float aimAngle, float* lastAngle) {
+bool _rotationEnded(Rotation rotation, float aimAngle, float* lastAngle) {
+	if (_action != SPIN) /* The action changed, maybe we need to stop */
+		return true;
+
+	/* if ((_duration != 0) && abs(millis() - _duration) > 2500)
+		return true;
+	*/
+
 	float currentAngle = Sensors::getEulerPhi();
 
 	if (_jump && (*lastAngle * currentAngle < -3.0f))
@@ -169,51 +197,69 @@ bool DriveSystem::rotationEnded(Rotation rotation, float aimAngle, float* lastAn
 	return false;
 }
 
-msg_t DriveSystem::thread(void* arg) {
+msg_t thread(void* arg) {
 	uint16_t count = 0;
 	uint16_t nSteps = 0;
 
 	float lastAngle = 0.0f;
 	float aimAngle = 0.0f;
+	int32_t spinStart = 0;
+
+	uint8_t delay = DRIVESYSTEM_THREAD_DELAY;
 
 	while (!chThdShouldTerminate()) {
 		chSemWait(&_sem);
 
 		if (_action == GO) {
 			count = 0;
-			while ((_action == GO) && ((_duration == 0) || (count++) * DRIVESYSTEM_THREAD_DELAY < _duration)) {
-				if (_launchDuration / DRIVESYSTEM_THREAD_DELAY > count)
-					Drive::go(_direction, (count * _speed) / (_launchDuration / DRIVESYSTEM_THREAD_DELAY));
+			while ((_action == GO) && ((_duration == 0) || (count++) * delay < _duration)) {
+				if (_launchDuration / delay > count)
+					Drive::go(_direction, (count * _speed) / (_launchDuration / delay));
 				else
 					Drive::go(_direction, _speed);
 				
-				waitMs(DRIVESYSTEM_THREAD_DELAY);
+				waitMs(delay);
 			}
 
 			if (_action == GO) {
+				chMtxLock(&_dataMutex);
+
 				_oldAction = GO;
 				_action = STOP;
 				_duration = 0;
+
+				chMtxUnlock();
 			}
 		}
 
 		if (_action == SPIN) {
+			spinStart = millis();
+
 			while (_angle > 0.0f) {
-				aimAngle = computeAimAngle(_rotation, _originAngle, _angle);
+				aimAngle = _computeAimAngle(_rotation, _originAngle, fmod(_angle, 2 * M_PI));
 				lastAngle = 0.0f;
 
-				while ((_action == SPIN) && !rotationEnded(_rotation, aimAngle, &lastAngle)) {
+				while (!_rotationEnded(_rotation, aimAngle, &lastAngle)) {
 					Drive::spin(_rotation, _speed);
-					waitMs(DRIVESYSTEM_THREAD_DELAY);
+					waitMs(delay);
+
+					if (abs(millis() - spinStart) > 2500) /* Security, prevent infinite spinning */
+						break;
 				}
 
+				chMtxLock(&_dataMutex);
 				_angle -= 2 * M_PI;
+				chMtxUnlock();
 			}
 
 			if (_action == SPIN) {
+				chMtxLock(&_dataMutex);
+
 				_oldAction = SPIN;
 				_action = STOP;
 				_duration = 0;
+
+				chMtxUnlock();
 			}
 		}
 
@@ -224,25 +270,33 @@ msg_t DriveSystem::thread(void* arg) {
 		if (_action == STOP) {
 			if (_oldAction == GO) {
 				count = 0;
-				nSteps = _duration / DRIVESYSTEM_THREAD_DELAY;
+				nSteps = _duration / delay;
 
-				while ((count++) * DRIVESYSTEM_THREAD_DELAY < _duration) {
-					_speed = (uint8_t)max(0, _speed - _speed / nSteps);
+				while ((count++) * delay < _duration) {
+					_speed = _speed - _speed / nSteps;
 					Drive::go(_direction, _speed);
-					waitMs(DRIVESYSTEM_THREAD_DELAY);
+					waitMs(delay);
 				}
 			}
 
 			Drive::stop();
 
+			chMtxLock(&_dataMutex);
+
 			_direction = FORWARD;
 			_rotation = LEFT;
 			_speed = 0;
+
+			chMtxUnlock();
 		}
 
+		chMtxLock(&_dataMutex);
+
 		_action = NONE;
+		chMtxUnlock();
 	}
 
 	return (msg_t)0;
 }
 
+}

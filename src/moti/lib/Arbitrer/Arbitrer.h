@@ -13,58 +13,62 @@ typedef enum {
 } ArbitrerState;
 
 
-class Arbitrer {
-	public:
-		static void launch(void);
-		static void stop(void);
+namespace Arbitrer {
 
-	private:
-		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO);
+	void launch(void);
+	void stop(void);
 
-		static bool _isStarted, _isRunning;
-
-		static bool _isCruising;
-
-		static ArbitrerState _state;
-
-		static Semaphore _sem;
-		static msg_t thread(void* arg);
-};
-
-
-bool Arbitrer::_isStarted = false;
-bool Arbitrer::_isRunning = false;
-bool Arbitrer::_isCruising = false;
-ArbitrerState Arbitrer::_state = SLEEPING;
-Semaphore Arbitrer::_sem = _SEMAPHORE_DATA(Arbitrer::_sem, 0);
+	void start(void* arg=NULL, tprio_t priority=NORMALPRIO);
+		
+}
 
 
 static WORKING_AREA(arbitrerThreadArea, 512);
 
+namespace Arbitrer {
 
-void Arbitrer::launch(void) {
+	bool _isStarted = false;
+	bool _isRunning = false;
+	bool _isCruising = false;
+	ArbitrerState _state = SLEEPING;
+
+	Semaphore _sem = _SEMAPHORE_DATA(_sem, 0);
+	static msg_t thread(void* arg);
+
+	MUTEX_DECL(_arbitrerMutex);
+
+
+void launch(void) {
 	if (!_isStarted)
-		Arbitrer::start();
+		start();
+
+	chMtxLock(&_arbitrerMutex);
 
 	if (!_isRunning) {
 		_isRunning = true;
 		chSemSignal(&_sem);
 	}
+
+	chMtxUnlock();
 }
 
-void Arbitrer::stop(void) {
+void stop(void) {
 	if (!_isStarted)
-		Arbitrer::start();
+		start();
+
+	chMtxLock(&_arbitrerMutex);
 
 	if (_isRunning) {
 		_state = SLEEPING;
 		_isCruising = false;
 		_isRunning = false;
 	}
+
+	chMtxUnlock();
 }
 
 
-void Arbitrer::start(void* arg, tprio_t priority) {
+void start(void* arg, tprio_t priority) {
 	if (!_isStarted) {
 		_isStarted = true;
 
@@ -73,7 +77,7 @@ void Arbitrer::start(void* arg, tprio_t priority) {
 	}
 }
 
-msg_t Arbitrer::thread(void* arg) {
+msg_t thread(void* arg) {
 	uint16_t spinStart = 0;
 	uint16_t cruiseStart = 0;
 
@@ -97,21 +101,27 @@ msg_t Arbitrer::thread(void* arg) {
 					}
 
 					waitMs(2000); */
+
+					chMtxLock(&_arbitrerMutex);
 					_state = CRUISING;
+					chMtxUnlock();
 
 					break;
 
 				case CRUISING:
-					Serial1.println(Environment::isStuck());
-
 					if (Light::getState(HEART) == INACTIVE)
 					 	Light::fade(HEART, Color::GreenPure, Color::GreenPure, 1500);
+
+					chMtxLock(&_arbitrerMutex);
 
 					if (!_isCruising) {
 						_isCruising = true;
 						cruiseStart = millis();
-						DriveSystem::go(FORWARD, 120, 0);
+						DriveSystem::go(FORWARD, 105, 0);
 					}
+
+					chMtxUnlock();
+
 
 					if (Environment::isStuck() && (cruiseStart + 1000 < millis())) {
 						DriveSystem::stop(0);
@@ -122,8 +132,10 @@ msg_t Arbitrer::thread(void* arg) {
 
 						spinStart = millis();
 
+						chMtxLock(&_arbitrerMutex);
 						_isCruising = false;
 						_state = REORIENTING;
+						chMtxUnlock();
 					}
 
 					break;
@@ -132,12 +144,17 @@ msg_t Arbitrer::thread(void* arg) {
 					if (Light::getState(HEART) == INACTIVE)
 					 	Light::fade(HEART, Color::RedPure, Color::RedPure, 1500);
 
+
+					chMtxLock(&_arbitrerMutex);
+
 					if ((DriveSystem::getState() == NONE) && (spinStart + 100 < millis())) {
 						_state = CRUISING;
 					}
 					else if ((DriveSystem::getState() != NONE) && (spinStart + 1200 < millis())) {
 						_state = CRUISING;
 					}
+
+					chMtxUnlock();
 
 					break;
 			}
@@ -149,5 +166,6 @@ msg_t Arbitrer::thread(void* arg) {
     return (msg_t)0;
 }
 
+}
 
 #endif

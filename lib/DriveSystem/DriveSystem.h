@@ -37,32 +37,17 @@
  * @class DriveSystem
  * @brief DriveSystem gathers all the driving related functions such as going forward, backward, turning and spinning.
  */
-class DriveSystem {
-	public:
-        static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+namespace DriveSystem {
+
+    void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
         
-		static void go(Direction direction, uint8_t speed, uint16_t duration, uint16_t launchDuration=0);
-		static void spin(Rotation rotation, uint8_t speed, float angle);
-		static void spinDeg(Rotation rotation, uint8_t speed, float angle);
-		static void stop(uint16_t stopDuration);
+	void go(Direction direction, uint8_t speed, uint16_t duration, uint16_t launchDuration=0);
+	void spin(Rotation rotation, uint8_t speed, float angle);
+	void spinDeg(Rotation rotation, uint8_t speed, float angle);
+	void stop(uint16_t stopDuration);
 
-		static DriveState getState();
+	DriveState getState();
 
-	private:
-		static float computeAimAngle(Rotation rotation, float originAngle, float angle);
-		static bool rotationEnded(Rotation rotation, float aimAngle, float* last_angle);
-
-		static DriveState _action, _oldAction;
-		static Direction _direction;
-		static Rotation _rotation;
-		static uint8_t _speed;
-		static uint16_t _duration, _launchDuration;
-		static float _angle, _originAngle;
-		static bool _jump;
-
-		static bool _isStarted;
-		static Semaphore _sem;
-		static msg_t thread(void *arg);
-};
+}
 
 #endif
