@@ -17,7 +17,9 @@ static WORKING_AREA(stabilizationThreadArea, 256);
 namespace Stabilization {
 
 	bool _isStarted = false;
-	bool _isRunning;
+	bool _isRunning = false;
+
+	uint32_t _runStartTime = 0;
 
 	static msg_t thread(void* arg);
 
@@ -38,6 +40,7 @@ void run(void) {
 	chMtxLock(&_stabMutex);
 
 	_isRunning = true;
+	_runStartTime = millis();
 
 	chMtxUnlock();
 }
@@ -51,21 +54,28 @@ void stop(void) {
 }
 
 msg_t thread(void* arg) {
-	/* float currentAngle = 0.0; */
+	float currentAngle = 0.0;
 	float input = 0.0;
 	int16_t output = 0.0;
 
 	uint8_t speed = 0;
 	int16_t accY = 0;
 
+	uint32_t currentTime = 0;
+
 	while (!chThdShouldTerminate()) {
 		if (_isRunning) {
-			/* currentAngle = Sensors::getEulerPhi(); */
+			// if (Light::getState(HEART) == INACTIVE)
+			//	Light::fade(HEART, Color::RedPure, Color::BluePure, 1500);
+
+			currentTime = abs(millis() - _runStartTime);
+			if (currentTime > 2000)
+				currentAngle = Sensors::getEulerPhi();
 
 			input = Sensors::getAccX();
 			output = (int16_t)(-0.5 * input);
 			
-			if (abs(output) > 100.0f) {
+			if (abs(output) > 100.0) {
 				speed = (uint8_t)abs(output);
 				DriveSystem::go(output < 0 ? BACKWARD : FORWARD, speed, 100);
 			}
@@ -75,13 +85,14 @@ msg_t thread(void* arg) {
 				if (abs(accY) > 80)
 					DriveSystem::spin(accY > 0 ? RIGHT : LEFT, 105, 1.57);
 
+				else if ((currentTime > 2000) && abs(currentAngle) > 0.40) {
+					speed = (uint8_t)min(255, 100 + abs(currentAngle) * 80);
+					DriveSystem::spin(currentAngle > 0.0f ? LEFT : RIGHT, speed, abs(currentAngle));
+				}
+
 				else if (DriveSystem::getState() != NONE)
 					DriveSystem::stop(0);
 			}
-
-			/* else if (abs(currentAngle) > 0.45f) {
-				DriveSystem::spin(currentAngle > 0.0f ? LEFT : RIGHT, 150, abs(currentAngle));
-			} */
 		}
 
 		waitMs(STABILIZATION_THREAD_DELAY);

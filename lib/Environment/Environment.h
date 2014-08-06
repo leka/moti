@@ -36,15 +36,18 @@
 class Environment {
 	public:
 		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+
+		static void run(void);
+		static void stop(void);
 		
 		static bool isStuck(void);
 		static bool isShaken(void);
 		static bool isFalling(void);
 
 	private:
-		static bool _isStarted, _isStuck;
+		static bool _isStarted, _isRunning, _isStuck;
 
-		static uint16_t _startStuckTime;
+		static uint32_t _startStuckTime;
 
 		static msg_t thread(void* arg);
 };

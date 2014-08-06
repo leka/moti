@@ -24,10 +24,11 @@
 void chSetup() {
 	Serial.println(F("Starting..."));
 
+    Sensors::init();
     Drive::start();
     DriveSystem::start();
-    Environment::start();
-    Light::start();
+    // Environment::start();
+    // Light::start();
 
     uint8_t state = 1;
     Stabilization::start();

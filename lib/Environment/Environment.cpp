@@ -27,11 +27,21 @@
 
 
 bool Environment::_isStarted = false;
+bool Environment::_isRunning = false;
 bool Environment::_isStuck = false;
-uint16_t Environment::_startStuckTime = 0;
+uint32_t Environment::_startStuckTime = 0;
 
-static WORKING_AREA(environmentThreadArea, 256);
+static WORKING_AREA(environmentThreadArea, 128);
 
+
+void Environment::run(void) {
+	_isRunning = true;
+}
+
+void Environment::stop(void) {
+	_isRunning = false;
+	_isStuck = false;
+}
 
 bool Environment::isStuck() {
 	if (!_isStarted)
@@ -53,15 +63,17 @@ void Environment::start(void* arg, tprio_t priority) {
 
 msg_t Environment::thread(void* arg) {
 	while (!chThdShouldTerminate()) {
-		if (abs(Sensors::getAccX()) > ENVIRONMENT_STUCK_THRESHOLD) {
-			if (!_isStuck) {
-				_isStuck = true;
-				_startStuckTime = millis();
+		if (_isRunning) {
+			if (abs(Sensors::getAccX()) > ENVIRONMENT_STUCK_THRESHOLD) {
+				if (!_isStuck) {
+					_isStuck = true;
+					_startStuckTime = millis();
+				}
 			}
-		}
-		else
-			_isStuck = false;
+			else
+				_isStuck = false;
 
+		}
 
 		waitMs(ENVIRONMENT_THREAD_DELAY);
 	}

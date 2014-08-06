@@ -176,13 +176,9 @@ bool _rotationEnded(Rotation rotation, float aimAngle, float* lastAngle) {
 	if (_action != SPIN) /* The action changed, maybe we need to stop */
 		return true;
 
-	/* if ((_duration != 0) && abs(millis() - _duration) > 2500)
-		return true;
-	*/
-
 	float currentAngle = Sensors::getEulerPhi();
 
-	if (_jump && (*lastAngle * currentAngle < -3.0f))
+	if (_jump && ((*lastAngle) * currentAngle < -3.0f))
 		_jump = false;
 
 	*lastAngle = currentAngle;
@@ -203,7 +199,7 @@ msg_t thread(void* arg) {
 
 	float lastAngle = 0.0f;
 	float aimAngle = 0.0f;
-	int32_t spinStart = 0;
+	uint32_t spinStart = 0;
 
 	uint8_t delay = DRIVESYSTEM_THREAD_DELAY;
 

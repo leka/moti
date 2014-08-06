@@ -44,6 +44,8 @@ void launch(void) {
 
 	chMtxLock(&_arbitrerMutex);
 
+	Environment::run();
+
 	if (!_isRunning) {
 		_isRunning = true;
 		chSemSignal(&_sem);
@@ -57,6 +59,8 @@ void stop(void) {
 		start();
 
 	chMtxLock(&_arbitrerMutex);
+
+	Environment::stop();
 
 	if (_isRunning) {
 		_state = SLEEPING;

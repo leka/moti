@@ -38,6 +38,8 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
 
 class Sensors {
 	public:
+		static void init(void);
+		
 		static void getAccXYZ(float* x, float* y, float* z);
 		static float getAccX();
 		static float getAccY();
@@ -70,7 +72,6 @@ class Sensors {
 		static float degToRad(float deg);
 
 	private:
-		static void init(void);
 		static void readXYZ(void);
 		static void readYPR(void);
 
