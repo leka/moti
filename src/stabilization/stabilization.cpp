@@ -4,6 +4,7 @@
 #include "Moti.h"
 #include "ChibiOS_AVR.h"
 #include "Configuration.h"
+#include "Environment.h"
 #include "Color.h"
 #include "Drive.h"
 #include "DriveSystem.h"
@@ -48,7 +49,7 @@ void chSetup() {
 		Serial.print(F("  "));
 		Serial.println(output);
 		*/
-		
+
 		if (abs(output) > 100.0f) {
 			DriveSystem::go(output < 0.0f ? BACKWARD : FORWARD, (uint8_t)abs(output), 100);
 		}
@@ -65,7 +66,7 @@ void chSetup() {
 			DriveSystem::spin(currentAngle > 0.0f ? LEFT : RIGHT, 150, abs(currentAngle));
 		}
 		else if (DriveSystem::getState() != NONE) {
-			DriveSystem::stop();
+			DriveSystem::stop(0);
 		}
 
 		waitMs(50);
