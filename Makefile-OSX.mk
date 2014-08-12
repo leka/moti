@@ -39,17 +39,20 @@ AVR_TOOLS_DIR     = /usr/local
 ### Path to avrdude directory.
 AVRDDUDE          = /usr/local/bin/avrdude
 
+### CFLAGS_STD
+CFLAGS_STD = -std=gnu11
+
+### CPPFLAGS_STD
+CPPFLAGS_STD = -std=gnu++14
+
 ### CPPFLAGS
 ### Flags you might want to set for debugging purpose. Comment to stop.
-CPPFLAGS         = -std=gnu++14 -pedantic -Wall -Wextra
+CPPFLAGS         = -pedantic -Wall -Wextra
 
 ### If avr-gcc -v is higher than 4.9, activate coloring of the output
 ifeq "$(AVR_GCC_VERSION)" "1"
     CPPFLAGS += -fdiagnostics-color
 endif
-
-### CFLAGS_STD
-CFLAGS = -std=gnu11
 
 ### MONITOR_PORT
 ### The port your board is connected to. Using an '*' tries all the ports and finds the right one.

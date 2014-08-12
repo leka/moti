@@ -7,6 +7,10 @@
 ### This is the path to where you have created/cloned your project
 PROJECT_DIR       = /home/{{ YOUR USERNAME }}/path/to/moti
 
+### AVR_GCC_VERSION
+### Check if the version is equal or higher than 4.9
+AVR_GCC_VERSION  := $(shell expr `avr-gcc -dumpversion | cut -f1` \>= 4.9)
+
 ### ARDMK_DIR
 ### Path to the Arduino-Makefile directory.
 ARDMK_DIR         = $(PROJECT_DIR)/Arduino-Makefile
@@ -18,10 +22,6 @@ ARDUINO_DIR       = /usr/share/arduino
 ### USER_LIB_PATH
 ### Path to where the your project's libraries are stored.
 USER_LIB_PATH     :=  $(PROJECT_DIR)/lib
-
-### AVR_GCC_VERSION
-### Check if the version is equal or higher than 4.9
-AVR_GCC_VERSION  := $(shell expr `avr-gcc -dumpversion | cut -f1` \>= 4.9)
 
 ### BOARD_TAG
 ### It must be set to the board you are currently using. (i.e uno, mega2560, etc.)
@@ -39,16 +39,20 @@ AVR_TOOLS_DIR     = /usr/bin
 ### Path to avrdude directory.
 AVRDDUDE          = /usr/bin/avrdude
 
+### CFLAGS_STD
+CFLAGS_STD = -std=gnu11
+
+### CPPFLAGS_STD
+CPPFLAGS_STD = -std=gnu++14
+
 ### CPPFLAGS
 ### Flags you might want to set for debugging purpose. Comment to stop.
-CPPFLAGS         = -std=c++14 -pedantic -Wall -Wextra
+CPPFLAGS         = -pedantic -Wall -Wextra
+
 ### If avr-gcc -v is higher than 4.9, activate coloring of the output
 ifeq "$(AVR_GCC_VERSION)" "1"
     CPPFLAGS += -fdiagnostics-color
 endif
-
-### CFLAGS_STD
-CFLAGS = -std=c11
 
 ### MONITOR_PORT
 ### The port your board is connected to. Using an '*' tries all the ports and finds the right one.
