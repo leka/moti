@@ -40,18 +40,18 @@ AVR_TOOLS_DIR     = /usr/bin
 AVRDDUDE          = /usr/bin/avrdude
 
 ### CFLAGS_STD
-CFLAGS_STD = -std=gnu11
+CFLAGS_STD        = -std=gnu11
 
-### CPPFLAGS_STD
-CPPFLAGS_STD = -std=gnu++14
+### CXXFLAGS_STD
+CXXFLAGS_STD      = -std=gnu++14
 
 ### CPPFLAGS
 ### Flags you might want to set for debugging purpose. Comment to stop.
-CPPFLAGS         = -pedantic -Wall -Wextra
+CXXFLAGS         = -pedantic -Wall -Wextra
 
 ### If avr-gcc -v is higher than 4.9, activate coloring of the output
 ifeq "$(AVR_GCC_VERSION)" "1"
-    CPPFLAGS += -fdiagnostics-color
+    CXXFLAGS += -fdiagnostics-color
 endif
 
 ### MONITOR_PORT
