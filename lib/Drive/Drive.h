@@ -31,26 +31,25 @@
 #include "Configuration.h"
 #include "Motor.h"
 
-
 /**
  * @class DriveSystem
  * @brief DriveSystem gathers all the driving related functions such as going forward, backward, turning and spinning.
  */
 class Drive {
 	public:
-        static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+2);
-        
+		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+2);
+
 		static void go(Direction direction, uint8_t speed);
 		static void spin(Rotation rotation, uint8_t speed);
 		static void turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed);
 		static void stop(void);
 
-      static Direction getRightDirection(void);
-      static uint8_t getRightSpeed(void);
-      
-      static Direction getLeftDirection(void);
-      static uint8_t getLeftSpeed(void);
-      
+		static Direction getRightDirection(void);
+		static uint8_t getRightSpeed(void);
+
+		static Direction getLeftDirection(void);
+		static uint8_t getLeftSpeed(void);
+
 
 	private:
 		static uint8_t _rightSpeed, _leftSpeed;

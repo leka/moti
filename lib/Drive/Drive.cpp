@@ -117,19 +117,19 @@ void Drive::stop(void) {
 }
 
 Direction Drive::getRightDirection(void) {
-    return _rightDirection;
+	return _rightDirection;
 }
 
 uint8_t Drive::getRightSpeed(void) {
-    return _rightSpeed;
+	return _rightSpeed;
 }
 
 Direction Drive::getLeftDirection(void) {
-    return _leftDirection;
+	return _leftDirection;
 }
 
 uint8_t Drive::getLeftSpeed(void) {
-    return _leftSpeed;
+	return _leftSpeed;
 }
 
 
