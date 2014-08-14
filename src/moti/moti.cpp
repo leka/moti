@@ -1,21 +1,27 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#include "Moti.h"
-#include "ChibiOS_AVR.h"
-#include "Configuration.h"
-#include "Color.h"
-#include "Drive.h"
 #include "DriveSystem.h"
 #include "Environment.h"
-#include "FreeIMU.h"
-#include "Led.h"
 #include "Light.h"
 #include "Monitor.h"
-#include "Motor.h"
-#include "Queue.h"
-#include "Sensors.h"
 #include "Serial.h"
+
+// #include "Moti.h"
+// #include "ChibiOS_AVR.h"
+// #include "Configuration.h"
+// #include "Color.h"
+// #include "Drive.h"
+// #include "DriveSystem.h"
+// #include "Environment.h"
+// #include "FreeIMU.h"
+// #include "Led.h"
+// #include "Light.h"
+// #include "Monitor.h"
+// #include "Motor.h"
+// #include "Queue.h"
+// #include "Sensors.h"
+// #include "Serial.h"
 
 #include "lib/Arbitrer/Arbitrer.h"
 #include "lib/Stabilization/Stabilization.h"
@@ -79,7 +85,7 @@ void chSetup() {
                                 Color(cmd.fade.endR, cmd.fade.endG, cmd.fade.endB),
                                 cmd.fade.duration);
                     break;
-                
+
                 default:
                     break;
                 }
