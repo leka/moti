@@ -39,6 +39,10 @@ AVR_TOOLS_DIR     = /usr/local
 ### Path to avrdude directory.
 AVRDDUDE          = /usr/local/bin/avrdude
 
+### AUTO_LIB
+### Auto link libraries
+AUTO_LIB = 1
+
 ### CFLAGS_STD
 CFLAGS_STD        = -std=gnu11
 
@@ -48,6 +52,7 @@ CXXFLAGS_STD      = -std=gnu++14
 ### CPPFLAGS
 ### Flags you might want to set for debugging purpose. Comment to stop.
 CXXFLAGS         = -pedantic -Wall -Wextra
+
 
 ### If avr-gcc -v is higher than 4.9, activate coloring of the output
 ifeq "$(AVR_GCC_VERSION)" "1"
