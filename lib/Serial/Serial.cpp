@@ -1,21 +1,21 @@
 /*
-Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at weareleka dot com> and Leka <http://weareleka.com>
+   Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at weareleka dot com> and Leka <http://weareleka.com>
 
-This file is part of Moti, a spherical robotic smart toy for autistic children.
+   This file is part of Moti, a spherical robotic smart toy for autistic children.
 
-Moti is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+   Moti is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-Moti is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+   Moti is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with Moti. If not, see <http://www.gnu.org/licenses/>.
-*/
+   You should have received a copy of the GNU General Public License
+   along with Moti. If not, see <http://www.gnu.org/licenses/>.
+   */
 
 #include <Arduino.h>
 #include "Serial.h"
@@ -54,33 +54,33 @@ void ReadCommand::readControlCommand(void) {
 	type = (COMMAND_TYPE)actionByte;
 
 	switch (type) {
-	case COMMAND_GO:
-		cmd.go.direction = (Direction)readByte();
-		cmd.go.speed = readByte();
-		cmd.go.duration = readTwoBytes();
-		break;
+		case COMMAND_GO:
+			cmd.go.direction = (Direction)readByte();
+			cmd.go.speed = readByte();
+			cmd.go.duration = readTwoBytes();
+			break;
 
-	case COMMAND_SPIN:
-		cmd.spin.rotation = (Rotation)readByte();
-		cmd.spin.speed = readByte();
-		cmd.spin.angle = readTwoBytes();
-		break;
+		case COMMAND_SPIN:
+			cmd.spin.rotation = (Rotation)readByte();
+			cmd.spin.speed = readByte();
+			cmd.spin.angle = readTwoBytes();
+			break;
 
-	case COMMAND_STOP:
-		break;
+		case COMMAND_STOP:
+			break;
 
-	case COMMAND_FADE:
-		cmd.fade.indicator = (LedIndicator)readByte();
-		cmd.fade.startR = readByte();
-		cmd.fade.startG = readByte();
-		cmd.fade.startB = readByte();
-		cmd.fade.endR = readByte();
-		cmd.fade.endG = readByte();
-		cmd.fade.endB = readByte();
-		cmd.fade.duration = readTwoBytes();
+		case COMMAND_FADE:
+			cmd.fade.indicator = (LedIndicator)readByte();
+			cmd.fade.startR = readByte();
+			cmd.fade.startG = readByte();
+			cmd.fade.startB = readByte();
+			cmd.fade.endR = readByte();
+			cmd.fade.endG = readByte();
+			cmd.fade.endB = readByte();
+			cmd.fade.duration = readTwoBytes();
 
-	default:
-		break;
+		default:
+			break;
 	}
 
 	_header = 0; /* Reset the header to tell that the control command has been handled */
@@ -91,7 +91,7 @@ uint8_t ReadCommand::readByte(void) {
 
 	/* uint8_t u = serial.read();
 
-	Serial.println(u); */
+	   Serial.println(u); */
 
 	return (uint8_t)serial.read();
 }

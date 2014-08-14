@@ -1,21 +1,21 @@
 /*
-Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at weareleka dot com> and Leka <http://weareleka.com>
+   Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at weareleka dot com> and Leka <http://weareleka.com>
 
-This file is part of Moti, a spherical robotic smart toy for autistic children.
+   This file is part of Moti, a spherical robotic smart toy for autistic children.
 
-Moti is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+   Moti is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-Moti is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+   Moti is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with Moti. If not, see <http://www.gnu.org/licenses/>.
-*/
+   You should have received a copy of the GNU General Public License
+   along with Moti. If not, see <http://www.gnu.org/licenses/>.
+   */
 
 #include <Arduino.h>
 #include "Light.h"
@@ -58,8 +58,8 @@ void Light::fade(LedIndicator led, Color startColor, Color endColor, int16_t dur
 	newData->state = FADE;
 
 	newData->diff = Color(endColor.getR() - startColor.getR(),
-						 endColor.getG() - startColor.getG(),
-						 endColor.getB() - startColor.getB());
+			endColor.getG() - startColor.getG(),
+			endColor.getB() - startColor.getB());
 
 	newData->current = startColor;
 
@@ -114,7 +114,7 @@ void Light::init(void) {
 		/* leds[0] = Led(HEART_LED_RED_PIN, HEART_LED_GREEN_PIN, HEART_LED_BLUE_PIN); */
 
 		/* for (uint8_t i = 0; i < N_LEDS; ++i)
-			 data[i] = Queue<LedData*>(); */
+		   data[i] = Queue<LedData*>(); */
 	}
 }
 
@@ -126,8 +126,8 @@ void Light::start(void* arg, tprio_t priority) {
 		_isStarted = true;
 
 		(void)chThdCreateStatic(lightThreadArea,
-								sizeof(lightThreadArea),
-								priority, thread, arg);
+				sizeof(lightThreadArea),
+				priority, thread, arg);
 
 		for (uint8_t i = 0; i < N_LEDS; ++i)
 			for (uint16_t j = 0; j < QUEUE_MAX_SIZE; ++j)
@@ -150,31 +150,31 @@ msg_t Light::thread(void* arg) {
 					state = data[i].getHead();
 
 					switch (state->state) {
-					case FADE:
-						state->current.setRGB(state->startColor.getR() + state->diff.getR() * state->steps / state->totalSteps,
-											  state->startColor.getG() + state->diff.getG() * state->steps / state->totalSteps,
-											  state->startColor.getB() + state->diff.getB() * state->steps / state->totalSteps);
-						leds[i].shine(state->current);
-						
-						state->steps++;
+						case FADE:
+							state->current.setRGB(state->startColor.getR() + state->diff.getR() * state->steps / state->totalSteps,
+									state->startColor.getG() + state->diff.getG() * state->steps / state->totalSteps,
+									state->startColor.getB() + state->diff.getB() * state->steps / state->totalSteps);
+							leds[i].shine(state->current);
 
-						if (state->steps == state->totalSteps) {
-							leds[i].shine(state->endColor);
-							data[i].pop();
+							state->steps++;
 
-							if (!data[i].isEmpty())
+							if (state->steps == state->totalSteps) {
+								leds[i].shine(state->endColor);
+								data[i].pop();
+
+								if (!data[i].isEmpty())
+									noRecall = false;
+							}
+							else
 								noRecall = false;
-						}
-						else
-							noRecall = false;
 
-						break;
+							break;
 
-					case SHINE:
-						break;
+						case SHINE:
+							break;
 
-					case INACTIVE:
-						break;			
+						case INACTIVE:
+							break;			
 					}
 				}
 			}

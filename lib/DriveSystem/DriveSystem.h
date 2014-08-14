@@ -39,8 +39,8 @@
  */
 namespace DriveSystem {
 
-    void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
-        
+	void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+
 	void go(Direction direction, uint8_t speed, uint16_t duration, uint16_t launchDuration=0);
 	void spin(Rotation rotation, uint8_t speed, float angle);
 	void spinDeg(Rotation rotation, uint8_t speed, float angle);
