@@ -26,14 +26,18 @@
  * @version 1.0
  */
 
+namespace Sensors {
 
-float Sensors::_XYZ[6] = { 0.f };
-float Sensors::_YPR[3] = { 0.f };
-float Sensors::_PTP[3] = { 0.f };
-FreeIMU Sensors::_imu = FreeIMU();
-uint32_t Sensors::_lastTimeXYZ = 0;
-uint32_t Sensors::_lastTimeYPR = 0;
-bool Sensors::_isInit = false;
+float _XYZ[6] = { 0.f };
+float _YPR[3] = { 0.f };
+float _PTP[3] = { 0.f };
+FreeIMU _imu = FreeIMU();
+uint32_t _lastTimeXYZ = 0;
+uint32_t _lastTimeYPR = 0;
+bool _isInit = false;
+
+void readXYZ(void);
+void readYPR(void);
 
 
 /**
@@ -42,7 +46,7 @@ bool Sensors::_isInit = false;
  * @param y pointer that will receive the content of the Y-axis
  * @param z pointer that will receive the content of the Z-axis
  */
-void Sensors::getAccXYZ(float* x, float* y, float* z) {
+void getAccXYZ(float* x, float* y, float* z) {
 	readXYZ();
 
 	*x = _XYZ[0];
@@ -54,7 +58,7 @@ void Sensors::getAccXYZ(float* x, float* y, float* z) {
  * @brief Getter method to get the X-axis value on the accelerometer
  * @return the X-axis accelerometer value
  */
-float Sensors::getAccX() {
+float getAccX() {
 	readXYZ();
 
 	return _XYZ[0];
@@ -64,7 +68,7 @@ float Sensors::getAccX() {
  * @brief Getter method to get the Y-axis value on the accelerometer
  * @return the Y-axis accelerometer value
  */
-float Sensors::getAccY() {
+float getAccY() {
 	readXYZ();
 
 	return _XYZ[1];
@@ -74,7 +78,7 @@ float Sensors::getAccY() {
  * @brief Getter method to get the Z-axis value on the accelerometer
  * @return the Z-axis accelerometer value
  */
-float Sensors::getAccZ() {
+float getAccZ() {
 	readXYZ();
 
 	return _XYZ[2];
@@ -86,7 +90,7 @@ float Sensors::getAccZ() {
  * @param p pointer that will receive the content of the pitch
  * @param r pointer that will receive the content of the roll
  */
-void Sensors::getGyrYPR(float* y, float* p, float* r) {
+void getGyrYPR(float* y, float* p, float* r) {
 	readYPR();
 
 	*y = _YPR[0];
@@ -98,7 +102,7 @@ void Sensors::getGyrYPR(float* y, float* p, float* r) {
  * @brief Reads the yaw on the gyroscope (in radians)
  * @return the yaw
  */
-float Sensors::getGyrY() {
+float getGyrY() {
 	readYPR();
 
 	return _YPR[0];
@@ -108,7 +112,7 @@ float Sensors::getGyrY() {
  * @brief Reads the pitch on the gyroscope (in radians)
  * @return the pitch
  */
-float Sensors::getGyrP() {
+float getGyrP() {
 	readYPR();
 
 	return _YPR[1];
@@ -118,7 +122,7 @@ float Sensors::getGyrP() {
  * @brief Reads the roll on the gyroscope (in radians)
  * @return the roll
  */
-float Sensors::getGyrR() {
+float getGyrR() {
 	readYPR();
 
 	return _YPR[2];
@@ -130,7 +134,7 @@ float Sensors::getGyrR() {
  * @param theta pointer that will receive the content of the Theta angle
  * @param psi pointer that will receive the content of the Psi angle
  */
-void Sensors::getEuler(float* phi, float* theta, float* psi) {
+void getEuler(float* phi, float* theta, float* psi) {
 	readYPR();
 
 	*phi = _PTP[0];
@@ -142,7 +146,7 @@ void Sensors::getEuler(float* phi, float* theta, float* psi) {
  * @brief Reads the Phi angle on the gyroscope (in radians)
  * @return Phi
  */
-float Sensors::getEulerPhi() {
+float getEulerPhi() {
 	readYPR();
 
 	return _PTP[0];
@@ -152,7 +156,7 @@ float Sensors::getEulerPhi() {
  * @brief Reads the Theta angle on the gyroscope (in radians)
  * @return Theta
  */
-float Sensors::getEulerTheta() {
+float getEulerTheta() {
 	readYPR();
 
 	return _PTP[1];
@@ -162,7 +166,7 @@ float Sensors::getEulerTheta() {
  * @brief Reads the Psi angle on the gyroscope (in radians)
  * @return Psi
  */
-float Sensors::getEulerPsi() {
+float getEulerPsi() {
 	return _PTP[2];
 }
 
@@ -172,7 +176,7 @@ float Sensors::getEulerPsi() {
  * @param p pointer that will receive the content of the pitch
  * @param r pointer that will receive the content of the roll
  */
-void Sensors::getGyrYPRDeg(float* y, float* p, float* r) {
+void getGyrYPRDeg(float* y, float* p, float* r) {
 	getGyrYPR(y, p, r);
 
 	*y = radToDeg(*y);
@@ -184,7 +188,7 @@ void Sensors::getGyrYPRDeg(float* y, float* p, float* r) {
  * @brief Reads the yaw on the gyroscope (in degrees)
  * @return the yaw
  */
-float Sensors::getGyrYDeg() {
+float getGyrYDeg() {
 	return radToDeg(getGyrY());
 }
 
@@ -192,7 +196,7 @@ float Sensors::getGyrYDeg() {
  * @brief Reads the pitch on the gyroscope (in degrees)
  * @return the pitch
  */
-float Sensors::getGyrPDeg() {
+float getGyrPDeg() {
 	return radToDeg(getGyrP());
 }
 
@@ -200,7 +204,7 @@ float Sensors::getGyrPDeg() {
  * @brief Reads the roll on the gyroscope (in degrees)
  * @return the roll
  */
-float Sensors::getGyrRDeg() {
+float getGyrRDeg() {
 	return radToDeg(getGyrR());
 }
 
@@ -210,7 +214,7 @@ float Sensors::getGyrRDeg() {
  * @param theta pointer that will receive the content of the Theta angle
  * @param psi pointer that will receive the content of the Psi angle
  */
-void Sensors::getEulerDeg(float* phi, float* theta, float* psi) {
+void getEulerDeg(float* phi, float* theta, float* psi) {
 	getEuler(phi, theta, psi);
 
 	*phi = radToDeg(*phi);
@@ -222,7 +226,7 @@ void Sensors::getEulerDeg(float* phi, float* theta, float* psi) {
  * @brief Reads the Phi angle on the gyroscope (in degrees)
  * @return Phi
  */
-float Sensors::getEulerPhiDeg() {
+float getEulerPhiDeg() {
 	return radToDeg(getEulerPhi());
 }
 
@@ -230,7 +234,7 @@ float Sensors::getEulerPhiDeg() {
  * @brief Reads the Theta angle on the gyroscope (in degrees)
  * @return Theta
  */
-float Sensors::getEulerThetaDeg() {
+float getEulerThetaDeg() {
 	return radToDeg(getEulerTheta());
 }
 
@@ -238,7 +242,7 @@ float Sensors::getEulerThetaDeg() {
  * @brief Reads the Psi angle on the gyroscope (in degrees)
  * @return Psi
  */
-float Sensors::getEulerPsiDeg() {
+float getEulerPsiDeg() {
 	return radToDeg(getEulerPsi());
 }
 
@@ -246,7 +250,7 @@ float Sensors::getEulerPsiDeg() {
  * @brief Checks whether the device is falling (see Configuration for threshold)
  * @return true if it is falling, flase otherwise
  */
-bool Sensors::isFalling() {
+bool isFalling() {
 	return _imu.acc.getInterruptSource(ADXL345_INT_FREE_FALL_BIT);
 }
 
@@ -254,7 +258,7 @@ bool Sensors::isFalling() {
  * @brief Checks whether the device is inactive (see Configuration for threshold)
  * @return true if it is inactive, flase otherwise
  */
-bool Sensors::isInactive() {
+bool isInactive() {
 	return _imu.acc.getInterruptSource(ADXL345_INT_INACTIVITY_BIT);
 }
 
@@ -262,7 +266,7 @@ bool Sensors::isInactive() {
  * @brief Converts a radians angle into degrees
  * @return the angle in degrees
  */
-float Sensors::radToDeg(float rad) {
+float radToDeg(float rad) {
 	return rad * 180.0f / M_PI;
 }
 
@@ -270,12 +274,12 @@ float Sensors::radToDeg(float rad) {
  * @brief Converts a radians angle into degrees
  * @return the angle in radians
  */
-float Sensors::degToRad(float deg) {
+float degToRad(float deg) {
 	return deg * M_PI / 180.0f;
 }
 
 
-void Sensors::init(void) {
+void init(void) {
 	if (!_isInit) {
 		_isInit = true;
 
@@ -299,7 +303,7 @@ void Sensors::init(void) {
 	}
 }
 
-void Sensors::readXYZ(void) {
+void readXYZ(void) {
 	if (!_isInit)
 		init();
 
@@ -310,7 +314,7 @@ void Sensors::readXYZ(void) {
 	_lastTimeXYZ = millis();
 }
 
-void Sensors::readYPR(void) {
+void readYPR(void) {
 	if (!_isInit)
 		init();
 
@@ -319,4 +323,6 @@ void Sensors::readYPR(void) {
 
 	_imu.getYawPitchRollEulerRad(_YPR, _PTP);
 	_lastTimeYPR = millis();
+}
+
 }

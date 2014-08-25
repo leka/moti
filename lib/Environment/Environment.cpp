@@ -25,33 +25,46 @@
  * @version 1.0
  */
 
+namespace Environment {
 
-bool Environment::_isStarted = false;
-bool Environment::_isRunning = false;
-bool Environment::_isStuck = false;
-uint32_t Environment::_startStuckTime = 0;
+bool _isStarted = false;
+bool _isRunning = false;
+bool _isStuck = false;
+uint32_t _startStuckTime = 0;
+
+msg_t thread(void* arg);
 
 static WORKING_AREA(environmentThreadArea, 128);
 
 
-void Environment::run(void) {
+/**
+ * @brief Tells the Environment thread to run and check for events
+ */
+void run(void) {
 	_isRunning = true;
 }
 
-void Environment::stop(void) {
+/**
+ * @brief Tells the Environment thread to stop checking for event
+ */
+void stop(void) {
 	_isRunning = false;
 	_isStuck = false;
 }
 
-bool Environment::isStuck() {
+/**
+ * @brief Returns whether the device is stuck or not
+ * @return true if it is stuck, false otherwise
+ */
+bool isStuck() {
 	if (!_isStarted)
-		Environment::start();
+		start();
 
 	return _isStuck && (abs(millis() - _startStuckTime) > ENVIRONMENT_STUCK_TIME);
 }
 
 
-void Environment::start(void* arg, tprio_t priority) {
+void start(void* arg, tprio_t priority) {
 	if (!_isStarted) {
 		_isStarted = true;
 
@@ -61,7 +74,7 @@ void Environment::start(void* arg, tprio_t priority) {
 	}
 }
 
-msg_t Environment::thread(void* arg) {
+msg_t thread(void* arg) {
 	while (!chThdShouldTerminate()) {
 		if (_isRunning) {
 			if (abs(Sensors::getAccX()) > ENVIRONMENT_STUCK_THRESHOLD) {
@@ -79,4 +92,6 @@ msg_t Environment::thread(void* arg) {
 	}
 
 	return (msg_t)0;
+}
+
 }

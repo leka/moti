@@ -43,24 +43,13 @@
 
 #define N_LEDS 1
 
-class Light {
-	public:
-		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+namespace Light {
+	void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
 
-		static void fade(LedIndicator led, Color startColor, Color endColor, int16_t duration);
-		static void turnOff(LedIndicator led);
-		static LedState getState(LedIndicator led);
-		static Color getColor(LedIndicator led);
-
-	private:
-		static void init(void);
-
-		static Led leds[N_LEDS];
-		static Queue<LedData*> data[N_LEDS];
-
-		static Semaphore _sem;
-		static msg_t thread(void* arg);
-		static bool _isInit, _isStarted;
-};
+	void fade(LedIndicator led, Color startColor, Color endColor, int16_t duration);
+	void turnOff(LedIndicator led);
+	LedState getState(LedIndicator led);
+	Color getColor(LedIndicator led);
+}
 
 #endif

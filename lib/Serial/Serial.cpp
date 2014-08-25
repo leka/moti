@@ -28,10 +28,15 @@
  * @version 1.0
  */
 
+
 ReadCommand::ReadCommand(void) {
 	_header = 0;
 }
 
+/**
+ * @brief Returns the header read from serial
+ * @return the header (if it did not change since last frame, will not change)
+ */
 uint8_t ReadCommand::getHeader(void) {
 	if ((_header != 1) && (_header != 42) && serial.available())
 		_header = readByte();
@@ -39,10 +44,16 @@ uint8_t ReadCommand::getHeader(void) {
 	return _header;
 }
 
+/**
+ * @brief Resets the header (set it to 0)
+ */
 void ReadCommand::resetHeader(void) {
 	_header = 0;
 }
 
+/**
+ * @brief Read a control command (GO, SPIN, STOP, FADE LED)
+ */
 void ReadCommand::readControlCommand(void) {
 	type = COMMAND_NONE;
 

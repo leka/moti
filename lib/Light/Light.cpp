@@ -27,11 +27,15 @@
  * @version 1.0
  */
 
-Semaphore Light::_sem = _SEMAPHORE_DATA(_sem, 0);
-bool Light::_isInit = false;
-bool Light::_isStarted = false;
-Led Light::leds[N_LEDS] = { Led(HEART_LED_RED_PIN, HEART_LED_GREEN_PIN, HEART_LED_BLUE_PIN) };
-Queue<LedData*> Light::data[N_LEDS] = { Queue<LedData*>() };
+namespace Light {
+
+Semaphore _sem = _SEMAPHORE_DATA(_sem, 0);
+bool _isInit = false;
+bool _isStarted = false;
+Led leds[N_LEDS] = { Led(HEART_LED_RED_PIN, HEART_LED_GREEN_PIN, HEART_LED_BLUE_PIN) };
+Queue<LedData*> data[N_LEDS] = { Queue<LedData*>() };
+
+msg_t thread(void* arg);
 
 static WORKING_AREA(lightThreadArea, 256);
 
@@ -43,7 +47,7 @@ static WORKING_AREA(lightThreadArea, 256);
  * @param endColor the color the led will shine at the end
  * @param duration the duration (in ms)
  */
-void Light::fade(LedIndicator led, Color startColor, Color endColor, int16_t duration) {
+void fade(LedIndicator led, Color startColor, Color endColor, int16_t duration) {
 	if (!_isStarted)
 		start();
 
@@ -72,7 +76,7 @@ void Light::fade(LedIndicator led, Color startColor, Color endColor, int16_t dur
  * @brief Tells a led to turn off
  * @param led the indicator of the led
  */
-void Light::turnOff(LedIndicator led) {
+void turnOff(LedIndicator led) {
 	if (!_isStarted)
 		start();
 
@@ -86,7 +90,7 @@ void Light::turnOff(LedIndicator led) {
  * @param led the indicator of the led
  * @return one of the available LedStates
  */
-LedState Light::getState(LedIndicator led) {
+LedState getState(LedIndicator led) {
 	uint8_t i = (uint8_t)led;
 
 	if (data[i].isEmpty())
@@ -100,14 +104,14 @@ LedState Light::getState(LedIndicator led) {
  * @param led the indicator of the led
  * @return the color  of the led
  */
-Color Light::getColor(LedIndicator led) {
+Color getColor(LedIndicator led) {
 	uint8_t i = (uint8_t)led;
 
 	return leds[i].getColor();
 }
 
 
-void Light::init(void) {
+void init(void) {
 	if (!_isInit) {
 		_isInit = true;
 
@@ -118,7 +122,7 @@ void Light::init(void) {
 	}
 }
 
-void Light::start(void* arg, tprio_t priority) {
+void start(void* arg, tprio_t priority) {
 	if (!_isInit)
 		init();
 
@@ -135,7 +139,7 @@ void Light::start(void* arg, tprio_t priority) {
 	}
 }
 
-msg_t Light::thread(void* arg) {
+msg_t thread(void* arg) {
 	bool noRecall = true;
 	LedData* state;
 
@@ -187,4 +191,6 @@ msg_t Light::thread(void* arg) {
 	}
 
 	return (msg_t)0;
+}
+
 }

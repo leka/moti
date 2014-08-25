@@ -36,54 +36,39 @@
 #include "Moti.h"
 
 
-class Sensors {
-	public:
-		static void init(void);
+namespace Sensors {
+	void init(void);
 
-		static void getAccXYZ(float* x, float* y, float* z);
-		static float getAccX();
-		static float getAccY();
-		static float getAccZ();
+	void getAccXYZ(float* x, float* y, float* z);
+	float getAccX();
+	float getAccY();
+	float getAccZ();
 
-		static void getGyrYPR(float* y, float* p, float* r);
-		static float getGyrY();
-		static float getGyrP();
-		static float getGyrR();
+	void getGyrYPR(float* y, float* p, float* r);
+	float getGyrY();
+	float getGyrP();
+	float getGyrR();
 
-		static void getEuler(float* phi, float* theta, float* psi);
-		static float getEulerPhi();
-		static float getEulerTheta();
-		static float getEulerPsi();
+	void getEuler(float* phi, float* theta, float* psi);
+	float getEulerPhi();
+	float getEulerTheta();
+	float getEulerPsi();
 
-		static void getGyrYPRDeg(float* y, float* p, float* r);
-		static float getGyrYDeg();
-		static float getGyrPDeg();
-		static float getGyrRDeg();
+	void getGyrYPRDeg(float* y, float* p, float* r);
+	float getGyrYDeg();
+	float getGyrPDeg();
+	float getGyrRDeg();
 
-		static void getEulerDeg(float* y, float* p, float* r);
-		static float getEulerPhiDeg();
-		static float getEulerThetaDeg();
-		static float getEulerPsiDeg();
+	void getEulerDeg(float* y, float* p, float* r);
+	float getEulerPhiDeg();
+	float getEulerThetaDeg();
+	float getEulerPsiDeg();
 
-		static bool isFalling();
-		static bool isInactive();
+	bool isFalling();
+	bool isInactive();
 
-		static float radToDeg(float rad);
-		static float degToRad(float deg);
-
-	private:
-		static void readXYZ(void);
-		static void readYPR(void);
-
-		static float _XYZ[6]; /* X, Y, Z */
-		static float _YPR[3]; /* Yaw, Pitch, Roll */
-		static float _PTP[3]; /* Phi, Theta, Psi */
-
-		static uint32_t _lastTimeXYZ, _lastTimeYPR;
-
-		static FreeIMU _imu;
-
-		static bool _isInit;
-};
+	float radToDeg(float rad);
+	float degToRad(float deg);
+}
 
 #endif

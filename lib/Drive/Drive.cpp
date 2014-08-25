@@ -26,15 +26,18 @@
  * @version 1.0
  */
 
+namespace Drive {
 
-bool Drive::_isStarted = false;
-Motor Drive::_rightMotor = Motor(RIGHT_MOTOR_DIRECTION_PIN, RIGHT_MOTOR_SPEED_PIN);
-Motor Drive::_leftMotor = Motor(LEFT_MOTOR_DIRECTION_PIN, LEFT_MOTOR_SPEED_PIN);
-Semaphore Drive::_sem = _SEMAPHORE_DATA(Drive::_sem, 0);
-uint8_t Drive::_rightSpeed = 0;
-uint8_t Drive::_leftSpeed = 0;
-Direction Drive::_rightDirection = FORWARD;
-Direction Drive::_leftDirection = FORWARD;
+bool _isStarted = false;
+Motor _rightMotor = Motor(RIGHT_MOTOR_DIRECTION_PIN, RIGHT_MOTOR_SPEED_PIN);
+Motor _leftMotor = Motor(LEFT_MOTOR_DIRECTION_PIN, LEFT_MOTOR_SPEED_PIN);
+Semaphore _sem = _SEMAPHORE_DATA(Drive::_sem, 0);
+uint8_t _rightSpeed = 0;
+uint8_t _leftSpeed = 0;
+Direction _rightDirection = FORWARD;
+Direction _leftDirection = FORWARD;
+
+msg_t thread(void* arg);
 
 static WORKING_AREA(driveThreadArea, 128);
 
@@ -44,9 +47,9 @@ static WORKING_AREA(driveThreadArea, 128);
  * @param direction the direction (FORWARD | BACKWARD)
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  */
-void Drive::go(Direction direction, uint8_t speed) {
+void go(Direction direction, uint8_t speed) {
 	if (!_isStarted)
-		Drive::start();
+		start();
 
 	_leftDirection = direction;
 	_rightDirection = direction;
@@ -63,9 +66,9 @@ void Drive::go(Direction direction, uint8_t speed) {
  * @param rightSpeed the speed of the right motor (0 - MOTOR_MAX_SPEED)
  * @param leftSpeed the speed of the left motor (0 - MOTOR_MAX_SPEED)
  */
-void Drive::turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed) {
+void turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed) {
 	if (!_isStarted)
-		Drive::start();
+		start();
 
 	_leftDirection = direction;
 	_rightDirection = direction;
@@ -81,9 +84,9 @@ void Drive::turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed) {
  * @param rotation the rotation side (RIGHT | LEFT)
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  */
-void Drive::spin(Rotation rotation, uint8_t speed) {
+void spin(Rotation rotation, uint8_t speed) {
 	if (!_isStarted)
-		Drive::start();
+		start();
 
 	switch (rotation) {
 		case LEFT:
@@ -106,9 +109,9 @@ void Drive::spin(Rotation rotation, uint8_t speed) {
 /**
  * @brief Tells the motors to immediately stop spinning
  */
-void Drive::stop(void) {
+void stop(void) {
 	if (!_isStarted)
-		Drive::start();
+		start();
 
 	_rightDirection = _leftDirection = FORWARD;
 	_rightSpeed = _leftSpeed = 0;
@@ -116,24 +119,24 @@ void Drive::stop(void) {
 	chSemSignal(&_sem);
 }
 
-Direction Drive::getRightDirection(void) {
+Direction getRightDirection(void) {
 	return _rightDirection;
 }
 
-uint8_t Drive::getRightSpeed(void) {
+uint8_t getRightSpeed(void) {
 	return _rightSpeed;
 }
 
-Direction Drive::getLeftDirection(void) {
+Direction getLeftDirection(void) {
 	return _leftDirection;
 }
 
-uint8_t Drive::getLeftSpeed(void) {
+uint8_t getLeftSpeed(void) {
 	return _leftSpeed;
 }
 
 
-void Drive::start(void* arg, tprio_t priority) {
+void start(void* arg, tprio_t priority) {
 	if (!_isStarted) {
 		_isStarted = true;
 
@@ -142,7 +145,7 @@ void Drive::start(void* arg, tprio_t priority) {
 	}
 }
 
-msg_t Drive::thread(void* arg) {
+msg_t thread(void* arg) {
 	while (!chThdShouldTerminate()) {
 		chSemWait(&_sem);
 
@@ -151,4 +154,6 @@ msg_t Drive::thread(void* arg) {
 	}
 
 	return (msg_t)0;
+}
+
 }

@@ -33,23 +33,15 @@
  */
 
 
-class Environment {
-	public:
-		static void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+namespace Environment {
+	void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
 
-		static void run(void);
-		static void stop(void);
+   void run(void);
+	void stop(void);
 
-		static bool isStuck(void);
-		static bool isShaken(void);
-		static bool isFalling(void);
-
-	private:
-		static bool _isStarted, _isRunning, _isStuck;
-
-		static uint32_t _startStuckTime;
-
-		static msg_t thread(void* arg);
-};
+	bool isStuck(void);
+	bool isShaken(void);
+	bool isFalling(void);
+}
 
 #endif
