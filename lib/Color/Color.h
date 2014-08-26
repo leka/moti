@@ -39,7 +39,13 @@ class Color {
 		uint8_t getG(void);
 		uint8_t getB(void);
 
+        void getHSV(uint16_t* hue, float* saturation, float* value);
+        uint16_t getHue(void);
+        float getSaturation(void);
+        float getValue(void);
+
 		void setRGB(uint8_t r, uint8_t g, uint8_t b);
+        void setHSV(uint16_t hue, float value, float saturation);
 
 		static Color randomColor(void);
 
@@ -61,6 +67,9 @@ class Color {
 
 	private:
 		uint8_t _r, _g, _b;
+
+        uint16_t _hue;
+        float _saturation, _value;
 };
 
 #endif

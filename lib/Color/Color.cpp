@@ -83,15 +83,142 @@ uint8_t Color::getB(void) {
 }
 
 /**
+ * @brief Reads the HSV values
+ * @param hue pointer that will receive the content of the hue
+ * @param saturation pointer that will receive the content of the saturation
+ * @param value pointer that will receive the content of the value
+ */
+void Color::getHSV(uint16_t* hue, float* saturation, float* value) {
+    *hue = _hue;
+    *saturation = _saturation;
+    *value = _value;
+}
+
+/**
+ * @brief Getter method to get the hue of the color
+ * @return the hue
+ */
+uint16_t Color::getHue(void) {
+    return _hue;
+}
+
+/**
+ * @brief Getter method to get the saturation of the color
+ * @return the saturation
+ */
+float Color::getSaturation(void) {
+    return _saturation;
+}
+
+/**
+ * @brief Getter method to get the value of the color
+ * @return the value
+ */
+float Color::getValue(void) {
+    return _value;
+}
+
+
+double __mod(double a, double b) {
+    double r = fmod(a, b);
+
+    return r < 0.f ? r + b : r;
+}
+
+/**
  * @brief Setter method to set the red, green and blue intensities of the color (0-255)
  * @param r the new red intensity of the color
  * @param g the new green intensity of the color
  * @param b the new blue intensity of the color
  */
 void Color::setRGB(uint8_t r, uint8_t g, uint8_t b) {
+    float new_r = (float)r / 255.f;
+    float new_g = (float)g / 255.f;
+    float new_b = (float)b / 255.f;
+
+    float c_max = max(new_r, max(new_g, new_b));
+    float c_min = min(new_r, min(new_g, new_b));
+
+    float delta = c_max - c_min;
+
+    if (c_max == new_r)
+        _hue = (uint16_t)(60.f * __mod((new_g - new_b) / delta, 6.f));
+    else if (c_max == new_g)
+        _hue = (uint16_t)(60.f * (((new_b - new_r) / delta) + 2.f));
+    else
+        _hue = (uint16_t)(60.f * (((new_r - new_g) / delta) + 4.f));
+
+    if (c_max == c_min)
+        _saturation = 0.f;
+    else
+        _saturation = delta / c_max;
+
+    _value = c_max;
+
 	_r = r;
 	_g = g;
 	_b = b;
+}
+
+/**
+ * @brief Setter method to set the hue, saturation and value of the color (See http://en.wikipedia.org/wiki/HSL_and_HSV#Converting_to_RGB)
+ * @param hue the new hue of the color
+ * @param b the new saturation of the color
+ * @param g the new value of the color
+ */
+ void Color::setHSV(uint16_t hue, float saturation, float value) {
+    float c = value * saturation;
+
+    uint16_t h = hue / 60;
+
+    float x = c * (1.f - abs((float)(h % 2) - 1.f));
+    float int_c = c;
+
+    float r = 0.f;
+    float g = 0.f;
+    float b = 0.f;
+
+    switch (h) {
+        case 0:
+            r = int_c;
+            g = x;
+            break;
+
+        case 1:
+            r = x;
+            g = int_c;
+            break;
+
+        case 2:
+            g = c;
+            b = x;
+            break;
+
+        case 3:
+            g = x;
+            b = c;
+            break;
+
+        case 4:
+            r = x;
+            b = c;
+            break;
+
+        case 5:
+            r = c;
+            b = x;
+            break;
+    }
+
+    float m = value - c;
+
+    _r = (uint8_t)(r + m);
+    _g = (uint8_t)(g + m);
+    _b = (uint8_t)(b + m);
+
+    _hue = hue;
+    _saturation = saturation;
+    _value = value;
 }
 
 /**
