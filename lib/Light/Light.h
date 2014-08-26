@@ -50,6 +50,12 @@ namespace Light {
 	void turnOff(LedIndicator led);
 	LedState getState(LedIndicator led);
 	Color getColor(LedIndicator led);
+
+   /* Easy use function */
+   void fadeHeart(Color startColor, Color endColor, int16_t duration);
+   void turnHeartOff();
+   LedState getHeartState(void);
+   Color getHeartColor(void);
 }
 
 #endif

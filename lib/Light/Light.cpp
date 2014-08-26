@@ -111,6 +111,23 @@ Color getColor(LedIndicator led) {
 }
 
 
+void fadeHeart(Color startColor, Color endColor, int16_t duration) {
+	fade(HEART, startColor, endColor, duration);
+}
+
+void turnHeartOff() {
+	turnOff(HEART);
+}
+
+LedState getHeartState(void) {
+	return getState(HEART);
+}
+
+Color getHeartColor(void) {
+	return getColor(HEART);
+}
+
+
 void init(void) {
 	if (!_isInit) {
 		_isInit = true;
