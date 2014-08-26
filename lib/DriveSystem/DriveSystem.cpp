@@ -137,6 +137,35 @@ DriveState getState() {
 }
 
 
+void goForward(uint8_t speed, uint16_t duration) {
+	go(FORWARD, speed, duration, 0);
+}
+
+void goBackward(uint8_t speed, uint16_t duration) {
+	go(BACKWARD, speed, duration, 0);
+}
+
+void spinRight(uint8_t speed, float angle) {
+	spin(RIGHT, speed, angle);
+}
+
+void spinLeft(uint8_t speed, float angle) {
+	spin(LEFT, speed, angle);
+}
+
+void spinRightDeg(uint8_t speed, float angle) {
+	spinDeg(RIGHT, speed, angle);
+}
+
+void spinLeftDeg(uint8_t speed, float angle) {
+	spinDeg(LEFT, speed, angle);
+}
+
+void stopNow(void) {
+	stop(0);
+}
+
+
 void start(void* arg, tprio_t priority) {
 	if (!_isStarted) {
 		_isStarted = true;

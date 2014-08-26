@@ -48,6 +48,17 @@ namespace DriveSystem {
 
 	DriveState getState();
 
+   /* Easy use functions */
+   void goForward(uint8_t speed, uint16_t duration);
+   void goBackward(uint8_t speed, uint16_t duration);
+
+   void spinRight(uint8_t speed, float angle);
+   void spinLeft(uint8_t speed, float angle);
+
+   void spinRightDeg(uint8_t speed, float angle);
+   void spinLeftDeg(uint8_t speed, float angle);
+
+   void stopNow(void);
 }
 
 #endif
