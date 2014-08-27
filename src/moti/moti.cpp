@@ -1,27 +1,27 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#include "DriveSystem.h"
-#include "Environment.h"
-#include "Light.h"
-#include "Monitor.h"
-#include "Serial.h"
-
-// #include "Moti.h"
-// #include "ChibiOS_AVR.h"
-// #include "Configuration.h"
-// #include "Color.h"
-// #include "Drive.h"
-// #include "DriveSystem.h"
+// #include "Motion.h"
 // #include "Environment.h"
-// #include "FreeIMU.h"
-// #include "Led.h"
 // #include "Light.h"
 // #include "Monitor.h"
-// #include "Motor.h"
-// #include "Queue.h"
-// #include "Sensors.h"
 // #include "Serial.h"
+
+#include "Moti.h"
+#include "ChibiOS_AVR.h"
+#include "Configuration.h"
+#include "Color.h"
+#include "DriveSystem.h"
+#include "Motion.h"
+// #include "Environment.h"
+#include "FreeIMU.h"
+#include "Led.h"
+#include "Light.h"
+#include "Communication.h"
+#include "Motor.h"
+#include "Queue.h"
+#include "Sensors.h"
+#include "Serial.h"
 
 #include "lib/Arbitrer/Arbitrer.h"
 #include "lib/Stabilization/Stabilization.h"
@@ -31,9 +31,9 @@ void chSetup() {
 	Serial.println(F("Starting..."));
 
     Sensors::init();
-    Drive::start();
     DriveSystem::start();
-    // Environment::start();
+    Motion::start();
+    // Moti::start();
     // Light::start();
 
     uint8_t state = 1;
@@ -46,7 +46,7 @@ void chSetup() {
         if (readCmd.getHeader() == 1) {
             if (state == 0) {
                 Arbitrer::stop();
-                DriveSystem::stop(0);
+                Motion::stop(0);
                 Stabilization::run();
             }
             else {
@@ -67,12 +67,12 @@ void chSetup() {
                 switch (readCmd.getType()) {
                 case COMMAND_GO:
                     Stabilization::stop();
-                    DriveSystem::go(cmd.go.direction, cmd.go.speed, cmd.go.duration, 500);
+                    Motion::go(cmd.go.direction, cmd.go.speed, cmd.go.duration, 500);
                     break;
 
                 case COMMAND_SPIN:
                     Stabilization::stop();
-                    DriveSystem::spinDeg(cmd.spin.rotation, cmd.spin.speed, cmd.spin.angle);
+                    Motion::spinDeg(cmd.spin.rotation, cmd.spin.speed, cmd.spin.angle);
                     break;
 
                 case COMMAND_STOP:
@@ -92,7 +92,7 @@ void chSetup() {
             }
         }
 
-        Monitor::sendAllData();
+        Communication::sendAllData();
         waitMs(50);
     }
 }

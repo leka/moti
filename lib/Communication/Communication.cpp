@@ -1,21 +1,21 @@
-#include "Monitor.h"
+#include "Communication.h"
 
 #define serial Serial1
 
-namespace Monitor {
+namespace Communication {
 
 /**
  * @brief Writes motors data to the serial
  */
 void sendMotorsData(void) {
 	serial.print(F("M,"));  /* M like Motors */
-	serial.print(Drive::getRightDirection());
+	serial.print(DriveSystem::getRightDirection());
 	serial.print(F(","));
-	serial.print(Drive::getRightSpeed());
+	serial.print(DriveSystem::getRightSpeed());
 	serial.print(F(","));
-	serial.print(Drive::getLeftDirection());
+	serial.print(DriveSystem::getLeftDirection());
 	serial.print(F(","));
-	serial.print(Drive::getLeftSpeed());
+	serial.print(DriveSystem::getLeftSpeed());
 }
 
 

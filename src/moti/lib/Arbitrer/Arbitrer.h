@@ -44,7 +44,7 @@ void launch(void) {
 
 	chMtxLock(&_arbitrerMutex);
 
-	Environment::run();
+	Moti::run();
 
 	if (!_isRunning) {
 		_isRunning = true;
@@ -60,7 +60,7 @@ void stop(void) {
 
 	chMtxLock(&_arbitrerMutex);
 
-	Environment::stop();
+	Moti::stop();
 
 	if (_isRunning) {
 		_state = SLEEPING;
@@ -121,18 +121,18 @@ msg_t thread(void* arg) {
 					if (!_isCruising) {
 						_isCruising = true;
 						cruiseStart = millis();
-						DriveSystem::go(FORWARD, 105, 0);
+						Motion::go(FORWARD, 105, 0);
 					}
 
 					chMtxUnlock();
 
 
-					if (Environment::isStuck() && (cruiseStart + 1000 < millis())) {
-						DriveSystem::stop(0);
-						while ((_state == CRUISING) && (DriveSystem::getState() != NONE))
+					if (Moti::isStuck() && (cruiseStart + 1000 < millis())) {
+						Motion::stop(0);
+						while ((_state == CRUISING) && (Motion::getState() != NONE))
 							waitMs(15);
 
-						DriveSystem::spin(rand() % 2 == 0 ? LEFT : RIGHT, 100, 1.57f);
+						Motion::spin(rand() % 2 == 0 ? LEFT : RIGHT, 100, 1.57f);
 
 						spinStart = millis();
 
@@ -151,10 +151,10 @@ msg_t thread(void* arg) {
 
 					chMtxLock(&_arbitrerMutex);
 
-					if ((DriveSystem::getState() == NONE) && (spinStart + 100 < millis())) {
+					if ((Motion::getState() == NONE) && (spinStart + 100 < millis())) {
 						_state = CRUISING;
 					}
-					else if ((DriveSystem::getState() != NONE) && (spinStart + 1200 < millis())) {
+					else if ((Motion::getState() != NONE) && (spinStart + 1200 < millis())) {
 						_state = CRUISING;
 					}
 

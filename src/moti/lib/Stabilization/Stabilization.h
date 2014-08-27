@@ -77,21 +77,21 @@ msg_t thread(void* arg) {
 			
 			if (abs(output) > 100.0) {
 				speed = (uint8_t)abs(output);
-				DriveSystem::go(output < 0 ? BACKWARD : FORWARD, speed, 100);
+				Motion::go(output < 0 ? BACKWARD : FORWARD, speed, 100);
 			}
 			else {
 				accY = Sensors::getAccY();
 
 				if (abs(accY) > 80)
-					DriveSystem::spin(accY > 0 ? RIGHT : LEFT, 105, 1.57);
+					Motion::spin(accY > 0 ? RIGHT : LEFT, 105, 1.57);
 
 				else if ((currentTime > 2000) && abs(currentAngle) > 0.40) {
 					speed = (uint8_t)min(255, 100 + abs(currentAngle) * 80);
-					DriveSystem::spin(currentAngle > 0.0f ? LEFT : RIGHT, speed, abs(currentAngle));
+					Motion::spin(currentAngle > 0.0f ? LEFT : RIGHT, speed, abs(currentAngle));
 				}
 
-				else if (DriveSystem::getState() != NONE)
-					DriveSystem::stop(0);
+				else if (Motion::getState() != NONE)
+					Motion::stop(0);
 			}
 		}
 

@@ -17,37 +17,30 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#ifndef LEKA_MOTI_ARDUINO_DRIVE_H_
-#define LEKA_MOTI_ARDUINO_DRIVE_H_
+#ifndef LEKA_MOTI_ARDUINO_COMMUNICATION_H_
+#define LEKA_MOTI_ARDUINO_COMMUNICATION_H_
 
 /**
- * @file Drive.h
- * @author Ladislas de Toldi
+ * @file Communication.h
+ * @author Ladislas de Toldi & Flavien Raynaud
  * @version 1.0
  */
 
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
-#include "Configuration.h"
-#include "Motor.h"
+#include "Moti.h"
+#include "Light.h"
+#include "DriveSystem.h"
+#include "Sensors.h"
 
-/**
- * @namespace DriveSystem
- * @brief DriveSystem gathers all the driving related functions such as going forward, backward, turning and spinning.
- */
-namespace Drive {
-	void start(void* arg=NULL, tprio_t priority=NORMALPRIO+2);
+namespace Communication {
 
-	void go(Direction direction, uint8_t speed);
-	void spin(Rotation rotation, uint8_t speed);
-	void turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed);
-	void stop(void);
+	void sendMotorsData(void);
+	void sendLedsData(void);
+	void sendSensorsData(void);
 
-	Direction getRightDirection(void);
-	uint8_t getRightSpeed(void);
+	void sendAllData(void);
 
-	Direction getLeftDirection(void);
-	uint8_t getLeftSpeed(void);
 }
 
 #endif

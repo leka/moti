@@ -28,6 +28,7 @@
 
 #include "ChibiOS_AVR.h"
 #include "Color.h"
+#include "Sensors.h"
 
 
 /*! Direction enumeration, for the DriveSystem */
@@ -49,7 +50,7 @@ typedef enum {
 	TURN,
 	STOP,
 	NONE
-} DriveState;
+} MotionState;
 
 
 /*! Indicators for the leds in the device */
@@ -71,5 +72,17 @@ typedef struct {
 } LedData;
 
 void waitMs(uint16_t ms);
+
+namespace Moti {
+        void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+
+	void run(void);
+        void stop(void);
+
+        bool isStuck(void);
+        bool isShaken(void);
+        bool isFalling(void);
+}
+
 
 #endif

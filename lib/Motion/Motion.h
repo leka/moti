@@ -17,31 +17,48 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#ifndef LEKA_MOTI_ARDUINO_ENVIRONMENT_H_
-#define LEKA_MOTI_ARDUINO_ENVIRONMENT_H_
-
-#include <Arduino.h>
-#include "ChibiOS_AVR.h"
-#include "Configuration.h"
-#include "Sensors.h"
-
+#ifndef LEKA_MOTI_ARDUINO_MOTION_H_
+#define LEKA_MOTI_ARDUINO_MOTION_H_
 
 /**
- * @file Environment.h
+ * @file Motion.h
  * @author Ladislas de Toldi
  * @version 1.0
  */
 
+#include <math.h>
 
-namespace Environment {
+#include <Arduino.h>
+#include "ChibiOS_AVR.h"
+#include "DriveSystem.h"
+#include "Sensors.h"
+
+/**
+ * @class Motion
+ * @brief Motion gathers all the driving related functions such as going forward, backward, turning and spinning.
+ */
+namespace Motion {
+
 	void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
 
-   void run(void);
-	void stop(void);
+	void go(Direction direction, uint8_t speed, uint16_t duration, uint16_t launchDuration=0);
+	void spin(Rotation rotation, uint8_t speed, float angle);
+	void spinDeg(Rotation rotation, uint8_t speed, float angle);
+	void stop(uint16_t stopDuration);
 
-	bool isStuck(void);
-	bool isShaken(void);
-	bool isFalling(void);
+	MotionState getState();
+
+	/* Easy use functions */
+	void goForward(uint8_t speed, uint16_t duration);
+	void goBackward(uint8_t speed, uint16_t duration);
+
+	void spinRight(uint8_t speed, float angle);
+	void spinLeft(uint8_t speed, float angle);
+
+	void spinRightDeg(uint8_t speed, float angle);
+	void spinLeftDeg(uint8_t speed, float angle);
+
+	void stopNow(void);
 }
 
 #endif

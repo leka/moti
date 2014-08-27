@@ -26,39 +26,28 @@
  * @version 1.0
  */
 
-#include <math.h>
-
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
-#include "Drive.h"
-#include "Sensors.h"
+#include "Configuration.h"
+#include "Motor.h"
 
 /**
- * @class DriveSystem
+ * @namespace DriveSystem
  * @brief DriveSystem gathers all the driving related functions such as going forward, backward, turning and spinning.
  */
 namespace DriveSystem {
+	void start(void* arg=NULL, tprio_t priority=NORMALPRIO+2);
 
-	void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+	void go(Direction direction, uint8_t speed);
+	void spin(Rotation rotation, uint8_t speed);
+	void turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed);
+	void stop(void);
 
-	void go(Direction direction, uint8_t speed, uint16_t duration, uint16_t launchDuration=0);
-	void spin(Rotation rotation, uint8_t speed, float angle);
-	void spinDeg(Rotation rotation, uint8_t speed, float angle);
-	void stop(uint16_t stopDuration);
+	Direction getRightDirection(void);
+	uint8_t getRightSpeed(void);
 
-	DriveState getState();
-
-   /* Easy use functions */
-   void goForward(uint8_t speed, uint16_t duration);
-   void goBackward(uint8_t speed, uint16_t duration);
-
-   void spinRight(uint8_t speed, float angle);
-   void spinLeft(uint8_t speed, float angle);
-
-   void spinRightDeg(uint8_t speed, float angle);
-   void spinLeftDeg(uint8_t speed, float angle);
-
-   void stopNow(void);
+	Direction getLeftDirection(void);
+	uint8_t getLeftSpeed(void);
 }
 
 #endif
