@@ -1,4 +1,30 @@
-# How to develop behaviors for Moti
+# Developing behaviors for Moti
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [How to develop behaviors for Moti](#how-to-develop-behaviors-for-moti)
+  - [Introduction](#introduction)
+  - [Overview of the API](#overview-of-the-api)
+    - [`Motion`](#motion)
+    - [`Light`](#light)
+    - [`Moti`](#moti)
+    - [`Monitor`](#monitor)
+  - [Anatomy of a program](#anatomy-of-a-program)
+    - [Directory structure](#directory-structure)
+    - [Threads and procedures](#threads-and-procedures)
+      - [The `start()` procedure](#the-start-procedure)
+      - [The `run()` procedure](#the-run-procedure)
+      - [The `stop()` procedure](#the-stop-procedure)
+      - [The `thread` procedure](#the-thread-procedure)
+  - [Building a basic example, the Stabilization behavior](#building-a-basic-example-the-stabilization-behavior)
+    - [What do I mean with "Stabilization"?](#what-do-i-mean-with-stabilization)
+    - [Here we go!](#here-we-go!)
+  - [The main thread](#the-main-thread)
+  - [Go further, multiple behaviors](#go-further-multiple-behaviors)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Introduction
 
@@ -203,56 +229,146 @@ msg_t thread(void* arg) {
 }
 ```
 
-## Building a basic example, the Stabilization behavior
+## Building a basic example
 
-Let's now go and build our first small example behavior, a **Stabilization** behavior!
+### Introduction
 
-You can develop your behavior as you intend to, but the solution we opted for is as follows:
+To better understand how it works, we are now going to write a small example, with the `Stabilization` behavior.
 
-* Create a directory in the `lib` folder
-* Create a header file within this directory
-* Create the working area for the thread (e.g: `static WORKING_AREA(threadArea, 256)`)
-* In this header, create a namespace having the name of your new behavior
-(e.g: `namespace Stabilization`)
-* Create 3 procedures:
-    - `void start(void* arg=NULL, tprio_t priority=NORMALPRIO);`
-    - `void run(void);`
-    - `void stop(void);`
-* Add two boolean variables:
-    - `bool _isStarted = false;`
-    - `bool _isRunning = false;`
-* Create the thread function `msg_t thread(void* arg)`
-* You are ready to code!
+The complete example is available in [`test/BehaviorExample`](https://github.com/WeAreLeka/moti/tree/dev/test/BehaviorExample), for those who don't want to wait. 
 
+For the others, we are going to write the code step by step.
 
+### Stabilization?!
 
-### What do I mean with "Stabilization"?
+Children love to hold and play with Moti. They often try to put it upside down in the sphere or to make it spin. That's why we want Moti to be stabilized, and always have his wheels facing the floor.
 
-Well, Moti is spherical, with wheels within the sphere, when someone lifts it and
-plays with it in his hands (like checking it out, turning in), we want Moti to
-stabilize, this means that its wheels always have to "face the floor", when it is
-rotated along its X-axis, it will go forward or backward in order to balance itself.
-And if it is rotated along its Y-axis, we will let Moti perform a 90-degrees rotation,
-then letting it go forward or backward.
+Basically, we will face two case of rotation:
 
-### Here we go!
+*	Rotation around the *Y axis* - the `X acceleration` value will change - Moti has to go forward or backward to find his stable position
+*	Rotation around the *X axis* - the `Y acceleration` value will change - Moti has to perform a 90° rotation before going forward or backward to find his stable position
 
-We will start with the basic code we saw earlier:
+Now that we know what we want to do, we are going to implement it. Don't worry, the maths behind that are pretty basic. :)
 
+### Let's code!
+
+#### Creating the files and the directories
+
+First we are going to create all the files we will need:
+
+```bash
+# go to moti's directory
+$ cd /path/to/moti
+
+# go to the src directory
+$ cd src
+
+# create a new directory for our example and go to this new directory
+$ mkdir BehaviorExample && cd $_
+
+# create the main program file
+$ touch BehaviorExample.cpp
+
+# create lib directory
+$ mkdir -p lib/Stabilization
+
+# create the stabilization files
+$ touch lib/Stabilization/Stabilization.h lib/Stabilization/Stabilization.cpp
 ```
-void start(void* arg, tprio_t priority) {
-	if (!_isStarted) {
-		_isStarted = true;
-		_isRunning = true;
 
-		(void)chThdCreateStatic(stabilizationThreadArea,
-								 sizeof(stabilizationThreadArea),
-								 priority,
-								 thread,
-								 arg);
+And that's it! We now have all the files we will use in the next steps.
+
+#### The `Stabilization` behavior
+
+We will start with the `Stabilization` behavior and use the basic code we saw earlier.
+
+In your favorite text editor, open the file `./lib/Stabilization/Stabilization.h`.
+
+We want to:
+
+*	include the required headers
+*	create a `namespace` called `Stabilization`
+*	create our functions prototypes and useful variables
+
+You can copy/paste the following in `./lib/Stabilization/Stabilization.h`:
+
+```cpp
+#include <Arduino.h>
+#include "ChibiOS_AVR.h"
+#include "Configuration.h"
+
+namespace Stabilization {
+
+	// Functions
+	static msg_t thread(void* arg);
+	void start(void* arg=NULL, tprio_t priority=NORMALPRIO);
+	void run(void);
+	void stop(void);
+
+	// Variables
+	static WORKING_AREA(stabilizationThreadArea, 256);
+	bool _isStarted = false;
+	bool _isRunning = false;
+
+}
+```
+
+Now we are going to write the functions definition in `./lib/Stabilization/Stabilization.cpp`. Note that we could write both in `.h` but as your code gets bigger and more complex, it is better to keep things separated.
+
+We start with the 3 basic procedues `start()`, `run()` and `stop()`. You can copy/past the following inside `./lib/Stabilization/Stabilization.cpp`:
+
+```cpp
+#include "Stabilization.h"
+
+namespace Stabilization {
+	
+	// Definition of the start() procedure
+	void start(void* arg, tprio_t priority) {
+		if (!_isStarted) {
+			_isStarted = true;
+			_isRunning = true;
+
+			(void)chThdCreateStatic(stabilizationThreadArea,
+									sizeof(stabilizationThreadArea),
+									priority,
+									thread,
+									arg);
+		}
 	}
+
+	// Definition of the run() procedure
+	void run(void) {
+		if (!_isStarted)
+			start(NULL, NORMALPRIO);
+
+		_isRunning = true;
+	}
+
+	// Definition of the stop() procedure
+	void stop(void) {
+		_isRunning = false;
+	}
+
+	msg_t thread(void* arg) {
+		while (!chThdShouldTerminate()) {
+			if (_isRunning) {
+				
+				/* We will write the code here */
+
+			}
+
+			waitMs(50); /* Prevents the thread from using all the MCU */
+		}
+
+		return (msg_t)0;
+	}
+
 }
 
+```
+
+
+```
 void run(void) {
     if (!_isStarted)
         start(NULL, NORMALPRIO);
