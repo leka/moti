@@ -65,9 +65,6 @@ msg_t thread(void* arg) {
 
 	while (!chThdShouldTerminate()) {
 		if (_isRunning) {
-			// if (Light::getState(HEART) == INACTIVE)
-			//	Light::fade(HEART, Color::RedPure, Color::BluePure, 1500);
-
 			currentTime = abs(millis() - _runStartTime);
 			if (currentTime > 2000)
 				currentAngle = Sensors::getEulerPhi();
@@ -75,7 +72,7 @@ msg_t thread(void* arg) {
 			input = Sensors::getAccX();
 			output = (int16_t)(-0.5 * input);
 			
-			if (abs(output) > 100.0) {
+			if (abs(output) > 80.0) {
 				speed = (uint8_t)abs(output);
 				Motion::go(output < 0 ? BACKWARD : FORWARD, speed, 100);
 			}

@@ -1,19 +1,19 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-// #include "Motion.h"
-// #include "Environment.h"
-// #include "Light.h"
-// #include "Monitor.h"
-// #include "Serial.h"
+#include "Motion.h"
+#include "Moti.h"
+#include "Light.h"
+#include "Communication.h"
+#include "Serial.h"
 
+/*
 #include "Moti.h"
 #include "ChibiOS_AVR.h"
 #include "Configuration.h"
 #include "Color.h"
 #include "DriveSystem.h"
 #include "Motion.h"
-// #include "Environment.h"
 #include "FreeIMU.h"
 #include "Led.h"
 #include "Light.h"
@@ -22,18 +22,19 @@
 #include "Queue.h"
 #include "Sensors.h"
 #include "Serial.h"
+*/
 
 #include "lib/Arbitrer/Arbitrer.h"
 #include "lib/Stabilization/Stabilization.h"
 
 
 void chSetup() {
-	Serial.println(F("Starting..."));
+	Serial1.println(F("Starting..."));
 
     Sensors::init();
     DriveSystem::start();
     Motion::start();
-    // Moti::start();
+    Moti::start();
     // Light::start();
 
     uint8_t state = 1;
@@ -42,8 +43,15 @@ void chSetup() {
     ReadCommand readCmd;
     COMMAND cmd;
 
+    Stabilization::run();
+
+    Moti::run();
+
     while (TRUE) {
-        if (readCmd.getHeader() == 1) {
+        if (Moti::isSpinning())
+            Serial1.println(Moti::countSpinLaps());        
+
+        /* if (readCmd.getHeader() == 1) {
             if (state == 0) {
                 Arbitrer::stop();
                 Motion::stop(0);
@@ -90,7 +98,7 @@ void chSetup() {
                     break;
                 }
             }
-        }
+        } */
 
         Communication::sendAllData();
         waitMs(50);
