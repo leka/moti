@@ -92,27 +92,29 @@ A,1337;M,1,255,0,255;L,0,0,0,0;S,15,-12,235,0,34,29
 
 **Explanation:**
 
-*	`A,1337`: `A` for "All data", 1337 is the number of seconds since power-up
-*	`M,1,255,0,255`: `M` for "Motors", `1,255` means that the right motor goes forward at max speed, `0,255` means that the left motor goes backward at max speed
-*	`L,0,0,0,0`: `L` for "Leds", the first `0` means that the led is inactive, and `0,0,0` is the color, black in this case
-*	`S,15,-12,235,0,34,29`: `S` for "Sensors", the rest of the data is quite
+*	`A,1337;` - `A` for "All data", 1337 is the number of seconds since power-up
+*	`M,1,255,0,255;` - `M` for "Motors", `1,255` means that the right motor goes forward at max speed, `0,255` means that the left motor goes backward at max speed
+*	`L,0,0,0,0;` - `L` for "Leds", the first `0` means that the led is inactive, and `0,0,0` is the color, black in this case
+*	`S,15,-12,235,0,34,29;` - `S` for "Sensors", the rest of the data is quite
 straightforward.
 
 If you want to plot data, you can use our [moti-data-analysis](https://github.com/WeAreLeka/moti-data-analysis), a simple Python tool to plot data received from Moti.
 
 ## Anatomy of a program
 
+### Directory structure
+
 Before developing our own behavior, we are going to take a look at the main program running on Moti and see how things work together.
 
 To begin with, open a `Terminal` window and go to moti's `src` directory:
 
-```Shell
+```bash
 $ cd /path/to/moti/src/moti
 ```
 
 The directory structure is as follow:
 
-```Shell
+```bash
 .
 ├── lib
 │   ├── Arbitrer
@@ -126,10 +128,12 @@ The directory structure is as follow:
 Some explanations:
 
 *	`moti.cpp` is the main program file that will be compiled for the robot - the name can change but must the same as its directory.
-*	`Makefile` is the filed use for compilation
-*	`./lib` is the folder where you want to put the different `behaviors` needed for your program. You can put them all in `lib` or create sub directories, it depends on you. The more files you have the better it is to organize things properly
+*	`Makefile` is the file used to compile the code.
+*	`./lib` is the folder where you want to put the different `behaviors` needed for your program. You can put them all in `lib` or create sub directories, it depends on you. The more files you have the better it is to organize things properly.
 
-Each `behavior` has to run in its own `thread` with a `NORMALPRIO`, in order for Moti to run its own basic services.
+### Threads and procedures
+
+Each `behavior` has to run in its own `thread` with a `NORMALPRIO`. This ensures that Moti is able to run its own basic services.
 
 Each behavior has a `msg_t thread(void* arg)` function and 3 procedures:
 
@@ -139,9 +143,9 @@ Each behavior has a `msg_t thread(void* arg)` function and 3 procedures:
 
 Let's dive in each of them.
 
-### The `start()` procedure
+#### The `start()` procedure
 
-This procedure is here to start the `thread` that will run in background and the code is basically the same for every `behavior`. When used, the `_isStarted` variable must be set to `true` and the `_isRunning` boolean must be set `false`. A `static thread` is then created.
+This procedure starts the `thread` that will run in the background. The code is basically the same for every `behavior`. When used, the `_isStarted` variable is set to `true` and the `_isRunning` boolean is set `false`. A `static thread` is then created.
 
 ```cpp
 void start(void* arg, tprio_t priority) {
@@ -150,15 +154,15 @@ void start(void* arg, tprio_t priority) {
 		_isRunning = false;
 
 		(void)chThdCreateStatic(stabilizationThreadArea,
-				sizeof(stabilizationThreadArea),
-				priority, thread, arg);
+								sizeof(stabilizationThreadArea),
+								priority, thread, arg);
 	}
 }
 ```
 
-### The `run()` procedure
+#### The `run()` procedure
 
-This precedure tells the `thread` to peform its job normally: the `behavior` is active and running, and *Moti* is doing what has been written. When used, `_isRunning` is set to `true`.
+This procedure tells the `thread` to perform its job normally: the `behavior` is active and running, and *Moti* is doing what has been written. When used, `_isRunning` is set to `true`.
 
 ```cpp
 void run(void) {
@@ -169,7 +173,7 @@ void run(void) {
 }
 ```
 
-### The `stop()` procedure
+#### The `stop()` procedure
 
 This procedure tells the `thread` to stop it's job: the `behavior` is just paused and will not be killed, so you'll be able to start it again later. When used, `_isRunning` is set to `false`.
 
@@ -179,12 +183,9 @@ void stop(void) {
 }
 ```
 
-Once you have these three procedures up and working, you will be able to start
-developping your behavior!
+#### The `thread` procedure
 
-### The `thread` procedure
-
-The `thread` function containes all the code of the `behavior`. Once the `thread` `_isStarted`, it waits for `_isRunning` to be true. Here is a basic example that you can fill later with your `behavior`:
+The `thread` function contains all the code of the `behavior`. Once the `thread` `_isStarted`, it waits for `_isRunning` to be true. Here is a basic example that you can fill later with your `behavior`:
 
 ```cpp
 msg_t thread(void* arg) {
@@ -205,7 +206,6 @@ msg_t thread(void* arg) {
 ## Building a basic example, the Stabilization behavior
 
 Let's now go and build our first small example behavior, a **Stabilization** behavior!
-
 
 You can develop your behavior as you intend to, but the solution we opted for is as follows:
 
