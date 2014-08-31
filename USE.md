@@ -420,9 +420,9 @@ msg_t thread(void* arg) {
 
 That's it! We now have our first behavior!
 
-#### The `main thread`
+#### The `mainThread`
 
-The `main thread` is the entry point of every program made for Moti. It here that all the basic behaviors, services and API are loaded. It's also there that you decide to use or not some behaviors, and how you want them to interact.
+The `mainThread` is the entry point of every program made for Moti. It here that all the basic behaviors, services and API are loaded. It's also there that you decide to use or not some behaviors, and how you want them to interact.
 
 You need three parts:
 
@@ -446,9 +446,12 @@ You can copy/past the following inside of `./BehaviorExample.cpp`:
 
 #include "./lib/Stabilization/Stabilization.h"
 
-void chSetup() {
+void mainThread() {
 
     // Init part
+	Wire.begin();
+	delay(500);
+
     Sensors::init();
     Drive::start();
     DriveSystem::start();
@@ -473,6 +476,17 @@ void chSetup() {
 
         waitMs(50);
     }
+}
+
+void setup() {
+
+	chBegin(mainThread);
+
+	while(1);
+}
+
+void loop() {
+	// nothing to do here
 }
 ```
 
