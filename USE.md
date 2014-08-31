@@ -235,7 +235,7 @@ msg_t thread(void* arg) {
 
 To better understand how it works, we are now going to write a small example, with the `Stabilization` behavior.
 
-The complete example is available in [`test/BehaviorExample`](https://github.com/WeAreLeka/moti/tree/dev/test/BehaviorExample), for those who don't want to wait. 
+The complete example is available in [`test/BehaviorExample`](https://github.com/WeAreLeka/moti/tree/dev/test/BehaviorExample), for those who don't want to wait.
 
 For the others, we are going to write the code step by step.
 
@@ -321,7 +321,7 @@ We start with the 3 basic procedues `start()`, `run()` and `stop()`. You can cop
 #include "Stabilization.h"
 
 namespace Stabilization {
-	
+
 	// Definition of the start() procedure
 	void start(void* arg, tprio_t priority) {
 		if (!_isStarted) {
@@ -330,9 +330,7 @@ namespace Stabilization {
 
 			(void)chThdCreateStatic(stabilizationThreadArea,
 									sizeof(stabilizationThreadArea),
-									priority,
-									thread,
-									arg);
+									priority, thread, arg);
 		}
 	}
 
@@ -352,7 +350,7 @@ namespace Stabilization {
 	msg_t thread(void* arg) {
 		while (!chThdShouldTerminate()) {
 			if (_isRunning) {
-				
+
 				/* We will write the code here */
 
 			}
@@ -364,119 +362,53 @@ namespace Stabilization {
 	}
 
 }
-
 ```
 
+Now we are going to write the actual stabilization code.
 
-```
-void run(void) {
-    if (!_isStarted)
-        start(NULL, NORMALPRIO);
+If Moti is rocked back and forth, the `input` is the `X-axis` value of the accelerometer. We use it to provide a proportional `output` value to the motors. We want the `output` value to be half the `input` value. Therefor, the coefficient is `0.5` and `outputValue = 0.5 * inputValue`. If the `input` value is negative, the motors will go backward.
 
-	_isRunning = true;
-}
+When the `Y-axis` exceeds a threshold of `80`, we tell Moti to spin 90°.
 
-void stop(void) {
-	_isRunning = false;
-}
+We also need to prevent the motors from running all the time, so we add a little constraint: the absolute `output` value has to be greater than `100` for the motor to roll.
 
+You can copy/past the following to replace `msg_t thread (void* arg) {...}`:
+
+```cpp
 msg_t thread(void* arg) {
-	while (!chThdShouldTerminate()) {
-		if (_isRunning) {
-		    /*  We will build our code here */
-		}
 
-		waitMs(50); /* Prevents us from taking all the CPU */
-	}
+    float inputValue = 0.f;             // Define variables
+    float outputValue = 0.f;
 
-	return (msg_t)0;
-}
-```
-
-We may also need some extra variables, an input and an output integers.
-
-Basically, the input will be the X-axis value of the accelerometer, and
-we will provide a proportional output to the device. Here, we will opt for
-an output equals to the half of the input, this means that it the accelerometer
-returns a value of 212, Moti will go forward with a speed of 106. If the input
-is negative, this just means that we will have to go backward in order to
-stabilize.
-
-We will also need to prevent the motors from running all the time, so let's add
-a little constraint: if the output is less than 100, we will assume that we already
-are stabilized won't do anything for this X-axis.
-
-```
-msg_t thread(void* arg) {
-    float input = 0.f;
-    float output = 0.f;
+    float accY = 0.f;                   // The Y-axis accelerometer value
+    SpinDirection spinDirection;        // Spin direction i.e. left or right
 
     Direction direction;
     uint8_t speed;
 
 	while (!chThdShouldTerminate()) {
+
 		if (_isRunning) {
-		    input = Sensors::getAccX();  // Retrive the value of the X-axis
-		    output = 0.5 * input;
+		    inputValue = Sensors::getAccX();  // Get the value of the X-axis
+		    outputValue = 0.5 * inputValue;   // Compute the output value
 
-		    if (abs(output) > 100.f) {
-		        direction = output < 0.f ? BACKWARD : FORWARD;
-		        speed = (uint8_t)abs(output);
+		    accY = Sensors::getAccY();        // Get the value of the Y-axis
 
-		         // Just go for 100ms, this will be discarded later if we
-		         // need to change the output speed
-		        Motion::go(direction, speed, 100);
+		    if (abs(outputValue) > 100.f) {
+		        direction = outputValue < 0.f ? BACKWARD : FORWARD;    // Select the direction
+		        speed = (uint8_t)abs(outputValue);
+
+		        Motion::go(direction, speed, 100);    // Turn the motors on for 100ms at the desired speed
+		    }
+		    else if (abs(accY) > 80.f) {
+	            spinDirection = accY > 0.f ? RIGHT : LEFT;
+
+	            Motion::spinDeg(spinDirection, 130, 90);       // Spin 90 degrees with an arbitrary speed of 130
 		    }
 		}
 
-		waitMs(50); /* Prevents us from taking all the CPU */
-	}
+		waitMs(50); // Prevents us from taking all the CPU
 
-	return (msg_t)0;
-}
-```
-
-Great! Now we can response to a change with the X-axis of the accelerometer.
-Last step now is to handle the Y-axis change. When the Y-axis exceeds a given
-threshold (let's say 80 here), we will tell Moti to spin for 90 degrees.
-
-Let's code this up!
-
-```
-msg_t thread(void* arg) {
-    float input = 0.f;
-    float output = 0.f;
-
-    Direction direction;
-    uint8_t speed;
-
-    float accY = 0.f; // The value of the Y-axis of the accelerometer
-    SpinDirection spin; // The direction in which Moti will spin, if it has to
-
-	while (!chThdShouldTerminate()) {
-		if (_isRunning) {
-		    input = Sensors::getAccX();  // Retrive the value of the X-axis
-		    output = 0.5 * input;
-
-		    accY = Sensors::getAccY();
-
-		    if (abs(output) > 100.f) {
-		        direction = output < 0.f ? BACKWARD : FORWARD;
-		        speed = (uint8_t)abs(output);
-
-		         // Just go for 100ms, this will be discarded later if we
-		         // need to change the output speed
-		        Motion::go(direction, speed, 100);
-		    }
-		    else if (abs(accY) > 80.f)
-	            spin = accY > 0.f ? RIGHT : LEFT;
-
-	            // Spin 90 degrees with an arbitrary speed of 105
-	            Motion::spinDeg(spin, 105, 90);
-		    }
-		}
-
-		waitMs(50); /* Prevents us from taking all the CPU */
 	}
 
 	return (msg_t)0;
