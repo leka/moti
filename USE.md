@@ -4,25 +4,27 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [How to develop behaviors for Moti](#how-to-develop-behaviors-for-moti)
-  - [Introduction](#introduction)
-  - [Overview of the API](#overview-of-the-api)
-    - [`Motion`](#motion)
-    - [`Light`](#light)
-    - [`Moti`](#moti)
-    - [`Monitor`](#monitor)
-  - [Anatomy of a program](#anatomy-of-a-program)
-    - [Directory structure](#directory-structure)
-    - [Threads and procedures](#threads-and-procedures)
-      - [The `start()` procedure](#the-start-procedure)
-      - [The `run()` procedure](#the-run-procedure)
-      - [The `stop()` procedure](#the-stop-procedure)
-      - [The `thread` procedure](#the-thread-procedure)
-  - [Building a basic example, the Stabilization behavior](#building-a-basic-example-the-stabilization-behavior)
-    - [What do I mean with "Stabilization"?](#what-do-i-mean-with-stabilization)
-    - [Here we go!](#here-we-go!)
-  - [The main thread](#the-main-thread)
-  - [Go further, multiple behaviors](#go-further-multiple-behaviors)
+- [Introduction](#introduction)
+- [Overview of the API](#overview-of-the-api)
+  - [`Motion`](#motion)
+  - [`Light`](#light)
+  - [`Moti`](#moti)
+  - [`Monitor`](#monitor)
+- [Anatomy of a program](#anatomy-of-a-program)
+  - [Directory structure](#directory-structure)
+  - [Threads and procedures](#threads-and-procedures)
+    - [The `start()` procedure](#the-start-procedure)
+    - [The `run()` procedure](#the-run-procedure)
+    - [The `stop()` procedure](#the-stop-procedure)
+    - [The `thread` procedure](#the-thread-procedure)
+- [Building a basic example](#building-a-basic-example)
+  - [Introduction](#introduction-1)
+  - [Stabilization?!](#stabilization!)
+  - [Let's code!](#lets-code!)
+    - [Creating the files and the directories](#creating-the-files-and-the-directories)
+    - [The `Stabilization` behavior](#the-stabilization-behavior)
+    - [The `main thread`](#the-main-thread)
+- [Go further, multiple behaviors](#go-further-multiple-behaviors)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -315,7 +317,7 @@ namespace Stabilization {
 
 Now we are going to write the functions definition in `./lib/Stabilization/Stabilization.cpp`. Note that we could write both in `.h` but as your code gets bigger and more complex, it is better to keep things separated.
 
-We start with the 3 basic procedues `start()`, `run()` and `stop()`. You can copy/past the following inside `./lib/Stabilization/Stabilization.cpp`:
+We start with the 3 basic procedures `start()`, `run()` and `stop()`. You can copy/past the following inside `./lib/Stabilization/Stabilization.cpp`:
 
 ```cpp
 #include "Stabilization.h"
@@ -416,31 +418,47 @@ msg_t thread(void* arg) {
 ```
 
 
-Here it is, we now have our first behavior! It only took us a few lines to
-have a basic, working, one.
+That's it! We now have our first behavior!
 
-## The main thread
+#### The `main thread`
 
-The main thread will be the entry point of Moti, where all basic behaviors and
-API are loaded, and where you can decide to use or not some behaviors, and how
-you want them to interract.
+The `main thread` is the entry point of every program made for Moti. It here that all the basic behaviors, services and API are loaded. It's also there that you decide to use or not some behaviors, and how you want them to interact.
 
-An example main thread can be found in `src/moti/moti.cpp`
+You need three parts:
 
-Let's build our main thread for our new Stabilization behavior:
+*	first part to `init` all the basic services
+*	second part to `init` your new behaviors
+*	third part to set the `workflow` of your application
 
-```
+To show you an example, in the following code, we turn on and off the `Stabilization` behavior when Moti `isShaken()`.
+
+You can copy/past the following inside of `./BehaviorExample.cpp`:
+
+```cpp
+#include <Arduino.h>
+#include <Wire.h>
+
+#include "Motion.h"
+#include "Moti.h"
+#include "Light.h"
+#include "Communication.h"
+#include "Serial.h"
+
+#include "./lib/Stabilization/Stabilization.h"
+
 void chSetup() {
-    /* Init part */
+
+    // Init part
     Sensors::init();
     Drive::start();
     DriveSystem::start();
     Moti::start();
     Light::start();
 
-    /* Start our brand new behavior */
+	// Init our new behavior
     Stabilization::start();
 
+	// Set variables
     bool stabilize = false;
 
     while (TRUE) {
@@ -457,13 +475,6 @@ void chSetup() {
     }
 }
 ```
-
-Maybe you guessed what happended here, the flow is quite easy:
-* First, Moti does not do anything
-* It we shake it, Moti enters its stabilization behavior
-* If we shake it again, Moti stop this behavior
-* Repeat...
-
 
 ## Go further, multiple behaviors
 
