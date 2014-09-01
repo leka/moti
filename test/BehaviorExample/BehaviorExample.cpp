@@ -7,20 +7,6 @@
 #include "Communication.h"
 #include "Serial.h"
 
-#include "ChibiOS_AVR.h"
-#include "Configuration.h"
-#include "Color.h"
-#include "DriveSystem.h"
-#include "Motion.h"
-#include "FreeIMU.h"
-#include "Led.h"
-#include "Light.h"
-#include "Communication.h"
-#include "Motor.h"
-#include "Queue.h"
-#include "Sensors.h"
-#include "Serial.h"
-
 #include "lib/Stabilization/Stabilization.h"
 
 void mainThread() {
