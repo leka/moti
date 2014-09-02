@@ -24,10 +24,10 @@ static WORKING_AREA(waThread1, 64);
 static msg_t Thread1(void *arg) {
   pinMode(LED_PIN, OUTPUT);
   while (TRUE) {
-    digitalWrite(LED_PIN, HIGH);
-    chThdSleepMilliseconds(50);
-    digitalWrite(LED_PIN, LOW);
-    chThdSleepMilliseconds(150);
+	digitalWrite(LED_PIN, HIGH);
+	chThdSleepMilliseconds(50);
+	digitalWrite(LED_PIN, LOW);
+	chThdSleepMilliseconds(150);
   }
   return 0;
 }
@@ -39,12 +39,12 @@ static WORKING_AREA(waThread2, 64);
 static msg_t Thread2(void *arg) {
 
   while (TRUE) {
-    count++;
-    uint32_t t = micros();
-    // yield so other threads can run
-    chThdYield();
-    t = micros() - t;
-    if (t > maxDelay) maxDelay = t;
+	count++;
+	uint32_t t = micros();
+	// yield so other threads can run
+	chThdYield();
+	t = micros() - t;
+	if (t > maxDelay) maxDelay = t;
   }
 }
 //------------------------------------------------------------------------------
@@ -55,10 +55,10 @@ void setup() {
   Serial.println();
   
   if (CH_TIME_QUANTUM) {
-    Serial.println("You must set CH_TIME_QUANTUM zero in");
-    Serial.println("libraries/ChibiOS_AVR/utility/chconf.h");
-    Serial.println("to enable cooperative scheduling.");
-    while(1);
+	Serial.println("You must set CH_TIME_QUANTUM zero in");
+	Serial.println("libraries/ChibiOS_AVR/utility/chconf.h");
+	Serial.println("to enable cooperative scheduling.");
+	while(1);
   }
   // start ChibiOS
   chBegin(mainThread);
@@ -72,23 +72,23 @@ void mainThread() {
 
   // start blink thread
   chThdCreateStatic(waThread1, sizeof(waThread1),
-    NORMALPRIO, Thread1, NULL);
-    
+	NORMALPRIO, Thread1, NULL);
+	
   // start count thread
   chThdCreateStatic(waThread2, sizeof(waThread2),
-    NORMALPRIO, Thread2, NULL);
-    
+	NORMALPRIO, Thread2, NULL);
+	
   Serial.println("Count, MaxDelay micros");
 
   while (1) {
-    Serial.print(count);
-    Serial.write(',');
-    Serial.println(maxDelay);
-    count = 0;
-    maxDelay = 0;
-    
-    // allow other threads to run for 1 sec
-    chThdSleepMilliseconds(1000);
+	Serial.print(count);
+	Serial.write(',');
+	Serial.println(maxDelay);
+	count = 0;
+	maxDelay = 0;
+	
+	// allow other threads to run for 1 sec
+	chThdSleepMilliseconds(1000);
   }
 }
 //------------------------------------------------------------------------------

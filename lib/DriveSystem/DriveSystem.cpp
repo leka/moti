@@ -1,21 +1,21 @@
 /*
-Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at weareleka dot com> and Leka <http://weareleka.com>
+   Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at weareleka dot com> and Leka <http://weareleka.com>
 
-This file is part of Moti, a spherical robotic smart toy for autistic children.
+   This file is part of Moti, a spherical robotic smart toy for autistic children.
 
-Moti is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+   Moti is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-Moti is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+   Moti is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with Moti. If not, see <http://www.gnu.org/licenses/>.
-*/
+   You should have received a copy of the GNU General Public License
+   along with Moti. If not, see <http://www.gnu.org/licenses/>.
+   */
 
 #include <Arduino.h>
 #include "DriveSystem.h"
@@ -26,199 +26,134 @@ along with Moti. If not, see <http://www.gnu.org/licenses/>.
  * @version 1.0
  */
 
+namespace DriveSystem {
+
+bool _isStarted = false;
+Motor _rightMotor = Motor(RIGHT_MOTOR_DIRECTION_PIN, RIGHT_MOTOR_SPEED_PIN);
+Motor _leftMotor = Motor(LEFT_MOTOR_DIRECTION_PIN, LEFT_MOTOR_SPEED_PIN);
+Semaphore _sem = _SEMAPHORE_DATA(DriveSystem::_sem, 0);
+uint8_t _rightSpeed = 0;
+uint8_t _leftSpeed = 0;
+Direction _rightDirection = FORWARD;
+Direction _leftDirection = FORWARD;
+
+msg_t thread(void* arg);
+
+static WORKING_AREA(driveThreadArea, 128);
+
+
 /**
- * @brief DriveSystem Class Constructor
- *
- * @param directionPin for Moti in its most up-to-date configuration, the pins are as follow: Left Dir = 4 / Left Speed = 5 // Right Dir = 7 / Right Speed = 6
- * @param speedPin
+ * @brief Tells the motors to spin in a given direction, at a given speed
+ * @param direction the direction (FORWARD | BACKWARD)
+ * @param speed the speed (0 - MOTOR_MAX_SPEED)
  */
-DriveSystem::DriveSystem() :
-	rMotor(Motor(DEFAULT_RIGHT_MOTOR_DIRECTION_PIN, DEFAULT_RIGHT_MOTOR_SPEED_PIN)),
-	lMotor(Motor(DEFAULT_LEFT_MOTOR_DIRECTION_PIN, DEFAULT_LEFT_MOTOR_SPEED_PIN))
-{
+void go(Direction direction, uint8_t speed) {
+	if (!_isStarted)
+		start();
 
+	_leftDirection = direction;
+	_rightDirection = direction;
+
+	_rightSpeed = speed;
+	_leftSpeed = speed;
+
+	chSemSignal(&_sem);
 }
 
-/*
- * @brief DriveSystem go Method
- *
- * @param direction should take 0 for backward, 1 for forward
- * @param speed the speed the motors should have
+/**
+ * @brief Tells the motors to spin in a given direction, at a given speed, with different speed for right and left motors
+ * @param direction the direction (FORWARD | BACKWARD)
+ * @param rightSpeed the speed of the right motor (0 - MOTOR_MAX_SPEED)
+ * @param leftSpeed the speed of the left motor (0 - MOTOR_MAX_SPEED)
  */
-void DriveSystem::go(Direction _direction, uint8_t _speed, uint32_t _time, uint16_t _launchTime) {
-	launch(_direction, _speed, _launchTime);
+void turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed) {
+	if (!_isStarted)
+		start();
 
-	if (_time - _launchTime)
-		chThdSleepMilliseconds(_time - _launchTime);
+	_leftDirection = direction;
+	_rightDirection = direction;
+
+	_rightSpeed = rightSpeed;
+	_leftSpeed = leftSpeed;
+
+	chSemSignal(&_sem);
 }
 
-/*
- * @brief DriveSystem launch Method
- *
- * @param direction should take 0 for backward, 1 for forward
- * @param speed the speed the motors should have
+/**
+ * @brief Tells the motors to spin in the opposite direction (rotation), at a given speed
+ * @param rotation the rotation side (RIGHT | LEFT)
+ * @param speed the speed (0 - MOTOR_MAX_SPEED)
  */
-void DriveSystem::launch(Direction _direction, uint8_t _speed, uint16_t _launchTime) {
-	uint32_t delayValue = 10;
-	uint32_t nLoops = _launchTime / delayValue;
+void spin(Rotation rotation, uint8_t speed) {
+	if (!_isStarted)
+		start();
 
-	uint8_t lInitSpeed = lSpeed;
-	uint8_t rInitSpeed = rSpeed;
+	switch (rotation) {
+		case LEFT:
+			_leftDirection = BACKWARD;
+			_rightDirection = FORWARD;
+			break;
 
-	if (lInitSpeed != rInitSpeed)
-		Serial.print("Outch!");
-
-	if (lInitSpeed == _speed)
-		return;
-
-	if (lDirection != _direction) {
-		float leftSpd = (float)lSpeed;
-		float part = leftSpd / ((float)_speed + leftSpd);
-
-		stop((uint32_t)(_launchTime * part));
-
-		lDirection = _direction;
-		rDirection = _direction;
-
-		launch(_direction, _speed, (uint32_t)(_launchTime * (1.f - part)));
-	}
-
-	for (uint32_t i = 0; i < nLoops; ++i) {
-		lSpeed = lInitSpeed + (i * (_speed - lInitSpeed)) / nLoops;
-		rSpeed = rInitSpeed + (i * (_speed - rInitSpeed)) / nLoops;
-
-		activate();
-
-		chThdSleepMilliseconds(delayValue);
-	}
-
-	lSpeed = _speed;
-	rSpeed = _speed;
-
-	activate();
-}
-
-/*
- * @brief DriveSystem spin Method
- *
- * @param direction should take 0 for backward, 1 for forward
- * @param speed the speed the motors should have
- */
-void DriveSystem::spin(Sensors &sensors, Rotation spinDirection, uint8_t speed, uint16_t angle) {
-	float alpha = sensors.getEuler(0);
-	float currentAngle = alpha;
-	float lastAngle = alpha;
-
-	lSpeed = speed;
-	rSpeed = speed;
-
-	if (spinDirection == RIGHT) {
-		lDirection = FORTH;
-		rDirection = BACK;
-	}
-	else {
-		rDirection = FORTH;
-		lDirection = BACK;
-	}
-
-	activate();
-
-	while (1) {
-		float beta = angle >= 360 ? 90. : (float)angle;
-		angle -= (uint16_t)beta;
-
-		if (spinDirection == LEFT)
-			beta = -beta;
-
-		float destination = currentAngle + beta;
-
-		if (abs(destination) >= 180.) {
-			while (currentAngle * lastAngle >= 0) {
-				lastAngle = currentAngle;
-				currentAngle = sensors.getEuler(0);
-			}
-
-			destination = (360. + destination) * (spinDirection == LEFT ? 1. : -1.);
-		}
-
-		if (spinDirection == RIGHT) {
-			while (destination > currentAngle)
-				currentAngle = sensors.getEuler(0);
-		}
-		else {
-			while (destination < currentAngle)
-				currentAngle = sensors.getEuler(0);
-		}
-
-		if (angle == 0)
+		case RIGHT:
+			_leftDirection = FORWARD;
+			_rightDirection = BACKWARD;
 			break;
 	}
 
-	stop(0);
+	_rightSpeed = speed;
+	_leftSpeed = speed;
+
+	chSemSignal(&_sem);
 }
 
-/*
- * @brief DriveSystem stop Method
+/**
+ * @brief Tells the motors to immediately stop spinning
  */
-void DriveSystem::stop(uint32_t stopTime) {
-	uint32_t delayValue = 10;
-	uint32_t nLoops = stopTime / delayValue;
+void stop(void) {
+	if (!_isStarted)
+		start();
 
-	uint8_t lInitSpeed = lSpeed;
-	uint8_t rInitSpeed = rSpeed;
+	_rightDirection = _leftDirection = FORWARD;
+	_rightSpeed = _leftSpeed = 0;
 
-	if ((lInitSpeed == 0) && (rInitSpeed == 0))
-		return;
+	chSemSignal(&_sem);
+}
 
-	for (uint32_t i = 0; i < nLoops; ++i) {
-		lSpeed = lInitSpeed - (i * lInitSpeed) / nLoops;
-		rSpeed = rInitSpeed - (i * rInitSpeed) / nLoops;
+Direction getRightDirection(void) {
+	return _rightDirection;
+}
 
-		activate();
+uint8_t getRightSpeed(void) {
+	return _rightSpeed;
+}
 
-		chThdSleepMilliseconds(delayValue);
+Direction getLeftDirection(void) {
+	return _leftDirection;
+}
+
+uint8_t getLeftSpeed(void) {
+	return _leftSpeed;
+}
+
+
+void start(void* arg, tprio_t priority) {
+	if (!_isStarted) {
+		_isStarted = true;
+
+		(void)chThdCreateStatic(driveThreadArea, sizeof(driveThreadArea),
+				priority, thread, arg);
+	}
+}
+
+msg_t thread(void* arg) {
+	while (!chThdShouldTerminate()) {
+		chSemWait(&_sem);
+
+		_rightMotor.spin(_rightDirection, _rightSpeed);
+		_leftMotor.spin(_leftDirection, _leftSpeed);
 	}
 
-	lDirection = FORTH;
-	rDirection = FORTH;
-
-	lSpeed = 0;
-	rSpeed = 0;
-
-	lMotor.stop();
-	rMotor.stop();
+	return (msg_t)0;
 }
 
-/*
- * @brief DriveSystem turn function
- */
-void DriveSystem::turn(Rotation turnDirection, uint8_t speed) {
-	if (turnDirection == RIGHT) {
-		rSpeed = speed;
-		rDirection = FORTH;
-
-		lSpeed = speed >= 30 ? (speed - 30) : 0;
-		lDirection = BACK;
-	}
-	else {
-		lSpeed = speed;
-		lDirection = BACK;
-
-		rSpeed = speed >= 30 ? (speed - 30) : 0;
-		rDirection = FORTH;
-	}
-
-	activate();
 }
-
-void DriveSystem::activate() {
-	lMotor.spin((bool)lDirection, lSpeed);
-	rMotor.spin((bool)rDirection, rSpeed);
-}
-
-/*
- * @brief DriveSystem turn function
- */
-// void DriveSystem::turn(int16_t angle, bool direction, uint8_t speed) const {
-// 	// nothing to do here until we check is usefulness of this method...
-// }

@@ -1,150 +1,93 @@
-#ifndef LEKA_MOTI_ARDUINO_ROBOT_H_
-#define LEKA_MOTI_ARDUINO_ROBOT_H_
+/*
+	 Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at weareleka dot com> and Leka <http://weareleka.com>
+
+	 This file is part of Moti, a spherical robotic smart toy for autistic children.
+
+	 Moti is free software: you can redistribute it and/or modify
+	 it under the terms of the GNU General Public License as published by
+	 the Free Software Foundation, either version 3 of the License, or
+	 (at your option) any later version.
+
+	 Moti is distributed in the hope that it will be useful,
+	 but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 GNU General Public License for more details.
+
+	 You should have received a copy of the GNU General Public License
+	 along with Moti. If not, see <http://www.gnu.org/licenses/>.
+	 */
+
+#ifndef LEKA_MOTI_ARDUINO_MOTI_H_
+#define LEKA_MOTI_ARDUINO_MOTI_H_
 
 /**
  * @file Moti.h
- * @brief Moti is a new interactive spherical smart toy for children with Autism Spectrum Disorders
  * @author Ladislas de Toldi
  * @version 1.0
  */
 
-#include <Arduino.h>
-#include <Wire.h>
-#include <Sensors.h>
-#include <Led.h>
-#include <Motors.h>
-#include <Memory.h>
-#include <Serial.h>
+#include <math.h>
+
+#include "ChibiOS_AVR.h"
+#include "Color.h"
+#include "Sensors.h"
 
 
-/**
- * @class Moti
- * @brief The Moti class represent the robot.
- *
- * For simplicity purpose, we decided to build a class for the whole robot that would simplify the way we design and code the robot's behaviors and algorithms.
- * With Moti class, you can access and manipulate everything you need, from motors to sensors and led.
- */
-class Moti {
+/*! Direction enumeration, for the DriveSystem */
+typedef enum {
+	BACKWARD,
+	FORWARD
+} Direction;
 
-	public:
+/*! Rotation enumeration, for the DriveSystem spin */
+typedef enum {
+	LEFT,
+	RIGHT
+} Rotation;
 
-		Moti();
-
-
-		void init(Sensors& sensors, Motors& motors);
-		void initDebug(Sensors& sensors, Motors& motors);
-
-
-		//	SET CONSTANTS
-		void initializeConstants();
-
-		void setLoopDelay(int value);
-
-		void setSleepDelay(int value);
-
-		void setAwakeThreshold(int value);
-		void setDeltaAccelThreshold(int value);
-		void setHighActivityThreshold(int value);
+/*! All the DriveStates the DriveSystem can be */
+typedef enum {
+	GO,
+	SPIN,
+	TURN,
+	STOP,
+	NONE
+} MotionState;
 
 
-		//	GET CONSTANTS
-		int getLoopDelay();
-		int getSleepDelay();
-		int getAwakeThreshold();
-		int getDeltaAccelThreshold();
-		int getHighActivityThreshold();
+/*! Indicators for the leds in the device */
+typedef enum {
+	HEART
+} LedIndicator;
 
+/*! All the LedStates a led can be */
+typedef enum {
+	FADE,
+	SHINE,
+	INACTIVE
+} LedState;
 
-    	//	RESET CONSTANTS
-		void resetLoopDelay();
-		void resetSleepDelay();
-		void resetAwakeThreshold();
-		void resetDeltaAccelThreshold();
-		void resetHighActivityThreshold();
+typedef struct {
+	Color startColor, endColor, diff, current;
+	int16_t totalSteps, steps;
+	LedState state;
+} LedData;
 
+void waitMs(uint16_t ms);
 
-		//	DATA TRANSFER TO COMPUTER
-		void sendJson(Sensors& sensors);
-		void sendBinaryData(Sensors& sensors);
-		void writeBinaryByte(uint8_t value);
-		void writeBinaryInt(int value);
+namespace Moti {
+	void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
 
+	void run(void);
+	void stop(void);
 
-		//	REMOTE CONTROL
-		void readCommands(Motors& motors, Led& led, Sensors& sensors);
-		void serialRouter();
-		void serialServer();
+	bool isStuck(void);
+	bool isShaken(void);
+	bool isFalling(void);
 
-		//	ACTIONS
-		void stabilize(Sensors& sensors, Motors& motors);
+	bool isSpinning(void);
+	uint8_t countSpinLaps(void);
+}
 
-
-		//	STATE
-		void initializeStates();
-
-		bool getMovingState();
-		bool getSleepingState();
-		bool getWaitingState();
-		bool getAwakeState();
-		bool getManipulatedState();
-		bool getRemoteState();
-		bool getLearningState();
-
-		void setMovingState(bool state);
-		void setSleepingState(bool state);
-		void setWaitingState(bool state);
-		void setAwakeState(bool state);
-		void setManipulatedState(bool state);
-		void setRemoteState(bool state);
-		void setLearningState(bool state);
-
-
-		//	GENERAL
-		void softwareReset();
-
-	private:
-
-		//	VARIABLES
-		uint16_t sleepy;
-
-		uint16_t _loopDelay;
-		uint16_t _sleepDelay;
-		uint16_t _awakeThreshold;
-		uint16_t _deltaAccelThreshold;
-		uint16_t _highActivityThreshold;
-
-		bool _stateMoving;
-		bool _stateSleeping;
-		bool _stateWaiting;
-		bool _stateAwake;
-		bool _stateManipulated;
-		bool _stateRemote;
-		bool _stateLearning;
-
-		//	CONSTANTS
-		static const uint8_t DEFAULT_LOOP_DELAY              = 75;
-		static const uint8_t DEFAULT_HIGH_ACTIVITY_THRESHOLD = 80;
-		static const uint16_t DEFAULT_SLEEP_DELAY            = 600;
-		static const uint16_t DEFAULT_AWAKE_THRESHOLD        = 300;
-		static const uint16_t DEFAULT_DELTA_ACCEL_THRESHOLD  = 200;
-
-		//	DATA TRANSFERT I/O
-		static const uint8_t DATA_HEADER = 0x0f;
-		static const uint8_t DATA_FOOTER = 0xf0;
-		static const uint8_t READY_TO_ANSWER = 0xff;
-
-		static const uint8_t INIT_PHASE        = 0xAA;
-
-		static const uint8_t START_ANSWER      = 0x0F;
-		static const uint8_t END_ANSWER        = 0xF0;
-		static const uint8_t NUMBER_OF_SENSORS = 0x02;
-
-		static const uint8_t ACC_SENSOR        = 0x01;
-		static const uint8_t ACC_DATA          = 0x06;
-		static const uint8_t GYR_SENSOR        = 0x02;
-		static const uint8_t GYR_DATA          = 0x06;
-
-		// RELATED CLASSES
-};
 
 #endif

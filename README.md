@@ -1,4 +1,4 @@
-
+[ ![Codeship Status for WeAreLeka/Bare-Arduino-Project](https://codeship.io/projects/ea313310-14cc-0132-6875-2a589eaadb79/status)](https://codeship.io/projects/33518) [![Stories in Ready](https://badge.waffle.io/WeAreLeka/moti.png?label=ready)](http://waffle.io/WeAreLeka/moti) 
 #Moti Readme
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->

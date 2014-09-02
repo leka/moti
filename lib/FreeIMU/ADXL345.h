@@ -1,16 +1,16 @@
 /**************************************************************************
- *                                                                         *
- * ADXL345 Driver for Arduino                                              *
- *                                                                         *
+ *																		 *
+ * ADXL345 Driver for Arduino											  *
+ *																		 *
  ***************************************************************************
- *                                                                         *
- * This program is free software; you can redistribute it and/or modify    *
- * it under the terms of the GNU License.                                  *
- * This program is distributed in the hope that it will be useful,         *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of          *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           *
- * GNU License V2 for more details.                                        *
- *                                                                         *
+ *																		 *
+ * This program is free software; you can redistribute it and/or modify	*
+ * it under the terms of the GNU License.								  *
+ * This program is distributed in the hope that it will be useful,		 *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of		  *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the		   *
+ * GNU License V2 for more details.										*
+ *																		 *
  ***************************************************************************/
 #include "Arduino.h"
 
@@ -62,8 +62,8 @@
 #define ADXL345_BW_50   0xA // 1010
 #define ADXL345_BW_25   0x9 // 1001
 #define ADXL345_BW_12   0x8 // 1000
-#define ADXL345_BW_6    0x7 // 0111
-#define ADXL345_BW_3    0x6 // 0110
+#define ADXL345_BW_6	0x7 // 0111
+#define ADXL345_BW_3	0x6 // 0110
 
 
 /*
@@ -86,20 +86,20 @@
 #define ADXL345_INT_WATERMARK_BIT  0x01
 #define ADXL345_INT_OVERRUNY_BIT   0x00
 
-#define ADXL345_OK    1 // no error
+#define ADXL345_OK	1 // no error
 #define ADXL345_ERROR 0 // indicates error is predent
 
 #define ADXL345_NO_ERROR   0 // initial state
 #define ADXL345_READ_ERROR 1 // problem reading accel
-#define ADXL345_BAD_ARG    2 // bad method argument
+#define ADXL345_BAD_ARG	2 // bad method argument
 
 class ADXL345
 {
 public:
-  bool status;           // set when error occurs
-                         // see error code for details
-  byte error_code;       // Initial state
-  float gains[3];        // counts to Gs
+  bool status;		   // set when error occurs
+						 // see error code for details
+  byte error_code;	   // Initial state
+  float gains[3];		// counts to Gs
 
   ADXL345();
   void init(int address);
@@ -199,7 +199,7 @@ private:
   void readFrom(byte address, int num, byte buff[]);
   void setRegisterBit(byte regAdress, int bitPos, bool state);
   bool getRegisterBit(byte regAdress, int bitPos);
-  byte _buff[6] ;    //6 bytes buffer for saving data read from the device
+  byte _buff[6] ;	//6 bytes buffer for saving data read from the device
   int _dev_address;
 };
 void print_byte(byte val);

@@ -41,13 +41,13 @@ void isrFcn() {
 static WORKING_AREA(waThd1, 200);
 msg_t handler(void *arg) {
   while (1) {
-    // wait for event
-    chBSemWait(&isrSem);
-    
-    // print elapsed time
-    uint32_t t = micros();
-    Serial.print("Handler: ");
-    Serial.println(t - tIsr);
+	// wait for event
+	chBSemWait(&isrSem);
+	
+	// print elapsed time
+	uint32_t t = micros();
+	Serial.print("Handler: ");
+	Serial.println(t - tIsr);
   }
 }
 //------------------------------------------------------------------------------
@@ -69,13 +69,13 @@ void mainThread() {
   // attach interrupt function
   attachInterrupt(0, isrFcn, RISING);
   while (1) {
-    // cause an interrupt - normally done by external event
-    Serial.println("High");
-    digitalWrite(INTERRUPT_PIN, HIGH);
-    Serial.println("Low");
-    digitalWrite(INTERRUPT_PIN, LOW);
-    Serial.println();
-    chThdSleepMilliseconds(1000);
+	// cause an interrupt - normally done by external event
+	Serial.println("High");
+	digitalWrite(INTERRUPT_PIN, HIGH);
+	Serial.println("Low");
+	digitalWrite(INTERRUPT_PIN, LOW);
+	Serial.println();
+	chThdSleepMilliseconds(1000);
   }
 }
 //------------------------------------------------------------------------------

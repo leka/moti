@@ -1,82 +1,74 @@
 /*
-Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at weareleka dot com> and Leka <http://weareleka.com>
+   Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at weareleka dot com> and Leka <http://weareleka.com>
 
-This file is part of Moti, a spherical robotic smart toy for autistic children.
+   This file is part of Moti, a spherical robotic smart toy for autistic children.
 
-Moti is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+   Moti is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-Moti is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+   Moti is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with Moti. If not, see <http://www.gnu.org/licenses/>.
-*/
+   You should have received a copy of the GNU General Public License
+   along with Moti. If not, see <http://www.gnu.org/licenses/>.
+   */
 
 #ifndef LEKA_MOTI_ARDUINO_SENSORS_H_
 #define LEKA_MOTI_ARDUINO_SENSORS_H_
 
 /**
  * @file Sensors.h
- * @author Ladislas de Toldi
+ * @author Ladislas de Toldi & Flavien Raynaud
  * @version 1.0
  */
 
+
+#include <math.h>
+
 #include <Arduino.h>
-#include <Wire.h>
-
 #include "ChibiOS_AVR.h"
-
-#include "CommunicationUtils.h"
-#include "DebugUtils.h"
-#include "ADXL345.h"
-#include "ITG3200.h"
+#include "Configuration.h"
 #include "FreeIMU.h"
+#include "Moti.h"
 
-#include "Serial.h"
 
-/**
- * @class Sensors
- * @brief Sensors class gathers all the Motors functions for Moti.
- */
-class Sensors {
+namespace Sensors {
+	void init(void);
 
-	public:
+	void getAccXYZ(float* x, float* y, float* z);
+	float getAccX();
+	float getAccY();
+	float getAccZ();
 
-		Sensors();
+	void getGyrYPR(float* y, float* p, float* r);
+	float getGyrY();
+	float getGyrP();
+	float getGyrR();
 
-		void init();
+	void getEuler(float* phi, float* theta, float* psi);
+	float getEulerPhi();
+	float getEulerTheta();
+	float getEulerPsi();
 
-		//	SENSORS
-		void read();
-		void readAccelerometer();
-		void readGyroscope();
+	void getGyrYPRDeg(float* y, float* p, float* r);
+	float getGyrYDeg();
+	float getGyrPDeg();
+	float getGyrRDeg();
 
-		int getXYZ(uint8_t index);
-		int getYPR(uint8_t index);
-		float getEuler(uint8_t index);
+	void getEulerDeg(float* y, float* p, float* r);
+	float getEulerPhiDeg();
+	float getEulerThetaDeg();
+	float getEulerPsiDeg();
 
-		void sendJson();
-		void sendData();
-		void debug();
+	bool isFalling();
+	bool isInactive();
 
-	private:
-
-		//	VARIABLES
-		int _XYZ[3], _tmpXYZ[3];
-		int _YPR[3];
-		float _tmpYPR[3];
-
-		FreeIMU AccelGyro;
-
-		// MUTEX
-		MUTEX_DECL(sensorsDataMutex);
-
-		//	RELATED CLASS
-};
+	float radToDeg(float rad);
+	float degToRad(float deg);
+}
 
 #endif

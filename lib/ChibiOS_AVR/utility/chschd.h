@@ -1,32 +1,32 @@
 /*
-    ChibiOS/RT - Copyright (C) 2006,2007,2008,2009,2010,
-                 2011,2012,2013 Giovanni Di Sirio.
+	ChibiOS/RT - Copyright (C) 2006,2007,2008,2009,2010,
+				 2011,2012,2013 Giovanni Di Sirio.
 
-    This file is part of ChibiOS/RT.
+	This file is part of ChibiOS/RT.
 
-    ChibiOS/RT is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License, or
-    (at your option) any later version.
+	ChibiOS/RT is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 3 of the License, or
+	(at your option) any later version.
 
-    ChibiOS/RT is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	ChibiOS/RT is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-                                      ---
+									  ---
 
-    A special exception to the GPL can be applied should you wish to distribute
-    a combined work that includes ChibiOS/RT, without being obliged to provide
-    the source code for any proprietary components. See the file exception.txt
-    for full details of how and when the exception can be applied.
+	A special exception to the GPL can be applied should you wish to distribute
+	a combined work that includes ChibiOS/RT, without being obliged to provide
+	the source code for any proprietary components. See the file exception.txt
+	for full details of how and when the exception can be applied.
 */
 
 /**
- * @file    chschd.h
+ * @file	chschd.h
  * @brief   Scheduler macros and structures.
  *
  * @addtogroup scheduler
@@ -37,43 +37,43 @@
 #define _CHSCHD_H_
 
 /**
- * @name    Wakeup status codes
+ * @name	Wakeup status codes
  * @{
  */
-#define RDY_OK          0           /**< @brief Normal wakeup message.      */
-#define RDY_TIMEOUT     -1          /**< @brief Wakeup caused by a timeout
-                                         condition.                         */
-#define RDY_RESET       -2          /**< @brief Wakeup caused by a reset
-                                         condition.                         */
+#define RDY_OK		  0		   /**< @brief Normal wakeup message.	  */
+#define RDY_TIMEOUT	 -1		  /**< @brief Wakeup caused by a timeout
+										 condition.						 */
+#define RDY_RESET	   -2		  /**< @brief Wakeup caused by a reset
+										 condition.						 */
 /** @} */
 
 /**
- * @name    Priority constants
+ * @name	Priority constants
  * @{
  */
-#define NOPRIO          0           /**< @brief Ready list header priority. */
-#define IDLEPRIO        1           /**< @brief Idle thread priority.       */
-#define LOWPRIO         2           /**< @brief Lowest user priority.       */
-#define NORMALPRIO      64          /**< @brief Normal user priority.       */
-#define HIGHPRIO        127         /**< @brief Highest user priority.      */
-#define ABSPRIO         255         /**< @brief Greatest possible priority. */
+#define NOPRIO		  0		   /**< @brief Ready list header priority. */
+#define IDLEPRIO		1		   /**< @brief Idle thread priority.	   */
+#define LOWPRIO		 2		   /**< @brief Lowest user priority.	   */
+#define NORMALPRIO	  64		  /**< @brief Normal user priority.	   */
+#define HIGHPRIO		127		 /**< @brief Highest user priority.	  */
+#define ABSPRIO		 255		 /**< @brief Greatest possible priority. */
 /** @} */
 
 /**
- * @name    Special time constants
+ * @name	Special time constants
  * @{
  */
 /**
  * @brief   Zero time specification for some functions with a timeout
- *          specification.
- * @note    Not all functions accept @p TIME_IMMEDIATE as timeout parameter,
- *          see the specific function documentation.
+ *		  specification.
+ * @note	Not all functions accept @p TIME_IMMEDIATE as timeout parameter,
+ *		  see the specific function documentation.
  */
 #define TIME_IMMEDIATE  ((systime_t)0)
 
 /**
  * @brief   Infinite time specification for all functions with a timeout
- *          specification.
+ *		  specification.
  */
 #define TIME_INFINITE   ((systime_t)-1)
 /** @} */
@@ -92,18 +92,18 @@
  */
 #if !defined(PORT_OPTIMIZED_READYLIST_STRUCT) || defined(__DOXYGEN__)
 typedef struct {
-  ThreadsQueue          r_queue;    /**< @brief Threads queue.              */
-  tprio_t               r_prio;     /**< @brief This field must be
-                                                initialized to zero.        */
-  struct context        r_ctx;      /**< @brief Not used, present because
-                                                offsets.                    */
+  ThreadsQueue		  r_queue;	/**< @brief Threads queue.			  */
+  tprio_t			   r_prio;	 /**< @brief This field must be
+												initialized to zero.		*/
+  struct context		r_ctx;	  /**< @brief Not used, present because
+												offsets.					*/
 #if CH_USE_REGISTRY || defined(__DOXYGEN__)
-  Thread                *r_newer;   /**< @brief Newer registry element.     */
-  Thread                *r_older;   /**< @brief Older registry element.     */
+  Thread				*r_newer;   /**< @brief Newer registry element.	 */
+  Thread				*r_older;   /**< @brief Older registry element.	 */
 #endif
   /* End of the fields shared with the Thread structure.*/
-  Thread                *r_current; /**< @brief The currently running
-                                                thread.                     */
+  Thread				*r_current; /**< @brief The currently running
+												thread.					 */
 } ReadyList;
 #endif /* !defined(PORT_OPTIMIZED_READYLIST_STRUCT) */
 
@@ -113,10 +113,10 @@ extern ReadyList rlist;
 
 /**
  * @brief   Current thread pointer access macro.
- * @note    This macro is not meant to be used in the application code but
- *          only from within the kernel, use the @p chThdSelf() API instead.
- * @note    It is forbidden to use this macro in order to change the pointer
- *          (currp = something), use @p setcurrp() instead.
+ * @note	This macro is not meant to be used in the application code but
+ *		  only from within the kernel, use the @p chThdSelf() API instead.
+ * @note	It is forbidden to use this macro in order to change the pointer
+ *		  (currp = something), use @p setcurrp() instead.
  */
 #if !defined(PORT_OPTIMIZED_CURRP) || defined(__DOXYGEN__)
 #define currp rlist.r_current
@@ -124,8 +124,8 @@ extern ReadyList rlist;
 
 /**
  * @brief   Current thread pointer change macro.
- * @note    This macro is not meant to be used in the application code but
- *          only from within the kernel.
+ * @note	This macro is not meant to be used in the application code but
+ *		  only from within the kernel.
  *
  * @notapi
  */
@@ -172,13 +172,13 @@ extern "C" {
 #endif
 
 /**
- * @name    Macro Functions
+ * @name	Macro Functions
  * @{
  */
 /**
  * @brief   Determines if the current thread must reschedule.
  * @details This function returns @p TRUE if there is a ready thread with
- *          higher priority.
+ *		  higher priority.
  *
  * @iclass
  */
@@ -189,7 +189,7 @@ extern "C" {
 /**
  * @brief   Determines if yielding is possible.
  * @details This function returns @p TRUE if there is a ready thread with
- *          equal or higher priority.
+ *		  equal or higher priority.
  *
  * @sclass
  */
@@ -200,41 +200,41 @@ extern "C" {
 /**
  * @brief   Yields the time slot.
  * @details Yields the CPU control to the next thread in the ready list with
- *          equal or higher priority, if any.
+ *		  equal or higher priority, if any.
  *
  * @sclass
  */
 #if !defined(PORT_OPTIMIZED_DOYIELDS) || defined(__DOXYGEN__)
-#define chSchDoYieldS() {                                                   \
-  if (chSchCanYieldS())                                                     \
-    chSchDoRescheduleBehind();                                              \
+#define chSchDoYieldS() {												   \
+  if (chSchCanYieldS())													 \
+	chSchDoRescheduleBehind();											  \
 }
 #endif /* !defined(PORT_OPTIMIZED_DOYIELDS) */
 
 /**
  * @brief   Inline-able preemption code.
  * @details This is the common preemption code, this function must be invoked
- *          exclusively from the port layer.
+ *		  exclusively from the port layer.
  *
  * @special
  */
 #if (CH_TIME_QUANTUM > 0) || defined(__DOXYGEN__)
-#define chSchPreemption() {                                                 \
-  tprio_t p1 = firstprio(&rlist.r_queue);                                   \
-  tprio_t p2 = currp->p_prio;                                               \
-  if (currp->p_preempt) {                                                   \
-    if (p1 > p2)                                                            \
-      chSchDoRescheduleAhead();                                             \
-  }                                                                         \
-  else {                                                                    \
-    if (p1 >= p2)                                                           \
-      chSchDoRescheduleBehind();                                            \
-  }                                                                         \
+#define chSchPreemption() {												 \
+  tprio_t p1 = firstprio(&rlist.r_queue);								   \
+  tprio_t p2 = currp->p_prio;											   \
+  if (currp->p_preempt) {												   \
+	if (p1 > p2)															\
+	  chSchDoRescheduleAhead();											 \
+  }																		 \
+  else {																	\
+	if (p1 >= p2)														   \
+	  chSchDoRescheduleBehind();											\
+  }																		 \
 }
 #else /* CH_TIME_QUANTUM == 0 */
-#define chSchPreemption() {                                                 \
-  if (p1 >= p2)                                                             \
-    chSchDoRescheduleAhead();                                               \
+#define chSchPreemption() {												 \
+  if (p1 >= p2)															 \
+	chSchDoRescheduleAhead();											   \
 }
 #endif /* CH_TIME_QUANTUM == 0 */
 /** @} */

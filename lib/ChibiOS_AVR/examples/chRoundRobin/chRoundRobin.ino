@@ -9,10 +9,10 @@ static msg_t blink(void *arg) {
   // blink twice per second
   pinMode(13, OUTPUT);
   while (1) {
-    digitalWrite(13, HIGH);
-    chThdSleepMilliseconds(100);
-    digitalWrite(13, LOW);
-    chThdSleepMilliseconds(400);
+	digitalWrite(13, HIGH);
+	chThdSleepMilliseconds(100);
+	digitalWrite(13, LOW);
+	chThdSleepMilliseconds(400);
   }
   return 0;
 }
@@ -36,10 +36,10 @@ void mainThread() {
   
   // print time every second
   while (1) {
-    Serial.println(m++);
+	Serial.println(m++);
   
-    // sleep until next second
-    chThdSleepMilliseconds(1000*m - millis());
+	// sleep until next second
+	chThdSleepMilliseconds(1000*m - millis());
   }
 }
 //------------------------------------------------------------------------------

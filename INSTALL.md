@@ -216,14 +216,14 @@ ARDUINO_DIR = /Applications/Arduino.app/Contents/Resources/Java
 ARDUINO_DIR = /usr/share/arduino
 
 # change line 32 from
-AVR_TOOLS_DIR     = /usr/local
+AVR_TOOLS_DIR	 = /usr/local
 # according to your path to
-AVR_TOOLS_DIR     = /usr
+AVR_TOOLS_DIR	 = /usr
 
 # change line 36 from
-AVRDDUDE          = /usr/local/bin/avrdude
+AVRDDUDE		  = /usr/local/bin/avrdude
 # according to your path to
-AVRDDUDE          = /usr/bin/avrdude
+AVRDDUDE		  = /usr/bin/avrdude
 ```
 
 Then compile and upload your code to an **Arduino Mega2560**:

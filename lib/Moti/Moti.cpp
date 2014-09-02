@@ -1,123 +1,152 @@
-#include <Arduino.h>
-#include <Moti.h>
+#include "Moti.h"
+#include "ChibiOS_AVR.h"
 
-//##############//
-// CONSTRUCTORS //
-//##############//
+#define HISTORY_SIZE 6
 
-/**
- * @brief Moti Class Constructor
- */
-Moti::Moti(){}
-
-/**
- * @brief Initialization method
- *
- * init() initialized everything at the beginning of the program. It must be called inside void setup().
- * The list of all the methods it calls is as follow: Serial.begin(), initializeConstants(), initializeLed(), initializeStates(), Wire.begin(), AccelGyro.init(), initiliazeMotors().
- */
-void Moti::init(Sensors& sensors, Motors& motors){
-	delay(500);
-	serial.begin(115200);
-	delay(50);
-	motors.init();
-	delay(50);
-	sensors.open();
-	delay(50);
+void waitMs(uint16_t ms) {
+	chThdSleepMilliseconds(ms);
 }
 
-/**
- * @brief Initialization method with verbose output
- *
- * initVerbose() does the same as init() but adds text output for debugging purpose. It should be used ONLY for development and NOT for production.
- * The list of all the methods it calls is as follow: Serial.begin(), initializeConstants(), Wire.begin(), AccelGyro.init(), initializeLed(), initializeStates(), initiliazeMotors().
- * If everything works fine it should output a list with "SC" --> "CST" --> "WIRE" --> "IMU" --> "LED" --> "STATES" --> "MOTORS".
- * If the list is not complete, it means that the initialization of the n+1 failed.
- *
- * For example, if the serial outputs "SC" --> "CST" --> "WIRE", it means that IMU is failing and needs a fix.
- */
-void Moti::initDebug(Sensors& sensors, Motors& motors){
-	delay(500);
-	serial.begin(115200);
-	delay(50);
-	serial.println("SC");
-	delay(50);
-	motors.init();
-	serial.println("MOTORS");
-	delay(50);
-	sensors.init();
-	serial.println("IMU");
-	delay(50);
+namespace Moti {
+
+	bool _isStarted = false;
+	bool _isRunning = false;
+	bool _isStuck = false;
+	bool _isShaken= false;
+	uint32_t _startStuckTime = 0;
+	bool _isSpinning = false;
+	float _spinAngle = 0.f;
+	int16_t _nLaps = 0;
+
+
+	float spinHistory[HISTORY_SIZE] = { 0.f };
+
+	msg_t thread(void* arg);
+
+	static WORKING_AREA(environmentThreadArea, 256);
+
+
+	/**
+	 * @brief Tells the Environment thread to run and check for events
+	 */
+	void run(void) {
+		_isRunning = true;
+		Serial.println(10);
+	}
+
+	/**
+	 * @brief Tells the Environment thread to stop checking for event
+	 */
+	void stop(void) {
+		_isRunning = false;
+		_isStuck = false;
+	}
+
+	/**
+	 * @brief Returns whether the device is stuck or not
+	 * @return true if it is stuck, false otherwise
+	 */
+	bool isStuck() {
+		if (!_isStarted)
+			start();
+
+		return _isStuck && (abs(millis() - _startStuckTime) > ENVIRONMENT_STUCK_TIME);
+	}
+
+	bool isShaken(void) {
+		return _isShaken;	
+	}
+
+	bool isSpinning(void) {
+		return _isSpinning;
+	}
+
+	uint8_t countSpinLaps(void) {
+		return (uint8_t)abs(_nLaps);
+	}
+
+
+	void start(void* arg, tprio_t priority) {
+		if (!_isStarted) {
+			_isStarted = true;
+
+			(void)chThdCreateStatic(environmentThreadArea,
+					sizeof(environmentThreadArea),
+					priority, thread, arg);
+
+		}
+	}
+
+	float mod(float a, float b) {
+		float m = (float)fmod((double)a, (double)b);
+
+		if (m < 0.f) {
+			m += b;
+		}
+
+		return m;
+	}
+
+	float _diffAngle(float a, float b) {
+		float diff = a - b;
+
+		return mod(diff + 180.f, 360.f) - 180.f;
+	}
+
+	float _arrayDeltaSum(float* array, uint8_t size) {
+		float sum = abs(_diffAngle(array[0], array[size - 1]));
+
+		for (uint8_t i = 1; i < size; ++i)
+			sum += abs(_diffAngle(array[i], array[i - 1]));
+
+		return sum;
+	}
+
+	msg_t thread(void* arg) {
+		uint8_t i = 0;
+
+		float currentAngle = 0.f;
+		float oldAngle = 0.f;
+
+		while (!chThdShouldTerminate()) {
+			if (_isRunning) {
+
+				if (abs(Sensors::getAccX()) > ENVIRONMENT_STUCK_THRESHOLD) {
+					if (!_isStuck) {
+						_isStuck = true;
+						_startStuckTime = millis();
+					}
+				}
+				else
+					_isStuck = false;
+
+
+				oldAngle = currentAngle;
+				currentAngle = Sensors::getEulerPhiDeg();
+				spinHistory[i] = currentAngle;
+				i = (i + 1) % HISTORY_SIZE;
+
+				if (abs(_arrayDeltaSum(spinHistory, HISTORY_SIZE)) > 15.f)
+					_isSpinning = true;
+				else {
+					_isSpinning = false;
+					_nLaps = 0;
+				}
+
+				if (_isSpinning) {
+					if ((currentAngle * oldAngle < 0.f) && (currentAngle * oldAngle > -8000.f)) {
+						if (currentAngle > 0.f)
+							_nLaps++;
+						else
+							_nLaps--;
+					}
+				}
+			}
+
+			waitMs(ENVIRONMENT_THREAD_DELAY);
+		}
+
+		return (msg_t)0;
+	}
+
 }
-
-
-//#########//
-// GENERAL //
-//#########//
-
-/**
- * @brief Reseting software
- *
- * softwareReset() resets the program so that it can restart before the void setup().
- * It may be used if you don't know how much time has passed since the last awaken state.
- * The environment may have change, so going through the void setup() again is required to re- init() everything.
- */
-void Moti::softwareReset() {
-	asm volatile ("  jmp 0");
-}
-
-/**
- * @class stabilze
- * @brief The stabilze class represents the stabilization of the robot in the start position.
- *
- * This class corrects the variation of the initial position of the robot inside the ball to be everytime in the same position relative.
- */
-void Moti::stabilize(Sensors& sensors, Motors& motors){
-
-
-	sensors.checkGyroscope();  //@ Check the Gyroscope initial values.
-
-
-	while (abs(sensors.getYPR(0)) > 3) { 	//@ How these values are initializes at zero, they are compared with -3 and 3 and do the position upgrade with this tolerance.
-
-
-		sensors.checkGyroscope();	
-
-		if(sensors.getYPR(0) < 0){		motors.spinRight();	}   //@ If the value is negatif, the derivate is positive and go back to zero.
-
-		else {		motors.spinLeft();		}	 //@ If the value is positive, the derivate is negative and go back to zero.
-
-
-	} 
-
-
-	while (abs(sensors.getYPR(2)) > 10) { 	//@ How these values are initializes at zero, they are compared with -10 and 10 and do the position upgrade with this tolerance.
-
-
-		sensors.checkGyroscope();	
-
-		if(sensors.getYPR(2) > 0){ motors.spinRight(); } //@ If the value is negatif, the derivate is positive and go back to zero and the inclination...
-													//@ at YPR(2) is changed for one inclination at YPR(1) due to the ball geometry.
-		else { motors.spinLeft(); }
-
-
-	} 
-
-
-	while (abs(sensors.getYPR(1)) > 3) { 	//@ YPR(1) finally correct the error in YPR(2) after the rotation and work independent.
- 
-
-		sensors.checkGyroscope();	
-
-		if(sensors.getYPR(1) < 0){ motors.goForward(); } //@ If the value is negatif, goForward allows to go back to zero.
-
-		else { motors.goBackward(); }	//@ If the value is positive, goBackward allows to go back to zero.
-
-
-	} 
-
-
-	motors.stop(); //
-
-}
-
