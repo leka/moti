@@ -1,3 +1,5 @@
+#ifndef LEKA_MOTI_BEHAVIOR_STABILIZATION_H_
+#define LEKA_MOTI_BEHAVIOR_STABILIZATION_H_
 
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
@@ -71,7 +73,7 @@ msg_t thread(void* arg) {
 
 			input = Sensors::getAccX();
 			output = (int16_t)(-0.5 * input);
-			
+
 			if (abs(output) > 80.0) {
 				speed = (uint8_t)abs(output);
 				Motion::go(output < 0 ? BACKWARD : FORWARD, speed, 100);
@@ -99,3 +101,5 @@ msg_t thread(void* arg) {
 }
 
 }
+
+#endif
