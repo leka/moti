@@ -7,8 +7,8 @@
 #include "Communication.h"
 #include "Serial.h"
 
-#include "lib/Arbitrer/Arbitrer.h"
-#include "lib/Stabilization/Stabilization.h"
+#include "Arbitrer.h"
+#include "Stabilization.h"
 
 void mainThred() {
 	Serial1.println(F("Starting..."));
@@ -31,7 +31,7 @@ void mainThred() {
 
 	while (TRUE) {
 		if (Moti::isSpinning())
-		    Serial1.println(Moti::countSpinLaps());
+			Serial1.println(Moti::countSpinLaps());
 
 		if (readCmd.getHeader() == 1) {
 			if (state == 0) {
@@ -88,8 +88,11 @@ void mainThred() {
 	}
 }
 
+void loop() { }
 
-void setup() {
+int main(void) {
+	init();
+
 	Serial.begin(115200);
 	while (!Serial);
 
@@ -102,6 +105,6 @@ void setup() {
 	chBegin(mainThred);
 
 	while(1);
-}
 
-void loop() { }
+	return 0;
+}
