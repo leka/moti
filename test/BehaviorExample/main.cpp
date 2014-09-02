@@ -7,47 +7,51 @@
 #include "Communication.h"
 #include "Serial.h"
 
-#include "lib/Stabilization/Stabilization.h"
+#include "Stabilization.h"
+#include "MyFirstLib.h"
+
+MyFirstClass myFirstObject;
 
 void mainThread() {
 
-    // Init part
-    Wire.begin();
-    delay(500);
+	// Init part
+	Wire.begin();
+	delay(500);
+	myFirstObject.methodNumberTwo();
 
-    Sensors::init();
-    DriveSystem::start();
-    Motion::start();
-    Moti::start();
-    Light::start();
+	Sensors::init();
+	DriveSystem::start();
+	Motion::start();
+	Moti::start();
+	Light::start();
 
-    // Init our new behavior
-    Stabilization::start();
+	// Init our new behavior
+	Stabilization::start();
 
-    // Set variables
-    bool stabilize = false;
+	// Set variables
+	bool stabilize = false;
 
-    while (TRUE) {
-        if (Moti::isShaken()) {
-            if (!stabilize)
-                Stabilization::run();
-            else
-                Stabilization::stop();
+	while (TRUE) {
+		if (Moti::isShaken()) {
+			if (!stabilize)
+				Stabilization::run();
+			else
+				Stabilization::stop();
 
-            stabilize = !stabilize;
-        }
+			stabilize = !stabilize;
+		}
 
-        waitMs(50);
-    }
+		waitMs(50);
+	}
 }
 
 void setup() {
 
-    chBegin(mainThread);
+	chBegin(mainThread);
 
-    while(1);
+	while(1);
 }
 
 void loop() {
-    // nothing to do here
+	// nothing to do here
 }
