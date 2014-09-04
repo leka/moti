@@ -1,4 +1,6 @@
+[![Build Status](https://drone.io/github.com/WeAreLeka/moti/status.png)](https://drone.io/github.com/WeAreLeka/moti/latest)
 [![Stories in Ready](https://badge.waffle.io/WeAreLeka/moti.png?label=ready)](http://waffle.io/WeAreLeka/moti) 
+
 #Moti Readme
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
