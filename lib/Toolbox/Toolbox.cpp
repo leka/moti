@@ -1,5 +1,9 @@
 #include "Toolbox.h"
 
+void waitMs(uint16_t ms) {
+	chThdSleepMilliseconds(ms);
+}
+
 float Toolbox::mod(float a, float b) {
 	float m = (float)fmod((double)a, (double)b);
 

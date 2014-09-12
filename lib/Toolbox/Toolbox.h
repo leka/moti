@@ -29,6 +29,7 @@
 
 #include <Arduino.h>
 #include <math.h>
+#include "ChibiOS_AVR.h"
 
 namespace Toolbox {
 
@@ -37,5 +38,7 @@ namespace Toolbox {
 	float arrayDeltaSum(float* array, uint8_t size);
 
 }
+
+	void waitMs(uint16_t ms);
 
 #endif
