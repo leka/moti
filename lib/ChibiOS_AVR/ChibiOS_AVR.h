@@ -21,7 +21,7 @@ extern "C"{
 #endif  //  __cplusplus
 //------------------------------------------------------------------------------
 /** ChibiOS_AVR version YYYYMMDD */
-#define CHIBIOS_AVR_VERSION 20130710
+#define CHIBIOS_AVR_VERSION 20140811
 //------------------------------------------------------------------------------
 void chBegin(void (*mainThread)());
 size_t chHeapMainSize();
