@@ -1,5 +1,6 @@
 /*
-   Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at weareleka dot com> and Leka <http://weareleka.com>
+   Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at weareleka dot com>
+   and Leka <http://weareleka.com>
 
    This file is part of Moti, a spherical robotic smart toy for autistic children.
 
@@ -17,8 +18,8 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#ifndef LEKA_MOTI_ARDUINO_SENSORS_H_
-#define LEKA_MOTI_ARDUINO_SENSORS_H_
+#ifndef LEKA_MOTI_MODULE_SENSORS_H_
+#define LEKA_MOTI_MODULE_SENSORS_H_
 
 /**
  * @file Sensors.h
@@ -37,6 +38,7 @@
 
 
 namespace Sensors {
+
 	void init(void);
 
 	void getAccXYZ(float* x, float* y, float* z);
