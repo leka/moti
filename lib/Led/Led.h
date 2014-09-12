@@ -29,6 +29,18 @@
 #include <Arduino.h>
 #include "Color.h"
 
+/*! Indicators for the leds in the device */
+typedef enum {
+	HEART
+} LedIndicator;
+
+/*! All the LedStates a led can be */
+typedef enum {
+	FADE,
+	SHINE,
+	INACTIVE
+} LedState;
+
 /**
  * @class Led
  * @brief Led library gathers all the LED functions for Moti.

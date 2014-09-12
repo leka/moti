@@ -29,6 +29,8 @@
 #include <Arduino.h>
 #include "Moti.h"
 #include "Color.h"
+#include "Motor.h"
+#include "Led.h"
 
 typedef enum {
 	COMMAND_GO,

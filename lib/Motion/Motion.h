@@ -33,6 +33,15 @@
 #include "DriveSystem.h"
 #include "Sensors.h"
 
+/*! All the DriveStates the DriveSystem can be */
+typedef enum {
+	GO,
+	SPIN,
+	TURN,
+	STOP,
+	NONE
+} MotionState;
+
 /**
  * @class Motion
  * @brief Motion gathers all the driving related functions such as going forward, backward, turning and spinning.

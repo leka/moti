@@ -29,49 +29,9 @@
 #include <math.h>
 
 #include "ChibiOS_AVR.h"
-#include "Color.h"
+// #include "Color.h"
 #include "Sensors.h"
 
-
-/*! Direction enumeration, for the DriveSystem */
-typedef enum {
-	BACKWARD,
-	FORWARD
-} Direction;
-
-/*! Rotation enumeration, for the DriveSystem spin */
-typedef enum {
-	LEFT,
-	RIGHT
-} Rotation;
-
-/*! All the DriveStates the DriveSystem can be */
-typedef enum {
-	GO,
-	SPIN,
-	TURN,
-	STOP,
-	NONE
-} MotionState;
-
-
-/*! Indicators for the leds in the device */
-typedef enum {
-	HEART
-} LedIndicator;
-
-/*! All the LedStates a led can be */
-typedef enum {
-	FADE,
-	SHINE,
-	INACTIVE
-} LedState;
-
-typedef struct {
-	Color startColor, endColor, diff, current;
-	int16_t totalSteps, steps;
-	LedState state;
-} LedData;
 
 void waitMs(uint16_t ms);
 
@@ -83,6 +43,9 @@ namespace Moti {
 
 	bool isStuck(void);
 	bool isShaken(void);
+	bool isShakenX(void);
+	bool isShakenY(void);
+	bool isShakenZ(void);
 	bool isFalling(void);
 
 	bool isSpinning(void);

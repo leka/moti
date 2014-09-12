@@ -35,6 +35,11 @@
 #include "Moti.h"
 #include "Queue.h"
 
+typedef struct {
+	Color startColor, endColor, diff, current;
+	int16_t totalSteps, steps;
+	LedState state;
+} LedData;
 
 /**
  * @class Led
