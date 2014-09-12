@@ -31,7 +31,7 @@ void mainThred() {
 
 	while (TRUE) {
 		if (Moti::isSpinning())
-			Serial1.println(Moti::countSpinLaps());
+			Serial1.println(Moti::getLapsZ());
 
 		if (readCmd.getHeader() == 1) {
 			if (state == 0) {
