@@ -7,6 +7,7 @@ namespace Moti {
 	// VARIABLES
 
 	// Thread states
+	static WORKING_AREA(motiModuleThreadArea, 256);
 	bool _isStarted = false;
 	bool _isRunning = false;
 
@@ -23,28 +24,36 @@ namespace Moti {
 	bool _isSpinningP = false;
 	bool _isSpinningR = false;
 
-	// Misc
+	// Stuck variables
+	uint32_t _startStuckTime = 0;
+
+	// Spin variables
 	int16_t _nLaps = 0;
 	float _spinAngle = 0.f;
 	float spinHistory[HISTORY_SIZE] = {0.f};
 
-	uint32_t _startStuckTime = 0;
+	// Shake variables
+	int16_t lastXYZ[3] = {0};
+	int16_t currentXYZ[3] = {0};
+	int16_t deltaXYZ[3] = {0};
 
-	static WORKING_AREA(motiModuleThreadArea, 256);
+	double sqrtXYZ[3] = {0};
+	double avrgXYZ[3] = {0};
+
+	double alphaXYZ[3] = {0.1};
 
 }
 
 
 /**
- * @brief Tells the Environment thread to run and check for events
+ * @brief Tells the Moti thread to run and check for events
  */
-void Moti::run(void) {
+void Moti::start(void) {
 	_isRunning = true;
-	Serial.println(10);
 }
 
 /**
- * @brief Tells the Environment thread to stop checking for event
+ * @brief Tells the Moti thread to stop checking for event
  */
 void Moti::stop(void) {
 	_isRunning = false;
@@ -52,8 +61,8 @@ void Moti::stop(void) {
 }
 
 /**
- * @brief Returns whether the device is stuck or not
- * @return true if it is stuck, false otherwise
+ * @brief Check if Moti is stuck
+ * @return true if stuck
  */
 bool Moti::isStuck() {
 	if (!_isStarted)
@@ -62,27 +71,40 @@ bool Moti::isStuck() {
 	return _isStuck && (abs(millis() - _startStuckTime) > ENVIRONMENT_STUCK_TIME);
 }
 
+/**
+ * @brief Check if Moti is shaken
+ * @return true if shaken
+ */
 bool Moti::isShaken(void) {
 	return _isShaken;
 }
 
+/**
+ * @brief Check if Moti is spun
+ * @return true if spun
+ */
 bool Moti::isSpinning(void) {
 	return _isSpinning;
 }
 
+/**
+ * @brief Count the number of laps around the Z axis
+ * @return number of laps
+ */
 uint8_t Moti::getLapsZ(void) {
 	return (uint8_t)abs(_nLaps);
 }
 
-
-void Moti::start(void* arg, tprio_t priority) {
+/**
+ * @brief Start Moti's chThread
+ */
+void Moti::startThread(void* arg, tprio_t priority) {
 	if (!_isStarted) {
 		_isStarted = true;
 
 		(void)chThdCreateStatic(motiModuleThreadArea,
-				sizeof(motiModuleThreadArea),
-				priority, moduleThread, arg);
-
+								sizeof(motiModuleThreadArea),
+								priority, moduleThread, arg);
 	}
 }
 
