@@ -86,48 +86,70 @@ void Moti::start(void* arg, tprio_t priority) {
 	}
 }
 
-msg_t Moti::moduleThread(void* arg) {
+void Moti::detectStuck(void) {
+	if (abs(Sensors::getAccX()) > ENVIRONMENT_STUCK_THRESHOLD) {
+		if (!_isStuck) {
+			_isStuck = true;
+			_startStuckTime = millis();
+		}
+	}
+	else {
+		_isStuck = false;
+	}
 
-	(void) arg;
+}
 
+void Moti::detectSpin(void) {
 	uint8_t i = 0;
 
 	float currentAngle = 0.f;
 	float oldAngle = 0.f;
 
+	oldAngle = currentAngle;
+	currentAngle = Sensors::getEulerPhiDeg();
+
+	spinHistory[i] = currentAngle;
+	i = (i + 1) % HISTORY_SIZE;
+
+	if (abs(Toolbox::arrayDeltaSum(spinHistory, HISTORY_SIZE)) > 15.f) {
+		_isSpinning = true;
+	}
+	else {
+		_isSpinning = false;
+		_nLaps = 0;
+	}
+
+	if (_isSpinning) {
+		if ((currentAngle * oldAngle < 0.f) && (currentAngle * oldAngle > -8000.f)) {
+			if (currentAngle > 0.f)
+				_nLaps++;
+			else
+				_nLaps--;
+		}
+	}
+
+}
+
+void Moti::detectShake(void) {
+
+}
+
+void Moti::detectFall(void) {
+
+}
+
+msg_t Moti::moduleThread(void* arg) {
+
+	(void) arg;
+
 	while (!chThdShouldTerminate()) {
 		if (_isRunning) {
 
-			if (abs(Sensors::getAccX()) > ENVIRONMENT_STUCK_THRESHOLD) {
-				if (!_isStuck) {
-					_isStuck = true;
-					_startStuckTime = millis();
-				}
-			}
-			else
-				_isStuck = false;
+			Moti::detectStuck();
+			Moti::detectSpin();
+			Moti::detectShake();
+			Moti::detectFall();
 
-
-			oldAngle = currentAngle;
-			currentAngle = Sensors::getEulerPhiDeg();
-			spinHistory[i] = currentAngle;
-			i = (i + 1) % HISTORY_SIZE;
-
-			if (abs(Toolbox::arrayDeltaSum(spinHistory, HISTORY_SIZE)) > 15.f)
-				_isSpinning = true;
-			else {
-				_isSpinning = false;
-				_nLaps = 0;
-			}
-
-			if (_isSpinning) {
-				if ((currentAngle * oldAngle < 0.f) && (currentAngle * oldAngle > -8000.f)) {
-					if (currentAngle > 0.f)
-						_nLaps++;
-					else
-						_nLaps--;
-				}
-			}
 		}
 
 		waitMs(ENVIRONMENT_THREAD_DELAY);

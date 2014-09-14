@@ -40,7 +40,7 @@ namespace Moti {
 
 	// Thread
 	msg_t moduleThread(void* arg);
-	void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+	void start(void* arg = NULL, tprio_t priority = NORMALPRIO + 1);
 	void run(void);
 	void stop(void);
 
@@ -48,14 +48,18 @@ namespace Moti {
 	uint8_t getLapsZ(void);
 
 	// States
+	void detectStuck(void);
 	bool isStuck(void);
+	void detectFall(void);
 	bool isFalling(void);
 
+	void detectShake(void);
 	bool isShaken(void);
 	bool isShakenX(void);
 	bool isShakenY(void);
 	bool isShakenZ(void);
 
+	void detectSpin(void);
 	bool isSpinning(void);
 	bool isSpinningY(void);
 	bool isSpinningP(void);
