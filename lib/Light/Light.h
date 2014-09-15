@@ -69,7 +69,9 @@ namespace Light {
 
 	// Methods
 	void fade(LedIndicator led, Color startColor, Color endColor, int16_t duration);
+	void fade(Led led, int16_t duration, Color startColor, Color endColor);
 	void turnOff(LedIndicator led);
+	void turnOff(Led led);
 
 	// Get methods
 	LedState getState(LedIndicator led);
