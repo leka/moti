@@ -42,6 +42,7 @@ namespace Sensors {
 	void init(void);
 
 	void getAccXYZ(float* x, float* y, float* z);
+	float getAccXYZ(uint8_t index);
 	float getAccX();
 	float getAccY();
 	float getAccZ();

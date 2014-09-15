@@ -54,6 +54,12 @@ namespace Sensors {
 		*z = _XYZ[2];
 	}
 
+	float getAccXYZ(uint8_t index) {
+		readXYZ();
+
+		return _XYZ[index];
+	}
+
 	/**
 	 * @brief Getter method to get the X-axis value on the accelerometer
 	 * @return the X-axis accelerometer value
