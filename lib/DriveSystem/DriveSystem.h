@@ -36,18 +36,24 @@
  * @brief DriveSystem gathers all the driving related functions such as going forward, backward, turning and spinning.
  */
 namespace DriveSystem {
-	void start(void* arg=NULL, tprio_t priority=NORMALPRIO+2);
 
+	// Thread
+	msg_t moduleThread(void* arg);
+	void init(void* arg = NULL, tprio_t priority = NORMALPRIO + 2);
+
+	// Methods
 	void go(Direction direction, uint8_t speed);
 	void spin(Rotation rotation, uint8_t speed);
 	void turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed);
 	void stop(void);
 
+	// Get methods
 	Direction getRightDirection(void);
 	uint8_t getRightSpeed(void);
 
 	Direction getLeftDirection(void);
 	uint8_t getLeftSpeed(void);
+
 }
 
 #endif

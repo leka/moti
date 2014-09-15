@@ -17,7 +17,6 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#include <Arduino.h>
 #include "DriveSystem.h"
 
 /**
@@ -28,28 +27,47 @@
 
 namespace DriveSystem {
 
-bool _isStarted = false;
-Motor _rightMotor = Motor(RIGHT_MOTOR_DIRECTION_PIN, RIGHT_MOTOR_SPEED_PIN);
-Motor _leftMotor = Motor(LEFT_MOTOR_DIRECTION_PIN, LEFT_MOTOR_SPEED_PIN);
-Semaphore _sem = _SEMAPHORE_DATA(DriveSystem::_sem, 0);
-uint8_t _rightSpeed = 0;
-uint8_t _leftSpeed = 0;
-Direction _rightDirection = FORWARD;
-Direction _leftDirection = FORWARD;
+	// VARIABLES
 
-msg_t thread(void* arg);
+	// Thread
+	static WORKING_AREA(driveThreadArea, 128);
+	bool _isInitialized = false;
 
-static WORKING_AREA(driveThreadArea, 128);
+	// Motor objects
+	Motor _rightMotor = Motor(RIGHT_MOTOR_DIRECTION_PIN, RIGHT_MOTOR_SPEED_PIN);
+	Motor _leftMotor  = Motor(LEFT_MOTOR_DIRECTION_PIN, LEFT_MOTOR_SPEED_PIN);
 
+	// Motors variables
+	uint8_t _rightSpeed = 0;
+	uint8_t _leftSpeed  = 0;
+	Direction _rightDirection = FORWARD;
+	Direction _leftDirection  = FORWARD;
+
+	// Misc
+	Semaphore _sem = _SEMAPHORE_DATA(_sem, 0);
+
+}
+
+/**
+ * @brief Start DriveSystem's chThread
+ */
+void DriveSystem::init(void* arg, tprio_t priority) {
+	if (!_isInitialized) {
+		_isInitialized = true;
+
+		(void)chThdCreateStatic(driveThreadArea, sizeof(driveThreadArea),
+				priority, moduleThread, arg);
+	}
+}
 
 /**
  * @brief Tells the motors to spin in a given direction, at a given speed
  * @param direction the direction (FORWARD | BACKWARD)
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  */
-void go(Direction direction, uint8_t speed) {
-	if (!_isStarted)
-		start();
+void DriveSystem::go(Direction direction, uint8_t speed) {
+	if (!_isInitialized)
+		init();
 
 	_leftDirection = direction;
 	_rightDirection = direction;
@@ -66,9 +84,9 @@ void go(Direction direction, uint8_t speed) {
  * @param rightSpeed the speed of the right motor (0 - MOTOR_MAX_SPEED)
  * @param leftSpeed the speed of the left motor (0 - MOTOR_MAX_SPEED)
  */
-void turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed) {
-	if (!_isStarted)
-		start();
+void DriveSystem::turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed) {
+	if (!_isInitialized)
+		init();
 
 	_leftDirection = direction;
 	_rightDirection = direction;
@@ -84,9 +102,9 @@ void turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed) {
  * @param rotation the rotation side (RIGHT | LEFT)
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  */
-void spin(Rotation rotation, uint8_t speed) {
-	if (!_isStarted)
-		start();
+void DriveSystem::spin(Rotation rotation, uint8_t speed) {
+	if (!_isInitialized)
+		init();
 
 	switch (rotation) {
 		case LEFT:
@@ -109,9 +127,9 @@ void spin(Rotation rotation, uint8_t speed) {
 /**
  * @brief Tells the motors to immediately stop spinning
  */
-void stop(void) {
-	if (!_isStarted)
-		start();
+void DriveSystem::stop(void) {
+	if (!_isInitialized)
+		init();
 
 	_rightDirection = _leftDirection = FORWARD;
 	_rightSpeed = _leftSpeed = 0;
@@ -119,33 +137,28 @@ void stop(void) {
 	chSemSignal(&_sem);
 }
 
-Direction getRightDirection(void) {
+Direction DriveSystem::getRightDirection(void) {
 	return _rightDirection;
 }
 
-uint8_t getRightSpeed(void) {
+uint8_t DriveSystem::getRightSpeed(void) {
 	return _rightSpeed;
 }
 
-Direction getLeftDirection(void) {
+Direction DriveSystem::getLeftDirection(void) {
 	return _leftDirection;
 }
 
-uint8_t getLeftSpeed(void) {
+uint8_t DriveSystem::getLeftSpeed(void) {
 	return _leftSpeed;
 }
 
+/**
+ * @brief Main module thread
+ */
+msg_t DriveSystem::moduleThread(void* arg) {
+	(void) arg;
 
-void start(void* arg, tprio_t priority) {
-	if (!_isStarted) {
-		_isStarted = true;
-
-		(void)chThdCreateStatic(driveThreadArea, sizeof(driveThreadArea),
-				priority, thread, arg);
-	}
-}
-
-msg_t thread(void* arg) {
 	while (!chThdShouldTerminate()) {
 		chSemWait(&_sem);
 
@@ -156,4 +169,4 @@ msg_t thread(void* arg) {
 	return (msg_t)0;
 }
 
-}
+
