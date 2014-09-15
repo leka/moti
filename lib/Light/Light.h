@@ -61,18 +61,27 @@ typedef struct {
 #define N_LEDS 1
 
 namespace Light {
-	void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
 
+	// Thread
+	msg_t moduleThread(void* arg);
+	void init(void* arg = NULL, tprio_t priority = NORMALPRIO + 1);
+	void start(void);
+
+	// Methods
 	void fade(LedIndicator led, Color startColor, Color endColor, int16_t duration);
 	void turnOff(LedIndicator led);
+
+	// Get methods
 	LedState getState(LedIndicator led);
 	Color getColor(LedIndicator led);
 
-   /* Easy use function */
-   void fadeHeart(Color startColor, Color endColor, int16_t duration);
-   void turnHeartOff();
-   LedState getHeartState(void);
-   Color getHeartColor(void);
+	/* Easy use function */
+	void fadeHeart(Color startColor, Color endColor, int16_t duration);
+	void turnHeartOff();
+
+	LedState getHeartState(void);
+	Color getHeartColor(void);
+
 }
 
 #endif

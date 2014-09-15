@@ -17,9 +17,7 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#include <Arduino.h>
 #include "Light.h"
-
 
 /**
  * @file Light.cpp
@@ -29,16 +27,21 @@
 
 namespace Light {
 
-Semaphore _sem = _SEMAPHORE_DATA(_sem, 0);
-bool _isInit = false;
-bool _isStarted = false;
-Led leds[N_LEDS] = { Led(HEART_LED_RED_PIN, HEART_LED_GREEN_PIN, HEART_LED_BLUE_PIN) };
-Queue<LedData*> data[N_LEDS] = { Queue<LedData*>() };
+	// VARIABLES
 
-msg_t thread(void* arg);
+	// Thread states
+	static WORKING_AREA(lightThreadArea, 256);
+	bool _isStarted     = false;
+	bool _isInitialized = false;
 
-static WORKING_AREA(lightThreadArea, 256);
+	// Led objects
+	Led leds[N_LEDS] = { Led(HEART_LED_RED_PIN, HEART_LED_GREEN_PIN, HEART_LED_BLUE_PIN) };
+	Queue<LedData*> data[N_LEDS] = { Queue<LedData*>() };
 
+	// Misc
+	Semaphore _sem = _SEMAPHORE_DATA(_sem, 0);
+
+}
 
 /**
  * @brief Tells a led to fade between two given colors, for a given duration
@@ -47,9 +50,9 @@ static WORKING_AREA(lightThreadArea, 256);
  * @param endColor the color the led will shine at the end
  * @param duration the duration (in ms)
  */
-void fade(LedIndicator led, Color startColor, Color endColor, int16_t duration) {
-	if (!_isStarted)
-		start();
+void Light::fade(LedIndicator led, Color startColor, Color endColor, int16_t duration) {
+	if (!_isInitialized)
+		init();
 
 	uint8_t i = (uint8_t)led;
 
@@ -76,9 +79,9 @@ void fade(LedIndicator led, Color startColor, Color endColor, int16_t duration) 
  * @brief Tells a led to turn off
  * @param led the indicator of the led
  */
-void turnOff(LedIndicator led) {
-	if (!_isStarted)
-		start();
+void Light::turnOff(LedIndicator led) {
+	if (!_isInitialized)
+		init();
 
 	uint8_t i = (uint8_t)led;
 
@@ -90,7 +93,7 @@ void turnOff(LedIndicator led) {
  * @param led the indicator of the led
  * @return one of the available LedStates
  */
-LedState getState(LedIndicator led) {
+LedState Light::getState(LedIndicator led) {
 	uint8_t i = (uint8_t)led;
 
 	if (data[i].isEmpty())
@@ -104,51 +107,52 @@ LedState getState(LedIndicator led) {
  * @param led the indicator of the led
  * @return the color  of the led
  */
-Color getColor(LedIndicator led) {
+Color Light::getColor(LedIndicator led) {
 	uint8_t i = (uint8_t)led;
 
 	return leds[i].getColor();
 }
 
 
-void fadeHeart(Color startColor, Color endColor, int16_t duration) {
+void Light::fadeHeart(Color startColor, Color endColor, int16_t duration) {
 	fade(HEART, startColor, endColor, duration);
 }
 
-void turnHeartOff() {
+void Light::turnHeartOff() {
 	turnOff(HEART);
 }
 
-LedState getHeartState(void) {
+LedState Light::getHeartState(void) {
 	return getState(HEART);
 }
 
-Color getHeartColor(void) {
+Color Light::getHeartColor(void) {
 	return getColor(HEART);
 }
 
 
-void init(void) {
-	if (!_isInit) {
-		_isInit = true;
-
-		/* leds[0] = Led(HEART_LED_RED_PIN, HEART_LED_GREEN_PIN, HEART_LED_BLUE_PIN); */
-
-		/* for (uint8_t i = 0; i < N_LEDS; ++i)
-		   data[i] = Queue<LedData*>(); */
-	}
-}
-
-void start(void* arg, tprio_t priority) {
-	if (!_isInit)
-		init();
-
+void Light::start(void) {
 	if (!_isStarted) {
 		_isStarted = true;
 
+		// leds[0] = Led(HEART_LED_RED_PIN, HEART_LED_GREEN_PIN, HEART_LED_BLUE_PIN);
+        //
+		// for (uint8_t i = 0; i < N_LEDS; ++i)
+		// 	data[i] = Queue<LedData*>();
+	}
+}
+
+void Light::init(void* arg, tprio_t priority) {
+
+	(void) arg;
+
+	if (!_isStarted) {
+		start();
+
+
 		(void)chThdCreateStatic(lightThreadArea,
 				sizeof(lightThreadArea),
-				priority, thread, arg);
+				priority, moduleThread, arg);
 
 		for (uint8_t i = 0; i < N_LEDS; ++i)
 			for (uint16_t j = 0; j < QUEUE_MAX_SIZE; ++j)
@@ -156,7 +160,10 @@ void start(void* arg, tprio_t priority) {
 	}
 }
 
-msg_t thread(void* arg) {
+msg_t Light::moduleThread(void* arg) {
+
+	(void) arg;
+
 	bool noRecall = true;
 	LedData* state;
 
@@ -174,7 +181,9 @@ msg_t thread(void* arg) {
 						case FADE:
 							state->current.setRGB(state->startColor.getR() + state->diff.getR() * state->steps / state->totalSteps,
 									state->startColor.getG() + state->diff.getG() * state->steps / state->totalSteps,
-									state->startColor.getB() + state->diff.getB() * state->steps / state->totalSteps);
+									state->startColor.getB() + state->diff.getB() * state->steps / state->totalSteps
+									);
+
 							leds[i].shine(state->current);
 
 							state->steps++;
@@ -195,7 +204,7 @@ msg_t thread(void* arg) {
 							break;
 
 						case INACTIVE:
-							break;			
+							break;
 					}
 				}
 			}
@@ -210,4 +219,3 @@ msg_t thread(void* arg) {
 	return (msg_t)0;
 }
 
-}
