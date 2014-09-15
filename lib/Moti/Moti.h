@@ -38,7 +38,7 @@ namespace Moti {
 
 	// Thread
 	msg_t moduleThread(void* arg);
-	void init(void* arg = NULL, tprio_t priority = NORMALPRIO+1);
+	void init(void* arg = NULL, tprio_t priority = NORMALPRIO + 1);
 	void start(void);
 	void stop(void);
 

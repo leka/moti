@@ -18,13 +18,13 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
+#include "Moti.h"
+
 /**
  * @file Moti.cpp
  * @author Ladislas de Toldi and Flavien Raynaud
  * @version 1.0
  */
-
-#include "Moti.h"
 
 namespace Moti {
 
@@ -32,8 +32,8 @@ namespace Moti {
 
 	// Thread states
 	static WORKING_AREA(motiModuleThreadArea, 256);
-	bool _isInitialized   = false;
-	bool _isStarted   = false;
+	bool _isInitialized = false;
+	bool _isStarted     = false;
 
 	// Moti states
 	bool _isStuck        = false;
@@ -235,11 +235,15 @@ void Moti::detectFall(void) {
 
 }
 
+/**
+ * @brief Main module thread
+ */
 msg_t Moti::moduleThread(void* arg) {
 
 	(void) arg;
 
 	while (!chThdShouldTerminate()) {
+
 		if (_isStarted) {
 
 			Moti::detectStuck();
