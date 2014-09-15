@@ -35,10 +35,9 @@
 
 namespace Communication {
 
-	void sendMotorsData(void);
-	void sendLedsData(void);
-	void sendSensorsData(void);
-
+	void sendMotorData(void);
+	void sendLedData(void);
+	void sendSensorData(void);
 	void sendAllData(void);
 
 }
