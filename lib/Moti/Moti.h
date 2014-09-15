@@ -23,7 +23,7 @@
 
 /**
  * @file Moti.h
- * @author Ladislas de Toldi
+ * @author Ladislas de Toldi and Flavien Raynaud
  * @version 1.0
  */
 
@@ -32,14 +32,13 @@
 #include "Toolbox.h"
 #include "Sensors.h"
 
-#define serio Serial
 #define HISTORY_SIZE 6
 
 namespace Moti {
 
 	// Thread
 	msg_t moduleThread(void* arg);
-	void startThread(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+	void init(void* arg = NULL, tprio_t priority = NORMALPRIO+1);
 	void start(void);
 	void stop(void);
 
@@ -49,6 +48,7 @@ namespace Moti {
 	// States
 	void detectStuck(void);
 	bool isStuck(void);
+
 	void detectFall(void);
 	bool isFalling(void);
 
@@ -66,8 +66,4 @@ namespace Moti {
 
 }
 
-namespace State {
-
-
-}
 #endif
