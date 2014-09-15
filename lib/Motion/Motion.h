@@ -26,14 +26,13 @@
  * @version 1.0
  */
 
+#include <Arduino.h>
 #include <math.h>
 
-#include <Arduino.h>
 #include "ChibiOS_AVR.h"
 #include "DriveSystem.h"
 #include "Sensors.h"
 
-/*! All the DriveStates the DriveSystem can be */
 typedef enum {
 	GO,
 	SPIN,
@@ -46,18 +45,23 @@ typedef enum {
  * @class Motion
  * @brief Motion gathers all the driving related functions such as going forward, backward, turning and spinning.
  */
+
 namespace Motion {
 
-	void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
+	// Thread
+	msg_t moduleThread(void* arg);
+	void init(void* arg = NULL, tprio_t priority = NORMALPRIO + 1);
 
-	void go(Direction direction, uint8_t speed, uint16_t duration, uint16_t launchDuration=0);
+	// Methods
+	void go(Direction direction, uint8_t speed, uint16_t duration, uint16_t goDelay = 0);
 	void spin(Rotation rotation, uint8_t speed, float angle);
 	void spinDeg(Rotation rotation, uint8_t speed, float angle);
 	void stop(uint16_t stopDuration);
 
+	// Get methods
 	MotionState getState();
 
-	/* Easy use functions */
+	// Simple methods
 	void goForward(uint8_t speed, uint16_t duration);
 	void goBackward(uint8_t speed, uint16_t duration);
 
@@ -66,8 +70,12 @@ namespace Motion {
 
 	void spinRightDeg(uint8_t speed, float angle);
 	void spinLeftDeg(uint8_t speed, float angle);
-
 	void stopNow(void);
+
+	// Helpers methods
+	float computeAimAngle(Rotation rotation, float originAngle, float angle);
+	bool rotationEnded(Rotation rotation, float aimAngle, float* lastAngle);
+
 }
 
 #endif
