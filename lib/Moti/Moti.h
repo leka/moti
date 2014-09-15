@@ -34,8 +34,6 @@
 
 #define HISTORY_SIZE 6
 
-void waitMs(uint16_t ms);
-
 namespace Moti {
 
 	// Thread
