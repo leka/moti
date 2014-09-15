@@ -32,6 +32,7 @@
 #include "Toolbox.h"
 #include "Sensors.h"
 
+#define serio Serial
 #define HISTORY_SIZE 6
 
 namespace Moti {

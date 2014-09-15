@@ -36,7 +36,7 @@ namespace Moti {
 	double _sqrtXYZ[3]           = {0, 0, 0};
 	double _avrgXYZ[3]           = {0, 0, 0};
 	double _alphaXYZ[3]          = {0.1, 0.1, 0.1};
-	double _shakeThresholdXYZ[3] = {150, 150, 150};
+	double _shakeThresholdXYZ[3] = {150, 150, 250};
 }
 
 /**
@@ -182,8 +182,10 @@ void Moti::detectShake(void) {
 	for (i = 0; i < 3; i++) {
 		_currentXYZ[i] = (int)Sensors::getAccXYZ(i);
 		_deltaXYZ[i]   = _lastXYZ[i] - _currentXYZ[i];
+		_lastXYZ[i]    = _currentXYZ[i];
 		_sqrtXYZ[i]    = sqrt(sq((double)_deltaXYZ[i]));
 		_avrgXYZ[i]    = (_alphaXYZ[i] * _sqrtXYZ[i]) + (1.0 - _alphaXYZ[i]) * _avrgXYZ[i];
+
 
 		if (_avrgXYZ[i] > _shakeThresholdXYZ[i]) {
 			_isShakenXYZ[i] = true;
