@@ -17,14 +17,13 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#include "Color.h"
-
 /**
  * @file Color.cpp
  * @author Ladislas de Toldi
  * @version 1.0
  */
 
+#include "Color.h"
 
 /*
  * @brief Default constructor, sets R, G, B to be equal to 0
@@ -89,9 +88,9 @@ uint8_t Color::getB(void) {
  * @param value pointer that will receive the content of the value
  */
 void Color::getHSV(uint16_t* hue, float* saturation, float* value) {
-    *hue = _hue;
-    *saturation = _saturation;
-    *value = _value;
+	*hue = _hue;
+	*saturation = _saturation;
+	*value = _value;
 }
 
 /**
@@ -99,7 +98,7 @@ void Color::getHSV(uint16_t* hue, float* saturation, float* value) {
  * @return the hue
  */
 uint16_t Color::getHue(void) {
-    return _hue;
+	return _hue;
 }
 
 /**
@@ -107,7 +106,7 @@ uint16_t Color::getHue(void) {
  * @return the saturation
  */
 float Color::getSaturation(void) {
-    return _saturation;
+	return _saturation;
 }
 
 /**
@@ -115,14 +114,14 @@ float Color::getSaturation(void) {
  * @return the value
  */
 float Color::getValue(void) {
-    return _value;
+	return _value;
 }
 
 
 double __mod(double a, double b) {
-    double r = fmod(a, b);
+	double r = fmod(a, b);
 
-    return r < 0.f ? r + b : r;
+	return r < 0.f ? r + b : r;
 }
 
 /**
@@ -132,28 +131,28 @@ double __mod(double a, double b) {
  * @param b the new blue intensity of the color
  */
 void Color::setRGB(uint8_t r, uint8_t g, uint8_t b) {
-    float new_r = (float)r / 255.f;
-    float new_g = (float)g / 255.f;
-    float new_b = (float)b / 255.f;
+	float new_r = (float)r / 255.f;
+	float new_g = (float)g / 255.f;
+	float new_b = (float)b / 255.f;
 
-    float c_max = max(new_r, max(new_g, new_b));
-    float c_min = min(new_r, min(new_g, new_b));
+	float c_max = max(new_r, max(new_g, new_b));
+	float c_min = min(new_r, min(new_g, new_b));
 
-    float delta = c_max - c_min;
+	float delta = c_max - c_min;
 
-    if (c_max == new_r)
-        _hue = (uint16_t)(60.f * __mod((new_g - new_b) / delta, 6.f));
-    else if (c_max == new_g)
-        _hue = (uint16_t)(60.f * (((new_b - new_r) / delta) + 2.f));
-    else
-        _hue = (uint16_t)(60.f * (((new_r - new_g) / delta) + 4.f));
+	if (c_max == new_r)
+		_hue = (uint16_t)(60.f * __mod((new_g - new_b) / delta, 6.f));
+	else if (c_max == new_g)
+		_hue = (uint16_t)(60.f * (((new_b - new_r) / delta) + 2.f));
+	else
+		_hue = (uint16_t)(60.f * (((new_r - new_g) / delta) + 4.f));
 
-    if (c_max == c_min)
-        _saturation = 0.f;
-    else
-        _saturation = delta / c_max;
+	if (c_max == c_min)
+		_saturation = 0.f;
+	else
+		_saturation = delta / c_max;
 
-    _value = c_max;
+	_value = c_max;
 
 	_r = r;
 	_g = g;
@@ -166,59 +165,59 @@ void Color::setRGB(uint8_t r, uint8_t g, uint8_t b) {
  * @param b the new saturation of the color
  * @param g the new value of the color
  */
- void Color::setHSV(uint16_t hue, float saturation, float value) {
-    float c = value * saturation;
+void Color::setHSV(uint16_t hue, float saturation, float value) {
+	float c = value * saturation;
 
-    uint16_t h = hue / 60;
+	uint16_t h = hue / 60;
 
-    float x = c * (1.f - abs((float)(h % 2) - 1.f));
-    float int_c = c;
+	float x = c * (1.f - abs((float)(h % 2) - 1.f));
+	float int_c = c;
 
-    float r = 0.f;
-    float g = 0.f;
-    float b = 0.f;
+	float r = 0.f;
+	float g = 0.f;
+	float b = 0.f;
 
-    switch (h) {
-        case 0:
-            r = int_c;
-            g = x;
-            break;
+	switch (h) {
+		case 0:
+			r = int_c;
+			g = x;
+			break;
 
-        case 1:
-            r = x;
-            g = int_c;
-            break;
+		case 1:
+			r = x;
+			g = int_c;
+			break;
 
-        case 2:
-            g = c;
-            b = x;
-            break;
+		case 2:
+			g = c;
+			b = x;
+			break;
 
-        case 3:
-            g = x;
-            b = c;
-            break;
+		case 3:
+			g = x;
+			b = c;
+			break;
 
-        case 4:
-            r = x;
-            b = c;
-            break;
+		case 4:
+			r = x;
+			b = c;
+			break;
 
-        case 5:
-            r = c;
-            b = x;
-            break;
-    }
+		case 5:
+			r = c;
+			b = x;
+			break;
+	}
 
-    float m = value - c;
+	float m = value - c;
 
-    _r = (uint8_t)(r + m);
-    _g = (uint8_t)(g + m);
-    _b = (uint8_t)(b + m);
+	_r = (uint8_t)(r + m);
+	_g = (uint8_t)(g + m);
+	_b = (uint8_t)(b + m);
 
-    _hue = hue;
-    _saturation = saturation;
-    _value = value;
+	_hue = hue;
+	_saturation = saturation;
+	_value = value;
 }
 
 /**
