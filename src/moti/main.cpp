@@ -10,13 +10,13 @@
 #include "Arbitrer.h"
 #include "Stabilization.h"
 
-void mainThred() {
+void mainThread() {
 	Serial1.println(F("Starting..."));
 
 	Sensors::init();
-	DriveSystem::start();
-	Motion::start();
-	Moti::startThread();
+	DriveSystem::init();
+	Motion::init();
+	Moti::init();
 	// Light::start();
 
 	uint8_t state = 1;
@@ -102,7 +102,7 @@ int main(void) {
 	Wire.begin();
 	delay(500);
 
-	chBegin(mainThred);
+	chBegin(mainThread);
 
 	while(1);
 

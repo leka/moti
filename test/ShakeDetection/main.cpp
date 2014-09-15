@@ -12,7 +12,7 @@ Led heart = Led(11, 12, 13);
 void mainThread() {
 	serio.begin(115200);
 	Sensors::init();
-	Moti::startThread();
+	Moti::init();
 
 	Moti::start();
 
@@ -25,7 +25,7 @@ void mainThread() {
 			heart.shine(Color::BluePure);
 
 		else if (Moti::isShakenZ())
-			heart.shine(Color::GreenPure);
+			heart.shine(255, 255, 255);
 
 		else
 			heart.turnOff();

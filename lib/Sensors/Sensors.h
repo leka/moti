@@ -28,47 +28,59 @@
  */
 
 
+#include <Arduino.h>
 #include <math.h>
 
-#include <Arduino.h>
 #include "ChibiOS_AVR.h"
 #include "Configuration.h"
 #include "FreeIMU.h"
 #include "Moti.h"
 
-
 namespace Sensors {
 
+	// Initialization
 	void init(void);
 
+	// Accelerometer
 	void getAccXYZ(float* x, float* y, float* z);
 	float getAccXYZ(uint8_t index);
 	float getAccX();
 	float getAccY();
 	float getAccZ();
 
+	// Gyroscope - Yaw Pitch Roll
 	void getGyrYPR(float* y, float* p, float* r);
+	float getGyrYPR(uint8_t index);
 	float getGyrY();
 	float getGyrP();
 	float getGyrR();
 
-	void getEuler(float* phi, float* theta, float* psi);
-	float getEulerPhi();
-	float getEulerTheta();
-	float getEulerPsi();
-
 	void getGyrYPRDeg(float* y, float* p, float* r);
+	float getGyrYPRDeg(uint8_t index);
 	float getGyrYDeg();
 	float getGyrPDeg();
 	float getGyrRDeg();
 
+	// Gyroscope - Euler angles
+	void getEuler(float* phi, float* theta, float* psi);
+	float getEulerPTP(uint8_t index);
+	float getEulerPhi();
+	float getEulerTheta();
+	float getEulerPsi();
+
 	void getEulerDeg(float* y, float* p, float* r);
+	float getEulerPTPDeg(uint8_t index);
 	float getEulerPhiDeg();
 	float getEulerThetaDeg();
 	float getEulerPsiDeg();
 
+	// Sensor fusion
 	bool isFalling();
 	bool isInactive();
+
+	// Helper methods
+	void readXYZ(void);
+	void readYPR(void);
 
 	float radToDeg(float rad);
 	float degToRad(float deg);

@@ -17,22 +17,20 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#include <Arduino.h>
-#include "Led.h"
-
-
 /**
  * @file Led.cpp
  * @author Ladislas de Toldi
  * @version 1.0
  */
 
+#include <Arduino.h>
+#include "Led.h"
 
 /**
  * @brief Default constructor
  */
 Led::Led() {
-	// nothing to do here
+	_colorValue = Color(0, 0, 0);
 }
 
 /**
@@ -64,7 +62,7 @@ Led::Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin, Color colorValue) {
 /**
  * @brief Tells the led to shine with its color
  */
-void Led::shine(void) {	
+void Led::shine(void) {
 	analogWrite(_redPin, _colorValue.getR());
 	analogWrite(_greenPin, _colorValue.getG());
 	analogWrite(_bluePin, _colorValue.getB());
@@ -76,6 +74,15 @@ void Led::shine(void) {
  */
 void Led::shine(Color colorValue) {
 	setColor(colorValue);
+	shine();
+}
+
+/**
+ * @brief Tells the led to shine with a given color
+ * @param color the color the led will shine
+ */
+void Led::shine(uint8_t redValue, uint8_t greeValue, uint8_t blueValue) {
+	setColor(Color(redValue, greeValue, blueValue));
 	shine();
 }
 

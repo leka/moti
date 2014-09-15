@@ -17,8 +17,8 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#ifndef LEKA_MOTI_ARDUINO_MOTOR_H_
-#define LEKA_MOTI_ARDUINO_MOTOR_H_
+#ifndef LEKA_MOTI_CLASS_MOTOR_H_
+#define LEKA_MOTI_CLASS_MOTOR_H_
 
 /**
  * @file Motors.h
@@ -29,13 +29,11 @@
 #include <Arduino.h>
 #include "Configuration.h"
 
-/*! Direction enumeration, for the DriveSystem */
 typedef enum {
 	BACKWARD,
 	FORWARD
 } Direction;
 
-/*! Rotation enumeration, for the DriveSystem spin */
 typedef enum {
 	LEFT,
 	RIGHT

@@ -17,7 +17,6 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#include <Arduino.h>
 #include "Motion.h"
 
 /**
@@ -26,30 +25,33 @@
  * @version 1.0
  */
 
-static WORKING_AREA(motionThreadArea, 256);
-
 namespace Motion {
 
+	// VARIABLES
 
-float _computeAimAngle(Rotation rotation, float originAngle, float angle);
-bool _rotationEnded(Rotation rotation, float aimAngle, float* last_angle);
+	// Thread states
+	static WORKING_AREA(motionThreadArea, 256);
+	bool _isInitialized = false;
 
-MotionState _action = NONE;
-MotionState _oldAction = NONE;
-Direction _direction = FORWARD;
-Rotation _rotation = LEFT;
-uint8_t _speed = 0;
-uint16_t _duration = 0;
-uint16_t _launchDuration = 0;
-float _angle = 0.f;
-float _originAngle = 0.f;
-bool _jump = false;
+	// Motion
+	uint8_t _speed     = 0;
+	uint16_t _duration = 0;
+	uint16_t _goDelay  = 0;
+	float _angle       = 0.f;
+	float _originAngle = 0.f;
+	bool _jump         = false;
 
-bool _isStarted = false;
-Semaphore _sem = _SEMAPHORE_DATA(_sem, 0);
-static msg_t thread(void *arg);
+	MotionState _action    = NONE;
+	MotionState _oldAction = NONE;
 
-MUTEX_DECL(_dataMutex);
+	Direction _direction = FORWARD;
+	Rotation _rotation   = LEFT;
+
+	// Misc
+	Semaphore _sem = _SEMAPHORE_DATA(_sem, 0);
+	MUTEX_DECL(_dataMutex);
+
+}
 
 /**
  * @brief Tells the drivesystem to go straight in a given direction, at a given speed, during a given duration
@@ -57,16 +59,16 @@ MUTEX_DECL(_dataMutex);
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  * @param duration the duration (in ms)
  */
-void go(Direction direction, uint8_t speed, uint16_t duration, uint16_t launchDuration) {
-	if (!_isStarted)
-		start();
+void Motion::go(Direction direction, uint8_t speed, uint16_t duration, uint16_t goDelay) {
+	if (!_isInitialized)
+		init();
 
 	chMtxLock(&_dataMutex);
 
 	_direction = direction;
 	_speed = speed;
 	_duration = duration;
-	_launchDuration = launchDuration;
+	_goDelay = goDelay;
 	_oldAction = _action;
 	_action = GO;
 
@@ -81,9 +83,9 @@ void go(Direction direction, uint8_t speed, uint16_t duration, uint16_t launchDu
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  * @param angle the angle to spin (in radians)
  */
-void spin(Rotation rotation, uint8_t speed, float angle) {
-	if (!_isStarted)
-		start();
+void Motion::spin(Rotation rotation, uint8_t speed, float angle) {
+	if (!_isInitialized)
+		init();
 
 	chMtxLock(&_dataMutex);
 
@@ -106,16 +108,16 @@ void spin(Rotation rotation, uint8_t speed, float angle) {
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  * @param angle the angle to spin (in degrees)
  */
-void spinDeg(Rotation rotation, uint8_t speed, float angle) {
+void Motion::spinDeg(Rotation rotation, uint8_t speed, float angle) {
 	spin(rotation, speed, angle * M_PI / 180.0f);
 }
 
 /**
  * @brief Tells the drivesystem to stop
  */
-void stop(uint16_t stopDuration) {
-	if (!_isStarted)
-		start();
+void Motion::stop(uint16_t stopDuration) {
+	if (!_isInitialized)
+		init();
 
 	chMtxLock(&_dataMutex);
 
@@ -132,51 +134,54 @@ void stop(uint16_t stopDuration) {
  * @brief Gets the state of the DriveSystem (DriveState)
  * @return one of the available DriveStates
  */
-MotionState getState() {
+MotionState Motion::getState() {
 	return _action;
 }
 
 
-void goForward(uint8_t speed, uint16_t duration) {
+void Motion::goForward(uint8_t speed, uint16_t duration) {
 	go(FORWARD, speed, duration, 0);
 }
 
-void goBackward(uint8_t speed, uint16_t duration) {
+void Motion::goBackward(uint8_t speed, uint16_t duration) {
 	go(BACKWARD, speed, duration, 0);
 }
 
-void spinRight(uint8_t speed, float angle) {
+void Motion::spinRight(uint8_t speed, float angle) {
 	spin(RIGHT, speed, angle);
 }
 
-void spinLeft(uint8_t speed, float angle) {
+void Motion::spinLeft(uint8_t speed, float angle) {
 	spin(LEFT, speed, angle);
 }
 
-void spinRightDeg(uint8_t speed, float angle) {
+void Motion::spinRightDeg(uint8_t speed, float angle) {
 	spinDeg(RIGHT, speed, angle);
 }
 
-void spinLeftDeg(uint8_t speed, float angle) {
+void Motion::spinLeftDeg(uint8_t speed, float angle) {
 	spinDeg(LEFT, speed, angle);
 }
 
-void stopNow(void) {
+void Motion::stopNow(void) {
 	stop(0);
 }
 
 
-void start(void* arg, tprio_t priority) {
-	if (!_isStarted) {
-		_isStarted = true;
+void Motion::init(void* arg, tprio_t priority) {
+
+	(void) arg;
+
+	if (!_isInitialized) {
+		_isInitialized = true;
 
 		(void)chThdCreateStatic(motionThreadArea,
 				sizeof(motionThreadArea),
-				priority, thread, arg);
+				priority, moduleThread, arg);
 	}
 }
 
-float _computeAimAngle(Rotation rotation, float originAngle, float angle) {
+float Motion::computeAimAngle(Rotation rotation, float originAngle, float angle) {
 	float aimAngle = originAngle;
 
 	switch (rotation) {
@@ -201,7 +206,7 @@ float _computeAimAngle(Rotation rotation, float originAngle, float angle) {
 	return aimAngle;
 }
 
-bool _rotationEnded(Rotation rotation, float aimAngle, float* lastAngle) {
+bool Motion::rotationEnded(Rotation rotation, float aimAngle, float* lastAngle) {
 	if (_action != SPIN) /* The action changed, maybe we need to stop */
 		return true;
 
@@ -222,7 +227,10 @@ bool _rotationEnded(Rotation rotation, float aimAngle, float* lastAngle) {
 	return false;
 }
 
-msg_t thread(void* arg) {
+msg_t Motion::moduleThread(void* arg) {
+
+	(void) arg;
+
 	uint16_t count = 0;
 	uint16_t nSteps = 0;
 
@@ -238,8 +246,8 @@ msg_t thread(void* arg) {
 		if (_action == GO) {
 			count = 0;
 			while ((_action == GO) && ((_duration == 0) || (count++) * delay < _duration)) {
-				if (_launchDuration / delay > count)
-					DriveSystem::go(_direction, (count * _speed) / (_launchDuration / delay));
+				if (_goDelay / delay > count)
+					DriveSystem::go(_direction, (count * _speed) / (_goDelay / delay));
 				else
 					DriveSystem::go(_direction, _speed);
 
@@ -261,10 +269,10 @@ msg_t thread(void* arg) {
 			spinStart = millis();
 
 			while (_angle > 0.0f) {
-				aimAngle = _computeAimAngle(_rotation, _originAngle, fmod(_angle, 2 * M_PI));
+				aimAngle = computeAimAngle(_rotation, _originAngle, fmod(_angle, 2 * M_PI));
 				lastAngle = 0.0f;
 
-				while (!_rotationEnded(_rotation, aimAngle, &lastAngle)) {
+				while (!rotationEnded(_rotation, aimAngle, &lastAngle)) {
 					DriveSystem::spin(_rotation, _speed);
 					waitMs(delay);
 
@@ -322,6 +330,4 @@ msg_t thread(void* arg) {
 	}
 
 	return (msg_t)0;
-}
-
 }

@@ -17,7 +17,6 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#include <Arduino.h>
 #include "Serial.h"
 
 #define serial Serial1
@@ -27,7 +26,6 @@
  * @author Ladislas de Toldi & Flavien Raynaud
  * @version 1.0
  */
-
 
 ReadCommand::ReadCommand(void) {
 	_header = 0;
@@ -99,10 +97,6 @@ void ReadCommand::readControlCommand(void) {
 
 uint8_t ReadCommand::readByte(void) {
 	while (!serial.available());
-
-	/* uint8_t u = serial.read();
-
-	   Serial.println(u); */
 
 	return (uint8_t)serial.read();
 }

@@ -17,8 +17,8 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#ifndef LEKA_MOTI_ARDUINO_LIGHT_H_
-#define LEKA_MOTI_ARDUINO_LIGHT_H_
+#ifndef LEKA_MOTI_MODULE_LIGHT_H_
+#define LEKA_MOTI_MODULE_LIGHT_H_
 
 /**
  * @file Light.h
@@ -35,6 +35,18 @@
 #include "Moti.h"
 #include "Queue.h"
 
+/*! Indicators for the leds in the device */
+typedef enum {
+	HEART
+} LedIndicator;
+
+/*! All the LedStates a led can be */
+typedef enum {
+	FADE,
+	SHINE,
+	INACTIVE
+} LedState;
+
 typedef struct {
 	Color startColor, endColor, diff, current;
 	int16_t totalSteps, steps;
@@ -49,18 +61,27 @@ typedef struct {
 #define N_LEDS 1
 
 namespace Light {
-	void start(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
 
+	// Thread
+	msg_t moduleThread(void* arg);
+	void init(void* arg = NULL, tprio_t priority = NORMALPRIO + 1);
+	void start(void);
+
+	// Methods
 	void fade(LedIndicator led, Color startColor, Color endColor, int16_t duration);
 	void turnOff(LedIndicator led);
+
+	// Get methods
 	LedState getState(LedIndicator led);
 	Color getColor(LedIndicator led);
 
-   /* Easy use function */
-   void fadeHeart(Color startColor, Color endColor, int16_t duration);
-   void turnHeartOff();
-   LedState getHeartState(void);
-   Color getHeartColor(void);
+	/* Easy use function */
+	void fadeHeart(Color startColor, Color endColor, int16_t duration);
+	void turnHeartOff();
+
+	LedState getHeartState(void);
+	Color getHeartColor(void);
+
 }
 
 #endif

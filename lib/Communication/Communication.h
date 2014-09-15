@@ -17,8 +17,8 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#ifndef LEKA_MOTI_ARDUINO_COMMUNICATION_H_
-#define LEKA_MOTI_ARDUINO_COMMUNICATION_H_
+#ifndef LEKA_MOTI_MODULE_COMMUNICATION_H_
+#define LEKA_MOTI_MODULE_COMMUNICATION_H_
 
 /**
  * @file Communication.h
@@ -35,10 +35,9 @@
 
 namespace Communication {
 
-	void sendMotorsData(void);
-	void sendLedsData(void);
-	void sendSensorsData(void);
-
+	void sendMotorData(void);
+	void sendLedData(void);
+	void sendSensorData(void);
 	void sendAllData(void);
 
 }

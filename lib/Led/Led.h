@@ -17,8 +17,8 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#ifndef LEKA_MOTI_ARDUINO_LED_H_
-#define LEKA_MOTI_ARDUINO_LED_H_
+#ifndef LEKA_MOTI_CLASS_LED_H_
+#define LEKA_MOTI_CLASS_LED_H_
 
 /**
  * @file Led.h
@@ -28,18 +28,6 @@
 
 #include <Arduino.h>
 #include "Color.h"
-
-/*! Indicators for the leds in the device */
-typedef enum {
-	HEART
-} LedIndicator;
-
-/*! All the LedStates a led can be */
-typedef enum {
-	FADE,
-	SHINE,
-	INACTIVE
-} LedState;
 
 /**
  * @class Led
@@ -54,6 +42,8 @@ class Led {
 
 		void shine(void);
 		void shine(Color colorValue);
+		void shine(uint8_t redValue, uint8_t greeValue, uint8_t blueValue);
+
 		void turnOff(void);
 
 		Color getColor(void);

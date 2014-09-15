@@ -17,8 +17,8 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#ifndef LEKA_MOTI_ARDUINO_SERIAL_H_
-#define LEKA_MOTI_ARDUINO_SERIAL_H_
+#ifndef LEKA_MOTI_CLASS_SERIAL_H_
+#define LEKA_MOTI_CLASS_SERIAL_H_
 
 /**
  * @file Serial.h
@@ -31,15 +31,14 @@
 #include "Color.h"
 #include "Motor.h"
 #include "Led.h"
+#include "Light.h"
 
 typedef enum {
 	COMMAND_GO,
 	COMMAND_SPIN,
 	COMMAND_STOP,
 	COMMAND_FADE,
-
 	COMMAND_TOGGLE,
-
 	COMMAND_NONE
 } COMMAND_TYPE;
 
@@ -69,7 +68,9 @@ typedef union {
 } COMMAND;
 
 class ReadCommand {
+
 	public:
+
 		ReadCommand(void);
 
 		uint8_t getHeader(void);
@@ -84,9 +85,11 @@ class ReadCommand {
 		COMMAND_TYPE getType();
 
 	private:
+
 		COMMAND cmd;
 		COMMAND_TYPE type;
 		uint8_t _header;
+
 };
 
 #endif

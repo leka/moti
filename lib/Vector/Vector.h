@@ -17,8 +17,8 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#ifndef LEKA_MOTI_ARDUINO_VECTOR_H_
-#define LEKA_MOTI_ARDUINO_VECTOR_H_
+#ifndef LEKA_MOTI_CLASS_VECTOR_H_
+#define LEKA_MOTI_CLASS_VECTOR_H_
 
 /**
  * @file Vector.h
@@ -27,7 +27,6 @@
  */
 
 #include <Arduino.h>
-
 
 template<class T> class Vector {
 	public:
