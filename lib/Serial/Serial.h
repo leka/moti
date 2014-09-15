@@ -31,6 +31,7 @@
 #include "Color.h"
 #include "Motor.h"
 #include "Led.h"
+#include "Light.h"
 
 typedef enum {
 	COMMAND_GO,
