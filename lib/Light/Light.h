@@ -35,6 +35,18 @@
 #include "Moti.h"
 #include "Queue.h"
 
+/*! Indicators for the leds in the device */
+typedef enum {
+	HEART
+} LedIndicator;
+
+/*! All the LedStates a led can be */
+typedef enum {
+	FADE,
+	SHINE,
+	INACTIVE
+} LedState;
+
 typedef struct {
 	Color startColor, endColor, diff, current;
 	int16_t totalSteps, steps;
