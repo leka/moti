@@ -28,7 +28,6 @@
 
 #include <Arduino.h>
 
-
 template<class T> class Vector {
 	public:
 		Vector() {
