@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
+#include "Moti.h"
 
 
 typedef enum {
@@ -44,7 +45,7 @@ namespace Arbitrer {
 
 		chMtxLock(&_arbitrerMutex);
 
-		Moti::run();
+		Moti::start();
 
 		if (!_isRunning) {
 			_isRunning = true;

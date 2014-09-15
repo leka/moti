@@ -16,7 +16,7 @@ void mainThred() {
 	Sensors::init();
 	DriveSystem::start();
 	Motion::start();
-	Moti::start();
+	Moti::startThread();
 	// Light::start();
 
 	uint8_t state = 1;
@@ -27,7 +27,7 @@ void mainThred() {
 
 	Stabilization::run();
 
-	Moti::run();
+	Moti::start();
 
 	while (TRUE) {
 		if (Moti::isSpinning())
