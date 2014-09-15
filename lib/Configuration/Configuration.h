@@ -20,127 +20,47 @@
 #ifndef LEKA_MOTI_ARDUINO_CONFIGURATION_H_
 #define LEKA_MOTI_ARDUINO_CONFIGURATION_H_
 
-#include <Arduino.h>
-
 /**
  * @file Configuration.h
  * @author Ladislas de Toldi & Flavien Raynaud
  * @version 1.0
  */
 
-/*
- * @brief The direction pin of the left motor
- */
+#include <Arduino.h>
+
+// MOTORS
 static const uint8_t LEFT_MOTOR_DIRECTION_PIN = 4;
-
-/*
- * @brief The speed pin of the left motor
- */
 static const uint8_t LEFT_MOTOR_SPEED_PIN = 5;
-
-/*
- * @brief The direction pin of the right motor
- */
 static const uint8_t RIGHT_MOTOR_DIRECTION_PIN = 7;
-
-/*
- * @brief The speed pin of the right motor
- */
 static const uint8_t RIGHT_MOTOR_SPEED_PIN = 6;
-
-
-/*
- * @brief The maximum speed that a motor can spin
- */
 static const uint8_t MOTOR_MAX_SPEED = 255;
 
-
-/*
- * @brief The delay between two operations in the DriveSystem (in ms)
- */
+// DRIVE SYSTEM
 static const uint8_t DRIVESYSTEM_THREAD_DELAY = 50;
 
-
-
-/*
- * @brief The number of leds on the device
- */
+// LED
 static const uint8_t N_LEDS = 1;
-
-
-/*
- * @brief The heart led red pin
- */
 static const uint8_t HEART_LED_RED_PIN = 11;
-
-/*
- * @brief The heart led green pin
- */
 static const uint8_t HEART_LED_GREEN_PIN = 12;
-
-/*
- * @brief The heart led blue pin
- */
 static const uint8_t HEART_LED_BLUE_PIN = 13;
 
-
-/*
- * @brief The delay between two operations in the Light system (in ms)
- */
+// LIGHT
 static const uint8_t LIGHT_THREAD_DELAY = 30;
 
-
-
-/*
- * @brief The threshold that detects whether the device is active or not
- */
+// SENSORS
 static const uint8_t SENSORS_INACTIVITY_THRESHOLD = 75;
-
-/*
- * @brief The time after which the device is said to be inactive
- */
 static const uint8_t SENSORS_INACTIVITY_TIME = 10;
-
-/*
- * @brief Activate or not the inactivity checking on the X-axis of the accelerometer (1 to active, 0 otherwise)
- */
 static const uint8_t SENSORS_INACTIVITY_X = 1;
-
-/*
- * @brief Activate or not the inactivity checking on the Y-axis of the accelerometer (1 to active, 0 otherwise)
- */
 static const uint8_t SENSORS_INACTIVITY_Y = 1;
-
-/*
- * @brief Activate or not the inactivity checking on the Z-axis of the accelerometer (1 to active, 0 otherwise)
- */
 static const uint8_t SENSORS_INACTIVITY_Z = 1;
-
-/*
- * @brief The minimum delay between two sensors refresh (in ms)
- */
 static const uint8_t SENSORS_REFRESH_DELAY = 50;
 
-
-/*
- * @brief The threshold that detects whether the device is stuck or not
- */
+// ENVIRONMENT
 static const uint8_t ENVIRONMENT_STUCK_THRESHOLD = 75;
-
-/*
- * @brief The time after which the device is considered stuck (in ms)
- */
+static const uint8_t ENVIRONMENT_THREAD_DELAY = 50;
 static const uint16_t ENVIRONMENT_STUCK_TIME = 500;
 
-/*
- * @brief The minimum delay between two environment checks (in ms)
- */
-static const uint8_t ENVIRONMENT_THREAD_DELAY = 50;
-
-
-/*
- * @brief The minimum delay between two stabilization steps (in ms)
- */
+// STABILIZATION
 static const uint8_t STABILIZATION_THREAD_DELAY = 50;
 
 #endif
