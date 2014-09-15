@@ -18,56 +18,27 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#ifndef LEKA_MOTI_MODULE_MOTI_H_
-#define LEKA_MOTI_MODULE_MOTI_H_
+#ifndef LEKA_MOTI_MODULE_TOOLBOX_H_
+#define LEKA_MOTI_MODULE_TOOLBOX_H_
 
 /**
- * @file Moti.h
+ * @file Toolbox.h
  * @author Ladislas de Toldi
  * @version 1.0
  */
 
 #include <Arduino.h>
+#include <math.h>
 #include "ChibiOS_AVR.h"
-#include "Toolbox.h"
-#include "Sensors.h"
 
-#define serio Serial
-#define HISTORY_SIZE 6
+namespace Toolbox {
 
-namespace Moti {
-
-	// Thread
-	msg_t moduleThread(void* arg);
-	void startThread(void* arg=NULL, tprio_t priority=NORMALPRIO+1);
-	void start(void);
-	void stop(void);
-
-	// Methods
-	uint8_t getLapsZ(void);
-
-	// States
-	void detectStuck(void);
-	bool isStuck(void);
-	void detectFall(void);
-	bool isFalling(void);
-
-	void detectShake(void);
-	bool isShaken(void);
-	bool isShakenX(void);
-	bool isShakenY(void);
-	bool isShakenZ(void);
-
-	void detectSpin(void);
-	bool isSpinning(void);
-	bool isSpinningY(void);
-	bool isSpinningP(void);
-	bool isSpinningR(void);
+	float mod(float a, float b);
+	float diffAngle(float a, float b);
+	float arrayDeltaSum(float* array, uint8_t size);
 
 }
 
-namespace State {
+	void waitMs(uint16_t ms);
 
-
-}
 #endif

@@ -16,7 +16,7 @@ void mainThred() {
 	Sensors::init();
 	DriveSystem::start();
 	Motion::start();
-	Moti::start();
+	Moti::startThread();
 	// Light::start();
 
 	uint8_t state = 1;
@@ -27,11 +27,11 @@ void mainThred() {
 
 	Stabilization::run();
 
-	Moti::run();
+	Moti::start();
 
 	while (TRUE) {
 		if (Moti::isSpinning())
-			Serial1.println(Moti::countSpinLaps());
+			Serial1.println(Moti::getLapsZ());
 
 		if (readCmd.getHeader() == 1) {
 			if (state == 0) {
