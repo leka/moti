@@ -17,7 +17,6 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#include <Arduino.h>
 #include "Motor.h"
 
 /**
@@ -25,7 +24,6 @@
  * @author Ladislas de Toldi
  * @version 1.0
  */
-
 
 /**
  * @brief Instantiates a new motor, given its direction and speed pins

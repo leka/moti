@@ -29,13 +29,11 @@
 #include <Arduino.h>
 #include "Configuration.h"
 
-/*! Direction enumeration, for the DriveSystem */
 typedef enum {
 	BACKWARD,
 	FORWARD
 } Direction;
 
-/*! Rotation enumeration, for the DriveSystem spin */
 typedef enum {
 	LEFT,
 	RIGHT
