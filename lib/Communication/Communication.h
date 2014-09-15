@@ -17,8 +17,8 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#ifndef LEKA_MOTI_ARDUINO_COMMUNICATION_H_
-#define LEKA_MOTI_ARDUINO_COMMUNICATION_H_
+#ifndef LEKA_MOTI_MODULE_COMMUNICATION_H_
+#define LEKA_MOTI_MODULE_COMMUNICATION_H_
 
 /**
  * @file Communication.h

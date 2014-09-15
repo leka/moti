@@ -17,8 +17,8 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#ifndef LEKA_MOTI_ARDUINO_SERIAL_H_
-#define LEKA_MOTI_ARDUINO_SERIAL_H_
+#ifndef LEKA_MOTI_CLASS_SERIAL_H_
+#define LEKA_MOTI_CLASS_SERIAL_H_
 
 /**
  * @file Serial.h

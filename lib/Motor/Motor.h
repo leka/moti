@@ -17,8 +17,8 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#ifndef LEKA_MOTI_ARDUINO_MOTOR_H_
-#define LEKA_MOTI_ARDUINO_MOTOR_H_
+#ifndef LEKA_MOTI_CLASS_MOTOR_H_
+#define LEKA_MOTI_CLASS_MOTOR_H_
 
 /**
  * @file Motors.h

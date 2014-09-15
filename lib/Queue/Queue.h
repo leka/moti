@@ -17,8 +17,8 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#ifndef LEKA_MOTI_ARDUINO_QUEUE_H
-#define LEKA_MOTI_ARDUINO_QUEUE_H
+#ifndef LEKA_MOTI_CLASS_QUEUE_H
+#define LEKA_MOTI_CLASS_QUEUE_H
 
 #include <Arduino.h>
 
