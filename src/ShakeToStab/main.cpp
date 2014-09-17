@@ -31,7 +31,6 @@ void mainThread() {
 	Light::start();
 	Heart::start();
 
-
 	while (TRUE) {
 
 		while (Moti::isShaken()) {
@@ -42,12 +41,12 @@ void mainThread() {
 
 			if (_actionState == SLEEPING) {
 				_actionState = STABILIZING;
-				// Stabilization::start();
+				Stabilization::start();
 				Heart::stop();
 			}
 			else {
 				_actionState = SLEEPING;
-				// Stabilization::stop();
+				Stabilization::stop();
 				Heart::start();
 			}
 
