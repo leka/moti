@@ -245,7 +245,7 @@ msg_t Motion::moduleThread(void* arg) {
 
 		if (_action == GO) {
 			count = 0;
-			while ((_action == GO) && ((_duration == 0) || (count++) * delay < _duration)) {
+			while ((_action == GO) && ((_duration == 0) || (++count) * delay < _duration)) {
 				if (_goDelay / delay > count)
 					DriveSystem::go(_direction, (count * _speed) / (_goDelay / delay));
 				else
