@@ -1,5 +1,5 @@
-#ifndef LEKA_MOTI_BEHAVIOR_BEHAVIOR_NAME_H_
-#define LEKA_MOTI_BEHAVIOR_BEHAVIOR_NAME_H_
+#ifndef LEKA_MOTI_BEHAVIOR_HEART_H_
+#define LEKA_MOTI_BEHAVIOR_HEART_H_
 
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
@@ -8,7 +8,7 @@
 namespace Heart {
 
 	// Thread methods
-	static WORKING_AREA(behaviorThreadArea, 256);
+	static WORKING_AREA(behaviorThreadArea, 400);
 	static msg_t thread(void* arg);
 
 	void init(void* arg = NULL, tprio_t priority = NORMALPRIO);
@@ -48,9 +48,9 @@ void Heart::stop(void) {
 	chMtxLock(&_behaviorMutex);
 
 	_isStarted = false;
-	Light::fade(HEART, Color::Black, Color::Black, _behaviorThreadDelay);
 
 	chMtxUnlock();
+	Light::fade(HEART, Color::Black, Color::Black, 100);
 }
 
 msg_t Heart::thread(void* arg) {
@@ -65,7 +65,6 @@ msg_t Heart::thread(void* arg) {
 	while (!chThdShouldTerminate()) {
 
 		if (_isStarted) {
-
 			Light::fade(HEART, Color(basePwm, 0, 0), Color(P, 0, 0), 100);
 			Light::fade(HEART, Color(P, 0, 0), Color(basePwm, 0, 0), 100);
 
@@ -74,9 +73,13 @@ msg_t Heart::thread(void* arg) {
 			Light::fade(HEART, Color(Q, 0, 0), Color(R, 0, 0), 120);
 			Light::fade(HEART, Color(R, 0, 0), Color(basePwm, 0, 0), 140);
 
+			waitMs(2000);
 		}
-
-		waitMs(_behaviorThreadDelay);
+		else {
+			// Light::fade(HEART, Color::Black, Color::BluePure, 500);
+			// Light::fade(HEART, Color::Black, Color::Orange, 500);
+			waitMs(1000);
+		}
 	}
 	return (msg_t)0;
 }
