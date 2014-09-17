@@ -6,13 +6,12 @@
 #include "Light.h"
 
 #include "Stabilization.h"
+#include "Heart.h"
 
 typedef enum {
 	SLEEPING = 0x01,
 	STABILIZING = 0x02,
 } ArbitrerState;
-
-Led heart = Led(11, 12, 13);
 
 void mainThread() {
 
@@ -23,11 +22,15 @@ void mainThread() {
 
 	Sensors::init();
 	Moti::init();
+	Light::init();
+
 	Stabilization::init();
+	Heart::init();
 
 	Moti::start();
+	Light::start();
+	Heart::start();
 
-	heart.shine(Color::GreenPure);
 
 	while (TRUE) {
 
@@ -40,12 +43,12 @@ void mainThread() {
 			if (_actionState == SLEEPING) {
 				_actionState = STABILIZING;
 				// Stabilization::start();
-				heart.shine(Color::GreenPure);
+				Heart::stop();
 			}
 			else {
 				_actionState = SLEEPING;
 				// Stabilization::stop();
-				heart.shine(Color::RedPure);
+				Heart::start();
 			}
 
 			hasBeenShaken = false;
