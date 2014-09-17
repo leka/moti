@@ -9,30 +9,28 @@
 
 namespace Stabilization {
 
-	void start(void* arg=NULL, tprio_t priority=NORMALPRIO);
+	// Thread methods
+	static WORKING_AREA(stabilizationThreadArea, 256);
+	static msg_t thread(void* arg);
 
-	void run(void);
+	void init(void* arg = NULL, tprio_t priority = NORMALPRIO);
+	void start(void);
 	void stop(void);
+
+	// Variables
+	bool _isInitialized = false;
+	bool _isStarted = false;
+	uint32_t _runStartTime = 0;
+
+	// Misc
+	MUTEX_DECL(_stabMutex);
 
 }
 
-static WORKING_AREA(stabilizationThreadArea, 256);
-
-namespace Stabilization {
-
-	bool _isStarted = false;
-	bool _isRunning = false;
-
-	uint32_t _runStartTime = 0;
-
-	static msg_t thread(void* arg);
-
-	MUTEX_DECL(_stabMutex);
-
-void start(void* arg, tprio_t priority) {
-	if (!_isStarted) {
-		_isStarted = true;
-		_isRunning = true;
+void Stabilization::init(void* arg, tprio_t priority) {
+	if (!_isInitialized) {
+		_isInitialized = true;
+		_isStarted = false;
 
 		(void)chThdCreateStatic(stabilizationThreadArea,
 				sizeof(stabilizationThreadArea),
@@ -40,24 +38,27 @@ void start(void* arg, tprio_t priority) {
 	}
 }
 
-void run(void) {
+void Stabilization::start(void) {
 	chMtxLock(&_stabMutex);
 
-	_isRunning = true;
+	_isStarted = true;
 	_runStartTime = millis();
 
 	chMtxUnlock();
 }
 
-void stop(void) {
+void Stabilization::stop(void) {
 	chMtxLock(&_stabMutex);
 
-	_isRunning = false;
+	_isStarted = false;
 
 	chMtxUnlock();
 }
 
-msg_t thread(void* arg) {
+msg_t Stabilization::thread(void* arg) {
+
+	(void) arg;
+
 	float currentAngle = 0.0;
 	float input = 0.0;
 	int16_t output = 0.0;
@@ -68,7 +69,7 @@ msg_t thread(void* arg) {
 	uint32_t currentTime = 0;
 
 	while (!chThdShouldTerminate()) {
-		if (_isRunning) {
+		if (_isStarted) {
 			currentTime = abs(millis() - _runStartTime);
 			if (currentTime > 2000)
 				currentAngle = Sensors::getEulerPhi();
@@ -100,8 +101,6 @@ msg_t thread(void* arg) {
 	}
 
 	return (msg_t)0;
-}
-
 }
 
 #endif

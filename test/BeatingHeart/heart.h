@@ -1,46 +1,48 @@
-#ifndef LEKA_MOTI_BEHAVIOR_STABILIZATION_H_
-#define LEKA_MOTI_BEHAVIOR_STABILIZATION_H_
+
+#ifndef LEKA_MOTI_BEHAVIOR_HEART_H_
+#define LEKA_MOTI_BEHAVIOR_HEART_H_
 
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
 #include "Configuration.h"
 #include "Sensors.h"
-#include "Motion.h"
+#include "Light.h"
 
-namespace Stabilization {
+namespace Heart {
 
-	void start(void* arg=NULL, tprio_t priority=NORMALPRIO);
+	static WORKING_AREA(heartThreadArea, 256);
+	void init(void* arg = NULL, tprio_t priority = NORMALPRIO);
 
-	void run(void);
+	void start(void);
 	void stop(void);
-
-}
-
-static WORKING_AREA(stabilizationThreadArea, 256);
-
-namespace Stabilization {
 
 	bool _isStarted = false;
 	bool _isRunning = false;
 
 	uint32_t _runStartTime = 0;
 
-	static msg_t thread(void* arg);
+	static msg_t heartThread(void* arg);
 
 	MUTEX_DECL(_stabMutex);
 
-void start(void* arg, tprio_t priority) {
+}
+
+
+
+void Heart::start(void* arg, tprio_t priority) {
+	(void) arg;
+
 	if (!_isStarted) {
 		_isStarted = true;
 		_isRunning = true;
 
-		(void)chThdCreateStatic(stabilizationThreadArea,
-				sizeof(stabilizationThreadArea),
-				priority, thread, arg);
+		(void)chThdCreateStatic(heartThreadArea,
+				sizeof(heartThreadArea),
+				priority, heartThread, arg);
 	}
 }
 
-void run(void) {
+void Heart::start(void) {
 	chMtxLock(&_stabMutex);
 
 	_isRunning = true;
@@ -49,7 +51,7 @@ void run(void) {
 	chMtxUnlock();
 }
 
-void stop(void) {
+void Heart::stop(void) {
 	chMtxLock(&_stabMutex);
 
 	_isRunning = false;
@@ -57,7 +59,9 @@ void stop(void) {
 	chMtxUnlock();
 }
 
-msg_t thread(void* arg) {
+msg_t Heart::heartThread(void* arg) {
+	(void) arg;
+
 	float currentAngle = 0.0;
 	float input = 0.0;
 	int16_t output = 0.0;
@@ -100,8 +104,6 @@ msg_t thread(void* arg) {
 	}
 
 	return (msg_t)0;
-}
-
 }
 
 #endif

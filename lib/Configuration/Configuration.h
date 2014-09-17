@@ -45,7 +45,7 @@ static const uint8_t HEART_LED_GREEN_PIN = 12;
 static const uint8_t HEART_LED_BLUE_PIN = 13;
 
 // LIGHT
-static const uint8_t LIGHT_THREAD_DELAY = 30;
+static const uint8_t LIGHT_THREAD_DELAY = 20;
 
 // SENSORS
 static const uint8_t SENSORS_INACTIVITY_THRESHOLD = 75;
