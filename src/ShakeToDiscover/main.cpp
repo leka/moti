@@ -9,6 +9,11 @@
 #include "Heart.h"
 #include "Wander.h"
 
+enum MovementState {
+	SLEEPING,
+	STABILIZING
+};
+
 void mainThread() {
 
 	bool hasBeenShaken = false;
@@ -34,17 +39,19 @@ void mainThread() {
 
 		while (Moti::isShaken()) {
 			hasBeenShaken = true;
+			waitMs(50);
 		}
 
 		if (hasBeenShaken) {
 
 			if (_actionState == SLEEPING) {
+				Serial.println(1);
 				_actionState = STABILIZING;
 				Stabilization::start();
 				Wander::stop();
 			}
 			else {
-				Serial.println("should move");
+				Serial.println(2);
 				_actionState = SLEEPING;
 				Stabilization::stop();
 				Wander::start();
@@ -52,7 +59,7 @@ void mainThread() {
 
 			hasBeenShaken = false;
 		}
-		waitMs(50);
+		waitMs(100);
 	}
 }
 
