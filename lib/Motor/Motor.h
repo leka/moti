@@ -38,6 +38,9 @@ typedef enum {
 	RIGHT
 } Rotation;
 
+
+static const uint8_t MOTOR_MAX_SPEED = 255;
+
 /**
  * @class Motor
  * @brief Motor class gathers all the motor functions for Moti.

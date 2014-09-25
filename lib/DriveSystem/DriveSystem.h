@@ -30,6 +30,8 @@
 #include "ChibiOS_AVR.h"
 #include "Motor.h"
 
+static const uint8_t DRIVESYSTEM_THREAD_DELAY = 50;
+
 /**
  * @namespace DriveSystem
  * @brief DriveSystem gathers all the driving related functions such as going forward, backward, turning and spinning.

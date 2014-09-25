@@ -32,14 +32,13 @@ namespace DriveSystem {
 	// Thread
 	static WORKING_AREA(driveThreadArea, 128);
 	bool _isInitialized = false;
-	uint8_t _threadDelay = 50;
+	uint8_t _threadDelay = DRIVESYSTEM_THREAD_DELAY;
 
 	// Motor objects
 	uint8_t LEFT_MOTOR_DIRECTION_PIN = 4;
 	uint8_t LEFT_MOTOR_SPEED_PIN = 5;
 	uint8_t RIGHT_MOTOR_DIRECTION_PIN = 7;
 	uint8_t RIGHT_MOTOR_SPEED_PIN = 6;
-	uint8_t MOTOR_MAX_SPEED = 255;
 
 	Motor _rightMotor = Motor(RIGHT_MOTOR_DIRECTION_PIN, RIGHT_MOTOR_SPEED_PIN);
 	Motor _leftMotor  = Motor(LEFT_MOTOR_DIRECTION_PIN, LEFT_MOTOR_SPEED_PIN);
