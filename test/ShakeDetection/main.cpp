@@ -10,23 +10,24 @@
 Led heart = Led(11, 12, 13);
 
 void mainThread() {
-	serio.begin(115200);
 	Sensors::init();
 	Moti::init();
 
 	Moti::start();
 
+	Serial.println("Starting");
+
 	while (TRUE) {
 
-		if (Moti::isShakenX())
+		if (Moti::isShakenX()) {
 			heart.shine(Color::RedPure);
-
-		else if (Moti::isShakenY())
+		}
+		else if (Moti::isShakenY()) {
 			heart.shine(Color::BluePure);
-
-		else if (Moti::isShakenZ())
+		}
+		else if (Moti::isShakenZ()) {
 			heart.shine(255, 255, 255);
-
+		}
 		else
 			heart.turnOff();
 
