@@ -35,6 +35,7 @@ void mainThread() {
 
 		while (Moti::isShaken()) {
 			hasBeenShaken = true;
+			waitMs(50);
 		}
 
 		if (hasBeenShaken) {
@@ -61,9 +62,9 @@ void loop() { }
 int main(void) {
 	init();
 
-	// Serial.begin(115200);
-	// while (!Serial);
-	//
+	Serial.begin(115200);
+	while (!Serial);
+
 	// Serial1.begin(115200);
 	// while (!Serial1);
 
