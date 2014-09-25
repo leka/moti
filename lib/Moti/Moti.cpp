@@ -34,13 +34,18 @@ namespace Moti {
 	static WORKING_AREA(motiModuleThreadArea, 256);
 	bool _isInitialized = false;
 	bool _isStarted     = false;
+	uint8_t _threadDelay = 100;
 
 	// Moti states
-	bool _isStuck        = false;
+	bool _isStuck           = false;
+	uint8_t _stuckThreshold = 75;
+	uint16_t _stuckTime     = 500;
+
 	bool _isFalling      = false;
 
 	bool _isShaken       = false;
 	bool _isShakenXYZ[3] = {false, false, false};
+	uint16_t _shakeTime  = 500;
 
 	bool _isSpinning     = false;
 	bool _isSpinningY    = false;
@@ -62,7 +67,8 @@ namespace Moti {
 	double _sqrtXYZ[3]           = {0, 0, 0};
 	double _avrgXYZ[3]           = {0, 0, 0};
 	double _alphaXYZ[3]          = {0.1, 0.1, 0.1};
-	double _shakeThresholdXYZ[3] = {150, 150, 250};
+	double _shakeThresholdXYZ[3] = {120, 120, 120};
+	uint32_t _startShakeTime     = 0;
 }
 
 /**
@@ -101,7 +107,7 @@ bool Moti::isStuck() {
 	if (!_isInitialized)
 		start();
 
-	return _isStuck && (abs(millis() - _startStuckTime) > ENVIRONMENT_STUCK_TIME);
+	return _isStuck && (abs(millis() - _startStuckTime) > _stuckTime);
 }
 
 /**
@@ -109,7 +115,7 @@ bool Moti::isStuck() {
  * @return true if shaken
  */
 bool Moti::isShaken(void) {
-	return _isShaken;
+	return _isShaken && (abs(millis() - _startShakeTime) > _shakeTime);
 }
 
 /**
@@ -117,7 +123,7 @@ bool Moti::isShaken(void) {
  * @return true if shaken
  */
 bool Moti::isShakenX(void) {
-	return _isShakenXYZ[0];
+	return _isShakenXYZ[0] && (abs(millis() - _startShakeTime) > _shakeTime);
 }
 
 /**
@@ -125,7 +131,7 @@ bool Moti::isShakenX(void) {
  * @return true if shaken
  */
 bool Moti::isShakenY(void) {
-	return _isShakenXYZ[1];
+	return _isShakenXYZ[1] && (abs(millis() - _startShakeTime) > _shakeTime);
 }
 
 /**
@@ -133,7 +139,7 @@ bool Moti::isShakenY(void) {
  * @return true if shaken
  */
 bool Moti::isShakenZ(void) {
-	return _isShakenXYZ[2];
+	return _isShakenXYZ[2] && (abs(millis() - _startShakeTime) > _shakeTime);
 }
 
 /**
@@ -161,7 +167,7 @@ uint8_t Moti::getLapsZ(void) {
 }
 
 void Moti::detectStuck(void) {
-	if (abs(Sensors::getAccX()) > ENVIRONMENT_STUCK_THRESHOLD) {
+	if (abs(Sensors::getAccX()) > _stuckThreshold) {
 		if (!_isStuck) {
 			_isStuck = true;
 			_startStuckTime = millis();
@@ -222,7 +228,10 @@ void Moti::detectShake(void) {
 	}
 
 	if (_isShakenXYZ[0] || _isShakenXYZ[1] || _isShakenXYZ[2]) {
-		_isShaken = true;
+		if (!_isShaken) {
+			_isShaken = true;
+			_startShakeTime = millis();
+		}
 	}
 	else {
 		_isShaken = false;
@@ -253,7 +262,7 @@ msg_t Moti::moduleThread(void* arg) {
 
 		}
 
-		waitMs(ENVIRONMENT_THREAD_DELAY);
+		waitMs(_threadDelay);
 	}
 
 	return (msg_t)0;
