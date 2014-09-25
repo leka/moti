@@ -17,153 +17,79 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#include "DriveSystem.h"
+#include "Module.h"
 
 /**
- * @file DriveSystem.cpp
+ * @file Module.cpp
  * @author Ladislas de Toldi
  * @version 1.0
  */
 
-namespace DriveSystem {
+namespace ModuleName {
 
 	// VARIABLES
 
 	// Thread
-	static WORKING_AREA(driveThreadArea, 128);
+	static WORKING_AREA(threadArea, 128);
 	bool _isInitialized = false;
+	bool _isStarted = false;
+	uint16_t _threadDelay = 50;
 
-	// Motor objects
-	Motor _rightMotor = Motor(RIGHT_MOTOR_DIRECTION_PIN, RIGHT_MOTOR_SPEED_PIN);
-	Motor _leftMotor  = Motor(LEFT_MOTOR_DIRECTION_PIN, LEFT_MOTOR_SPEED_PIN);
+	// Objects
 
-	// Motors variables
-	uint8_t _rightSpeed = 0;
-	uint8_t _leftSpeed  = 0;
-	Direction _rightDirection = FORWARD;
-	Direction _leftDirection  = FORWARD;
+	// Variables
 
 	// Misc
-	Semaphore _sem = _SEMAPHORE_DATA(_sem, 0);
 
 }
 
 /**
  * @brief Start DriveSystem's chThread
  */
-void DriveSystem::init(void* arg, tprio_t priority) {
+void ModuleName::init(void* arg, tprio_t priority) {
 	if (!_isInitialized) {
 		_isInitialized = true;
 
-		(void)chThdCreateStatic(driveThreadArea, sizeof(driveThreadArea),
+		(void)chThdCreateStatic(threadArea, sizeof(threadArea),
 				priority, moduleThread, arg);
 	}
 }
 
 /**
- * @brief Tells the motors to spin in a given direction, at a given speed
- * @param direction the direction (FORWARD | BACKWARD)
- * @param speed the speed (0 - MOTOR_MAX_SPEED)
+ * @brief Starts the module
  */
-void DriveSystem::go(Direction direction, uint8_t speed) {
-	if (!_isInitialized)
-		init();
-
-	_leftDirection = direction;
-	_rightDirection = direction;
-
-	_rightSpeed = speed;
-	_leftSpeed = speed;
-
-	chSemSignal(&_sem);
+void ModuleName::start(void) {
+	_isStarted = true;
 }
 
 /**
- * @brief Tells the motors to spin in a given direction, at a given speed, with different speed for right and left motors
- * @param direction the direction (FORWARD | BACKWARD)
- * @param rightSpeed the speed of the right motor (0 - MOTOR_MAX_SPEED)
- * @param leftSpeed the speed of the left motor (0 - MOTOR_MAX_SPEED)
+ * @brief Stops the module
  */
-void DriveSystem::turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed) {
-	if (!_isInitialized)
-		init();
-
-	_leftDirection = direction;
-	_rightDirection = direction;
-
-	_rightSpeed = rightSpeed;
-	_leftSpeed = leftSpeed;
-
-	chSemSignal(&_sem);
+void ModuleName::stop(void) {
+	_isStarted = false;
 }
 
 /**
- * @brief Tells the motors to spin in the opposite direction (rotation), at a given speed
- * @param rotation the rotation side (RIGHT | LEFT)
- * @param speed the speed (0 - MOTOR_MAX_SPEED)
+ * @brief A method the Module should execute
  */
-void DriveSystem::spin(Rotation rotation, uint8_t speed) {
-	if (!_isInitialized)
-		init();
-
-	switch (rotation) {
-		case LEFT:
-			_leftDirection = BACKWARD;
-			_rightDirection = FORWARD;
-			break;
-
-		case RIGHT:
-			_leftDirection = FORWARD;
-			_rightDirection = BACKWARD;
-			break;
-	}
-
-	_rightSpeed = speed;
-	_leftSpeed = speed;
-
-	chSemSignal(&_sem);
-}
-
-/**
- * @brief Tells the motors to immediately stop spinning
- */
-void DriveSystem::stop(void) {
-	if (!_isInitialized)
-		init();
-
-	_rightDirection = _leftDirection = FORWARD;
-	_rightSpeed = _leftSpeed = 0;
-
-	chSemSignal(&_sem);
-}
-
-Direction DriveSystem::getRightDirection(void) {
-	return _rightDirection;
-}
-
-uint8_t DriveSystem::getRightSpeed(void) {
-	return _rightSpeed;
-}
-
-Direction DriveSystem::getLeftDirection(void) {
-	return _leftDirection;
-}
-
-uint8_t DriveSystem::getLeftSpeed(void) {
-	return _leftSpeed;
+void ModuleName::aModuleMethod(void) {
+	// do stuff you want here
 }
 
 /**
  * @brief Main module thread
  */
-msg_t DriveSystem::moduleThread(void* arg) {
+msg_t ModuleName::moduleThread(void* arg) {
 	(void) arg;
 
 	while (!chThdShouldTerminate()) {
-		chSemWait(&_sem);
 
-		_rightMotor.spin(_rightDirection, _rightSpeed);
-		_leftMotor.spin(_leftDirection, _leftSpeed);
+		if(_isStarted) {
+			aModuleMethod();
+			// and everything else you want
+		}
+
+		waitMs(_threadDelay);
 	}
 
 	return (msg_t)0;

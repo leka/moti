@@ -17,42 +17,33 @@
    along with Moti. If not, see <http://www.gnu.org/licenses/>.
    */
 
-#ifndef LEKA_MOTI_MODULE_DRIVE_SYSTEM_H_
-#define LEKA_MOTI_MODULE_DRIVE_SYSTEM_H_
+#ifndef LEKA_MOTI_MODULE_MODULENAME_H_
+#define LEKA_MOTI_MODULE_MODULENAME_H_
 
 /**
- * @file DriveSystem.h
+ * @file Module.h
  * @author Ladislas de Toldi
  * @version 1.0
  */
 
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
-#include "Configuration.h"
-#include "Motor.h"
+#include "Toolbox.h"
 
 /**
  * @namespace DriveSystem
  * @brief DriveSystem gathers all the driving related functions such as going forward, backward, turning and spinning.
  */
-namespace DriveSystem {
+namespace ModuleName {
 
 	// Thread
 	msg_t moduleThread(void* arg);
 	void init(void* arg = NULL, tprio_t priority = NORMALPRIO + 2);
-
-	// Methods
-	void go(Direction direction, uint8_t speed);
-	void spin(Rotation rotation, uint8_t speed);
-	void turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed);
+	void start(void);
 	void stop(void);
 
-	// Get methods
-	Direction getRightDirection(void);
-	uint8_t getRightSpeed(void);
-
-	Direction getLeftDirection(void);
-	uint8_t getLeftSpeed(void);
+	// Methods
+	void aModuleMethod(void);
 
 }
 
