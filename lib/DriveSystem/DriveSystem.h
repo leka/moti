@@ -28,7 +28,6 @@
 
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
-#include "Configuration.h"
 #include "Motor.h"
 
 /**

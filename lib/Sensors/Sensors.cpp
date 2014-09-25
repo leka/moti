@@ -30,6 +30,14 @@ namespace Sensors {
 	// FreeIMU object
 	FreeIMU _imu = FreeIMU();
 
+	// FreeIMU variables
+	uint8_t SENSORS_INACTIVITY_THRESHOLD = 75;
+	uint8_t SENSORS_INACTIVITY_TIME = 10;
+	uint8_t SENSORS_INACTIVITY_X = 1;
+	uint8_t SENSORS_INACTIVITY_Y = 1;
+	uint8_t SENSORS_INACTIVITY_Z = 1;
+	uint8_t SENSORS_REFRESH_DELAY = 50;
+
 	// Variables
 	float _XYZ[6] = { 0.f };
 	float _YPR[3] = { 0.f };

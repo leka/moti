@@ -27,7 +27,6 @@
  */
 
 #include <Arduino.h>
-#include "Configuration.h"
 
 typedef enum {
 	BACKWARD,

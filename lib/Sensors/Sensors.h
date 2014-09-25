@@ -32,7 +32,6 @@
 #include <math.h>
 
 #include "ChibiOS_AVR.h"
-#include "Configuration.h"
 #include "FreeIMU.h"
 #include "Moti.h"
 

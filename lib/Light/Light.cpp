@@ -33,8 +33,13 @@ namespace Light {
 	static WORKING_AREA(lightThreadArea, 256);
 	bool _isStarted     = false;
 	bool _isInitialized = false;
+	uint8_t _threadDelay = 20;
 
 	// Led objects
+	uint8_t HEART_LED_RED_PIN = 11;
+	uint8_t HEART_LED_GREEN_PIN = 12;
+	uint8_t HEART_LED_BLUE_PIN = 13;
+
 	Led leds[N_LEDS] = { Led(HEART_LED_RED_PIN, HEART_LED_GREEN_PIN, HEART_LED_BLUE_PIN) };
 	Queue<LedData*> data[N_LEDS] = { Queue<LedData*>() };
 
@@ -60,7 +65,7 @@ void Light::fade(LedIndicator led, Color startColor, Color endColor, int16_t dur
 
 	newData->startColor = startColor;
 	newData->endColor = endColor;
-	newData->totalSteps = duration / LIGHT_THREAD_DELAY;
+	newData->totalSteps = duration / _threadDelay;
 	newData->steps = 0;
 	newData->state = FADE;
 
@@ -136,7 +141,7 @@ void Light::start(void) {
 		_isStarted = true;
 
 		// leds[0] = Led(HEART_LED_RED_PIN, HEART_LED_GREEN_PIN, HEART_LED_BLUE_PIN);
-        //
+		//
 		// for (uint8_t i = 0; i < N_LEDS; ++i)
 		// 	data[i] = Queue<LedData*>();
 	}
@@ -209,7 +214,7 @@ msg_t Light::moduleThread(void* arg) {
 				}
 			}
 
-			waitMs(LIGHT_THREAD_DELAY);
+			waitMs(_threadDelay);
 
 			if (noRecall)
 				break;
