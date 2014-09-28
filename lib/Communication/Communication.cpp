@@ -35,13 +35,13 @@ namespace Communication {
 	 */
 	void sendMotorData(void) {
 		serial.print(F("M,"));  /* M like Motors */
-		serial.print(DriveSystem::getRightDirection());
+		serial.print(DriveSystem::getRightMotorDirection());
 		serial.print(F(","));
-		serial.print(DriveSystem::getRightSpeed());
+		serial.print(DriveSystem::getRightMotorSpeed());
 		serial.print(F(","));
-		serial.print(DriveSystem::getLeftDirection());
+		serial.print(DriveSystem::getLeftMotorDirection());
 		serial.print(F(","));
-		serial.print(DriveSystem::getLeftSpeed());
+		serial.print(DriveSystem::getLeftMotorSpeed());
 	}
 
 
