@@ -27,8 +27,8 @@
  */
 
 #include <Arduino.h>
-#include "ChibiOS_AVR.h"
 #include "Motor.h"
+#include "ChibiOS_AVR.h"
 
 static const uint8_t DRIVESYSTEM_THREAD_DELAY = 50;
 
@@ -39,8 +39,7 @@ static const uint8_t DRIVESYSTEM_THREAD_DELAY = 50;
 namespace DriveSystem {
 
 	// Thread
-	msg_t moduleThread(void* arg);
-	void init(void* arg = NULL, tprio_t priority = NORMALPRIO + 2);
+	// no thread here
 
 	// Methods
 	void go(Direction direction, uint8_t speed);
@@ -48,12 +47,19 @@ namespace DriveSystem {
 	void turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed);
 	void stop(void);
 
-	// Get methods
-	Direction getRightDirection(void);
-	uint8_t getRightSpeed(void);
+	// Set methods
+	void setRightMotorDirection(Direction dir);
+	void setLeftMotorDirection(Direction dir);
 
-	Direction getLeftDirection(void);
-	uint8_t getLeftSpeed(void);
+	void setRightMotorSpeed(uint8_t speed);
+	void setLeftMotorSpeed(uint8_t speed);
+
+	// Get methods
+	Direction getRightMotorDirection(void);
+	Direction getLeftMotorDirection(void);
+
+	uint8_t getRightMotorSpeed(void);
+	uint8_t getLeftMotorSpeed(void);
 
 }
 
