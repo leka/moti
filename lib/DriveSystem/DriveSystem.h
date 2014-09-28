@@ -49,11 +49,11 @@ namespace DriveSystem {
 	void stop(void);
 
 	// Get methods
-	Direction getRightDirection(void);
-	uint8_t getRightSpeed(void);
+	Direction getRightMotorDirection(void);
+	Direction getLeftMotorDirection(void);
 
-	Direction getLeftDirection(void);
-	uint8_t getLeftSpeed(void);
+	uint8_t getRightMotorSpeed(void);
+	uint8_t getLeftMotorSpeed(void);
 
 }
 

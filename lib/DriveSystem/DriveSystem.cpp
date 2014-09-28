@@ -31,7 +31,8 @@ namespace DriveSystem {
 
 	// Thread
 	static WORKING_AREA(driveThreadArea, 128);
-	bool _isInitialized = false;
+	bool _isInitialized  = false;
+	bool _isStarted      = false;
 	uint8_t _threadDelay = DRIVESYSTEM_THREAD_DELAY;
 
 	// Motor objects
@@ -72,14 +73,11 @@ void DriveSystem::init(void* arg, tprio_t priority) {
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  */
 void DriveSystem::go(Direction direction, uint8_t speed) {
-	if (!_isInitialized)
-		init();
-
-	_leftDirection = direction;
+	_leftDirection  = direction;
 	_rightDirection = direction;
 
 	_rightSpeed = speed;
-	_leftSpeed = speed;
+	_leftSpeed  = speed;
 
 	chSemSignal(&_sem);
 }
@@ -91,14 +89,11 @@ void DriveSystem::go(Direction direction, uint8_t speed) {
  * @param leftSpeed the speed of the left motor (0 - MOTOR_MAX_SPEED)
  */
 void DriveSystem::turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed) {
-	if (!_isInitialized)
-		init();
-
-	_leftDirection = direction;
+	_leftDirection  = direction;
 	_rightDirection = direction;
 
 	_rightSpeed = rightSpeed;
-	_leftSpeed = leftSpeed;
+	_leftSpeed  = leftSpeed;
 
 	chSemSignal(&_sem);
 }
@@ -109,23 +104,20 @@ void DriveSystem::turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpee
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  */
 void DriveSystem::spin(Rotation rotation, uint8_t speed) {
-	if (!_isInitialized)
-		init();
-
 	switch (rotation) {
 		case LEFT:
-			_leftDirection = BACKWARD;
+			_leftDirection  = BACKWARD;
 			_rightDirection = FORWARD;
 			break;
 
 		case RIGHT:
-			_leftDirection = FORWARD;
+			_leftDirection  = FORWARD;
 			_rightDirection = BACKWARD;
 			break;
 	}
 
 	_rightSpeed = speed;
-	_leftSpeed = speed;
+	_leftSpeed  = speed;
 
 	chSemSignal(&_sem);
 }
@@ -134,28 +126,28 @@ void DriveSystem::spin(Rotation rotation, uint8_t speed) {
  * @brief Tells the motors to immediately stop spinning
  */
 void DriveSystem::stop(void) {
-	if (!_isInitialized)
-		init();
+	_rightDirection = FORWARD;
+	_leftDirection  = FORWARD;
 
-	_rightDirection = _leftDirection = FORWARD;
-	_rightSpeed = _leftSpeed = 0;
+	_rightSpeed = 0;
+	_leftSpeed  = 0;
 
 	chSemSignal(&_sem);
 }
 
-Direction DriveSystem::getRightDirection(void) {
+Direction DriveSystem::getRightMotorDirection(void) {
 	return _rightDirection;
 }
 
-uint8_t DriveSystem::getRightSpeed(void) {
-	return _rightSpeed;
-}
-
-Direction DriveSystem::getLeftDirection(void) {
+Direction DriveSystem::getLeftMotorDirection(void) {
 	return _leftDirection;
 }
 
-uint8_t DriveSystem::getLeftSpeed(void) {
+uint8_t DriveSystem::getRightMotorSpeed(void) {
+	return _rightSpeed;
+}
+
+uint8_t DriveSystem::getLeftMotorSpeed(void) {
 	return _leftSpeed;
 }
 
