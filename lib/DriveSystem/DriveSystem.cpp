@@ -30,10 +30,7 @@ namespace DriveSystem {
 	// VARIABLES
 
 	// Thread
-	static WORKING_AREA(driveThreadArea, 128);
-	bool _isInitialized  = false;
-	bool _isStarted      = false;
-	uint8_t _threadDelay = DRIVESYSTEM_THREAD_DELAY;
+	// no thread here
 
 	// Motor objects
 	uint8_t LEFT_MOTOR_DIRECTION_PIN = 4;
@@ -47,24 +44,49 @@ namespace DriveSystem {
 	// Motors variables
 	uint8_t _rightSpeed = 0;
 	uint8_t _leftSpeed  = 0;
-	Direction _rightDirection = FORWARD;
-	Direction _leftDirection  = FORWARD;
+	Direction _rightMotorDirection = FORWARD;
+	Direction _leftMotorDirection  = FORWARD;
 
-	// Misc
-	Semaphore _sem = _SEMAPHORE_DATA(_sem, 0);
+	uint8_t _returnRightSpeed = 0;
+	uint8_t _returnLeftSpeed  = 0;
+	Direction _returnRightMotorDirection = FORWARD;
+	Direction _returnLeftMotorDirection  = FORWARD;
+
+	// ChibiOS
+	MUTEX_DECL(_DriveSystemDataMutex);
 
 }
 
-/**
- * @brief Start DriveSystem's chThread
- */
-void DriveSystem::init(void* arg, tprio_t priority) {
-	if (!_isInitialized) {
-		_isInitialized = true;
+void DriveSystem::setRightMotorDirection(Direction dir) {
 
-		(void)chThdCreateStatic(driveThreadArea, sizeof(driveThreadArea),
-				priority, moduleThread, arg);
-	}
+	chMtxLock(&_DriveSystemDataMutex);
+	_rightMotorDirection = dir;
+	chMtxUnlock();
+
+}
+
+void DriveSystem::setLeftMotorDirection(Direction dir) {
+
+	chMtxLock(&_DriveSystemDataMutex);
+	_leftMotorDirection = dir;
+	chMtxUnlock();
+
+}
+
+void DriveSystem::setRightMotorSpeed(uint8_t speed) {
+
+	chMtxLock(&_DriveSystemDataMutex);
+	_rightSpeed = speed;
+	chMtxUnlock();
+
+}
+
+void DriveSystem::setLeftMotorSpeed(uint8_t speed) {
+
+	chMtxLock(&_DriveSystemDataMutex);
+	_leftSpeed = speed;
+	chMtxUnlock();
+
 }
 
 /**
@@ -73,13 +95,16 @@ void DriveSystem::init(void* arg, tprio_t priority) {
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  */
 void DriveSystem::go(Direction direction, uint8_t speed) {
-	_leftDirection  = direction;
-	_rightDirection = direction;
 
-	_rightSpeed = speed;
-	_leftSpeed  = speed;
+	setRightMotorDirection(direction);
+	setLeftMotorDirection(direction);
 
-	chSemSignal(&_sem);
+	setRightMotorSpeed(speed);
+	setLeftMotorSpeed(speed);
+
+	_rightMotor.spin(getRightMotorDirection(), getRightMotorSpeed());
+	_leftMotor.spin(getLeftMotorDirection(), getLeftMotorSpeed());
+
 }
 
 /**
@@ -89,13 +114,16 @@ void DriveSystem::go(Direction direction, uint8_t speed) {
  * @param leftSpeed the speed of the left motor (0 - MOTOR_MAX_SPEED)
  */
 void DriveSystem::turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpeed) {
-	_leftDirection  = direction;
-	_rightDirection = direction;
 
-	_rightSpeed = rightSpeed;
-	_leftSpeed  = leftSpeed;
+	setRightMotorDirection(direction);
+	setLeftMotorDirection(direction);
 
-	chSemSignal(&_sem);
+	setRightMotorSpeed(rightSpeed);
+	setLeftMotorSpeed(leftSpeed);
+
+	_rightMotor.spin(getRightMotorDirection(), getRightMotorSpeed());
+	_leftMotor.spin(getLeftMotorDirection(), getLeftMotorSpeed());
+
 }
 
 /**
@@ -104,69 +132,81 @@ void DriveSystem::turn(Direction direction, uint8_t rightSpeed, uint8_t leftSpee
  * @param speed the speed (0 - MOTOR_MAX_SPEED)
  */
 void DriveSystem::spin(Rotation rotation, uint8_t speed) {
+
 	switch (rotation) {
 		case LEFT:
-			_leftDirection  = BACKWARD;
-			_rightDirection = FORWARD;
+			setRightMotorDirection(FORWARD);
+			setLeftMotorDirection(BACKWARD);
 			break;
 
 		case RIGHT:
-			_leftDirection  = FORWARD;
-			_rightDirection = BACKWARD;
+			setRightMotorDirection(BACKWARD);
+			setLeftMotorDirection(FORWARD);
 			break;
 	}
 
-	_rightSpeed = speed;
-	_leftSpeed  = speed;
+	setRightMotorSpeed(speed);
+	setLeftMotorSpeed(speed);
 
-	chSemSignal(&_sem);
+	_rightMotor.spin(getRightMotorDirection(), getRightMotorSpeed());
+	_leftMotor.spin(getLeftMotorDirection(), getLeftMotorSpeed());
+
 }
 
 /**
  * @brief Tells the motors to immediately stop spinning
  */
 void DriveSystem::stop(void) {
-	_rightDirection = FORWARD;
-	_leftDirection  = FORWARD;
 
-	_rightSpeed = 0;
-	_leftSpeed  = 0;
+	setRightMotorDirection(FORWARD);
+	setLeftMotorDirection(FORWARD);
 
-	chSemSignal(&_sem);
+	setRightMotorSpeed(0);
+	setLeftMotorSpeed(0);
+
+	_rightMotor.stop();
+	_leftMotor.stop();
+
 }
 
 Direction DriveSystem::getRightMotorDirection(void) {
-	return _rightDirection;
+
+	chMtxLock(&_DriveSystemDataMutex);
+	_returnRightMotorDirection = _rightMotorDirection;
+	chMtxUnlock();
+
+	return _returnRightMotorDirection;
+
 }
 
 Direction DriveSystem::getLeftMotorDirection(void) {
-	return _leftDirection;
+
+	chMtxLock(&_DriveSystemDataMutex);
+	_returnLeftMotorDirection = _leftMotorDirection;
+	chMtxUnlock();
+
+	return _returnLeftMotorDirection;
+
 }
 
 uint8_t DriveSystem::getRightMotorSpeed(void) {
-	return _rightSpeed;
+
+	chMtxLock(&_DriveSystemDataMutex);
+	_returnRightSpeed = _rightSpeed;
+	chMtxUnlock();
+
+	return _returnRightSpeed;
+
 }
 
 uint8_t DriveSystem::getLeftMotorSpeed(void) {
-	return _leftSpeed;
-}
 
-/**
- * @brief Main module thread
- */
-msg_t DriveSystem::moduleThread(void* arg) {
-	(void) arg;
+	chMtxLock(&_DriveSystemDataMutex);
+	_returnLeftSpeed = _leftSpeed;
+	chMtxUnlock();
 
-	while (!chThdShouldTerminate()) {
+	return _returnLeftSpeed;
 
-		chSemWait(&_sem);
-
-		_rightMotor.spin(_rightDirection, _rightSpeed);
-		_leftMotor.spin(_leftDirection, _leftSpeed);
-
-	}
-
-	return (msg_t)0;
 }
 
 
