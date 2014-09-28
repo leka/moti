@@ -14,7 +14,6 @@ void mainThread() {
 	Serial1.println(F("Starting..."));
 
 	Sensors::init();
-	DriveSystem::init();
 	Motion::init();
 	Moti::init();
 	// Light::start();
@@ -25,7 +24,7 @@ void mainThread() {
 	ReadCommand readCmd;
 	COMMAND cmd;
 
-	Stabilization::run();
+	Stabilization::start();
 
 	Moti::start();
 
@@ -37,7 +36,7 @@ void mainThread() {
 			if (state == 0) {
 				Arbitrer::stop();
 				Motion::stop(0);
-				Stabilization::run();
+				Stabilization::start();
 			}
 			else {
 				Stabilization::stop();
@@ -67,7 +66,7 @@ void mainThread() {
 						break;
 
 					case COMMAND_STOP:
-						Stabilization::run();
+						Stabilization::start();
 						break;
 
 					case COMMAND_FADE:
