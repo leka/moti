@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
 failures=()
+successes=()
 
 cd "$SRC"
 for dir in *; do
 
 	if [ -d "${dir}" ]; then
 
-		echo "Compiling $dir...\n"
+		echo "Compiling $dir..."
 
 		echo $CWD
 		cd $dir
@@ -20,6 +21,9 @@ for dir in *; do
 		if [[ $? -ne 0 ]]; then
 			failures+=("$dir")
 			echo "Source $dir failed"
+		else
+			successes+=("$dir")
+			echo "Source $dir succeeded"
 		fi
 
 		cd ..
@@ -33,7 +37,7 @@ for dir in *; do
 
 	if [ -d "${dir}" ]; then
 
-		echo "Compiling $dir...\n"
+		echo "Compiling $dir..."
 
 		cd $dir
 
@@ -45,6 +49,9 @@ for dir in *; do
 		if [[ $? -ne 0 ]]; then
 			failures+=("$dir")
 			echo "Test $dir failed"
+		else
+			successes+=("$dir")
+			echo "Source $dir succeeded"
 		fi
 
 		cd ..
@@ -54,14 +61,19 @@ for dir in *; do
 done
 
 if [[ ${#failures[@]} -ne 0 ]]; then
-	echo "\nThe following builds failed:"
+	echo "The following builds succeeded:"
+	for success in "${successes[@]}"; do
+		echo "- Building $success succeeded"
+	done
+
+	echo "The following builds failed:"
 	for failure in "${failures[@]}"; do
 		echo "- Building $failure failed"
 	done
 fi
 
 if [[ ${#failures[@]} -eq 0 ]]; then
-	echo "\nAll tests passed."
+	echo "All tests passed."
 else
 	exit 1
 fi
