@@ -38,7 +38,10 @@
 namespace Sensors {
 
 	// Initialization
-	void init(void);
+	msg_t thread(void* arg);
+	void init(void* arg = NULL, tprio_t priority = NORMALPRIO + 2);
+	void start(void);
+	void stop(void);
 
 	// Accelerometer
 	void getAccXYZ(float* x, float* y, float* z);

@@ -27,6 +27,12 @@
 
 namespace Sensors {
 
+	// Thread
+	static WORKING_AREA(sensorsThreadArea, 230);
+	bool _isInitialized = false;
+	bool _isStarted = false;
+	uint16_t _threadDelay = 50;
+
 	// FreeIMU object
 	FreeIMU _imu = FreeIMU();
 
@@ -36,22 +42,23 @@ namespace Sensors {
 	uint8_t SENSORS_INACTIVITY_X = 1;
 	uint8_t SENSORS_INACTIVITY_Y = 1;
 	uint8_t SENSORS_INACTIVITY_Z = 1;
-	uint8_t SENSORS_REFRESH_DELAY = 50;
 
 	// Variables
-	float _XYZ[6] = { 0.f };
-	float _YPR[3] = { 0.f };
-	float _PTP[3] = { 0.f };
-	uint32_t _lastTimeXYZ = 0;
-	uint32_t _lastTimeYPR = 0;
-	bool _isInitialized = false;
+	float _XYZ[3] = { 0.f, 0.f, 0.f };
+	float _YPR[3] = { 0.f, 0.f, 0.f };
+	float _PTP[3] = { 0.f, 0.f, 0.f };
+
+	float _returnXYZ = 0.f;
+	float _returnYPR = 0.f;
+	float _returnPTP = 0.f;
 
 	// ChibiOS
 	MUTEX_DECL(_SensorsDataMutex);
 
 }
 
-void Sensors::init(void) {
+void Sensors::init(void* arg, tprio_t priority) {
+
 	if (!_isInitialized) {
 		_isInitialized = true;
 
@@ -71,7 +78,70 @@ void Sensors::init(void) {
 
 		_imu.acc.setInterruptMapping(ADXL345_INT_FREE_FALL_BIT, ADXL345_INT1_PIN);
 		_imu.acc.setInterrupt(ADXL345_INT_FREE_FALL_BIT, 1);
+
+		(void)chThdCreateStatic(sensorsThreadArea, sizeof(sensorsThreadArea),
+				priority, thread, arg);
+
 	}
+
+}
+
+/**
+ * @brief Starts the module
+ */
+void Sensors::start(void) {
+
+	_isStarted = true;
+
+}
+
+/**
+ * @brief Stops the module
+ */
+void Sensors::stop(void) {
+
+	_isStarted = false;
+
+}
+
+/**
+ * @brief Main module thread
+ */
+msg_t Sensors::thread(void* arg) {
+
+	(void) arg;
+
+	while (!chThdShouldTerminate()) {
+
+		if(_isStarted) {
+
+			readXYZ();
+			readYPR();
+
+		}
+
+		waitMs(_threadDelay);
+
+	}
+
+	return (msg_t)0;
+
+}
+
+void Sensors::readXYZ(void) {
+
+	chMtxLock(&_SensorsDataMutex);
+	_imu.getValues(_XYZ);
+	chMtxUnlock();
+
+}
+
+void Sensors::readYPR(void) {
+
+	chMtxLock(&_SensorsDataMutex);
+	_imu.getYawPitchRollEulerRad(_YPR, _PTP);
+	chMtxUnlock();
+
 }
 
 /**
@@ -81,17 +151,23 @@ void Sensors::init(void) {
  * @param z pointer that will receive the content of the Z-axis
  */
 void Sensors::getAccXYZ(float* x, float* y, float* z) {
-	readXYZ();
 
+	chMtxLock(&_SensorsDataMutex);
 	*x = _XYZ[0];
 	*y = _XYZ[1];
 	*z = _XYZ[2];
+	chMtxUnlock();
+
 }
 
 float Sensors::getAccXYZ(uint8_t index) {
-	readXYZ();
 
-	return _XYZ[index];
+	chMtxLock(&_SensorsDataMutex);
+	_returnXYZ = _XYZ[index];
+	chMtxUnlock();
+
+	return _returnXYZ;
+
 }
 
 /**
@@ -99,9 +175,13 @@ float Sensors::getAccXYZ(uint8_t index) {
  * @return the X-axis accelerometer value
  */
 float Sensors::getAccX() {
-	readXYZ();
 
-	return _XYZ[0];
+	chMtxLock(&_SensorsDataMutex);
+	_returnXYZ = _XYZ[0];
+	chMtxUnlock();
+
+	return _returnXYZ;
+
 }
 
 /**
@@ -109,9 +189,13 @@ float Sensors::getAccX() {
  * @return the Y-axis accelerometer value
  */
 float Sensors::getAccY() {
-	readXYZ();
 
-	return _XYZ[1];
+	chMtxLock(&_SensorsDataMutex);
+	_returnXYZ = _XYZ[1];
+	chMtxUnlock();
+
+	return _returnXYZ;
+
 }
 
 /**
@@ -119,9 +203,13 @@ float Sensors::getAccY() {
  * @return the Z-axis accelerometer value
  */
 float Sensors::getAccZ() {
-	readXYZ();
 
-	return _XYZ[2];
+	chMtxLock(&_SensorsDataMutex);
+	_returnXYZ = _XYZ[2];
+	chMtxUnlock();
+
+	return _returnXYZ;
+
 }
 
 /**
@@ -131,11 +219,13 @@ float Sensors::getAccZ() {
  * @param r pointer that will receive the content of the roll
  */
 void Sensors::getGyrYPR(float* y, float* p, float* r) {
-	readYPR();
 
+	chMtxLock(&_SensorsDataMutex);
 	*y = _YPR[0];
 	*p = _YPR[1];
 	*r = _YPR[2];
+	chMtxUnlock();
+
 }
 
 /**
@@ -143,9 +233,13 @@ void Sensors::getGyrYPR(float* y, float* p, float* r) {
  * @return the yaw
  */
 float Sensors::getGyrYPR(uint8_t index) {
-	readYPR();
 
-	return _YPR[index];
+	chMtxLock(&_SensorsDataMutex);
+	_returnYPR = _YPR[index];
+	chMtxUnlock();
+
+	return _returnYPR;
+
 }
 
 /**
@@ -153,9 +247,13 @@ float Sensors::getGyrYPR(uint8_t index) {
  * @return the yaw
  */
 float Sensors::getGyrY() {
-	readYPR();
 
-	return _YPR[0];
+	chMtxLock(&_SensorsDataMutex);
+	_returnYPR = _YPR[0];
+	chMtxUnlock();
+
+	return _returnYPR;
+
 }
 
 /**
@@ -163,9 +261,13 @@ float Sensors::getGyrY() {
  * @return the pitch
  */
 float Sensors::getGyrP() {
-	readYPR();
 
-	return _YPR[1];
+	chMtxLock(&_SensorsDataMutex);
+	_returnYPR = _YPR[1];
+	chMtxUnlock();
+
+	return _returnYPR;
+
 }
 
 /**
@@ -173,9 +275,13 @@ float Sensors::getGyrP() {
  * @return the roll
  */
 float Sensors::getGyrR() {
-	readYPR();
 
-	return _YPR[2];
+	chMtxLock(&_SensorsDataMutex);
+	_returnYPR = _YPR[2];
+	chMtxUnlock();
+
+	return _returnYPR;
+
 }
 
 /**
@@ -187,9 +293,12 @@ float Sensors::getGyrR() {
 void Sensors::getGyrYPRDeg(float* y, float* p, float* r) {
 	getGyrYPR(y, p, r);
 
+	chMtxLock(&_SensorsDataMutex);
 	*y = radToDeg(*y);
 	*p = radToDeg(*p);
 	*r = radToDeg(*r);
+	chMtxUnlock();
+
 }
 
 /**
@@ -197,9 +306,9 @@ void Sensors::getGyrYPRDeg(float* y, float* p, float* r) {
  * @return the yaw
  */
 float Sensors::getGyrYPRDeg(uint8_t index) {
-	readYPR();
 
 	return radToDeg(_YPR[index]);
+
 }
 
 /**
@@ -207,7 +316,9 @@ float Sensors::getGyrYPRDeg(uint8_t index) {
  * @return the yaw
  */
 float Sensors::getGyrYDeg() {
+
 	return radToDeg(getGyrY());
+
 }
 
 /**
@@ -215,7 +326,9 @@ float Sensors::getGyrYDeg() {
  * @return the pitch
  */
 float Sensors::getGyrPDeg() {
+
 	return radToDeg(getGyrP());
+
 }
 
 /**
@@ -223,7 +336,9 @@ float Sensors::getGyrPDeg() {
  * @return the roll
  */
 float Sensors::getGyrRDeg() {
+
 	return radToDeg(getGyrR());
+
 }
 
 /**
@@ -233,11 +348,13 @@ float Sensors::getGyrRDeg() {
  * @param psi pointer that will receive the content of the Psi angle
  */
 void Sensors::getEuler(float* phi, float* theta, float* psi) {
-	readYPR();
 
+	chMtxLock(&_SensorsDataMutex);
 	*phi = _PTP[0];
 	*theta = _PTP[1];
 	*psi = _PTP[2];
+	chMtxUnlock();
+
 }
 
 /**
@@ -245,9 +362,13 @@ void Sensors::getEuler(float* phi, float* theta, float* psi) {
  * @return Phi
  */
 float Sensors::getEulerPTP(uint8_t index) {
-	readYPR();
 
-	return _PTP[index];
+	chMtxLock(&_SensorsDataMutex);
+	_returnPTP = _PTP[index];
+	chMtxUnlock();
+
+	return _returnPTP;
+
 }
 
 /**
@@ -255,9 +376,13 @@ float Sensors::getEulerPTP(uint8_t index) {
  * @return Phi
  */
 float Sensors::getEulerPhi() {
-	readYPR();
 
-	return _PTP[0];
+	chMtxLock(&_SensorsDataMutex);
+	_returnPTP = _PTP[0];
+	chMtxUnlock();
+
+	return _returnPTP;
+
 }
 
 /**
@@ -265,9 +390,13 @@ float Sensors::getEulerPhi() {
  * @return Theta
  */
 float Sensors::getEulerTheta() {
-	readYPR();
 
-	return _PTP[1];
+	chMtxLock(&_SensorsDataMutex);
+	_returnPTP = _PTP[1];
+	chMtxUnlock();
+
+	return _returnPTP;
+
 }
 
 /**
@@ -275,7 +404,13 @@ float Sensors::getEulerTheta() {
  * @return Psi
  */
 float Sensors::getEulerPsi() {
-	return _PTP[2];
+
+	chMtxLock(&_SensorsDataMutex);
+	_returnPTP = _PTP[2];
+	chMtxUnlock();
+
+	return _returnPTP;
+
 }
 
 /**
@@ -285,11 +420,15 @@ float Sensors::getEulerPsi() {
  * @param psi pointer that will receive the content of the Psi angle
  */
 void Sensors::getEulerDeg(float* phi, float* theta, float* psi) {
+
 	getEuler(phi, theta, psi);
 
+	chMtxLock(&_SensorsDataMutex);
 	*phi = radToDeg(*phi);
 	*theta = radToDeg(*theta);
 	*psi = radToDeg(*psi);
+	chMtxUnlock();
+
 }
 
 /**
@@ -297,9 +436,9 @@ void Sensors::getEulerDeg(float* phi, float* theta, float* psi) {
  * @return Phi
  */
 float Sensors::getEulerPTPDeg(uint8_t index) {
-	readYPR();
 
-	return radToDeg(_PTP[index]);
+	return radToDeg(getEulerPTP(index));;
+
 }
 
 /**
@@ -307,7 +446,9 @@ float Sensors::getEulerPTPDeg(uint8_t index) {
  * @return Phi
  */
 float Sensors::getEulerPhiDeg() {
+
 	return radToDeg(getEulerPhi());
+
 }
 
 /**
@@ -315,7 +456,9 @@ float Sensors::getEulerPhiDeg() {
  * @return Theta
  */
 float Sensors::getEulerThetaDeg() {
+
 	return radToDeg(getEulerTheta());
+
 }
 
 /**
@@ -323,7 +466,9 @@ float Sensors::getEulerThetaDeg() {
  * @return Psi
  */
 float Sensors::getEulerPsiDeg() {
+
 	return radToDeg(getEulerPsi());
+
 }
 
 /**
@@ -331,7 +476,9 @@ float Sensors::getEulerPsiDeg() {
  * @return true if it is falling, flase otherwise
  */
 bool Sensors::isFalling() {
+
 	return _imu.acc.getInterruptSource(ADXL345_INT_FREE_FALL_BIT);
+
 }
 
 /**
@@ -339,7 +486,9 @@ bool Sensors::isFalling() {
  * @return true if it is inactive, flase otherwise
  */
 bool Sensors::isInactive() {
+
 	return _imu.acc.getInterruptSource(ADXL345_INT_INACTIVITY_BIT);
+
 }
 
 /**
@@ -347,7 +496,9 @@ bool Sensors::isInactive() {
  * @return the angle in degrees
  */
 float Sensors::radToDeg(float rad) {
+
 	return rad * 180.0f / M_PI;
+
 }
 
 /**
@@ -355,21 +506,8 @@ float Sensors::radToDeg(float rad) {
  * @return the angle in radians
  */
 float Sensors::degToRad(float deg) {
+
 	return deg * M_PI / 180.0f;
+
 }
 
-void Sensors::readXYZ(void) {
-	if (abs(millis() - _lastTimeXYZ < SENSORS_REFRESH_DELAY))
-		return;
-
-	_imu.getValues(_XYZ);
-	_lastTimeXYZ = millis();
-}
-
-void Sensors::readYPR(void) {
-	if (abs(millis() - _lastTimeYPR < SENSORS_REFRESH_DELAY))
-		return;
-
-	_imu.getYawPitchRollEulerRad(_YPR, _PTP);
-	_lastTimeYPR = millis();
-}
