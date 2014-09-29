@@ -53,6 +53,14 @@ void mainThread() {
 
 			hasBeenShaken = false;
 		}
+
+		if (_actionState == STABILIZING) {
+			Light::fadeHeart(Color::LightBlue, Color::Orange, 1000);
+			Light::fadeHeart(Color::Orange, Color::LightPink, 1000);
+			Light::fadeHeart(Color::LightPink, Color::Yellow, 1000);
+			Light::fadeHeart(Color::Yellow, Color::LightBlue, 1000);
+			waitMs(4000);
+		}
 		waitMs(50);
 	}
 }
