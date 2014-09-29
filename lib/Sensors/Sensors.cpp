@@ -176,11 +176,7 @@ float Sensors::getAccXYZ(uint8_t index) {
  */
 float Sensors::getAccX() {
 
-	chMtxLock(&_SensorsDataMutex);
-	_returnXYZ = _XYZ[0];
-	chMtxUnlock();
-
-	return _returnXYZ;
+	return getAccXYZ(0);
 
 }
 
@@ -190,11 +186,7 @@ float Sensors::getAccX() {
  */
 float Sensors::getAccY() {
 
-	chMtxLock(&_SensorsDataMutex);
-	_returnXYZ = _XYZ[1];
-	chMtxUnlock();
-
-	return _returnXYZ;
+	return getAccXYZ(1);
 
 }
 
@@ -204,11 +196,7 @@ float Sensors::getAccY() {
  */
 float Sensors::getAccZ() {
 
-	chMtxLock(&_SensorsDataMutex);
-	_returnXYZ = _XYZ[2];
-	chMtxUnlock();
-
-	return _returnXYZ;
+	return getAccXYZ(2);
 
 }
 
@@ -248,11 +236,7 @@ float Sensors::getGyrYPR(uint8_t index) {
  */
 float Sensors::getGyrY() {
 
-	chMtxLock(&_SensorsDataMutex);
-	_returnYPR = _YPR[0];
-	chMtxUnlock();
-
-	return _returnYPR;
+	return getGyrYPR(0);
 
 }
 
@@ -262,11 +246,7 @@ float Sensors::getGyrY() {
  */
 float Sensors::getGyrP() {
 
-	chMtxLock(&_SensorsDataMutex);
-	_returnYPR = _YPR[1];
-	chMtxUnlock();
-
-	return _returnYPR;
+	return getGyrYPR(1);
 
 }
 
@@ -276,11 +256,7 @@ float Sensors::getGyrP() {
  */
 float Sensors::getGyrR() {
 
-	chMtxLock(&_SensorsDataMutex);
-	_returnYPR = _YPR[2];
-	chMtxUnlock();
-
-	return _returnYPR;
+	return getGyrYPR(2);
 
 }
 
@@ -291,6 +267,7 @@ float Sensors::getGyrR() {
  * @param r pointer that will receive the content of the roll
  */
 void Sensors::getGyrYPRDeg(float* y, float* p, float* r) {
+
 	getGyrYPR(y, p, r);
 
 	chMtxLock(&_SensorsDataMutex);
@@ -307,7 +284,7 @@ void Sensors::getGyrYPRDeg(float* y, float* p, float* r) {
  */
 float Sensors::getGyrYPRDeg(uint8_t index) {
 
-	return radToDeg(_YPR[index]);
+	return radToDeg(getGyrYPR(index));
 
 }
 
@@ -377,11 +354,7 @@ float Sensors::getEulerPTP(uint8_t index) {
  */
 float Sensors::getEulerPhi() {
 
-	chMtxLock(&_SensorsDataMutex);
-	_returnPTP = _PTP[0];
-	chMtxUnlock();
-
-	return _returnPTP;
+	return getEulerPTP(0);
 
 }
 
@@ -391,11 +364,7 @@ float Sensors::getEulerPhi() {
  */
 float Sensors::getEulerTheta() {
 
-	chMtxLock(&_SensorsDataMutex);
-	_returnPTP = _PTP[1];
-	chMtxUnlock();
-
-	return _returnPTP;
+	return getEulerPTP(1);
 
 }
 
@@ -405,11 +374,7 @@ float Sensors::getEulerTheta() {
  */
 float Sensors::getEulerPsi() {
 
-	chMtxLock(&_SensorsDataMutex);
-	_returnPTP = _PTP[2];
-	chMtxUnlock();
-
-	return _returnPTP;
+	return getEulerPTP(2);
 
 }
 
