@@ -38,7 +38,7 @@ namespace Moti {
 
 	// Moti states
 	bool _isStuck           = false;
-	uint8_t _stuckThreshold = 75;
+	uint8_t _stuckThreshold = 90;
 	uint16_t _stuckTime     = 500;
 
 	bool _isFalling      = false;
