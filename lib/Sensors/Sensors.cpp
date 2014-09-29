@@ -46,6 +46,9 @@ namespace Sensors {
 	uint32_t _lastTimeYPR = 0;
 	bool _isInitialized = false;
 
+	// ChibiOS
+	MUTEX_DECL(_SensorsDataMutex);
+
 }
 
 void Sensors::init(void) {
@@ -356,9 +359,6 @@ float Sensors::degToRad(float deg) {
 }
 
 void Sensors::readXYZ(void) {
-	if (!_isInitialized)
-		init();
-
 	if (abs(millis() - _lastTimeXYZ < SENSORS_REFRESH_DELAY))
 		return;
 
@@ -367,9 +367,6 @@ void Sensors::readXYZ(void) {
 }
 
 void Sensors::readYPR(void) {
-	if (!_isInitialized)
-		init();
-
 	if (abs(millis() - _lastTimeYPR < SENSORS_REFRESH_DELAY))
 		return;
 
