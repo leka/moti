@@ -29,6 +29,7 @@ void mainThread() {
 	Heart::init();
 	Wander::init();
 
+	Sensors::start();
 	Moti::start();
 	Light::start();
 
