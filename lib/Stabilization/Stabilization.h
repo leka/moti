@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include "ChibiOS_AVR.h"
 #include "Sensors.h"
+#include "DriveSystem.h"
 #include "Motion.h"
 
 namespace Stabilization {
@@ -69,34 +70,38 @@ msg_t Stabilization::thread(void* arg) {
 
 	while (!chThdShouldTerminate()) {
 		if (_isStarted) {
+
 			currentTime = abs(millis() - _runStartTime);
-			if (currentTime > 2000)
-				currentAngle = Sensors::getEulerPhi();
 
 			input = Sensors::getAccX();
 			output = (-0.7 * input);
+			accY = Sensors::getAccY();
+
+			if (currentTime > 2000) {
+				currentAngle = Sensors::getEulerPhi();
+			}
 
 			if (abs(output) > 80.0) {
 				speed = (uint8_t)abs(output);
-				Motion::go(output < 0 ? BACKWARD : FORWARD, speed, 100);
+				DriveSystem::go(output < 0 ? BACKWARD : FORWARD, speed);
+			}
+			else if (abs(accY) > 80) {
+				Motion::spin(accY > 0 ? RIGHT : LEFT, 120, 1.57);
+			}
+			else if ((currentTime > 2000) && abs(currentAngle) > 0.40) {
+				speed = (uint8_t)min(230, 100 + abs(currentAngle) * 80);
+				Motion::spin(currentAngle > 0.0f ? LEFT : RIGHT, speed, abs(currentAngle));
+			}
+			else if (Motion::getState() != NONE) {
+				Motion::stop(0);
 			}
 			else {
-				accY = Sensors::getAccY();
-
-				if (abs(accY) > 80)
-					Motion::spin(accY > 0 ? RIGHT : LEFT, 120, 1.57);
-
-				else if ((currentTime > 2000) && abs(currentAngle) > 0.40) {
-					speed = (uint8_t)min(230, 100 + abs(currentAngle) * 80);
-					Motion::spin(currentAngle > 0.0f ? LEFT : RIGHT, speed, abs(currentAngle));
-				}
-
-				else if (Motion::getState() != NONE)
-					Motion::stop(0);
+				DriveSystem::stop();
 			}
 		}
 
 		waitMs(_threadDelay);
+
 	}
 
 	return (msg_t)0;
