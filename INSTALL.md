@@ -199,32 +199,26 @@ $ cd src/driveSystem
 Then copy the `Makefile` from `arduino-mk`:
 
 ```Bash
-$ cp ../../arduino-mk/examples/MakefileExample/Makefile-example.mk ./Makefile
+$ cp ../../Arduino-MakeFile/examples/MakefileExample/Makefile-example.mk ./Makefile
 ```
 
 You need to customize the `Makefile` to work on your pc. Open it and change the following line:
+(If on Sublime Text 2, set syntax to Makefile by pressing Ctrl+Shift+P and then typing "ssmk".)
 
 ```Makefile
-# change line 8 from
+# change line 9 from
 PROJECT_DIR = /Users/Ladislas/dev/leka/moti
 # according to your path to
 PROJECT_DIR = path/to/moti
 
-# change line 16 from
+# comment out line 18 (and all others that follow for OSX. Spare those for Linux)
 ARDUINO_DIR = /Applications/Arduino.app/Contents/Resources/Java
-# to
-ARDUINO_DIR = /usr/share/arduino
 
-# change line 32 from
+# comment out line 37
 AVR_TOOLS_DIR	 = /usr/local
-# according to your path to
-AVR_TOOLS_DIR	 = /usr
 
-# change line 36 from
+# comment out line 44
 AVRDDUDE		  = /usr/local/bin/avrdude
-# according to your path to
-AVRDDUDE		  = /usr/bin/avrdude
-```
 
 Then compile and upload your code to an **Arduino Mega2560**:
 
@@ -308,7 +302,7 @@ For you Linux users, the recipe is pretty much the same as for OS X, except that
 Then, you need to:
 
 ```Bash
-apt-get install libdevice-serialport-perl
+sudo apt-get install libdevice-serialport-perl
 ```
 
 And finally follow from [here](#2-Clone-moti-repository-from-Github)
@@ -338,7 +332,7 @@ For comfort, we like like to use a Git GUI. For beginners, we recommend the Gith
 For those on Linux or Windows, there are [apps](http://git-scm.com/downloads/guis) for you as well but we assume that if you are using Linux, you don't need one of them.
 
 
-#### Installing Homebrew
+#### Installing Homebrew (For Linux, we'll have to use Linuxbrew)
 
 As we said earlier, Homebrew is a package manager. It's not a standard application with a graphical user interface (GUI). You have to open the Terminal.app to use Homebrew and type some command lines. If you're afraid, fear not my friend! We will guide you all along the way and you will eventually feel all the power of your computer!
 If command line is really not your cup of tea, maybe you should just give up because we are going to use plenty of those later on! Come back when you're ready.
@@ -346,7 +340,8 @@ If command line is really not your cup of tea, maybe you should just give up bec
 For those who want to fight, go visit the [Homebrew website](http://mxcl.github.io/homebrew/) and follow all the instructions. And because we are so generous, we also put them here: open Terminal.app, copy/paste the following line and let the magic begin (**don't copy the `$` sign**, it is used to say we are using the command line...):
 
 ```Bash
-$ ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+$ sudo apt-get install ruby 
+$ ruby -e "$(wget -O- https://raw.github.com/Homebrew/linuxbrew/go/install)"
 ```
 
 For troubleshooting, [Google](http://lmgtfy.com/?q=homebrew) is your best friend. You can also try typing `brew doctor` in your `Terminal.app` to see what is wrong. Please don't fill issues on Github regarding the installation of Homebrew, we won't read them.
