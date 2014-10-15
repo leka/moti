@@ -60,7 +60,7 @@ void mainThread() {
 
 			hasBeenShaken = false;
 		}
-		waitMs(100);
+		waitMs(50);
 	}
 }
 
