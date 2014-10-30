@@ -9,6 +9,16 @@
 #include "Heart.h"
 #include "Wander.h"
 
+// #include "ChibiOS_AVR.h"
+// #include "DriveSystem.h"
+// #include "Motor.h"
+// #include "Led.h"
+// #include "Sensors.h"
+// #include "Toolbox.h"
+// #include "Color.h"
+// #include "Queue.h"
+// #include "FreeIMU.h"
+
 enum MovementState {
 	SLEEPING,
 	STABILIZING
