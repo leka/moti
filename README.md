@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/WeAreLeka/moti.svg?branch=dev)](https://travis-ci.org/WeAreLeka/moti)
-[![Build Status](https://drone.io/github.com/WeAreLeka/moti/status.png)](https://drone.io/github.com/WeAreLeka/moti/latest)
 [![Stories in Ready](https://badge.waffle.io/WeAreLeka/moti.png?label=ready)](http://waffle.io/WeAreLeka/moti) 
 
 #Moti Readme
