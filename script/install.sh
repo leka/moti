@@ -20,7 +20,7 @@ echo "Installing avr-gcc from Arduino 1.5.8..."
 
 wget -q "$AVR_GCC_URL"
 tar -xzf "$AVR_GCC_FILE"
-sudo mv "$AVR_GCC_BASENAME/hardware/tools/avr" "$AVR_GCC"
+sudo mv "$AVR_GCC_BASENAME/hardware/tools/avr/bin" "$AVR_GCC"
 
 echo "Installation of dependencies is complete, we are now going to run some tests..."
 
