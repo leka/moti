@@ -7,23 +7,36 @@ flags = [
 	'-Wall'
 	,'-Wextra'
 	,'-Werror'
+
 	,'-Wno-attributes'
 	,'-std=c++11'
 	,'-x'
 	,'c++'
+
 	,'-isystem/usr/local/Cellar/avr-libc/1.8.0/avr/include'
+	,'-isystem/usr/local/Cellar/avr-libc/1.8.1/avr/include'
+
 	,'-isystem/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
 	,'-isystem/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
-	,'-I/Applications/Arduino.app/Contents/Resources/Java/libraries/Wire'
+	,'-isystem/Applications/Arduino.app/Contents/Resources/Java/libraries'
+	,'-isystem/Applications/Arduino.app/Contents/Resources/Java/libraries/Wire'
+
+	,'-isystem/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
+	,'-isystem/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
+	,'-isystem/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/libraries'
+	,'-isystem/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/libraries/Wire'
+
 	,'-I/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
 	,'-I/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
 	,'-I/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/libraries'
-	,'-I/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/libraries/Wire'
+	,'-I/Applications/Arduino.app/Contents/Resources/Java/libraries/Wire'
+
 	,'-mmcu=atmega2560'
 	,'-DF_CPU=16000000L'
 	,'-DARDUINO=105'
 	,'-D__AVR__'
 	,'-D__AVR_ATmega2560__'
+
 	# ,'-MMD -DUSB_VID=null'
 	# ,'-DUSB_PID=null'
 ]
