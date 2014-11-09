@@ -18,7 +18,7 @@ sudo mv "$ARDUINO_BASENAME/" "$ARDUINO"
 
 echo "Installing avr-gcc from Arduino 1.5.8..."
 
-wget "$AVR_GCC_URL" -O "AVR_GCC_FILE"
+wget "$AVR_GCC_URL" -O "$AVR_GCC_FILE"
 tar -xzf "$AVR_GCC_FILE"
 sudo mv "$AVR_GCC_BASENAME/hardware/tools/avr" "$AVR_GCC"
 
