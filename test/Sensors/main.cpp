@@ -2,7 +2,6 @@
 #include <Wire.h>
 
 #include "Sensors.h"
-#include "Heart.h"
 
 void chSetup() {
 
