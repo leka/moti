@@ -68,7 +68,7 @@ CURRENT_DIR       = $(shell basename $(CURDIR))
 
 ### OBJDIR
 ### This is were you put the binaries you just compile using 'make'
-OBJDIR            = $(PROJECT_DIR)/bin/$(BOARD_TAG)/$(CURRENT_DIR)
+OBJDIR            = $(PROJECT_DIR)/bin/$(CURRENT_DIR)/$(BOARD_TAG)
 
 ### path to Arduino.mk, inside the ARDMK_DIR, don't touch.
 include $(ARDMK_DIR)/Arduino.mk
