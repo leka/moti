@@ -7,10 +7,6 @@
 ### This is the path to where you have created/cloned your project
 PROJECT_DIR       = /Users/ladislas/dev/leka/moti
 
-### AVR_GCC_VERSION
-### Check if the version is equal or higher than 4.9
-AVR_GCC_VERSION  := $(shell expr `avr-gcc -dumpversion | cut -f1` \>= 4.9)
-
 ### ARDMK_DIR
 ### Path to the Arduino-Makefile directory.
 ARDMK_DIR         = $(PROJECT_DIR)/Arduino-Makefile
@@ -53,6 +49,9 @@ CXXFLAGS_STD      = -std=gnu++14
 ### Flags you might want to set for debugging purpose. Comment to stop.
 CXXFLAGS         = -pedantic -Wall -Wextra
 
+### AVR_GCC_VERSION
+### Check if the version is equal or higher than 4.9
+AVR_GCC_VERSION  := $(shell expr `avr-gcc -dumpversion | cut -f1` \>= 4.9)
 
 ### If avr-gcc -v is higher than 4.9, activate coloring of the output
 ifeq "$(AVR_GCC_VERSION)" "1"
