@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 
+#include "Sensors.h"
 #include "Motion.h"
 #include "Moti.h"
 #include "Light.h"
