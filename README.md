@@ -27,6 +27,12 @@
 
 ![Moti](https://scontent-b.xx.fbcdn.net/hphotos-prn2/t31.0-8/1978378_640660259359885_9078537445630618389_o.jpg)
 
+### Websites
+
+The company behind Moti is called Leka, you can visit our website here: [We Are Leka!](weareleka.com).
+
+Soon, a website just for Moti will be available! [Discover Moti](discovermoti.com)
+
 ### What is Moti
 
 Moti is a new kind of interactive smart toy: it's a spherical robot specially designed for children with communication and social disabilities.
