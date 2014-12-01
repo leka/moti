@@ -5,7 +5,7 @@
 
 ### PROJECT_DIR
 ### This is the path to where you have created/cloned your project
-PROJECT_DIR       = /home/{{ YOUR USERNAME }}/path/to/moti
+PROJECT_DIR       = /home/ladislas/dev/leka/moti
 
 ### AVR_GCC_VERSION
 ### Check if the version is equal or higher than 4.9
@@ -33,7 +33,7 @@ MONITOR_BAUDRATE  = 115200
 
 ### AVR_TOOLS_DIR
 ### Path to the AVR tools directory such as avr-gcc, avr-g++, etc.
-AVR_TOOLS_DIR     = /usr/bin
+AVR_TOOLS_DIR     = /usr
 
 ### AVRDDUDE
 ### Path to avrdude directory.
@@ -43,7 +43,7 @@ AVRDDUDE          = /usr/bin/avrdude
 CFLAGS_STD        = -std=gnu11
 
 ### CXXFLAGS_STD
-CXXFLAGS_STD      = -std=gnu++14
+CXXFLAGS_STD      = -std=gnu++11
 
 ### CPPFLAGS
 ### Flags you might want to set for debugging purpose. Comment to stop.
