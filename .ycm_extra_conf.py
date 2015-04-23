@@ -1,9 +1,18 @@
 import os
 import ycm_core
 
-libDir = "lib"
+# You can set a directory with a lot of libraries to be search recursively here
+ArduinoLibDir = [
+  "/Applications/Arduino.app/Contents/Resources/Java/libraries"
+  ,"/Applications/Arduino.app/Contents/Java/libraries"
+  ,"/Applications/Arduino.app/Contents/Java/hardware/arduino/avr/libraries"
+]
+
+# This is the list of all directories to search for header files
+libDirs = ArduinoLibDir + ["lib"]
 
 flags = [
+  # General flags
   '-Wall'
   ,'-Wextra'
   ,'-Werror'
@@ -13,27 +22,31 @@ flags = [
   ,'-x'
   ,'c++'
 
+  # Avr-libc flags for 1.8.0 and 1.8.1 installed with homebrew
+  # You can deleted the one you don't need
   ,'-isystem/usr/local/Cellar/avr-libc/1.8.0/avr/include'
   ,'-isystem/usr/local/Cellar/avr-libc/1.8.1/avr/include'
 
-  ,'-isystem/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
-  ,'-isystem/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
-  ,'-isystem/Applications/Arduino.app/Contents/Resources/Java/libraries'
-  ,'-isystem/Applications/Arduino.app/Contents/Resources/Java/libraries/Wire'
+  # Arduino libs flags when downloaded from the arduino website
+  # IDE 1.0.6
+  ,'-I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
+  ,'-I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
+  # IDE 1.6.3
+  ,'-I/Applications/Arduino.app/Contents/Java/hardware/arduino/avr/cores/arduino'
+  ,'-I/Applications/Arduino.app/Contents/Java/hardware/arduino/avr/variants/mega'
 
-  ,'-isystem/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
-  ,'-isystem/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
-  ,'-isystem/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/libraries'
-  ,'-isystem/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/libraries/Wire'
+  # Arduino libs flags when installed with brew cask or if the path is not the regular one
+  # Beware, the version number can change
+  # ,'-I/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
+  # ,'-I/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
 
-  ,'-I/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
-  ,'-I/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
-  ,'-I/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/libraries'
-  ,'-I/Applications/Arduino.app/Contents/Resources/Java/libraries/Wire'
+  # You can add custom libraries here, but note that the script will automatically scan the 'lib' directory.
+  ,'-I./lib/MyFirstLib'
 
+  # Customize microcontroler and Arduino version
   ,'-mmcu=atmega2560'
   ,'-DF_CPU=16000000L'
-  ,'-DARDUINO=105'
+  ,'-DARDUINO=163'
   ,'-D__AVR__'
   ,'-D__AVR_ATmega2560__'
 
@@ -54,7 +67,6 @@ SOURCE_EXTENSIONS = [ '.cpp', '.cxx', '.cc', '.c', '.ino', '.m', '.mm' ]
 def DirectoryOfThisScript():
   return os.path.dirname( os.path.abspath( __file__ ) )
 
-
 def MakeRelativePathsInFlagsAbsolute( flags, working_directory ):
   if not working_directory:
     return list( flags )
@@ -63,10 +75,11 @@ def MakeRelativePathsInFlagsAbsolute( flags, working_directory ):
   make_next_absolute = False
   path_flags = [ '-isystem', '-I', '-iquote', '--sysroot=' ]
 
-  for path, dirs, files in os.walk(libDir):
-    for d in dirs:
-      flag = '-I' + os.path.join(path, d)
-      flags.append(flag)
+  for libDir in libDirs:
+    for path, dirs, files in os.walk(libDir):
+      for d in dirs:
+        flag = '-I' + os.path.join(path, d)
+        flags.append(flag)
 
   for flag in flags:
     new_flag = flag
@@ -88,6 +101,7 @@ def MakeRelativePathsInFlagsAbsolute( flags, working_directory ):
 
     if new_flag:
       new_flags.append( new_flag )
+
   return new_flags
 
 
