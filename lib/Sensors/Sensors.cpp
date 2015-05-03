@@ -46,11 +46,11 @@ namespace Sensors {
 	// Variables
 	float _XYZ[3] = { 0.f, 0.f, 0.f };
 	float _YPR[3] = { 0.f, 0.f, 0.f };
-	float _PTP[3] = { 0.f, 0.f, 0.f };
+	float _PTP[3] = { 0.f, 0.f, 0.f }; // PSI THETA PHI
 
 	float _returnXYZ = 0.f;
 	float _returnYPR = 0.f;
-	float _returnPTP = 0.f;
+	float _returnPTP = 0.f; // PSI THETA PHI
 
 	// ChibiOS
 	MUTEX_DECL(_SensorsDataMutex);
@@ -324,12 +324,12 @@ float Sensors::getGyrRDeg() {
  * @param theta pointer that will receive the content of the Theta angle
  * @param psi pointer that will receive the content of the Psi angle
  */
-void Sensors::getEuler(float* phi, float* theta, float* psi) {
+void Sensors::getEuler(float* psi, float* theta, float* phi) {
 
 	chMtxLock(&_SensorsDataMutex);
-	*phi = _PTP[0];
+	*psi = _PTP[0];
 	*theta = _PTP[1];
-	*psi = _PTP[2];
+	*phi = _PTP[2];
 	chMtxUnlock();
 
 }
@@ -352,7 +352,7 @@ float Sensors::getEulerPTP(uint8_t index) {
  * @brief Reads the Phi angle on the gyroscope (in radians)
  * @return Phi
  */
-float Sensors::getEulerPhi() {
+float Sensors::getEulerPsi() {
 
 	return getEulerPTP(0);
 
@@ -372,7 +372,7 @@ float Sensors::getEulerTheta() {
  * @brief Reads the Psi angle on the gyroscope (in radians)
  * @return Psi
  */
-float Sensors::getEulerPsi() {
+float Sensors::getEulerPhi() {
 
 	return getEulerPTP(2);
 

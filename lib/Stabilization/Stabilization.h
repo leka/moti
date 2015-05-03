@@ -78,7 +78,7 @@ msg_t Stabilization::thread(void* arg) {
 			accY = Sensors::getAccY();
 
 			if (currentTime > 2000) {
-				currentAngle = Sensors::getEulerPhi();
+				currentAngle = Sensors::getEulerPsi();
 			}
 
 			if (abs(output) > 80.0) {
