@@ -28,6 +28,11 @@ USER_LIB_PATH     :=  $(realpath $(PROJECT_DIR)/lib)
 BOARD_TAG         = mega
 BOARD_SUB         = atmega2560
 
+### MONITOR_PORT
+### The port your board is connected to. Using an '*' tries all the ports and finds the right one.
+# MONITOR_PORT      = /dev/tty.moti-DevB
+MONITOR_PORT      = /dev/tty.usbmodem*
+
 ### MONITOR_BAUDRATE
 ### It must be set to Serial baudrate value you are using.
 MONITOR_BAUDRATE  = 115200
@@ -54,10 +59,6 @@ CXXFLAGS         = -pedantic -Wall -Wextra
 ifeq "$(AVR_GCC_VERSION)" "1"
     CXXFLAGS += -fdiagnostics-color
 endif
-
-### MONITOR_PORT
-### The port your board is connected to. Using an '*' tries all the ports and finds the right one.
-MONITOR_PORT      = /dev/tty.usbmodem*
 
 ### don't touch this
 ### This is were you put the binaries you just compile using 'make'
