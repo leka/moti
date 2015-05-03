@@ -5,6 +5,7 @@
 #include "ChibiOS_AVR.h"
 #include "Sensors.h"
 #include "Motion.h"
+#include "DriveSystem.h"
 #include "Light.h"
 
 namespace Wander {
@@ -44,6 +45,7 @@ void Wander::start(void) {
 	chMtxLock(&_behaviorMutex);
 
 	_isStarted = true;
+	_isMoving = false;
 
 	chMtxUnlock();
 }
@@ -52,6 +54,7 @@ void Wander::stop(void) {
 	chMtxLock(&_behaviorMutex);
 
 	_isStarted = false;
+	_isMoving = false;
 
 	chMtxUnlock();
 }
@@ -70,15 +73,15 @@ msg_t Wander::thread(void* arg) {
 				chMtxLock(&_behaviorMutex);
 				_isMoving = true;
 				moveStart = millis();
-				Motion::go(FORWARD, 150, 0);
+				DriveSystem::go(FORWARD, 150);
 				chMtxUnlock();
 			}
 
-			if (Moti::isStuck() && (moveStart + 1000 < millis())) {
+			waitMs(_threadDelay);
 
-				_isMoving = false;
+			if (Moti::isStuck() && (moveStart + 2000 < millis())) {
 
-				Motion::stop(0);
+				DriveSystem::stop();
 
 				waitMs(1000);
 
@@ -90,7 +93,10 @@ msg_t Wander::thread(void* arg) {
 
 				waitMs(1000);
 
+				_isMoving = false;
 			}
+
+			waitMs(_threadDelay);
 
 		}
 
