@@ -8,7 +8,6 @@
 
 #include "Stabilization.h"
 #include "Heart.h"
-#include "Wander.h"
 
 enum MovementState {
 	SLEEPING,
@@ -27,7 +26,6 @@ void mainThread() {
 
 	Stabilization::init();
 	Heart::init();
-	Wander::init();
 
 	Sensors::start();
 	Moti::start();
@@ -38,29 +36,8 @@ void mainThread() {
 
 	while (TRUE) {
 
-		while (Moti::isShaken()) {
-			hasBeenShaken = true;
-			waitMs(50);
-		}
+		waitMs(5000);
 
-		if (hasBeenShaken) {
-
-			if (_actionState == SLEEPING) {
-				Serial.println(1);
-				_actionState = STABILIZING;
-				Stabilization::start();
-				Wander::stop();
-			}
-			else {
-				Serial.println(2);
-				_actionState = SLEEPING;
-				Stabilization::stop();
-				Wander::start();
-			}
-
-			hasBeenShaken = false;
-		}
-		waitMs(50);
 	}
 }
 
