@@ -9,7 +9,7 @@
 #include "Led.h"
 
 void mainThread() {
-	int Threshold=40;
+	int Threshold=70;
 	int i=0;
 	int accXold=0;
 	int deltaX=0;
@@ -40,36 +40,49 @@ void mainThread() {
 		
 			//if ((Sensors::getAccX()>Threshold) | (Sensors::getAccX()< (-Threshold)) | (Sensors::getAccY()>Threshold) | (Sensors::getAccY()< (-Threshold))) {
 		if (deltaX > Threshold | deltaY > Threshold){
-			isTouched=1;
 			nbtouch++;
+			Serial.println(nbtouch);
+			isTouched=1;
 		}
 
 		if (nbtouch==1 &&  isTouched){
 			Serial.println("bleu");
 			myLed.shine(0,0,255);
+			isTouched=0;
 			waitMs(1000);
 			myLed.shine(0,0,0);
-			isTouched=0;
+			waitMs(1000);
+			//accXold=-Sensors::getAccX();
+		//accYold=-Sensors::getAccY();
+
 		}
 
 		if (nbtouch==2 && isTouched){
 			Serial.println("vert");
 			myLed.shine(0,255, 0);
+			isTouched=0;
 			waitMs(2000);
 			myLed.shine(0,0,0);
-			isTouched=0;
+			waitMs(1000);
+			//accXold=-Sensors::getAccX();
+		//accYold=-Sensors::getAccY();
+
 		}
 
 		if (nbtouch==3 && isTouched){
 			Serial.println("Rouge et  spin");
 			myLed.shine(255,0,0);
+			isTouched=0;
 			waitMs(50);
 			DriveSystem::spin(LEFT, 255);
 			waitMs(3000);
 			DriveSystem::stop();
 			myLed.shine(0,0,0);
 			nbtouch=0;
-			isTouched=0;
+			waitMs(2000);
+			//accXold=-Sensors::getAccX();
+		//accYold=-Sensors::getAccY();
+
 		}
 
 		waitMs(50);
