@@ -4,34 +4,36 @@
 #include "ChibiOS_AVR.h"
 #include "Moti.h"
 #include "Sensors.h"
-#include "Motion.h"
 #include "DriveSystem.h"
 #include "Led.h"
 
 Led LedRight = Led(8,9,10);
 Led LedLeft = Led(11,12,13);
 
-void blinkRightLeft(int RedValue, int GreenValue, int BlueValue, int timeTotal, Led Led1, Led Led2) {
+void blinkRightLeft(uint8_t RedValue, uint8_t GreenValue, uint8_t BlueValue, uint16_t timeTotal) {
 
 	for (uint16_t i = 0 ; i < timeTotal/500 ; ++i) {
 
-		Led1.shine(RedValue, GreenValue, BlueValue);
-		Led2.shine(0,0,0);
+		LedRight.shine(RedValue, GreenValue, BlueValue);
+		LedLeft.shine(0, 0, 0);
 
 		waitMs(250);
 
-		Led2.shine(RedValue, GreenValue, BlueValue);
-		Led1.shine(0,0,0);
+		LedLeft.shine(RedValue, GreenValue, BlueValue);
+		LedRight.shine(0, 0, 0);
 
 		waitMs(250);
 
 	}
 
+	LedLeft.shine(0, 0, 0);
+	LedRight.shine(0, 0, 0);
+
 }
 
 void mainThread() {
 
-	int Threshold=70;
+	int Threshold = 120;
 
 	int accXold = 0;
 	int deltaX = 0;
@@ -39,7 +41,7 @@ void mainThread() {
 	int accYold = 0;
 	int deltaY = 0;
 
-	int nbtouch = 0;
+	uint8_t nbtouch = 0;
 	bool isTouched = FALSE;
 
 	//INITIALIZATION
@@ -49,7 +51,9 @@ void mainThread() {
 	Sensors::start();
 
 	Serial.println("Hello world!");
+
 	while (TRUE) {
+
 		deltaX = accXold - Sensors::getAccX();
 		deltaY = accYold - Sensors::getAccY();
 		accXold = Sensors::getAccX();
@@ -58,79 +62,81 @@ void mainThread() {
 		if (deltaX < 0) deltaX = - deltaX;
 		if (deltaY < 0) deltaY = - deltaY;
 
-		//if ((Sensors::getAccX()>Threshold) | (Sensors::getAccX()< (-Threshold)) | (Sensors::getAccY()>Threshold) | (Sensors::getAccY()< (-Threshold))) {
+		Serial.println(deltaX);
+		Serial.println(deltaY);
+		Serial.println(accXold);
+		Serial.println(accYold);
+
 		if (deltaX > Threshold || deltaY > Threshold) {
 			nbtouch++;
 			Serial.println(nbtouch);
-			isTouched = 1;
+			isTouched = TRUE;
 		}
 
 		if (nbtouch == 1 && isTouched) {
 			Serial.println("bleu");
-			blinkRightLeft(0,0,255, 1000, LedLeft, LedRight);
-			isTouched = 0;
-			waitMs(1000);
-			LedLeft.shine(0,0,0);
-			LedRight.shine(0,0,0);
-			waitMs(1000);
-			//accXold=-Sensors::getAccX();
-			//accYold=-Sensors::getAccY();
+			blinkRightLeft(0, 0, 255, 1000);
+			waitMs(2000);
 
+			accXold = Sensors::getAccX();
+			accYold = Sensors::getAccY();
+			isTouched = FALSE;
 		}
 
 		if (nbtouch == 2 && isTouched) {
 			Serial.println("vert");
-			blinkRightLeft(0,255,0, 2000, LedLeft, LedRight);
-			//LedLeft.shine(0,255, 0);
-			isTouched = 0;
+			blinkRightLeft(0, 255, 0, 2000);
 			waitMs(2000);
-			LedLeft.shine(0,0,0);
-			LedRight.shine(0,0,0);
-			waitMs(1000);
-			//accXold=-Sensors::getAccX();
-			//accYold=-Sensors::getAccY();
 
+			accXold = Sensors::getAccX();
+			accYold = Sensors::getAccY();
+			isTouched = FALSE;
 		}
 
 		if (nbtouch == 3 && isTouched) {
 			Serial.println("Rouge et  spin");
-			blinkRightLeft(255,0,0, 3000, LedLeft, LedRight);
-			//LedLeft.shine(255,0,0);
-			isTouched = 0;
-			//waitMs(50);
-			DriveSystem::spin(LEFT, 255);
-			waitMs(3000);
-			DriveSystem::stop();
-			LedLeft.shine(0,0,0);
-			LedRight.shine(0,0,0);
-			nbtouch = 0;
-			waitMs(2000);
-			//accXold=-Sensors::getAccX();
-			//accYold=-Sensors::getAccY();
+			blinkRightLeft(255, 0, 0, 3000);
+			LedRight.shine(255, 0, 0);
+			LedLeft.shine(255, 0, 0);
 
+			DriveSystem::spin(LEFT, 255);
+
+			waitMs(3000);
+
+			DriveSystem::stop();
+
+			LedRight.shine(0, 0, 0);
+			LedLeft.shine(0, 0, 0);
+
+			waitMs(2000);
+
+			accXold = Sensors::getAccX();
+			accYold = Sensors::getAccY();
+			nbtouch = 0;
+			isTouched = FALSE;
 		}
 
 		waitMs(50);
 	}
-	}
+}
 
-	void loop() { }
+void loop() { }
 
-	int main(void) {
-		init();
+int main(void) {
+	init();
 
-		Serial.begin(115200);
-		while (!Serial);
+	Serial.begin(115200);
+	while (!Serial);
 
-		// Serial1.begin(115200);
-		// while (!Serial1);
+	// Serial1.begin(115200);
+	// while (!Serial1);
 
-		Wire.begin();
-		delay(2000);
+	Wire.begin();
+	delay(2000);
 
-		chBegin(mainThread);
+	chBegin(mainThread);
 
-		while(1);
+	while(1);
 
-		return 0;
-	}
+	return 0;
+}
