@@ -6,6 +6,7 @@
 #include "Sensors.h"
 #include "DriveSystem.h"
 #include "Led.h"
+#include "Stabilization.h"
 
 Led LedRight = Led(8,9,10);
 Led LedLeft = Led(11,12,13);
@@ -33,7 +34,7 @@ void blinkRightLeft(uint8_t RedValue, uint8_t GreenValue, uint8_t BlueValue, uin
 
 void mainThread() {
 
-	int Threshold = 120;
+	int Threshold = 150;
 
 	int accXold = 0;
 	int deltaX = 0;
@@ -49,6 +50,8 @@ void mainThread() {
 	Moti::start();
 	Sensors::init();
 	Sensors::start();
+	Stabilization::init();
+	Stabilization::start();
 
 	Serial.println("Hello world!");
 
@@ -68,6 +71,7 @@ void mainThread() {
 		Serial.println(accYold);
 
 		if (deltaX > Threshold || deltaY > Threshold) {
+			Stabilization::stop();
 			nbtouch++;
 			Serial.println(nbtouch);
 			isTouched = TRUE;
@@ -81,6 +85,7 @@ void mainThread() {
 			accXold = Sensors::getAccX();
 			accYold = Sensors::getAccY();
 			isTouched = FALSE;
+			Stabilization::start();
 		}
 
 		if (nbtouch == 2 && isTouched) {
@@ -91,6 +96,7 @@ void mainThread() {
 			accXold = Sensors::getAccX();
 			accYold = Sensors::getAccY();
 			isTouched = FALSE;
+			Stabilization::start();
 		}
 
 		if (nbtouch == 3 && isTouched) {
@@ -114,6 +120,7 @@ void mainThread() {
 			accYold = Sensors::getAccY();
 			nbtouch = 0;
 			isTouched = FALSE;
+			Stabilization::start();
 		}
 
 		waitMs(50);
