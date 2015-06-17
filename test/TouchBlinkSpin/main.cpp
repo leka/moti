@@ -8,9 +8,22 @@
 #include "DriveSystem.h"
 #include "Led.h"
 
+void BlinkRightLEft(int RedValue, int GreenValue, int BlueValue, int timeTotal, Led Led1, Led Led2){
+	int i;
+	for (i=0; i<timeTotal/500; ++i){
+		Led1.shine(RedValue, GreenValue, BlueValue);
+		Led2.shine(0,0,0);
+		waitMs(250);
+		Led2.shine(RedValue, GreenValue, BlueValue);
+		Led1.shine(0,0,0);
+		waitMs(250);
+	}
+
+}
+
 void mainThread() {
 	int Threshold=70;
-	int i=0;
+	
 	int accXold=0;
 	int deltaX=0;
 
@@ -20,7 +33,8 @@ void mainThread() {
 	int nbtouch=0;
 	bool isTouched;
 
-	Led myLed = Led(11,12,13);
+	Led LedRight = Led(8,9,10);
+	Led LedLeft = Led(11,12,13);
 
 	//INITIALIZATION
 	Moti::init();
@@ -47,10 +61,12 @@ void mainThread() {
 
 		if (nbtouch==1 &&  isTouched){
 			Serial.println("bleu");
-			myLed.shine(0,0,255);
+			//LedLeft.shine(0,0,255);
+			BlinkRightLEft(0,0,255, 1000, LedLeft, LedRight);
 			isTouched=0;
 			waitMs(1000);
-			myLed.shine(0,0,0);
+			LedLeft.shine(0,0,0);
+			LedRight.shine(0,0,0);
 			waitMs(1000);
 			//accXold=-Sensors::getAccX();
 		//accYold=-Sensors::getAccY();
@@ -59,10 +75,12 @@ void mainThread() {
 
 		if (nbtouch==2 && isTouched){
 			Serial.println("vert");
-			myLed.shine(0,255, 0);
+			BlinkRightLEft(0,255,0, 2000, LedLeft, LedRight);
+			//LedLeft.shine(0,255, 0);
 			isTouched=0;
 			waitMs(2000);
-			myLed.shine(0,0,0);
+			LedLeft.shine(0,0,0);
+			LedRight.shine(0,0,0);
 			waitMs(1000);
 			//accXold=-Sensors::getAccX();
 		//accYold=-Sensors::getAccY();
@@ -71,13 +89,15 @@ void mainThread() {
 
 		if (nbtouch==3 && isTouched){
 			Serial.println("Rouge et  spin");
-			myLed.shine(255,0,0);
+			BlinkRightLEft(255,0,0, 3000, LedLeft, LedRight);
+			//LedLeft.shine(255,0,0);
 			isTouched=0;
-			waitMs(50);
+			//waitMs(50);
 			DriveSystem::spin(LEFT, 255);
 			waitMs(3000);
 			DriveSystem::stop();
-			myLed.shine(0,0,0);
+			LedLeft.shine(0,0,0);
+			LedRight.shine(0,0,0);
 			nbtouch=0;
 			waitMs(2000);
 			//accXold=-Sensors::getAccX();
