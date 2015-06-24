@@ -1,35 +1,24 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#include "Motion.h"
+#include "ChibiOS_AVR.h"
 #include "Moti.h"
-#include "Light.h"
-
-#include "Stabilization.h"
-#include "Heart.h"
-#include "Wander.h"
+#include "Sensors.h"
+#include "Motion.h"
+#include "DriveSystem.h"
 
 void mainThread() {
 
-	Serial.println(F("Starting..."));
-
-	Sensors::init();
+	//INITIALIZATION
 	Moti::init();
-	Light::init();
-
-	Stabilization::init();
-	Heart::init();
-	Wander::init();
-
 	Moti::start();
-	Light::start();
-	Heart::start();
-	Wander::start();
 
 	while (TRUE) {
 
-		waitMs(1000);
+			DriveSystem::go(FORWARD, 255);
+			Serial.println	("starting");
 
+		waitMs(50);
 	}
 }
 
