@@ -2,7 +2,7 @@
 #include <Wire.h>
 
 #include "ChibiOS_AVR.h"
-#include "Moti.h"
+//#include "Moti.h"
 #include "Sensors.h"
 #include "DriveSystem.h"
 #include "Led.h"
@@ -39,22 +39,8 @@ void blinkRightLeft(uint8_t RedValue, uint8_t GreenValue, uint8_t BlueValue, uin
 
 }
 
-void zigzag(uint16_t timeTotal){
-for (uint16_t i = 0 ; i < timeTotal/1000 ; ++i) {
-
-		DriveSystem::turn(BACKWARD, SpeedMoti, 0);
-		waitMs(500);
-
-		DriveSystem::turn(BACKWARD, 0, SpeedMoti);
-		waitMs(500);
-
-	}
-
-}
 
 void mainThread() {
-	uint8_t randNumber;
-
 	int Threshold = 120;
 
 	int accXold = 0;
@@ -67,15 +53,13 @@ void mainThread() {
 	bool isTouched = FALSE;
 
 	//INITIALIZATION
-	Moti::init();
-	Moti::start();
 	Sensors::init();
 	Sensors::start();
 
 	Serial.println("Hello world!");
 
 	while (TRUE) {
-
+			
 		deltaX = accXold - Sensors::getAccX();
 		deltaY = accYold - Sensors::getAccY();
 		accXold = Sensors::getAccX();
@@ -84,11 +68,11 @@ void mainThread() {
 		if (deltaX < 0) deltaX = - deltaX;
 		if (deltaY < 0) deltaY = - deltaY;
 
-		// 
+
 
 		if (deltaX > Threshold || deltaY > Threshold) {
 			nbtouch++;
-			//Serial.println(nbtouch);
+			Serial.println(nbtouch);
 			isTouched = TRUE;
 		}
 
@@ -117,27 +101,8 @@ void mainThread() {
 			blinkRightLeft(255, 0, 0, 3000);
 			LedRight.shine(255, 0, 0);
 			LedLeft.shine(255, 0, 0);
-
-			randNumber = random(1,4);
-			Serial.println(randNumber);
-
-			if (randNumber ==1){
 			DriveSystem::spin(LEFT, SpeedMoti);
 			waitMs(3000);
-			}
-
-			if (randNumber ==2){
-			zigzag(3000);
-			}
-
-			if (randNumber ==3){
-			DriveSystem::go(BACKWARD, SpeedMoti);
-			waitMs(1000);
-			DriveSystem::turn(FORWARD, SpeedMoti, SpeedTurnMoti);
-			waitMs(1000);
-			DriveSystem::go(BACKWARD, SpeedMoti);
-			waitMs(1000);
-			}
 
 			DriveSystem::stop();
 

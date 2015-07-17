@@ -1,61 +1,98 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#include "Sensors.h"
+// #include "Sensors.h"
+#include "DriveSystem.h"
+#include "../../lib/FreeIMU/ADXL345.h"
+
+# define Serio Serial
+
+#define FIMU_ACC_ADDR ADXL345_ADDR_ALT_LOW
+
+ADXL345 acc;
+
+int DTC;
+byte range;
+
+// void detect(uint16_t timeS){
+// 	for (uint16_t i=0; i<timeS; ++i){
+
+// 		Serio.print(millis());
+// 		Serio.print(", ");
+
+// 		Serio.print(DTC);
+// 		Serio.print(", ");
+
+// 		Serio.print(Sensors::getAccX());
+// 		Serio.print(", ");
+// 		//Serio.print(F("  Y: "));
+// 		Serio.print(Sensors::getAccY());
+// 		Serio.print(", ");
+// 		//Serio.print(F("  Z: "));
+// 		Serio.print(Sensors::getAccZ());
+// 		Serio.print(", ");
+
+// 		//Serio.print(F("  Yaw: "));
+// 		Serio.print(Sensors::getGyrY());
+// 		Serio.print(", ");
+// 		//Serio.print(F("  Pitch: "));
+// 		Serio.print(Sensors::getGyrP());
+// 		Serio.print(", ");
+// 		//Serio.print(F("  Roll: "));
+// 		Serio.print(Sensors::getGyrR());
+// 		Serio.print(", ");
+
+// 		//Serio.print(F("  Yaw deg: "));
+// 		Serio.print(Sensors::getGyrYDeg());
+// 		Serio.print(", ");
+// 		//Serio.print(F("  Pitch deg: "));
+// 		Serio.print(Sensors::getGyrPDeg());
+// 		Serio.print(", ");
+// 		//Serio.print(F("  Roll deg: "));
+// 		Serio.print(Sensors::getGyrRDeg());
+// 		Serio.print(", ");
+
+// 		//Serio.print(F("  Phi: "));
+// 		Serio.print(Sensors::getEulerPhi());
+// 		Serio.print(", ");
+// 		//Serio.print(F("  Theta: "));
+// 		Serio.print(Sensors::getEulerTheta());
+// 		Serio.print(", ");
+// 		//Serio.print(F("  Psi: "));
+// 		Serio.print(Sensors::getEulerPsi());
+
+// 		Serio.println();
+// 	}
+// }
 
 void chSetup() {
 
-	Sensors::init();
-	Sensors::start();
+	// Sensors::init();
+	// Sensors::start();
+	acc.init(FIMU_ACC_ADDR);
+	int setRange = 4;
+	Serio.print("Sensor range: ");
+	acc.setRangeSetting(setRange);
+	delay(500);
+	acc.getRangeSetting(&range);
+	// byte rangeDisplay = range;
+	Serio.print(range);
 
-	// Light::init();
-	// Light::start();
-
-	// Heart::init();
-	// Heart::start();
+int xyz[3];
 
 	while (TRUE) {
-		Serial.print(F("Time: "));
-		Serial.print(millis());
+		acc.readAccel(&xyz[0], &xyz[1], &xyz[2]);
+		Serial.println(xyz[2]);
+		
 
-		Serial.print(F("  X: "));
-		Serial.print(Sensors::getAccX());
-		Serial.print(F("  Y: "));
-		Serial.print(Sensors::getAccY());
-		Serial.print(F("  Z: "));
-		Serial.print(Sensors::getAccZ());
-
-		Serial.print(F("  Yaw: "));
-		Serial.print(Sensors::getGyrY());
-		Serial.print(F("  Pitch: "));
-		Serial.print(Sensors::getGyrP());
-		Serial.print(F("  Roll: "));
-		Serial.print(Sensors::getGyrR());
-
-		Serial.print(F("  Yaw: "));
-		Serial.print(Sensors::getGyrYDeg());
-		Serial.print(F("  Pitch: "));
-		Serial.print(Sensors::getGyrPDeg());
-		Serial.print(F("  Roll: "));
-		Serial.print(Sensors::getGyrRDeg());
-
-		Serial.print(F("  Phi: "));
-		Serial.print(Sensors::getEulerPhi());
-		Serial.print(F("  Theta: "));
-		Serial.print(Sensors::getEulerTheta());
-		Serial.print(F("  Psi: "));
-		Serial.print(Sensors::getEulerPsi());
-
-		Serial.println();
-
-		waitMs(25);
-	}
+		delay(100);
+	 }
 }
 
 
 void setup() {
-	Serial.begin(115200);
-	while (!Serial);
+	Serio.begin(115200);
+	while (!Serio);
 
 	Wire.begin();
 	delay(500);

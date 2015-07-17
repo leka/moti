@@ -254,7 +254,6 @@ msg_t Moti::moduleThread(void* arg) {
 	while (!chThdShouldTerminate()) {
 
 		if (_isStarted) {
-
 			Moti::detectStuck();
 			Moti::detectSpin();
 			Moti::detectShake();
