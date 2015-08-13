@@ -3,9 +3,7 @@ import ycm_core
 
 # You can set a directory with a lot of libraries to be search recursively here
 ArduinoLibDir = [
-  "/Applications/Arduino.app/Contents/Resources/Java/libraries"
-  ,"/Applications/Arduino.app/Contents/Java/libraries"
-  ,"/Applications/Arduino.app/Contents/Java/hardware/arduino/avr/libraries"
+  "/Applications/Arduino.app/Contents/Java/hardware/arduino/avr/libraries"
 ]
 
 # This is the list of all directories to search for header files
@@ -24,16 +22,17 @@ flags = [
 
   # Avr-libc flags for 1.8.0 and 1.8.1 installed with homebrew
   # You can deleted the one you don't need
-  ,'-isystem/usr/local/Cellar/avr-libc/1.8.0/avr/include'
+  # ,'-isystem/usr/local/Cellar/avr-libc/1.8.0/avr/include'
   ,'-isystem/usr/local/Cellar/avr-libc/1.8.1/avr/include'
 
   # Arduino libs flags when downloaded from the arduino website
   # IDE 1.0.6
-  ,'-I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
-  ,'-I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
+  # ,'-I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/cores/arduino'
+  # ,'-I/Applications/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
   # IDE 1.6.3
   ,'-I/Applications/Arduino.app/Contents/Java/hardware/arduino/avr/cores/arduino'
   ,'-I/Applications/Arduino.app/Contents/Java/hardware/arduino/avr/variants/mega'
+  # ,'-I/Applications/Arduino.app/Contents/Java/hardware/arduino/avr/variants/standard'
 
   # Arduino libs flags when installed with brew cask or if the path is not the regular one
   # Beware, the version number can change
@@ -41,7 +40,11 @@ flags = [
   # ,'-I/opt/homebrew-cask/Caskroom/arduino/1.0.6/Arduino.app/Contents/Resources/Java/hardware/arduino/variants/mega'
 
   # You can add custom libraries here, but note that the script will automatically scan the 'lib' directory.
-  ,'-I./lib/MyFirstLib'
+  # ,'-I./lib/MyFirstLib'
+
+  # Current directory
+  # , '-I'
+  # , '.'
 
   # Customize microcontroler and Arduino version
   ,'-mmcu=atmega2560'
