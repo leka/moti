@@ -59,7 +59,7 @@ Before starting, please make sure you have those installed:
 We've made a [Homebrew](http://brew.sh/) `formula` that you can `tap` like [*dat ass*](https://www.youtube.com/watch?v=18gp_NBg43c):
 
 ```Bash
-$ brew tap WeAreLeka/avr
+$ brew tap osx-cross/avr
 $ brew install avr-libc
 ```
 
