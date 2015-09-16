@@ -50,8 +50,8 @@ void mainThread() {
 	Moti::start();
 	Sensors::init();
 	Sensors::start();
-	Stabilization::init();
-	Stabilization::start();
+	// Stabilization::init();
+	// Stabilization::start();
 
 	Serial.println("Hello world!");
 
