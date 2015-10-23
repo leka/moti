@@ -7,6 +7,8 @@
 #include "DriveSystem.h"
 #include "Motion.h"
 
+#include "Filters.h"
+
 namespace Stabilization {
 
 	// Thread methods
@@ -17,15 +19,24 @@ namespace Stabilization {
 	void start(void);
 	void stop(void);
 
+	PID _filterPsi;
+	PID _filterTheta(150,0.0,5);
+	PID _filterPhi;
+
+	float _PIDOutputPsi = 0.0;
+	float _PIDOutputTheta = 0.0;
+	float _PIDOutputPhi = 0.0;
+
 	// Variables
 	bool _isInitialized = false;
 	bool _isStarted = false;
 	uint8_t _threadDelay = 100;
 	uint32_t _runStartTime = 0;
 
+
 	// Misc
 	MUTEX_DECL(_stabMutex);
-
+  
 }
 
 void Stabilization::init(void* arg, tprio_t priority) {
@@ -59,11 +70,18 @@ msg_t Stabilization::thread(void* arg) {
 
 	(void) arg;
 
-	float currentAngle = 0.0;
+	float currentAnglePsi = 0.0;
+	float currentAngleTheta = 0.0;
+	float currentAnglePhi = 0.0;
+
+
 	float input = 0.0;
 	int16_t output = 0.0;
 
-	uint8_t speed = 0;
+	uint8_t speedPsi = 0;
+	uint8_t speedTheta = 0;
+	uint8_t speedPhi = 0;
+	
 	int16_t accY = 0;
 
 	uint32_t currentTime = 0;
@@ -73,31 +91,72 @@ msg_t Stabilization::thread(void* arg) {
 
 			currentTime = abs(millis() - _runStartTime);
 
-			input = Sensors::getAccX();
-			output = (-0.7 * input);
-			accY = Sensors::getAccY();
 
 			if (currentTime > 2000) {
-				currentAngle = Sensors::getEulerPsi();
+				currentAnglePsi = Sensors::getEulerPsi();
+				currentAngleTheta = Sensors::getEulerTheta();
+				//currentAnglePhi = Sensors::getEulerPhi();
+
 			}
 
-			if (abs(output) > 80.0) {
-				speed = (uint8_t)abs(output);
-				DriveSystem::go(output < 0 ? BACKWARD : FORWARD, speed);
+			
+
+			//Code for New Stab implementation
+
+			_PIDOutputPsi = _filterPsi.CalculatePID(currentAnglePsi);
+			_PIDOutputTheta = _filterTheta.CalculatePID(currentAngleTheta);
+			//_PIDOutputPhi = _filterPhi.CalculatePID(currentAnglePhi);
+
+
+
+			//Perform anti-reset windup?
+
+			speedPsi = (uint8_t)min(230,abs(_PIDOutputPsi));
+			speedTheta = (uint8_t)min(230,abs(_PIDOutputTheta));
+			speedPhi = (uint8_t)min(230,abs(_PIDOutputPhi));
+
+			if((currentTime > 2000) && abs(currentAnglePsi) > 0.40)
+			{
+				//DriveSystem::spin(_PIDOutputPhi > 0 ? RIGHT : LEFT,speedPsi);
+				if(_PIDOutputPsi > 0)
+				{
+					DriveSystem::spin(RIGHT,speedPsi);
+				}
+				else if(_PIDOutputPsi < 0)
+				{
+					DriveSystem::spin(LEFT,speedPsi);	
+				}
 			}
-			else if (abs(accY) > 80) {
-				Motion::spin(accY > 0 ? RIGHT : LEFT, 120, 1.57);
+
+			else if((currentTime > 2000) && abs(currentAngleTheta) > 0.40){
+				//DriveSystem::go(_PIDOutputTheta > 0 ? FORWARD : BACKWARD, speedTheta);
+				if(_PIDOutputTheta > 0)
+				{
+					DriveSystem::go(FORWARD,speedTheta);
+				}
+				else if(_PIDOutputTheta < 0)
+				{
+					DriveSystem::go(BACKWARD,speedTheta);	
+				}
 			}
-			else if ((currentTime > 2000) && abs(currentAngle) > 0.40) {
-				speed = (uint8_t)min(230, 100 + abs(currentAngle) * 80);
-				Motion::spin(currentAngle > 0.0f ? LEFT : RIGHT, speed, abs(currentAngle));
+
+			//  else if ((currentTime > 2000) && abs(currentAnglePhi) > 0.40){
+			// // DriveSystem::turn(_PIDOutputPhi > 0 ? FORWARD : BACKWARD,)
+			//  	if(_PIDOutputPhi > 0){
+			//  		DriveSystem::turn(FORWARD,150,0);
+			//  	}
+			//  	else if(_PIDOutputPhi < 0){
+			//  		DriveSystem::turn(FORWARD,0,150);
+			//  	}
+				// DriveSystem::go(FORWARD,120);
+
 			}
-			else if (Motion::getState() != NONE) {
-				Motion::stop(0);
-			}
+
 			else {
 				DriveSystem::stop();
 			}
+
+			//End of new implementation;
 		}
 
 		waitMs(_threadDelay);

@@ -1,4 +1,4 @@
-/*
+ /*
    Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at weareleka dot com> and Leka <http://weareleka.com>
 
    This file is part of Moti, a spherical robotic smart toy for autistic children.

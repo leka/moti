@@ -19,6 +19,7 @@
 
 #include "Motor.h"
 
+
 /**
  * @file Motor.cpp
  * @author Ladislas de Toldi
@@ -43,6 +44,9 @@ Motor::Motor(uint8_t directionPin, uint8_t speedPin) {
 void Motor::spin(Direction direction, uint8_t speed) {
 	digitalWrite(_directionPin, direction);
 	analogWrite(_speedPin, speed);
+
+   // Serial.print(F("Spin from motor. Direc
+
 }
 
 /**
