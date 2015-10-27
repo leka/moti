@@ -22,7 +22,7 @@ namespace Stabilization {
 	void wiggle(void);
 
 	PID _filterPsi;
-	PID _filterTheta(150,0.0,5);
+	PID _filterTheta(100,0.0,5);
 	PID _filterPhi;
 
 	float _PIDOutputPsi = 0.0;
