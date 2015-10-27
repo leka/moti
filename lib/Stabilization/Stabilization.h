@@ -15,9 +15,11 @@ namespace Stabilization {
 	static WORKING_AREA(stabilizationThreadArea, 256);
 	static msg_t thread(void* arg);
 
+
 	void init(void* arg = NULL, tprio_t priority = NORMALPRIO);
 	void start(void);
 	void stop(void);
+	void wiggle(void);
 
 	PID _filterPsi;
 	PID _filterTheta(150,0.0,5);
@@ -66,7 +68,20 @@ void Stabilization::stop(void) {
 	chMtxUnlock();
 }
 
+void Stabilization::wiggle(void){
+
+	//DriveSystem::go(FORWARD,130);
+	DriveSystem::turn(FORWARD,150,0);
+	waitMs(100);
+	DriveSystem::turn(FORWARD,0,150);
+	waitMs(100);
+	DriveSystem::stop();
+}
+
 msg_t Stabilization::thread(void* arg) {
+
+	// PI/9 = 20°
+	// PI/4 = 45°
 
 	(void) arg;
 
@@ -95,7 +110,7 @@ msg_t Stabilization::thread(void* arg) {
 			if (currentTime > 2000) {
 				currentAnglePsi = Sensors::getEulerPsi();
 				currentAngleTheta = Sensors::getEulerTheta();
-				//currentAnglePhi = Sensors::getEulerPhi();
+				currentAnglePhi = Sensors::getEulerPhi();
 
 			}
 
@@ -107,15 +122,13 @@ msg_t Stabilization::thread(void* arg) {
 			_PIDOutputTheta = _filterTheta.CalculatePID(currentAngleTheta);
 			//_PIDOutputPhi = _filterPhi.CalculatePID(currentAnglePhi);
 
-
-
 			//Perform anti-reset windup?
 
 			speedPsi = (uint8_t)min(230,abs(_PIDOutputPsi));
 			speedTheta = (uint8_t)min(230,abs(_PIDOutputTheta));
-			speedPhi = (uint8_t)min(230,abs(_PIDOutputPhi));
+			//speedPhi = (uint8_t)min(230,abs(_PIDOutputPhi));
 
-			if((currentTime > 2000) && abs(currentAnglePsi) > 0.40)
+			if((currentTime > 2000) && abs(currentAnglePsi) > PI/9)
 			{
 				//DriveSystem::spin(_PIDOutputPhi > 0 ? RIGHT : LEFT,speedPsi);
 				if(_PIDOutputPsi > 0)
@@ -128,7 +141,7 @@ msg_t Stabilization::thread(void* arg) {
 				}
 			}
 
-			else if((currentTime > 2000) && abs(currentAngleTheta) > 0.40){
+			else if((currentTime > 2000) && abs(currentAngleTheta) > PI/9){
 				//DriveSystem::go(_PIDOutputTheta > 0 ? FORWARD : BACKWARD, speedTheta);
 				if(_PIDOutputTheta > 0)
 				{
@@ -149,8 +162,15 @@ msg_t Stabilization::thread(void* arg) {
 			//  		DriveSystem::turn(FORWARD,0,150);
 			//  	}
 				// DriveSystem::go(FORWARD,120);
+			//}
+
+			else if((currentTime > 2000) && abs(currentAnglePhi) > PI/4){
+			
+				wiggle();
+				waitMs(50);
 
 			}
+
 
 			else {
 				DriveSystem::stop();
