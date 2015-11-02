@@ -23,6 +23,7 @@ class PID
 	float CalculatePID(const float);
 	//Impact Initial Angle
 	void SetInitialAngle(const float);
+	float GetInitialAngle();
 
 	private:
 

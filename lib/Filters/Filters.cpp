@@ -73,6 +73,10 @@ void PID::SetInitialAngle(const float initialAngle){
 	_InitialAngle = initialAngle;
 }
 
+float PID::GetInitialAngle(){
+	return _InitialAngle;
+}
+
 float PID::CalculatePID(const float currentAngle)
 {
 	

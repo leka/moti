@@ -21,6 +21,9 @@ namespace Stabilization {
 	void stop(void);
 	void wiggle(void);
 
+	void orientateLeft(void);
+	void orientateRight(void);
+
 	PID _filterPsi;
 	PID _filterTheta(100,0.0,5);
 	PID _filterPhi;
@@ -76,6 +79,15 @@ void Stabilization::wiggle(void){
 	DriveSystem::turn(FORWARD,0,150);
 	waitMs(100);
 	DriveSystem::stop();
+}
+
+void Stabilization::orientateLeft(void){
+_filterPsi.SetInitialAngle(_filterPsi.GetInitialAngle()+(PI/12));
+}
+
+void Stabilization::orientateRight(void){
+_filterPsi.SetInitialAngle(_filterPsi.GetInitialAngle()-(PI/12));
+
 }
 
 msg_t Stabilization::thread(void* arg) {
