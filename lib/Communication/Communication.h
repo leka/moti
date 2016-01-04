@@ -72,6 +72,11 @@ public:
    void getData(void) override;
 
    void updateFrame(void);
+   void getValuesFromBluetooth(void);
+
+   uint8_t getValues(int);
+   String getString(void);
+   
 
 private:
 
@@ -90,6 +95,9 @@ private:
    float _eulerTheta;
    float _eulerPsi;
 
+   String _command;
+
+   uint8_t _values[17];
    /* data */
 };
 

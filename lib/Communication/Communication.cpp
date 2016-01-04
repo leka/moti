@@ -119,6 +119,13 @@ Bluetooth::Bluetooth(void){
     _eulerPhi = Sensors::getEulerPhi();
     _eulerTheta = Sensors::getEulerTheta();
     _eulerPsi = Sensors::getEulerPhi();
+
+    _command = "";
+
+    for (int i = 0; i <17; i ++)
+    {
+    	_values[i] = 0;
+    }
 }
 
 Bluetooth::~Bluetooth(void){
@@ -147,7 +154,8 @@ void Bluetooth::sendData(void){
 
 	String frame = String();
 
-	frame = millis();
+	frame ="[";
+	frame += millis();
 	frame += ",";
 	frame += _accX;
 	frame += ",";
@@ -166,6 +174,7 @@ void Bluetooth::sendData(void){
 	frame += _eulerTheta;
 	frame += ",";
 	frame += _eulerPsi;
+	frame += "]";
 
 	serialPort.println(frame);
 
@@ -173,6 +182,75 @@ void Bluetooth::sendData(void){
 
 void Bluetooth::getData(void){
 
+	String command = "";
+	
+	while(serialPort.available()) { 
+       char caracter= (char)serialPort.read();
+       
+       // ******* Be sure that what we get is the right value (especially because of noise)
+       if (caracter=='['){
+         command = "";
+         command += (char)caracter; 
+       }
+       else if (caracter=='-'){
+         command += (char)caracter; 
+       }  
+       else if (caracter=='+'){
+         command += (char)caracter; 
+       }  
+       else if (caracter==','){
+         //command += (char)caracter; 
+       }
+       else if (isdigit(caracter)) {
+         command += (char)caracter; 
+       }
+       else if (caracter==']'){
+         command += (char)caracter; 
+         if (command.charAt(0)=='[' && command.length()>50){
+           _command = command;
+           getValuesFromBluetooth();
+           command = "";
+           break;
+         }
+         else{
+           command = "";
+           break;
+         }
+       }
+       else {
+         command = "";
+         break;
+       }
+     }
+}
+
+void Bluetooth::getValuesFromBluetooth(void)
+{
+	//substring(from,to), from value is inclusive, to value is exclusive
+	serialPort.println("GVFB");
+	int k = 9;
+	_values[0]=_command.substring(1,5).toInt();
+	serialPort.println(_values[0]);
+	_values[1]=_command.substring(5,9).toInt();
+	serialPort.println(_values[1]);
+	// for(int i = 9; i <45: i+3){
+	// 	_values[i]=_command.substring(i,i+3) ;
+	// }
+	for(int i = 2; i < 17; i ++){
+		_values[i]=_command.substring(k,k+3).toInt();
+		k += 3;
+	}
+	
+}
+
+uint8_t Bluetooth::getValues(int position){
+
+	return _values[position];
+
+}
+
+String Bluetooth::getString(void){
+	return _command;
 }
 
 Interface_Communication::~Interface_Communication(void){
