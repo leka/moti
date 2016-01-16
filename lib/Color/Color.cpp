@@ -228,6 +228,23 @@ Color Color::randomColor(void) {
 	return Color(random(0, 255), random(0, 255), random(0, 255));
 }
 
+// operateur ==
+ bool Color::isEgal(Color const& colora) const
+ {
+     return (_r== colora._r && _g== colora._g && _b== colora._b);  // test si c'est egal
+ }
+
+// bool Color::EgalEgal(Color const& a, Color const& b)
+// {
+//     if (a.Color::getR()==b.Color::getR() && a.Color::getG()==b.Color::getG() && a.Color::getB()==b.Color::getB() ){
+//     	return TRUE;
+//     }
+//     else {
+//     	return FALSE;
+//     }
+// }
+
+
 /**
  * @brief Set basic color values
  */

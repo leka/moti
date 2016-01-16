@@ -42,7 +42,7 @@ Led::Led() {
 Led::Led(uint8_t redPin, uint8_t greenPin, uint8_t bluePin) {
 	_redPin = redPin;
 	_greenPin = greenPin;
-	_bluePin = bluePin;
+	_bluePin = bluePin;   
 
 	_colorValue = Color(0, 0, 0);
 }
