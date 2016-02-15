@@ -104,6 +104,7 @@ float PID::CalculatePID(const float currentAngle)
 
 
 			_ErrorTracker.addValue(_Error);
+			
 			// Perform Anti-reset windup?
 			// if(m_bAntiResetWindup)
 			// {
