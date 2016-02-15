@@ -46,6 +46,9 @@ class Color {
 		void setRGB(uint8_t r, uint8_t g, uint8_t b);
 		void setHSV(uint16_t hue, float value, float saturation);
 
+		bool isEgal(Color const& colora) const;
+		// bool EgalEgal(Color const& a, Color const& b);
+
 		static Color randomColor(void);
 
 		static const Color Black;

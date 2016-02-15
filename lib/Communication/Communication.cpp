@@ -66,18 +66,18 @@ namespace Communication {
 	 * @brief Writes sensors data to the serial
 	 */
 	void sendSensorData(void) {
-		serial.print(F("S,"));
-		serial.print(Sensors::getAccX());
-		serial.print(F(","));
-		serial.print(Sensors::getAccY());
-		serial.print(F(","));
-		serial.print(Sensors::getAccZ());
-		serial.print(F(","));
-		serial.print(Sensors::getGyrYDeg());
-		serial.print(F(","));
-		serial.print(Sensors::getGyrPDeg());
-		serial.print(F(","));
-		serial.print(Sensors::getGyrRDeg());
+		Serial.print(F("S,"));
+		Serial.print(Sensors::getAccX());
+		Serial.print(F(","));
+		Serial.print(Sensors::getAccY());
+		Serial.print(F(","));
+		Serial.print(Sensors::getAccZ());
+		Serial.print(F(","));
+		Serial.print(Sensors::getGyrYDeg());
+		Serial.print(F(","));
+		Serial.print(Sensors::getGyrPDeg());
+		Serial.print(F(","));
+		Serial.println(Sensors::getGyrRDeg());
 	}
 
 

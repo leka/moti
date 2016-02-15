@@ -2,13 +2,21 @@
 #include <Wire.h>
 
 #include "ChibiOS_AVR.h"
-#include "Moti.h"
+//#include "Moti.h"
 #include "Sensors.h"
 #include "DriveSystem.h"
 #include "Led.h"
 
+#define SpeedMoti 150
+#define SpeedTurnMoti 50
+
 Led LedRight = Led(8,9,10);
 Led LedLeft = Led(11,12,13);
+
+void setup(){
+  Serial.begin(9600);
+  randomSeed(analogRead(0));
+}
 
 void blinkRightLeft(uint8_t RedValue, uint8_t GreenValue, uint8_t BlueValue, uint16_t timeTotal) {
 
@@ -31,6 +39,7 @@ void blinkRightLeft(uint8_t RedValue, uint8_t GreenValue, uint8_t BlueValue, uin
 
 }
 
+
 void mainThread() {
 
 	int Threshold = 120;
@@ -45,8 +54,6 @@ void mainThread() {
 	bool isTouched = FALSE;
 
 	//INITIALIZATION
-	Moti::init();
-	Moti::start();
 	Sensors::init();
 	Sensors::start();
 
@@ -99,7 +106,7 @@ void mainThread() {
 			LedRight.shine(255, 0, 0);
 			LedLeft.shine(255, 0, 0);
 
-			DriveSystem::spin(LEFT, 255);
+			DriveSystem::spin(LEFT, SpeedMoti);
 
 			waitMs(3000);
 
@@ -127,9 +134,6 @@ int main(void) {
 
 	Serial.begin(115200);
 	while (!Serial);
-
-	// Serial1.begin(115200);
-	// while (!Serial1);
 
 	Wire.begin();
 	delay(2000);
