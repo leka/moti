@@ -2,17 +2,18 @@
 #include <Wire.h>
 
 // #include "Sensors.h"
-#include "DriveSystem.h"
-#include "../../lib/FreeIMU/ADXL345.h"
+// #include "DriveSystem.h"
+#include "ChibiOS_AVR.h"
+#include "ADXL345.h"
 
-# define Serio Serial
+#define Serio Serial
 
 #define FIMU_ACC_ADDR ADXL345_ADDR_ALT_LOW
 
 ADXL345 acc;
 
-int DTC;
-byte range;
+// int DTC;
+// byte range;
 
 // void detect(uint16_t timeS){
 // 	for (uint16_t i=0; i<timeS; ++i){
@@ -70,23 +71,23 @@ void chSetup() {
 	// Sensors::init();
 	// Sensors::start();
 	acc.init(FIMU_ACC_ADDR);
-	int setRange = 4;
-	Serio.print("Sensor range: ");
-	acc.setRangeSetting(setRange);
+	// int setRange = 4;
+	// Serio.print("Sensor range: ");
+	// acc.setRangeSetting(setRange);
 	delay(500);
-	acc.getRangeSetting(&range);
+	// acc.getRangeSetting(&range);
 	// byte rangeDisplay = range;
-	Serio.print(range);
+	// Serio.print(range);
 
-int xyz[3];
+	int xyz[3];
 
-	while (TRUE) {
+	while (1) {
+
 		acc.readAccel(&xyz[0], &xyz[1], &xyz[2]);
-		Serial.println(xyz[2]);
-		
+		Serio.println(xyz[2]);
 
 		delay(100);
-	 }
+	}
 }
 
 
@@ -99,7 +100,7 @@ void setup() {
 
 	chBegin(chSetup);
 
-	while (TRUE);
+	while (1);
 }
 
 void loop() { }
