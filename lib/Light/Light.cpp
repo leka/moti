@@ -40,6 +40,7 @@ namespace Light {
 	uint8_t HEART_LED_GREEN_PIN = 12;
 	uint8_t HEART_LED_BLUE_PIN = 13;
 
+
 	Led leds[N_LEDS] = { Led(HEART_LED_RED_PIN, HEART_LED_GREEN_PIN, HEART_LED_BLUE_PIN) };
 	Queue<LedData*> data[N_LEDS] = { Queue<LedData*>() };
 
