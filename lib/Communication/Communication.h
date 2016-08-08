@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at weareleka dot com> and Leka <http://weareleka.com>
+   Copyright (C) 2013-2014 Ladislas de Toldi <ladislas at leka dot com> and Leka <http://leka.io>
 
    This file is part of Moti, a spherical robotic smart toy for autistic children.
 
@@ -23,7 +23,8 @@
 /**
  * @file Communication.h
  * @author Ladislas de Toldi & Flavien Raynaud
- * @version 1.0
+ * @revision Gareth Dys
+ * @version 2.0
  */
 
 #include <Arduino.h>
@@ -33,6 +34,8 @@
 #include "DriveSystem.h"
 #include "Sensors.h"
 
+ #define serialPort Serial1
+
 namespace Communication {
 
 	void sendMotorData(void);
@@ -41,5 +44,75 @@ namespace Communication {
 	void sendAllData(void);
 
 }
+
+class Interface_Communication
+{
+public:
+   //Interface_Communication(arguments);
+   virtual ~Interface_Communication();
+   
+   virtual void sendData(void) = 0;
+   virtual void getData(void) = 0;
+
+protected:
+
+private:
+
+
+   /* data */
+};
+
+class Bluetooth : public Interface_Communication
+{
+public:
+   Bluetooth();
+   ~Bluetooth();
+
+   void sendData(void) override;
+   void getData(void) override;
+
+   void updateFrame(void);
+   void getValuesFromBluetooth(void);
+
+   uint8_t getValues(int);
+   String getString(void);
+   
+
+private:
+
+   float _accX;
+   float _accY;
+   float _accZ;
+   
+   //Yaw 
+   float _gyrY;
+   //Pitch
+   float _gyrP;
+   //Roll
+   float _gyrR;
+
+   float _eulerPhi;
+   float _eulerTheta;
+   float _eulerPsi;
+
+   String _command;
+
+   uint8_t _values[17];
+   /* data */
+};
+
+//Interface for for class setting the rules for all data frame sizes
+// class Frame
+// {
+// public:
+//     Frame(arguments);
+//    ~ Frame();
+
+//     data 
+// private:
+//    uint8_t _ID;
+//    uint8_t _frameSize;
+//    Byte* data;
+// };
 
 #endif

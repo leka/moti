@@ -73,6 +73,10 @@ void PID::SetInitialAngle(const float initialAngle){
 	_InitialAngle = initialAngle;
 }
 
+float PID::GetInitialAngle(){
+	return _InitialAngle;
+}
+
 float PID::CalculatePID(const float currentAngle)
 {
 	
@@ -100,6 +104,7 @@ float PID::CalculatePID(const float currentAngle)
 
 
 			_ErrorTracker.addValue(_Error);
+			
 			// Perform Anti-reset windup?
 			// if(m_bAntiResetWindup)
 			// {
