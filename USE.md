@@ -572,9 +572,3 @@ That's it, you now are able to build your own behaviors and have lots
 of fun with your Moti device!
 
 Bye.
-
-
-
-
-
-

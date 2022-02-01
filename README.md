@@ -1,7 +1,4 @@
-[![Build Status](https://travis-ci.org/WeAreLeka/moti.svg?branch=dev)](https://travis-ci.org/WeAreLeka/moti)
-[![Stories in Ready](https://badge.waffle.io/WeAreLeka/moti.png?label=ready)](http://waffle.io/WeAreLeka/moti) 
-
-#Moti Readme
+# Moti Readme
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -23,9 +20,9 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-##About
+## About
 
-![Moti](https://scontent-b.xx.fbcdn.net/hphotos-prn2/t31.0-8/1978378_640660259359885_9078537445630618389_o.jpg)
+![Moti](./docs/img/Moti.jpg)
 
 ### Websites
 
